@@ -2,6 +2,7 @@ import React from 'react';
 import { useStore } from '../../store/zustand';
 import nextarrow from '../../assets/icons/nextarrow.svg';
 import previousarrow from '../../assets/icons/previousarrow.svg';
+import { StepDataType } from '../../utils/data/stepsData';
 
 type SncdHeadermobileProps = {
     handleSidebarToggle: () => void;
@@ -15,14 +16,14 @@ const SncdHeadermobile = ({ handleSidebarToggle }: SncdHeadermobileProps) => {
             <span className="flex px-4">
                 {currentStep !== 1 ? <img src={previousarrow} alt="previous_arrow" className="bg-sky p-3 rounded-lg" onClick={() => setCurrentStepMinus()} /> : ''}
                 <span className="w-[100%] flex justify-center">
-                    {steps.map((val, index) => {
+                    {steps.map((val: StepDataType, index) => {
                         return (
-                            <span key={index}>
+                            <span key={val.id}>
                                 {currentStep - 1 === index ? (
                                     <span className="flex">
                                         <span className="mbl_snd_head_step mr-2">{index + 1}</span>
                                         <span>
-                                            <div className="text-[18px] text-sky font-[500]">{val}</div>
+                                            <div className="text-[18px] text-sky font-[500]">{val.label}</div>
                                             <div className="text-[15px] text-orange">In-Progress</div>
                                         </span>
                                     </span>

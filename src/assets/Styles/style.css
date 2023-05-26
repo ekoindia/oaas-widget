@@ -2,6 +2,11 @@
     @apply flex flex-col relative w-60;
 }
 
+.disabled {
+    color: gray !important;
+    pointer-events: none;
+}
+
 .step-item:not(:first-child)::before {
     @apply content-[''] block bg-gray absolute -top-14 sm:left-4 left-6 h-full w-0.5 border border-gray;
 }
@@ -123,7 +128,7 @@ li::before {
 }
 
 .busin_drpdwn_input {
-    @apply block w-full border-2 border-gray rounded py-2 px-3 leading-tight focus:outline-none;
+    @apply block w-full border-2 border-gray rounded py-2 px-3 mb-3 leading-tight focus:outline-none;
 }
 
 /* Business */
@@ -369,3 +374,9 @@ li::before {
     @apply text-black ml-2 pb-2 pr-2 text-[16px] font-[500] sm:font-normal;
 }
 /* Sidebar */
+
+button:disabled {
+    background: #8080809c !important;
+    color: white !important;
+    pointer-events: none;
+}

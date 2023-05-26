@@ -1,6 +1,6 @@
+import { StepDataType } from '../../utils/data/stepsData';
 type StepperProps = {
-    steps: string[];
-    stepsStatus: any;
+    steps: Array<StepDataType>;
 };
-declare const Sidebar: ({ steps, stepsStatus }: StepperProps) => JSX.Element;
+declare const Sidebar: ({ steps }: StepperProps) => JSX.Element;
 export default Sidebar;

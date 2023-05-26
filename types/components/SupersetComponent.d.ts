@@ -1,7 +1,8 @@
 import React from 'react';
+import { StepDataType } from '../utils/data/stepsData';
 type SupersetComponentProps = {
     pagename: string;
-    steps: string[];
+    steps: Array<StepDataType>;
     children?: JSX.Element | string;
     btnName: string;
     tagLine?: string;

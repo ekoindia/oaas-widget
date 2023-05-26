@@ -7,6 +7,8 @@ const HomeStory = {
 } as ComponentMeta<typeof Home>;
 
 export default HomeStory;
-
-const Template: ComponentStory<typeof Home> = () => <Home></Home>;
+const handleStepDataSubmit = (data: any) => {
+    console.log('HandleWlcStepData', data);
+};
+const Template: ComponentStory<typeof Home> = () => <Home defaultStep={12400} isBranding={false} handleSubmit={handleStepDataSubmit} selectedMerchantType={3} />;
 export const homepage = Template.bind({});

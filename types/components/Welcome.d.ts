@@ -1,9 +1,4 @@
-import React from 'react';
 import '../assets/Styles/style.css';
-type WelcomeProps = {
-    steps: string[];
-    stepsStatus: any;
-    setStepsStatus: React.Dispatch<React.SetStateAction<any>>;
-};
-declare const Welcome: ({ steps, stepsStatus, setStepsStatus }: WelcomeProps) => JSX.Element;
+import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
+declare const Welcome: ({ stepData, handleSubmit }: GlobalStepPropsType) => JSX.Element;
 export default Welcome;

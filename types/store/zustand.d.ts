@@ -1,8 +1,9 @@
+import { StepDataType } from '../utils/data/stepsData';
 type Zustand = {
-    imge: any | null;
+    image: any | null;
     selectedFile: any;
     preview: any;
-    steps: string[];
+    steps: Array<StepDataType>;
     status: string;
     cameraType: string;
     panStatusResult: string;
@@ -19,12 +20,12 @@ type Zustand = {
     cameraStatus: boolean;
     sideBarToggle: boolean;
     setSideBarToggle: () => void;
-    setImg: (input: any) => void;
+    setImage: (input: any) => void;
     setCurrentStepPlus: () => void;
     setManageVeriyStep: () => void;
     setCurrentStepMinus: () => void;
     setPreview: (input: any) => void;
-    setCurrentStepInitial: () => void;
+    setCurrentStepInitial: (input: number) => void;
     setStatus: (input: string) => void;
     setManageVeriyStepback: () => void;
     setFinish: (input: boolean) => void;
@@ -42,6 +43,7 @@ type Zustand = {
     setCurrentStepInput: (input: number) => void;
     setPanVerificationdone: (input: number) => void;
     setPanVerificationfailed: (input: number) => void;
+    setStepsData: (input: StepDataType) => void;
 };
 export declare const useStore: import("zustand").UseBoundStore<import("zustand").StoreApi<Zustand>>;
 export {};

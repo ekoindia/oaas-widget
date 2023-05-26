@@ -7,38 +7,25 @@ import Uploadfile from './Uploadfile';
 import filledcamera from '../../assets/icons/filledcamera.svg';
 
 type FrontcamProps = {
-  handleRetake: (input: string) => void;
+    handleRetake: (input: string) => void;
+    imageVal: any;
 };
-const Frontcam = ({ handleRetake }: FrontcamProps) => {
-  const { imge, setImg, setCameraType } = useStore();
-  return (
-    <div className="flex">
-      <div>
-        <img src={imge} alt="screenshot" className="rounded-[10px]" />
-        <span className="flex flex-col justify-end items-end mt-3">
-          <ButtonGlobal onClick={handleRetake} className="cam_btn">
-            <>
-              <img src={retry} alt="retry_icon" className="w-[16px] h-[16px] mr-1" /> Re-Capture
-            </>
-          </ButtonGlobal>
-        </span>
-      </div>
-      <div className="documentimgstyle w-[40%] h-[190px] ml-4 text-center">
-        <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
-        <div className="text-sm">{`Drag and drop back copy of Aadhaar or you can`}</div>
-        <div className="flex mt-4">
-          <Uploadfile />
-          <ButtonGlobal
-            className="documentbtn"
-            onClick={() => (setImg(null), setCameraType('back'))}>
-            <>
-              <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
-            </>
-          </ButtonGlobal>
+const Frontcam = ({ handleRetake, imageVal }: FrontcamProps) => {
+    const { image, setImage, setCameraType } = useStore();
+    console.log('imagesVal inside', imageVal);
+
+    return (
+        <div className="flex flex-col max-w-[60%]">
+            <img src={imageVal || image} alt="screenshot" className="rounded-[10px] max-w-xs max-h-32" />
+            <span className="flex flex-col justify-end items-end mt-3 ">
+                <ButtonGlobal onClick={handleRetake} className="cam_btn">
+                    <>
+                        <img src={retry} alt="retry_icon" className="w-[16px] h-[16px]  mr-1" /> Re-Capture
+                    </>
+                </ButtonGlobal>
+            </span>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Frontcam;

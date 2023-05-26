@@ -15,10 +15,12 @@ type CameraProps = {
     recordedChunks?: any;
     setRecordedChunks?: React.Dispatch<React.SetStateAction<any>>;
     type: string;
-    cameraType?: string;
+    cameraType: string;
+    handleImageCapture?: any;
+    imagesVal: any;
 };
-const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, cameraType }: CameraProps) => {
-    const { imge, setImg, setManageVeriyStep, setManageVeriyStepback } = useStore();
+const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, imagesVal, handleImageCapture, cameraType }: CameraProps) => {
+    const { image, setImage, setCameraStatus, setManageVeriyStepback } = useStore();
     const videoConstraints = {
         width: { min: 1280 },
         height: { min: 720 },
@@ -32,20 +34,23 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
         async (e: any) => {
             e.preventDefault();
             const imageSrc = webcamRef?.current?.getScreenshot();
+            console.log('Image src', imageSrc);
             const blob = await fetch(imageSrc).then((res) => res.blob());
-            const formData = new FormData();
+            const fileData = new File([blob], `${type}_${cameraType}.${blob.type.split('/')[1]}`, { type: blob.type });
+            console.log('Image src Blob', blob, fileData);
 
-            formData.append('images', blob);
-            setImg(imageSrc);
-            setManageVeriyStep();
+            // formData.append('images', blob);
+            handleImageCapture(imageSrc, fileData);
+            setCameraStatus(false);
+            // setManageVeriyStep();
         },
         [webcamRef]
     );
 
     const handleRetake = (e: any) => {
         e.preventDefault();
-        setImg(null);
-        setManageVeriyStepback();
+        setImage(null);
+        // setManageVeriyStepback();
     };
 
     const handleDataAvailable = useCallback(({ data }: any) => {
@@ -92,122 +97,63 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
             setRecordedChunks?.([]);
         }
     }, [recordedChunks]);
-
+    console.log('imagesVal', imagesVal, imagesVal?.front?.url, imagesVal?.back?.url);
     return (
         <span>
-            {imge === null ? (
-                <>
-                    <span className={`${type === 'Pan' || type === 'videoRecord' ? 'flex justify-end' : 'flex'}`}>
-                        {type === 'Pan' || type === 'videoRecord' ? (
-                            <Webcam
-                                audio={false}
-                                mirrored={true}
-                                height={type === 'videoRecord' ? 500 : 500}
-                                width={type === 'videoRecord' ? 500 : 500}
-                                ref={webcamRef}
-                                screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
-                                className="rounded-[10px]"
-                            />
-                        ) : cameraType === 'front' ? (
-                            <>
-                                <div className="flex flex-col">
-                                    <Webcam
-                                        audio={false}
-                                        mirrored={true}
-                                        height={340}
-                                        width={340}
-                                        ref={webcamRef}
-                                        screenshotFormat="image/jpeg"
-                                        videoConstraints={videoConstraints}
-                                        className="rounded-[10px]"
-                                    />
-                                    <span className={`flex flex-col items-end mt-3`}>
-                                        <ButtonGlobal onClick={capture} className="cam_btn">
-                                            <>
-                                                <img src={filledcamera} className="w-[16px] h-[16px] mr-1" /> Capture
-                                            </>
-                                        </ButtonGlobal>
-                                    </span>
-                                </div>
-                                <FrontBackcapture type="back" />
-                            </>
-                        ) : cameraType === 'back' ? (
-                            <>
-                                <FrontBackcapture type="front" />
-                                <div className="flex flex-col">
-                                    <Webcam
-                                        audio={false}
-                                        mirrored={true}
-                                        height={340}
-                                        width={340}
-                                        ref={webcamRef}
-                                        screenshotFormat="image/jpeg"
-                                        videoConstraints={videoConstraints}
-                                        className="rounded-[10px]"
-                                    />
-                                    <span className={`flex flex-col justify-end mt-3`}>
-                                        <ButtonGlobal onClick={capture} className="cam_btn">
-                                            <>
-                                                <img src={filledcamera} className="w-[16px] h-[16px] mr-1" /> Capture
-                                            </>
-                                        </ButtonGlobal>
-                                    </span>
-                                </div>
-                            </>
-                        ) : (
-                            ''
-                        )}
-                    </span>
-                    {type !== 'Aadhaar' ? (
+            {/* {image === null ? ( */}
+            <>
+                <span className={`${type === 'Pan' || type === 'videoRecord' ? 'flex justify-end' : 'flex'}`}>
+                    {type === 'Pan' || type === 'videoRecord' ? (
+                        <Webcam
+                            audio={false}
+                            mirrored={true}
+                            height={type === 'videoRecord' ? 500 : 500}
+                            width={type === 'videoRecord' ? 500 : 500}
+                            ref={webcamRef}
+                            screenshotFormat="image/jpeg"
+                            videoConstraints={videoConstraints}
+                            className="rounded-[10px]"
+                        />
+                    ) : (
                         <>
-                            {type !== 'videoRecord' ? (
-                                <span className={`flex ${type !== 'Aadhaar' ? 'justify-end' : 'justify-center'} mt-3`}>
+                            <div className="flex flex-col jalaj">
+                                <Webcam
+                                    audio={false}
+                                    mirrored={true}
+                                    height={340}
+                                    width={340}
+                                    ref={webcamRef}
+                                    screenshotFormat="image/jpeg"
+                                    videoConstraints={videoConstraints}
+                                    className="rounded-[10px]"
+                                />
+                                <span className={`flex flex-col items-end mt-3`}>
                                     <ButtonGlobal onClick={capture} className="cam_btn">
                                         <>
                                             <img src={filledcamera} className="w-[16px] h-[16px] mr-1" /> Capture
                                         </>
                                     </ButtonGlobal>
                                 </span>
-                            ) : (
-                                <span className="flex justify-end mt-3">
-                                    {capturing ? (
-                                        <ButtonGlobal onClick={handleStopCaptureClick} className="cam_btn">
-                                            Stop Capture
-                                        </ButtonGlobal>
-                                    ) : (
-                                        <ButtonGlobal onClick={handleStartCaptureClick} className="cam_btn">
-                                            Start Capture
-                                        </ButtonGlobal>
-                                    )}
-                                    {recordedChunks.length > 0 && (
-                                        <ButtonGlobal onClick={handleDownload} className="cam_btn ml-2">
-                                            Download
-                                        </ButtonGlobal>
-                                    )}
-                                </span>
-                            )}
+                            </div>
+                            {/* <FrontBackcapture type="front" /> */}
                         </>
-                    ) : (
-                        ''
                     )}
-                </>
-            ) : type !== 'Aadhaar' ? (
-                <>
-                    <img src={imge} alt="screenshot" className="rounded-[10px]" />
-                    <span className="flex justify-end mt-3">
-                        <ButtonGlobal onClick={handleRetake} className="cam_btn">
-                            <>
-                                <img src={retry} alt="retry_icon" className="w-[16px] h-[16px] mr-1" /> Re-Capture
-                            </>
-                        </ButtonGlobal>
-                    </span>
-                </>
-            ) : cameraType === 'front' ? (
-                <Frontcam handleRetake={handleRetake} />
-            ) : (
-                <Backcam handleRetake={handleRetake} />
-            )}
+                </span>
+            </>
+            {/* ) : (
+                type !== 'Aadhaar' && (
+                    <>
+                        <img src={image} alt="screenshot" className="rounded-[10px]" />
+                        <span className="flex justify-end mt-3">
+                            <ButtonGlobal onClick={handleRetake} className="cam_btn">
+                                <>
+                                    <img src={retry} alt="retry_icon" className="w-[16px] h-[16px] mr-1" /> Re-Capture
+                                </>
+                            </ButtonGlobal>
+                        </span>
+                    </>
+                )
+            )} */}
         </span>
     );
 };

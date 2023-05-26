@@ -6,7 +6,9 @@ type CameraProps = {
     recordedChunks?: any;
     setRecordedChunks?: React.Dispatch<React.SetStateAction<any>>;
     type: string;
-    cameraType?: string;
+    cameraType: string;
+    handleImageCapture?: any;
+    imagesVal: any;
 };
-declare const Camera: ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, cameraType }: CameraProps) => JSX.Element;
+declare const Camera: ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, imagesVal, handleImageCapture, cameraType }: CameraProps) => JSX.Element;
 export default Camera;

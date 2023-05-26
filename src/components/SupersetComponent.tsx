@@ -3,10 +3,11 @@ import { useStore } from '../store/zustand';
 import ButtonGlobal from './Common/ButtonGlobal';
 import Modal from './Common/Modal';
 import retry from '../assets/icons/retry.png';
+import { StepDataType } from '../utils/data/stepsData';
 
 type SupersetComponentProps = {
     pagename: string;
-    steps: string[];
+    steps: Array<StepDataType>;
     children?: JSX.Element | string;
     btnName: string;
     tagLine?: string;
@@ -46,14 +47,14 @@ const SupersetComponent = ({ pagename, steps, children, btnName, tagLine, captur
         currentStep === steps.length + 1
             ? setCompleted(true)
             : panStatus === 0 || panStatus === 1 || (panStatus === 2 && finish === false)
-            ? currentStep < 7
+            ? currentStep < 8
                 ? (setCurrentStepPlus(), setStepsStatus([...stepsStatus, { progress: 'Completed', step: currentStep }]))
                 : setFinish(true)
             : // setStepsStatus?.([...stepsStatus, { progress: 'Completed', step: currentStep }])
-              setCurrentStepInitial();
+              setCurrentStepInitial(currentStep);
         setPanStatus(panStatus === 2 ? panStatus : panStatus + 1);
         btnName === 'Next' ? setPanStatusResult('Good Match') : setPanStatusResult('Matching Failed');
-        currentStep >= 7 ? setCompleted(true) : '';
+        currentStep >= 8 ? setCompleted(true) : '';
     };
 
     const increase = () => {
@@ -71,7 +72,7 @@ const SupersetComponent = ({ pagename, steps, children, btnName, tagLine, captur
     const captureLocation = () => {
         setGetlocation(true);
     };
-    const handleOnclick = currentStep === 1 ? captureLocation : handleStepbtn;
+    const handleOnclick = currentStep === 2 ? captureLocation : handleStepbtn;
 
     const showInfromation = () => {
         // comment this to show pan verify failed screens
@@ -93,16 +94,16 @@ const SupersetComponent = ({ pagename, steps, children, btnName, tagLine, captur
     return (
         <div className="pt-8 sm:p-8">
             <div className="text-[22px] font-[500] sm:font-[400]">{pagename}</div>
-            {currentStep === 2 || currentStep === 3 || currentStep === 5 || currentStep === 6 || currentStep === 7 ? (
+            {currentStep === 3 || currentStep === 4 || currentStep === 6 || currentStep === 7 || currentStep === 8 ? (
                 <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
                     {tagLine}
-                    {currentStep === 2 || currentStep === 3 || currentStep === 5 ? <span className="text-sky">.jpg, .png, .pdf</span> : ''}
+                    {currentStep === 3 || currentStep === 4 || currentStep === 6 ? <span className="text-sky">.jpg, .png, .pdf</span> : ''}
                 </div>
             ) : (
                 ''
             )}
             {children}
-            <span className={`flex flex-col items-center ${currentStep === 4 ? `mt-20 sm:mt-0` : ``} sm:block`}>
+            <span className={`flex flex-col items-center ${currentStep === 5 ? `mt-20 sm:mt-0` : ``} sm:block`}>
                 <ButtonGlobal
                     className={
                         (manageVeriyStep === 0 && btnName === 'Verify PAN') || (manageVeriyStep === 0 && btnName === 'Verify Aadhaar')
@@ -135,10 +136,10 @@ const SupersetComponent = ({ pagename, steps, children, btnName, tagLine, captur
                     </>
                 </ButtonGlobal>
 
-                {currentStep === steps.length + 1 || currentStep === 7 ? (
+                {currentStep === steps.length + 1 || currentStep === 8 ? (
                     ''
                 ) : (
-                    <ButtonGlobal className={`font-semibold sm:ml-10 ${currentStep === 4 ? `mt-10` : `mt-6`}`} onClick={handleStatus}>
+                    <ButtonGlobal className={`font-semibold sm:ml-10 ${currentStep === 5 ? `mt-10` : `mt-6`}`} onClick={handleStatus}>
                         Skip this step
                     </ButtonGlobal>
                 )}

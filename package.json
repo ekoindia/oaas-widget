@@ -1,6 +1,6 @@
 {
     "name": "eko-oaas-package",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "description": "On board as a service",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -42,6 +42,7 @@
         "@types/node": "^18.11.18",
         "@types/react": "^18.0.27",
         "@types/react-dom": "^18.0.10",
+        "@types/react-helmet": "^6.1.6",
         "@types/styled-components": "^5.1.26",
         "autoprefixer": "^10.4.14",
         "babel-loader": "^8.3.0",
@@ -69,11 +70,14 @@
     },
     "dependencies": {
         "@rollup/plugin-image": "^3.0.2",
+        "formik": "^2.2.9",
+        "react-helmet": "^6.1.0",
         "react-webcam": "^7.0.1",
         "rollup-plugin-typescript2": "^0.34.1",
         "sass-loader": "^13.2.1",
         "tesseract.js": "^4.0.3",
         "ts-node": "^10.9.1",
+        "yup": "^1.1.1",
         "zustand": "^4.3.6"
     }
 }

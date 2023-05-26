@@ -3,14 +3,14 @@ import WelcomeIcon from '../assets/icons/welcomeIcon.png';
 import { useStore } from '../store/zustand';
 import ButtonGlobal from './Common/ButtonGlobal';
 import '../assets/Styles/style.css';
+import { StepDataType } from '../utils/data/stepsData';
+import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
 
 type WelcomeProps = {
-    steps: string[];
-    stepsStatus: any;
-    setStepsStatus: React.Dispatch<React.SetStateAction<any>>;
+    stepData: StepDataType;
 };
-const Welcome = ({ steps, stepsStatus, setStepsStatus }: WelcomeProps) => {
-    const { currentStep, setCompleted, setCurrentStepPlus } = useStore();
+const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
+    const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     return (
         <div className="welcome">
             <div className="items-center text-center text-black">
@@ -22,11 +22,12 @@ const Welcome = ({ steps, stepsStatus, setStepsStatus }: WelcomeProps) => {
                 </p>
                 <ButtonGlobal
                     className="welcome_btn"
-                    onClick={() => {
-                        currentStep === steps.length + 1 ? setCompleted(true) : (setCurrentStepPlus(), setStepsStatus([...stepsStatus, { progress: 'In Progress', step: currentStep + 1 }]));
-                    }}
+                    // onClick={() => {
+                    //     currentStep === steps.length + 1 ? setCompleted(true) : (setCurrentStepPlus(), setStepsStatus([...stepsStatus, { progress: 'In Progress', step: currentStep + 1 }]));
+                    // }}
+                    onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}
                 >
-                    {currentStep === steps.length + 1 ? 'Done' : 'Start Onboarding'}
+                    {currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}
                 </ButtonGlobal>
             </div>
         </div>
