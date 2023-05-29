@@ -10,5 +10,5 @@ export default HomeStory;
 const handleStepDataSubmit = (data: any) => {
     console.log('HandleWlcStepData', data);
 };
-const Template: ComponentStory<typeof Home> = () => <Home defaultStep={12400} isBranding={false} handleSubmit={handleStepDataSubmit} selectedMerchantType={3} />;
+const Template: ComponentStory<typeof Home> = () => <Home defaultStep="13300" isBranding={false} handleSubmit={handleStepDataSubmit} selectedMerchantType={3} />;
 export const homepage = Template.bind({});

@@ -756,8 +756,9 @@ const stepsData = [
         label: 'Business Details',
         isSkipable: false,
         isRequired: true,
-        isVisible: false,
+        isVisible: true,
         stepStatus: 0,
+        role: 13300,
         primaryCTAText: 'Next',
         description: '',
         form_data: {}
@@ -768,8 +769,9 @@ const stepsData = [
         label: 'Set Your 4-Digit Secret Pin',
         isSkipable: false,
         isRequired: true,
-        isVisible: false,
+        isVisible: true,
         stepStatus: 0,
+        role: 12600,
         primaryCTAText: 'Next',
         description: '',
         form_data: {}
@@ -804,6 +806,20 @@ const stepsData = [
     },
     {
         id: 13,
+        name: 'Activation Plans',
+        label: 'Activation Plans',
+        isSkipable: false,
+        isRequired: true,
+        isVisible: false,
+        stepStatus: 0,
+        role: 13400,
+        primaryCTAText: 'Sign Agreement',
+        description: 'Select Plans To See Details',
+        form_data: {},
+        success_message: 'Agreement signed successfully.'
+    },
+    {
+        id: 14,
         name: 'OnboardingStatus',
         label: 'Onboarding Status',
         isSkipable: false,
@@ -815,7 +831,7 @@ const stepsData = [
         form_data: {}
     },
     {
-        id: 14,
+        id: 15,
         name: 'PANAadhaarMatching',
         label: 'PAN - Aadhaar Matching',
         isSkipable: false,
@@ -1672,8 +1688,8 @@ const Frontcam = ({ handleRetake, imageVal }) => {
 };
 
 const InputGlobal = (_a) => {
-    var { type, id, className, placeholder, onChange, value, name, maxLength, minLength } = _a, props = __rest(_a, ["type", "id", "className", "placeholder", "onChange", "value", "name", "maxLength", "minLength"]);
-    return React.createElement("input", Object.assign({ type: type, id: id, className: className, onChange: onChange, placeholder: placeholder, value: value }, props, { name: name, maxLength: maxLength, minLength: minLength }));
+    var { type, id, className, placeholder, onChange, value, name, maxLength, max, minLength } = _a, props = __rest(_a, ["type", "id", "className", "placeholder", "onChange", "value", "name", "maxLength", "max", "minLength"]);
+    return React.createElement("input", Object.assign({ type: type, id: id, className: className, onChange: onChange, placeholder: placeholder, value: value }, props, { max: max, name: name, maxLength: maxLength, minLength: minLength }));
 };
 
 const Labelglobal = ({ className, children }) => {
@@ -8657,80 +8673,80 @@ create$3.prototype = ObjectSchema.prototype;
 
 const SignupSchema$1 = create$3().shape({
     // shopName: Yup.string().required('Required'),
-    // companyName: Yup.string().required('Required'),
-    directorFullName: create$6().required('Required'),
-    contactPersonCellNo: create$6().required('Required'),
-    pincode: create$6().required('Required'),
-    city: create$6().required('Required'),
-    state: create$6().required('Required')
+    // name: Yup.string().required('Required'),
+    authorized_signatory_name: create$6().required('Required'),
+    contact_person_cell: create$6().required('Required'),
+    current_address_pincode: create$6().required('Required'),
+    current_address_district: create$6().required('Required')
+    // state: Yup.string().required('Required')
 });
 const companyTypeData$1 = [
-    { label: 'Private Ltd', value: 'privateltd' },
-    { label: 'LLP', value: 'llp' },
-    { label: 'Partnership', value: 'partnership' },
-    { label: 'Sole Proprietorship', value: 'soleproprietorship' }
+    { label: 'Private Ltd', value: 1 },
+    { label: 'LLP', value: 2 },
+    { label: 'Partnership', value: 3 },
+    { label: 'Sole Proprietorship', value: 4 }
 ];
 const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [] }) => {
     useStore();
     const [formValues, setFormValues] = React.useState({
         // shopType: 'shop1',
         // shopName: '',
-        companyName: '',
-        alternateNumber: '',
-        companyType: 'privateltd',
-        directorFullName: '',
-        contactPersonCellNo: '',
-        RegisteredBusinessAddress1: '',
-        RegisteredBusinessAddress2: '',
-        pincode: '',
-        city: '',
-        state: stateTypes[0].value
+        name: '',
+        alternate_mobile: '',
+        company_type: 1,
+        authorized_signatory_name: '',
+        contact_person_cell: '',
+        current_address_line1: '',
+        current_address_line2: '',
+        current_address_pincode: '',
+        current_address_district: '',
+        current_address_state: ''
     });
     console.log('state types in business', stateTypes);
     return (React.createElement(React.Fragment, null,
         React.createElement(Formik, { initialValues: formValues, validationSchema: SignupSchema$1, onSubmit: (formData) => {
-                handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: { formData }, stepStatus: 3 }));
-                console.log(formData);
+                handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: formData, stepStatus: 3 }));
+                console.log('this is form data', formData);
             } }, ({ errors, touched, values, handleChange }) => (React.createElement(Form, { className: "bg-white mt-4 ml-6 w-full mr-2" },
             React.createElement("div", { className: "mt-8 text-black text-lg mb-4 font-bold" }, "Business Type"),
             React.createElement("div", { className: "grid grid-cols-2 gap-4 w-full\t" },
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Company/Firm's name"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "companyName", value: values.companyName, onChange: handleChange('companyName'), id: "username", type: "text", placeholder: "" }),
-                    errors.companyName && touched.companyName ? React.createElement("div", { className: "text-red" }, errors.companyName) : null),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "name", value: values.name, onChange: handleChange('name'), id: "username", type: "text", placeholder: "" }),
+                    errors.name && touched.name ? React.createElement("div", { className: "text-red" }, errors.name) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Aleternate mobile number(optional)"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "alternateNumber", value: values.alternateNumber, onChange: handleChange('alternateNumber'), id: "username", type: "text", placeholder: "" })),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "alternate_mobile", value: values.alternate_mobile, onChange: handleChange('alternate_mobile'), id: "username", type: "text", placeholder: "" })),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Company Type"),
-                    React.createElement("select", { name: "companyType", value: values.companyType, onChange: handleChange('companyType'), id: "cars", className: "px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray" }, companyTypeData$1.map((company, idx) => {
+                    React.createElement("select", { name: "company_type", value: values.company_type, onChange: handleChange('company_type'), className: "px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray" }, companyTypeData$1.map((company, idx) => {
                         return (React.createElement("option", { value: company.value, key: `${idx}_${company.value}` }, company.label));
                     }))),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Director/Authorised Signatory Full Name"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "directorFullName", value: values.directorFullName, onChange: handleChange('directorFullName'), id: "username", type: "text", placeholder: "" }),
-                    errors.directorFullName && touched.directorFullName ? React.createElement("div", { className: "text-red" }, errors.directorFullName) : null),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "authorized_signatory_name", value: values.authorized_signatory_name, onChange: handleChange('authorized_signatory_name'), id: "username", type: "text", placeholder: "" }),
+                    errors.authorized_signatory_name && touched.authorized_signatory_name ? React.createElement("div", { className: "text-red" }, errors.authorized_signatory_name) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Contact Person's Cell Number "),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "contactPersonCellNo", value: values.contactPersonCellNo, onChange: handleChange('contactPersonCellNo'), id: "username", type: "text", placeholder: "" }),
-                    errors.contactPersonCellNo && touched.contactPersonCellNo ? React.createElement("div", { className: "text-red" }, errors.contactPersonCellNo) : null),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "contact_person_cell", value: values.contact_person_cell, onChange: handleChange('contact_person_cell'), id: "username", type: "text", placeholder: "" }),
+                    errors.contact_person_cell && touched.contact_person_cell ? React.createElement("div", { className: "text-red" }, errors.contact_person_cell) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Registered Business address(Line1)"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "RegisteredBusinessAddress1", value: values.RegisteredBusinessAddress1, onChange: handleChange('RegisteredBusinessAddress1'), id: "username", type: "text", placeholder: "" })),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_line1", value: values.current_address_line1, onChange: handleChange('current_address_line1'), id: "username", type: "text", placeholder: "" })),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Registered Business address(Line2)"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "RegisteredBusinessAddress2", value: values.RegisteredBusinessAddress2, onChange: handleChange('RegisteredBusinessAddress2'), id: "username", type: "text", placeholder: "" })),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_line2", value: values.current_address_line2, onChange: handleChange('current_address_line2'), id: "username", type: "text", placeholder: "" })),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Pincode"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "pincode", value: values.pincode, onChange: handleChange('pincode'), id: "username", type: "number", placeholder: "" }),
-                    errors.pincode && touched.pincode ? React.createElement("div", { className: "text-red" }, errors.pincode) : null),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_pincode", value: values.current_address_pincode, onChange: handleChange('current_address_pincode'), id: "username", type: "number", max: "10000", placeholder: "" }),
+                    errors.current_address_pincode && touched.current_address_pincode ? React.createElement("div", { className: "text-red" }, errors.current_address_pincode) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "City"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "city", value: values.city, onChange: handleChange('city'), id: "username", type: "text", placeholder: "" }),
-                    errors.city && touched.city ? React.createElement("div", { className: "text-red" }, errors.city) : null),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_district", value: values.current_address_district, onChange: handleChange('current_address_district'), id: "username", type: "text", placeholder: "" }),
+                    errors.current_address_district && touched.current_address_district ? React.createElement("div", { className: "text-red" }, errors.current_address_district) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "State"),
-                    React.createElement("select", { name: "state", value: values.state, onChange: handleChange('state'), className: "px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray" }, stateTypes.map((state, idx) => {
+                    React.createElement("select", { name: "current_address_state", value: values.current_address_state, onChange: handleChange('current_address_state'), className: "px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray" }, stateTypes.map((state, idx) => {
                         return (React.createElement("option", { value: state.value, key: `${idx}_${state.value}` }, state.label));
                     })))),
             React.createElement(ButtonGlobal, { className: "welcome_btn", disabled: isDisabledCTA, type: "submit" }, isDisabledCTA ? 'Loading...' : stepData === null || stepData === void 0 ? void 0 : stepData.primaryCTAText))))));
@@ -8910,9 +8926,11 @@ var img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAA
 const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }) => {
     var _a, _b;
     const { id, name, label, primaryCTAText, form_data } = stepData;
-    const [roleVal, setRoleVal] = React.useState(1);
+    const [roleVal, setRoleVal] = React.useState(2);
+    console.log('form selection data', form_data, roleVal);
     const handleChange = (e) => {
-        setRoleVal(e.target.value);
+        console.log('change', e.target.value);
+        setRoleVal(parseInt(e.target.value));
     };
     return (React.createElement("div", { className: "bg-gray-100 rounded-lg p-8 flex flex-col max-w-md mt-10 md:mt-0", id: `step_${id}_${name}` },
         React.createElement("h2", { className: "text-gray-900 text-lg font-medium title-font mb-5" }, label),
@@ -9121,7 +9139,7 @@ const secretPinValidationSchema = create$3().shape({
         .oneOf([create$9('secretPin')], 'secret PIN must match')
         .required('required')
 });
-const SecretPin = ({ stepData, handleSubmit, isDisabledCTA }) => {
+const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }) => {
     const { label, description, isSkipable, primaryCTAText } = stepData;
     const [formValues, setFormValues] = React.useState({
         secretPin: '',
@@ -9130,9 +9148,12 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA }) => {
     const handleSkip = () => {
         handleSubmit(Object.assign(Object.assign({}, stepData), { stepStatus: 2 }));
     };
+    React.useEffect(() => {
+        handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
+    }, []);
     return (React.createElement("div", { className: "pt-8 sm:p-8" },
         React.createElement(Formik, { initialValues: formValues, validationSchema: secretPinValidationSchema, onSubmit: (formData) => {
-                handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: { formData }, stepStatus: 3 }));
+                handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: formData, stepStatus: 3 }));
                 console.log(formData);
             } }, ({ errors, touched, values, handleChange }) => (React.createElement(Form, { className: "bg-white mt-4 ml-6 w-full mr-2" },
             React.createElement("div", { className: "text-[22px] font-[500] sm:font-[400]" }, label),
@@ -9153,8 +9174,31 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA }) => {
                     React.createElement("li", null, "Your 4-digit secret pin will be required in all the transactions")),
                 React.createElement(ButtonGlobal, { className: "bg-sky hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]", 
                     // onClick={handleAadharConsentClick}
-                    disabled: isDisabledCTA }, isDisabledCTA ? 'Please wait...' : primaryCTAText),
+                    type: "submit", disabled: isDisabledCTA }, isDisabledCTA ? 'Please wait...' : primaryCTAText),
                 isSkipable && (React.createElement(ButtonGlobal, { className: "font-semibold sm:ml-10 mt-6", onClick: handleSkip }, "Skip this step"))))))));
+};
+
+const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }) => {
+    React.useState('');
+    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const handleActivationPlan = () => {
+        // handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
+    };
+    const handleSkip = () => {
+        handleSubmit(Object.assign(Object.assign({}, stepData), { stepStatus: 2 }));
+    };
+    React.useEffect(() => {
+        if (typeof handleStepCallBack === 'function')
+            handleStepCallBack({ type: stepData.id, method: 'getInitialActivationPlan' });
+    }, []);
+    return (React.createElement("div", { className: "pt-8 sm:p-8" },
+        React.createElement("div", { className: "text-[22px] font-[500] sm:font-[400]" }, label),
+        React.createElement("div", { className: "mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]" }, description),
+        React.createElement("div", { className: "mt-10 relative" }),
+        React.createElement("span", { className: `flex flex-col items-center sm:block` },
+            React.createElement("div", null),
+            React.createElement(ButtonGlobal, { className: "bg-sky hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]", onClick: handleActivationPlan, disabled: isDisabledCTA }, isDisabledCTA ? 'Please wait...' : primaryCTAText),
+            isSkipable && (React.createElement(ButtonGlobal, { className: "font-semibold sm:ml-10 mt-6", onClick: handleSkip }, "Skip this step")))));
 };
 
 const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack }) => {
@@ -9181,37 +9225,15 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     };
     const renderStep = (currentStep) => {
         const stepData = steps === null || steps === void 0 ? void 0 : steps.find((step) => step.id === currentStep);
+        console.log(stepData, 'currentStep', currentStep, steps);
         if (stepData) {
             switch (currentStep) {
                 case 2:
                     return React.createElement(SelectionScreen, { handleSubmit: handleStepSubmit, stepData: stepData, isDisabledCTA: isDisable });
                 case 3:
-                    return (
-                    // <SupersetComponent
-                    //     steps={steps}
-                    //     btnName="Start Location Capture"
-                    //     pagename="Location Capturing"
-                    //     capturelocationData={capturelocationData}
-                    //     setCapturelocationData={setCapturelocationData}
-                    //     stepsStatus={stepsStatus}
-                    //     setStepsStatus={setStepsStatus}
-                    // >
-                    React.createElement(LoctionCapture, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable })
-                    // </SupersetComponent>
-                    );
+                    return React.createElement(LoctionCapture, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
                 case 4:
-                    return (
-                    // <SupersetComponent
-                    //     steps={steps}
-                    //     btnName="Verify Aadhaar"
-                    //     pagename="Aadhaar Verification"
-                    //     tagLine="Upload your Aadhar Copy front and back to verify yourself. Accepted format are "
-                    //     stepsStatus={stepsStatus}
-                    //     setStepsStatus={setStepsStatus}
-                    // >
-                    React.createElement(AdharVerifiction, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable })
-                    // </SupersetComponent>
-                    );
+                    return React.createElement(AdharVerifiction, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
                 case 5:
                     return React.createElement(AadharConsent, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
                 case 6:
@@ -9219,18 +9241,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                 case 7:
                     return React.createElement(AadharNumberOtpVerify, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
                 case 8:
-                    return (
-                    // <SupersetComponent
-                    //     steps={steps}
-                    //     btnName="Verify PAN"
-                    //     pagename="PAN Verification"
-                    //     tagLine="Upload your PAN copy to verify your business. Accepted format are "
-                    //     stepsStatus={stepsStatus}
-                    //     setStepsStatus={setStepsStatus}
-                    // >
-                    React.createElement(PanVerification, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes })
-                    // </SupersetComponent>
-                    );
+                    return React.createElement(PanVerification, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes });
                 case 9:
                     if (selectedMerchantType === 2) {
                         return React.createElement(BusinessMerchant, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes, stateTypes: stateTypes });
@@ -9239,36 +9250,17 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                         return React.createElement(Business, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes, stateTypes: stateTypes });
                     }
                 case 10:
-                    return React.createElement(SecretPin, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
+                    return React.createElement(SecretPin, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, handleStepCallBack: handleStepCallBack });
                 case 11:
                     return React.createElement(VideoKYC, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
                 case 12:
                     return React.createElement(SignAgreement, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, handleStepCallBack: handleStepCallBack });
                 case 13:
-                    return (
-                    // <SupersetComponent
-                    //     steps={steps}
-                    //     btnName="Submit"
-                    //     pagename="Onboarding Status"
-                    //     tagLine="Below are the details of the completion status of your onboarding."
-                    //     stepsStatus={stepsStatus}
-                    //     setStepsStatus={setStepsStatus}
-                    // >
-                    React.createElement(OnboardingStatus, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable })
-                    // </SupersetComponent>
-                    );
+                    return React.createElement(ActivationPlan, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, handleStepCallBack: handleStepCallBack });
                 case 14:
-                    return (
-                    // <SupersetComponent
-                    //     steps={steps}
-                    //     btnName={`${panStatus === 0 ? 'Start Matching' : panStatus === 1 ? 'Next' : 'Retry'}`}
-                    //     pagename="PAN - Aadhaar Matching"
-                    //     stepsStatus={stepsStatus}
-                    //     setStepsStatus={setStepsStatus}
-                    // >
-                    React.createElement(PanAdharMatch, null)
-                    // </SupersetComponent>
-                    );
+                    return React.createElement(OnboardingStatus, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
+                case 15:
+                    return React.createElement(PanAdharMatch, null);
                 default:
                     return React.createElement(Welcome, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
             }

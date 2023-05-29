@@ -165,8 +165,9 @@ export const stepsData: Array<StepDataType> = [
         label: 'Business Details',
         isSkipable: false,
         isRequired: true,
-        isVisible: false,
+        isVisible: true,
         stepStatus: 0,
+        role: 13300,
         primaryCTAText: 'Next',
         description: '',
         form_data: {}
@@ -177,8 +178,9 @@ export const stepsData: Array<StepDataType> = [
         label: 'Set Your 4-Digit Secret Pin',
         isSkipable: false,
         isRequired: true,
-        isVisible: false,
+        isVisible: true,
         stepStatus: 0,
+        role: 12600,
         primaryCTAText: 'Next',
         description: '',
         form_data: {}
@@ -213,6 +215,20 @@ export const stepsData: Array<StepDataType> = [
     },
     {
         id: 13,
+        name: 'Activation Plans',
+        label: 'Activation Plans',
+        isSkipable: false,
+        isRequired: true,
+        isVisible: false,
+        stepStatus: 0,
+        role: 13400,
+        primaryCTAText: 'Sign Agreement',
+        description: 'Select Plans To See Details',
+        form_data: {},
+        success_message: 'Agreement signed successfully.'
+    },
+    {
+        id: 14,
         name: 'OnboardingStatus',
         label: 'Onboarding Status',
         isSkipable: false,
@@ -224,7 +240,7 @@ export const stepsData: Array<StepDataType> = [
         form_data: {}
     },
     {
-        id: 14,
+        id: 15,
         name: 'PANAadhaarMatching',
         label: 'PAN - Aadhaar Matching',
         isSkipable: false,

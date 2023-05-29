@@ -20,6 +20,7 @@ import ConfirmAadharNumber from './ConfirmAadharNumber';
 import AadharNumberOtpVerify from './AadharNumberOtpVerify';
 import BusinessMerchant from './BusinessMerchant';
 import SecretPin from './SecretPin';
+import ActivationPlan from './ActivationPlan';
 
 type HomepageProps = {
     sideBarToggle: boolean;
@@ -54,37 +55,15 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     };
     const renderStep = (currentStep: number): any => {
         const stepData: StepDataType | undefined = steps?.find((step: StepDataType) => step.id === currentStep);
+        console.log(stepData, 'currentStep', currentStep, steps);
         if (stepData) {
             switch (currentStep) {
                 case 2:
                     return <SelectionScreen handleSubmit={handleStepSubmit} stepData={stepData} isDisabledCTA={isDisable} />;
                 case 3:
-                    return (
-                        // <SupersetComponent
-                        //     steps={steps}
-                        //     btnName="Start Location Capture"
-                        //     pagename="Location Capturing"
-                        //     capturelocationData={capturelocationData}
-                        //     setCapturelocationData={setCapturelocationData}
-                        //     stepsStatus={stepsStatus}
-                        //     setStepsStatus={setStepsStatus}
-                        // >
-                        <LoctionCapture stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />
-                        // </SupersetComponent>
-                    );
+                    return <LoctionCapture stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 4:
-                    return (
-                        // <SupersetComponent
-                        //     steps={steps}
-                        //     btnName="Verify Aadhaar"
-                        //     pagename="Aadhaar Verification"
-                        //     tagLine="Upload your Aadhar Copy front and back to verify yourself. Accepted format are "
-                        //     stepsStatus={stepsStatus}
-                        //     setStepsStatus={setStepsStatus}
-                        // >
-                        <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />
-                        // </SupersetComponent>
-                    );
+                    return <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 5:
                     return <AadharConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 6:
@@ -92,18 +71,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                 case 7:
                     return <AadharNumberOtpVerify stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 8:
-                    return (
-                        // <SupersetComponent
-                        //     steps={steps}
-                        //     btnName="Verify PAN"
-                        //     pagename="PAN Verification"
-                        //     tagLine="Upload your PAN copy to verify your business. Accepted format are "
-                        //     stepsStatus={stepsStatus}
-                        //     setStepsStatus={setStepsStatus}
-                        // >
-                        <PanVerification stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} />
-                        // </SupersetComponent>
-                    );
+                    return <PanVerification stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} />;
                 case 9:
                     if (selectedMerchantType === 2) {
                         return <BusinessMerchant stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
@@ -111,37 +79,18 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                         return <Business stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
                     }
                 case 10:
-                    return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
 
                 case 11:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 12:
                     return <SignAgreement stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case 13:
-                    return (
-                        // <SupersetComponent
-                        //     steps={steps}
-                        //     btnName="Submit"
-                        //     pagename="Onboarding Status"
-                        //     tagLine="Below are the details of the completion status of your onboarding."
-                        //     stepsStatus={stepsStatus}
-                        //     setStepsStatus={setStepsStatus}
-                        // >
-                        <OnboardingStatus stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />
-                        // </SupersetComponent>
-                    );
+                    return <ActivationPlan stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case 14:
-                    return (
-                        // <SupersetComponent
-                        //     steps={steps}
-                        //     btnName={`${panStatus === 0 ? 'Start Matching' : panStatus === 1 ? 'Next' : 'Retry'}`}
-                        //     pagename="PAN - Aadhaar Matching"
-                        //     stepsStatus={stepsStatus}
-                        //     setStepsStatus={setStepsStatus}
-                        // >
-                        <PanAdharMatch />
-                        // </SupersetComponent>
-                    );
+                    return <OnboardingStatus stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                case 15:
+                    return <PanAdharMatch />;
                 default:
                     return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }

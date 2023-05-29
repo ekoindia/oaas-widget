@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
 import InputGlobal from './Common/InputGlobal';
 import ButtonGlobal from './Common/ButtonGlobal';
@@ -7,29 +7,32 @@ import * as Yup from 'yup';
 import Labelglobal from './Common/Labelglobal';
 
 const secretPinValidationSchema = Yup.object().shape({
-    secretPin: Yup.number().integer().max(9999, 'Must be at most 4 digits').required('Secret PIN is required'),
-    confirmSecretPin: Yup.number()
+    first_okekey: Yup.number().integer().max(9999, 'Must be at most 4 digits').required('Secret PIN is required'),
+    second_okekey: Yup.number()
         .integer()
-        .oneOf([Yup.ref('secretPin')], 'secret PIN must match')
+        .oneOf([Yup.ref('first_okekey')], 'secret PIN must match')
         .required('required')
 });
 
-const SecretPin = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
+const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
     const { label, description, isSkipable, primaryCTAText } = stepData;
     const [formValues, setFormValues] = useState({
-        secretPin: '',
-        confirmSecretPin: ''
+        first_okekey: '',
+        second_okekey: ''
     });
     const handleSkip = () => {
         handleSubmit({ ...stepData, stepStatus: 2 });
     };
+    useEffect(() => {
+        handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
+    }, []);
     return (
         <div className="pt-8 sm:p-8">
             <Formik
                 initialValues={formValues}
                 validationSchema={secretPinValidationSchema}
                 onSubmit={(formData) => {
-                    handleSubmit({ ...stepData, form_data: { formData }, stepStatus: 3 });
+                    handleSubmit({ ...stepData, form_data: formData, stepStatus: 3 });
                     console.log(formData);
                 }}
             >
@@ -41,21 +44,29 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsTyp
                         <span className={`flex flex-col items-center sm:block`}>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Secret PIN</Labelglobal>
-                                <InputGlobal className="busin_drpdwn_input" name="secretPin" value={values.secretPin} onChange={handleChange('secretPin')} id="username" type="number" placeholder="" />
-                                {errors.secretPin && touched.secretPin ? <div className="text-red">{errors.secretPin}</div> : null}
+                                <InputGlobal
+                                    className="busin_drpdwn_input"
+                                    name="first_okekey"
+                                    value={values.first_okekey}
+                                    onChange={handleChange('first_okekey')}
+                                    id="username"
+                                    type="number"
+                                    placeholder=""
+                                />
+                                {errors.first_okekey && touched.first_okekey ? <div className="text-red">{errors.first_okekey}</div> : null}
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Confirm Secret PIN</Labelglobal>
                                 <InputGlobal
                                     className="busin_drpdwn_input"
-                                    name="confirmSecretPin"
-                                    value={values.confirmSecretPin}
-                                    onChange={handleChange('confirmSecretPin')}
+                                    name="second_okekey"
+                                    value={values.second_okekey}
+                                    onChange={handleChange('second_okekey')}
                                     id="username"
                                     type="number"
                                     placeholder=""
                                 />
-                                {errors.confirmSecretPin && touched.confirmSecretPin ? <div className="text-red">{errors.confirmSecretPin}</div> : null}
+                                {errors.second_okekey && touched.second_okekey ? <div className="text-red">{errors.second_okekey}</div> : null}
                             </div>
                             Note:
                             <div className="ml-8">
@@ -65,6 +76,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsTyp
                             <ButtonGlobal
                                 className="bg-sky hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
                                 // onClick={handleAadharConsentClick}
+                                type="submit"
                                 disabled={isDisabledCTA}
                             >
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}

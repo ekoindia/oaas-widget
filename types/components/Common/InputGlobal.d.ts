@@ -8,6 +8,7 @@ type InputProps = {
     onChange?: any;
     maxLength?: any;
     minLength?: any;
+    max?: any;
 };
-declare const InputGlobal: ({ type, id, className, placeholder, onChange, value, name, maxLength, minLength, ...props }: InputProps) => JSX.Element;
+declare const InputGlobal: ({ type, id, className, placeholder, onChange, value, name, maxLength, max, minLength, ...props }: InputProps) => JSX.Element;
 export default InputGlobal;

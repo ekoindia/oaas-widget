@@ -7,9 +7,11 @@ import ButtonGlobal from './Common/ButtonGlobal';
 
 export const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
-    const [roleVal, setRoleVal] = React.useState<number>(1);
+    const [roleVal, setRoleVal] = React.useState<number>(2);
+    console.log('form selection data', form_data, roleVal);
     const handleChange = (e: any) => {
-        setRoleVal(e.target.value);
+        console.log('change', e.target.value);
+        setRoleVal(parseInt(e.target.value));
     };
     return (
         <div className="bg-gray-100 rounded-lg p-8 flex flex-col max-w-md mt-10 md:mt-0" id={`step_${id}_${name}`}>
