@@ -184,7 +184,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     onChange={handleChange('current_address_pincode')}
                                     id="username"
                                     type="number"
-                                    max="10000"
+                                    max="999999"
                                     placeholder=""
                                 />
                                 {errors.current_address_pincode && touched.current_address_pincode ? <div className="text-red">{errors.current_address_pincode}</div> : null}

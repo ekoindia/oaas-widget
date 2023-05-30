@@ -8738,7 +8738,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                     React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_line2", value: values.current_address_line2, onChange: handleChange('current_address_line2'), id: "username", type: "text", placeholder: "" })),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Pincode"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_pincode", value: values.current_address_pincode, onChange: handleChange('current_address_pincode'), id: "username", type: "number", max: "10000", placeholder: "" }),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_pincode", value: values.current_address_pincode, onChange: handleChange('current_address_pincode'), id: "username", type: "number", max: "999999", placeholder: "" }),
                     errors.current_address_pincode && touched.current_address_pincode ? React.createElement("div", { className: "text-red" }, errors.current_address_pincode) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "City"),
@@ -9133,23 +9133,26 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
 };
 
 const secretPinValidationSchema = create$3().shape({
-    secretPin: create$5().integer().max(9999, 'Must be at most 4 digits').required('Secret PIN is required'),
-    confirmSecretPin: create$5()
+    first_okekey: create$5().integer().max(9999, 'Must be at most 4 digits').required('Secret PIN is required'),
+    second_okekey: create$5()
         .integer()
-        .oneOf([create$9('secretPin')], 'secret PIN must match')
+        .oneOf([create$9('first_okekey')], 'secret PIN must match')
         .required('required')
 });
 const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }) => {
     const { label, description, isSkipable, primaryCTAText } = stepData;
     const [formValues, setFormValues] = React.useState({
-        secretPin: '',
-        confirmSecretPin: ''
+        first_okekey: '',
+        second_okekey: ''
     });
     const handleSkip = () => {
         handleSubmit(Object.assign(Object.assign({}, stepData), { stepStatus: 2 }));
     };
     React.useEffect(() => {
+        console.log('In stepSecretPin');
         handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
+        // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
+        // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
     }, []);
     return (React.createElement("div", { className: "pt-8 sm:p-8" },
         React.createElement(Formik, { initialValues: formValues, validationSchema: secretPinValidationSchema, onSubmit: (formData) => {
@@ -9162,12 +9165,12 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
             React.createElement("span", { className: `flex flex-col items-center sm:block` },
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Secret PIN"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "secretPin", value: values.secretPin, onChange: handleChange('secretPin'), id: "username", type: "number", placeholder: "" }),
-                    errors.secretPin && touched.secretPin ? React.createElement("div", { className: "text-red" }, errors.secretPin) : null),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "first_okekey", value: values.first_okekey, onChange: handleChange('first_okekey'), id: "username", type: "number", placeholder: "" }),
+                    errors.first_okekey && touched.first_okekey ? React.createElement("div", { className: "text-red" }, errors.first_okekey) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Confirm Secret PIN"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "confirmSecretPin", value: values.confirmSecretPin, onChange: handleChange('confirmSecretPin'), id: "username", type: "number", placeholder: "" }),
-                    errors.confirmSecretPin && touched.confirmSecretPin ? React.createElement("div", { className: "text-red" }, errors.confirmSecretPin) : null),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "second_okekey", value: values.second_okekey, onChange: handleChange('second_okekey'), id: "username", type: "number", placeholder: "" }),
+                    errors.second_okekey && touched.second_okekey ? React.createElement("div", { className: "text-red" }, errors.second_okekey) : null),
                 "Note:",
                 React.createElement("div", { className: "ml-8" },
                     React.createElement("li", null, "Please set a stron secret PIN to secure your account"),
