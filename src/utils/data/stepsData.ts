@@ -99,7 +99,7 @@ export const stepsData: Array<StepDataType> = [
         stepStatus: 0,
         role: 12400,
         primaryCTAText: 'Verify Aadhaar',
-        description: '',
+        description: 'Upload your Aadhar Copy front and back to verify yourself. Accepted formats are',
         form_data: {},
         success_message: 'Aadhaar uploaded successfully.'
     },
@@ -155,7 +155,7 @@ export const stepsData: Array<StepDataType> = [
         stepStatus: 0,
         role: 12300,
         primaryCTAText: 'Verify PAN',
-        description: '',
+        description: 'Upload your PAN copy to verify your business. Accepted formats are',
         form_data: {},
         success_message: 'PAN verified successfully.'
     },
@@ -175,14 +175,14 @@ export const stepsData: Array<StepDataType> = [
     {
         id: 10,
         name: 'SecretPin',
-        label: 'Set Your 4-Digit Secret Pin',
+        label: 'Secret Pin',
         isSkipable: false,
         isRequired: true,
         isVisible: true,
         stepStatus: 0,
         role: 12600,
         primaryCTAText: 'Next',
-        description: '',
+        description: 'Set Your 4-Digit Secret Pin',
         form_data: {}
     },
     {

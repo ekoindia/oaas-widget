@@ -65,65 +65,52 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
         shopTypes?.filter((shop: any) => shop.dependent_params.is_visible === 1)
     );
     return (
-        <div className="pt-8 sm:p-8">
+        <div className="pt-8 sm:p-8 xl:w-[55%]">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-
-            {/* <div className="relative sm:hidden block mt-10">
-                {uploadedImage === 0 ? (
-                    cameraStatus === true && panImage?.url === null ? (
-                        <Camera type="Pan" handleImageCapture={handleImageCapture} imagesVal={panImage} />
-                    ) : (
-                        <>
-                            <div className="documentimgstyle w-[100%] h-[180px]">
-                                <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
-                                Upload PAN copy by clicking here
-                            </div>
-                            <div className="flex justify-center">
-                                <div className="side_arrow_alt"></div>
-                            </div>
-                            <div className="attmp_alt">You will get two attempts for PAN verification</div>
-                        </>
-                    )
-                ) : (
-                    <Browse copyType="Pan Copy" />
-                )}
-            </div> */}
+            <div className="mt-3 mb-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
+                {description}
+                <span className="text-sky"> .jpg, .png, .pdf</span>
+            </div>
             <div>
                 <Labelglobal className="block text-black text-sm font-bold mb-2">Pan Card Number</Labelglobal>
                 <InputGlobal className="busin_drpdwn_input" name="panNumber" value={formValues.panNumber} onChange={handleChange} id="panNumber" type="text" placeholder="" />
                 {/* {errors.shopName && touched.shopName ? <div className="text-red">{errors.shopName}</div> : null} */}
             </div>
-            <div className="relative hidden sm:block mt-10">
+            <div className="relative sm:block mt-10">
                 {uploadedImage === 0 ? (
                     cameraStatus === true && panImage?.url === null ? (
                         <Camera type="pan" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={panImage} />
                     ) : (
-                        <div className="documentimgstyle overflow-hidden w-[100%]">
+                        <>
+                            {/* <div className="documentimgstyle overflow-hidden w-[100%]"> */}
                             {panImage.url !== null || undefined ? (
                                 <Frontcam imageVal={panImage.url} handleRetake={() => handleRetake()} />
                             ) : (
                                 <>
-                                    <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
-                                    Drag and drop copy of PAN Card or you can
-                                    <div className="hidden sm:flex mt-8">
-                                        <Uploadfile handleUpload={(files: any, fileData: any) => handleImageUpload(files, fileData)} />
-                                        <ButtonGlobal className="documentbtn" onClick={() => setCameraStatus(true)}>
-                                            <>
-                                                <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
-                                            </>
-                                        </ButtonGlobal>
+                                    <div className="documentimgstyle overflow-hidden w-[100%]">
+                                        <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
+                                        Drag and drop copy of PAN Card or you can
+                                        <div className="flex  mt-8">
+                                            <Uploadfile type="pan" handleUpload={(files: any, fileData: any) => handleImageUpload(files, fileData)} />
+                                            <ButtonGlobal className="documentbtn" onClick={() => setCameraStatus(true)}>
+                                                <>
+                                                    <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
+                                                </>
+                                            </ButtonGlobal>
+                                        </div>
                                     </div>
                                 </>
                             )}
-                        </div>
+                            {/* </div> */}
+                        </>
                     )
                 ) : (
                     <Browse copyType="Pan Copy" />
                 )}
             </div>
-            <div>
+            <div className="mt-2">
                 <Labelglobal className="block text-black text-sm font-bold mb-2">Shop Type</Labelglobal>
-                <select name="shopType" value={formValues.shopType} onChange={handleChange} id="cars" className="px-0.5 py-3 border-2 border-gray-800 w-full rounded-md bg-white border-gray">
+                <select name="shopType" value={formValues.shopType} onChange={handleChange} id="cars" className="px-0.5 py-[9px] border-2 border-gray-800 w-full rounded-md bg-white border-gray">
                     {shopTypes?.length > 0 &&
                         shopTypes?.map((shop: any, idx: number) => (
                             <option value={shop.value} key={`${idx}_${shop.value}`}>
@@ -132,7 +119,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                         ))}
                 </select>
             </div>
-            <div>
+            <div className="mt-2">
                 <Labelglobal className="block text-black text-sm font-bold mb-2">Shop Name</Labelglobal>
                 <InputGlobal className="busin_drpdwn_input" name="shopName" value={formValues.shopName} onChange={handleChange} id="shopName" type="text" placeholder="" />
                 {/* {errors.shopName && touched.shopName ? <div className="text-red">{errors.shopName}</div> : null} */}

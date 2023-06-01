@@ -46,7 +46,7 @@
 }
 
 .documentbtn {
-    @apply text-white text-xs bottom-1.5 bg-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-fit flex mr-2 justify-center items-center;
+    @apply text-white text-xs bottom-1.5 bg-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center;
 }
 
 .videoKyc {
@@ -54,7 +54,7 @@
 }
 
 .vidoKyCambtn {
-    @apply text-white text-xs bg-sky hover:bg-black focus:ring-4 focus:outline-none focus:ring-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-fit flex justify-center items-center right-2.5 absolute;
+    @apply text-white text-xs bg-sky hover:bg-black focus:ring-4 focus:outline-none focus:ring-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-fit flex justify-center items-center;
 }
 
 .side {
@@ -128,7 +128,7 @@ li::before {
 }
 
 .busin_drpdwn_input {
-    @apply block w-full border-2 border-gray rounded py-2 px-3 mb-3 leading-tight focus:outline-none;
+    @apply block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight focus:outline-none;
 }
 
 /* Business */

@@ -116,7 +116,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                         />
                     ) : (
                         <>
-                            <div className="flex flex-col jalaj">
+                            <div className="flex flex-col mr-3">
                                 <Webcam
                                     audio={false}
                                     mirrored={true}

@@ -21,7 +21,7 @@ export const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }: Globa
                     .filter((role: any) => role.isVisible)
                     ?.map((role: any, idx: number) => (
                         <div className="flex mb-5" key={`${idx}_${role.id}`}>
-                            <div className="mr-5 border-slate-200 border-2 p-4 rounded-full">
+                            <div className="mr-5 border-2 border-slate-200  p-4 rounded-full">
                                 <img src={role.id === 1 ? userMerchant : role.id === 2 ? userDistributor : userEnterprise}></img>
                             </div>
                             <div className="flex flex-col mr-5 w-full justify-center">

@@ -15,8 +15,10 @@ const Frontcam = ({ handleRetake, imageVal }: FrontcamProps) => {
     console.log('imagesVal inside', imageVal);
 
     return (
-        <div className="flex flex-col max-w-[60%]">
-            <img src={imageVal || image} alt="screenshot" className="rounded-[10px] max-w-xs max-h-32" />
+        <div className="flex flex-col w-[50%] md:w-[100%] lg:w-[50%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
+            <div className="w-full justify-center flex h-[190px]">
+                <img src={imageVal || image} alt="screenshot" className="rounded-[10px] w-full" />
+            </div>
             <span className="flex flex-col justify-end items-end mt-3 ">
                 <ButtonGlobal onClick={handleRetake} className="cam_btn">
                     <>

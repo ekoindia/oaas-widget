@@ -88,7 +88,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                         >
                             Location Capture
                         </ButtonGlobal>
-                        <div className="grid grid-cols-2 gap-4 w-full	">
+                        <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full	">
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Full Name(as per your panCard)</Labelglobal>
                                 <InputGlobal className="busin_drpdwn_input mb-0" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
@@ -219,7 +219,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                 </select>
                             </div> */}
                         </div>
-                        <ButtonGlobal className="welcome_btn" disabled={isDisabledCTA} type="submit">
+                        <ButtonGlobal className="welcome_btn" disabled={isDisabledCTA}>
                             {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                         </ButtonGlobal>
                     </Form>

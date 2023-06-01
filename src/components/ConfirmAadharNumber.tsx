@@ -19,7 +19,7 @@ const ConfirmAadharNumber = ({ stepData, handleSubmit, isDisabledCTA }: GlobalSt
             <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
             <div className="mt-10 relative"></div>
             <span className={`flex flex-col items-center sm:block`}>
-                <div className="mb-7 w-[45%]">
+                <div className="mb-7 w-[80%] xl:w-[45%]">
                     <Labelglobal className="block text-black text-sm font-bold mb-2">Aadhar card Number</Labelglobal>
                     <InputGlobal
                         className="busin_drpdwn_input"

@@ -40,11 +40,11 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                 }}
             >
                 {({ errors, touched, values, handleChange }) => (
-                    <Form className="bg-white mt-4 ml-6 w-full mr-2">
+                    <Form className="bg-white mt-4 sm:ml-2 xl:ml-6 w-full mr-2">
                         <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
                         <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
                         <div className="mt-10 relative"></div>
-                        <span className={`flex flex-col items-center sm:block`}>
+                        <span className={`flex flex-col sm:block`}>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Secret PIN</Labelglobal>
                                 <InputGlobal

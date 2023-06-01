@@ -43,42 +43,6 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
     console.log('state types in business', stateTypes);
     return (
         <>
-            {/* <div className="dropdown relative mt-2">
-                <ButtonGlobal className="busin_drpdwn_btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
-                    <>
-                        -- Select --
-                        <svg
-                            aria-hidden="true"
-                            focusable="false"
-                            data-prefix="fas"
-                            data-icon="caret-down"
-                            className="w-3 text-extrdarkgray"
-                            role="img"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 320 512"
-                        >
-                            <path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
-                        </svg>
-                    </>
-                </ButtonGlobal>
-                <ul className="busin_drpdwn_ul" aria-labelledby="dropdownMenuButton1">
-                    <li>
-                        <a className="busin_drpdwn_li_a" href="#">
-                            Action
-                        </a>
-                    </li>
-                    <li>
-                        <a className="busin_drpdwn_li_a" href="#">
-                            Another action
-                        </a>
-                    </li>
-                    <li>
-                        <a className="busin_drpdwn_li_a" href="#">
-                            Something else here
-                        </a>
-                    </li>
-                </ul>
-            </div> */}
             <Formik
                 initialValues={formValues}
                 validationSchema={SignupSchema}
@@ -88,16 +52,16 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                 }}
             >
                 {({ errors, touched, values, handleChange }) => (
-                    <Form className="bg-white mt-4 ml-6 w-full mr-2">
+                    <Form className="bg-white mt-4 min-[640px]:ml-6 w-full min-[640px]:mr-3 xl:mr-6 sm:mr-0 sm:ml-0">
                         <div className="mt-8 text-black text-lg mb-4 font-bold">Business Type</div>
-                        <div className="grid grid-cols-2 gap-4 w-full	">
+                        <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full">
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Company/Firm's name</Labelglobal>
                                 <InputGlobal className="busin_drpdwn_input" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
                                 {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Aleternate mobile number(optional)</Labelglobal>
+                                <Labelglobal className="block text-black text-sm font-bold mb-2">Alternate mobile number(optional)</Labelglobal>
                                 <InputGlobal
                                     className="busin_drpdwn_input"
                                     name="alternate_mobile"
@@ -114,7 +78,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     name="company_type"
                                     value={values.company_type}
                                     onChange={handleChange('company_type')}
-                                    className="px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray"
+                                    className="px-0.5 py-[7px] border-2 border-gray-800 w-full rounded-md bg-white border-gray"
                                 >
                                     {companyTypeData.map((company, idx) => {
                                         return (
@@ -208,7 +172,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     name="current_address_state"
                                     value={values.current_address_state}
                                     onChange={handleChange('current_address_state')}
-                                    className="px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray"
+                                    className="px-0.5 py-[7px] border-2 border-gray-800 w-full rounded-md bg-white border-gray"
                                 >
                                     {stateTypes.map((state, idx) => {
                                         return (
@@ -220,7 +184,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                 </select>
                             </div>
                         </div>
-                        <ButtonGlobal className="welcome_btn" disabled={isDisabledCTA} type="submit">
+                        <ButtonGlobal className="welcome_btn" disabled={isDisabledCTA}>
                             {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                         </ButtonGlobal>
                     </Form>

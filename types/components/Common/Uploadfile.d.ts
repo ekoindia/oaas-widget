@@ -1,5 +1,6 @@
 type UploadFileProps = {
-    handleUpload: (files: any, fileData: any) => void;
+    type: any;
+    handleUpload: (files: any, type: any, fileData: any) => void;
 };
-declare const Uploadfile: ({ handleUpload }: UploadFileProps) => JSX.Element;
+declare const Uploadfile: ({ type, handleUpload }: UploadFileProps) => JSX.Element;
 export default Uploadfile;

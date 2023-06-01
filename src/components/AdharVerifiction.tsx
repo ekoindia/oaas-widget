@@ -54,7 +54,7 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
     };
 
     const handleImageUpload = (files: any, type: string, fileData: any) => {
-        console.log('files', files);
+        console.log('files me hu', files, type, fileData);
         setAadharImages({
             ...aadharImages,
             [type]: { url: files, fileData: fileData }
@@ -69,60 +69,82 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
         setCameraStatus(true);
     };
     return (
-        <div className="pt-8 sm:p-8">
+        <div className="pt-8 sm:p-8 w-full">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
                 {description}
-                <span className="text-sky">.jpg, .png, .pdf</span>
+                <span className="text-sky"> .jpg, .png, .pdf</span>
             </div>
             <div className="mt-10 relative">
                 {uploadedImage == 0 ? (
                     // <div></div>
-                    <div className="hidden sm:flex flex-col text-center lg:flex-row ">
-                        {cameraStatus === true && cameraType === 'front' && aadharImages?.front?.url == null ? (
-                            <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadharImages} />
-                        ) : (
-                            <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4 sm:w-[100%] md:w-[80%] sm:mb-8 w-72 ">
-                                {aadharImages?.front?.url !== null || undefined ? (
-                                    <Frontcam imageVal={aadharImages?.front?.url} handleRetake={() => handleRetake('front')} />
-                                ) : (
-                                    <>
-                                        <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
-                                        <div className="text-sm">Drag and drop front copy of Aadhaar or you can</div>
-                                        <div className="flex mt-4">
-                                            <Uploadfile handleUpload={(files: any, fileData: any) => handleImageUpload(files, 'front', fileData)} />
-                                            <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('front'), setImage(null))}>
-                                                <>
-                                                    <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
-                                                </>
-                                            </ButtonGlobal>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        )}
-                        {cameraStatus === true && cameraType === 'back' && aadharImages?.back?.url == null ? (
-                            <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadharImages} />
-                        ) : (
-                            <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4  sm:w-[100%] md:w-[80%] ">
-                                {aadharImages?.back?.url !== null || undefined ? (
-                                    <Backcam imageVal={aadharImages?.back?.url} handleRetake={() => handleRetake('back')} />
-                                ) : (
-                                    <>
-                                        <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
-                                        <div className="text-sm">Drag and drop back copy of Aadhaar or you can</div>
-                                        <div className="flex mt-4">
-                                            <Uploadfile handleUpload={(files: any, fileData: any) => handleImageUpload(files, 'back', fileData)} />
-                                            <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('back'))}>
-                                                <>
-                                                    <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
-                                                </>
-                                            </ButtonGlobal>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        )}
+                    <div className="sm:flex flex-col text-center lg:flex-row max-[640px]:flex  max-[640px]:items-center ">
+                        <div className="sm:flex flex-col text-center lg:flex-row w-[90%]">
+                            {cameraStatus === true && cameraType === 'front' && aadharImages?.front?.url == null ? (
+                                <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadharImages} />
+                            ) : (
+                                <>
+                                    {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4 sm:w-[100%] md:w-[80%] sm:mb-8 w-72 "> */}
+                                    {aadharImages?.front?.url !== null || undefined ? (
+                                        <Frontcam imageVal={aadharImages?.front?.url} handleRetake={() => handleRetake('front')} />
+                                    ) : (
+                                        <>
+                                            <div className="documentimgstyle xl:w-[50%] lg:w-[50%] md:w-[100%]  h-[190px] mr-4 sm:w-[100%] max-[640px]:mb-8 sm:mb-8 max-[640px]:mr-0  ">
+                                                <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
+                                                <div className="text-sm">Drag and drop front copy of Aadhaar or you can</div>
+                                                <div className="flex mt-4 ml-1.5">
+                                                    <Uploadfile
+                                                        type="front"
+                                                        handleUpload={(files: any, type: any, fileData: any) => {
+                                                            console.log('11');
+                                                            handleImageUpload(files, type, fileData);
+                                                        }}
+                                                    />
+                                                    <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('front'), setImage(null))}>
+                                                        <>
+                                                            <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
+                                                        </>
+                                                    </ButtonGlobal>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    {/* </div> */}
+                                </>
+                            )}
+                            {cameraStatus === true && cameraType === 'back' && aadharImages?.back?.url == null ? (
+                                <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadharImages} />
+                            ) : (
+                                <>
+                                    {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4  sm:w-[100%] md:w-[80%] "> */}
+                                    {aadharImages?.back?.url !== null || undefined ? (
+                                        <Backcam imageVal={aadharImages?.back?.url} handleRetake={() => handleRetake('back')} />
+                                    ) : (
+                                        <>
+                                            <div className="documentimgstyle xl:w-[50%] lg:w-[50%] md:w-[100%] h-[190px] mr-4 max-[640px]:mr-0  sm:w-[100%] ">
+                                                <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
+                                                <div className="text-sm">Drag and drop back copy of Aadhaar or you can</div>
+                                                <div className="flex mt-4 ml-1.5">
+                                                    <Uploadfile
+                                                        type="back"
+                                                        handleUpload={(files: any, type: any, fileData: any) => {
+                                                            console.log('22');
+                                                            handleImageUpload(files, type, fileData);
+                                                        }}
+                                                    />
+                                                    <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('back'))}>
+                                                        <>
+                                                            <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
+                                                        </>
+                                                    </ButtonGlobal>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    {/* </div> */}
+                                </>
+                            )}
+                        </div>
                     </div>
                 ) : (
                     <Browse copyType="Aadhaar copy" />

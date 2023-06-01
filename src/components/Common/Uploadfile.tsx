@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useStore } from '../../store/zustand';
 import imageicon from '../../assets/icons/imageicon.svg';
 type UploadFileProps = {
-    handleUpload: (files: any, fileData: any) => void;
+    type: any;
+    handleUpload: (files: any, type: any, fileData: any) => void;
 };
-const Uploadfile = ({ handleUpload }: UploadFileProps) => {
+const Uploadfile = ({ type, handleUpload }: UploadFileProps) => {
     // useEffect(() => {
     //     if (!selectedFile) {
     //         setPreview(undefined);
@@ -25,12 +26,12 @@ const Uploadfile = ({ handleUpload }: UploadFileProps) => {
         }
         console.log('Inside handleUpload => ', typeof e.target.files[0], e.target.files);
         const objectUrl = URL.createObjectURL(e.target.files[0]);
-        handleUpload(objectUrl, e.target.files[0]);
+        handleUpload(objectUrl, type, e.target.files[0]);
         // setManageVeriyStep();
     };
     return (
-        <label htmlFor={'upload-button'} className="documentbtn flex w-[4.2rem]">
-            <input type="file" onChange={onSelectFile} name="done" id="upload-button" style={{ display: 'none' }} />
+        <label htmlFor={type} className="documentbtn flex">
+            <input type="file" onChange={onSelectFile} name={type} id={type} style={{ display: 'none' }} />
             <img src={imageicon} className="w-[18px] h-[18px] mr-2" />
             Browse
         </label>
