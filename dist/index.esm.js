@@ -1699,6 +1699,7 @@ const InputGlobal = (_a) => {
         }
         else {
             e.preventDefault();
+            onChange(e);
         }
     };
     return (React.createElement("input", Object.assign({ type: type, id: id, className: className, onChange: handleChange, placeholder: placeholder, value: value }, props, { max: max, name: name, maxLength: maxLength, minLength: minLength })));
@@ -8705,7 +8706,6 @@ const SignupSchema$1 = create$3().shape({
     current_address_line2: create$6().required('Required').min(3, 'Minimum 3 characters are required'),
     current_address_pincode: create$6().required('Required').min(6, 'Must be exactly 6 digits').max(6, 'Must be exactly 6 digits'),
     current_address_district: create$6().required('Required').min(3, 'Minimum 3 characters are allowed')
-    // state: Yup.string().required('Required')
 });
 const companyTypeData$1 = [
     { label: 'Private Ltd', value: 1 },
@@ -8714,10 +8714,7 @@ const companyTypeData$1 = [
     { label: 'Sole Proprietorship', value: 4 }
 ];
 const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [] }) => {
-    useStore();
     const [formValues, setFormValues] = useState({
-        // shopType: 'shop1',
-        // shopName: '',
         name: '',
         alternate_mobile: '',
         company_type: 1,
@@ -8729,17 +8726,6 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
         current_address_district: '',
         current_address_state: ''
     });
-    console.log('state types in business', stateTypes);
-    const handleOnChange = (fieldName, event) => {
-        console.log('inside change', fieldName, event.target.value);
-        if (fieldName === 'current_address_pincode') {
-            let inputValue = event.target.value;
-            if (inputValue > 6) {
-                inputValue = inputValue.slice(0, 6); // Truncate input value to 6 digits
-            }
-            // formik.setFieldValue(fieldName, inputValue);
-        }
-    };
     return (React.createElement(React.Fragment, null,
         React.createElement(Formik, { initialValues: formValues, validationSchema: SignupSchema$1, onSubmit: (formData) => {
                 handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: formData, stepStatus: 3 }));
@@ -8749,7 +8735,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
             React.createElement("div", { className: "xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full" },
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Company/Firm's name"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "name", value: values.name, onChange: (event) => handleOnChange('name', event), id: "username", type: "text", placeholder: "" }),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "name", value: values.name, onChange: handleChange('name'), id: "username", type: "text", placeholder: "" }),
                     errors.name && touched.name ? React.createElement("div", { className: "text-red" }, errors.name) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Alternate mobile number(optional)"),
@@ -8777,12 +8763,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                     errors.current_address_line2 && touched.current_address_line2 ? React.createElement("div", { className: "text-red" }, errors.current_address_line2) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Pincode"),
-                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_pincode", value: values.current_address_pincode, onChange: handleChange('current_address_pincode'), maxLength: "6", 
-                        // onKeyPress={}
-                        // onInput={(e:any) => {
-                        //     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2);
-                        // }}
-                        id: "username", type: "number", max: "9999999", placeholder: "" }),
+                    React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "current_address_pincode", value: values.current_address_pincode, onChange: handleChange('current_address_pincode'), maxLength: "6", id: "username", type: "number", max: "9999999", placeholder: "" }),
                     errors.current_address_pincode && touched.current_address_pincode ? React.createElement("div", { className: "text-red" }, errors.current_address_pincode) : null),
                 React.createElement("div", null,
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "City"),
@@ -9012,6 +8993,7 @@ const consentText = 'You hereby consent to Eko India Financial Services Private 
 const AadharConsent = ({ stepData, handleSubmit, isDisabledCTA }) => {
     const [consentData, setConsentData] = useState('');
     const { label, description, isSkipable, primaryCTAText } = stepData;
+    console.log('my consent data', consentData);
     const handleAadharConsentClick = () => {
         handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 }));
     };
