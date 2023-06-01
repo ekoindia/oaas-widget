@@ -4,16 +4,17 @@ import InputGlobal from './Common/InputGlobal';
 import Labelglobal from './Common/Labelglobal';
 import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
 import { useStore } from '../store/zustand';
-import { Formik, Form } from 'formik';
+import { Formik, Form, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
 const SignupSchema = Yup.object().shape({
-    // shopName: Yup.string().required('Required'),
-    // name: Yup.string().required('Required'),
+    name: Yup.string().required('Required'),
     authorized_signatory_name: Yup.string().required('Required'),
     contact_person_cell: Yup.string().required('Required'),
-    current_address_pincode: Yup.string().required('Required'),
-    current_address_district: Yup.string().required('Required')
+    current_address_line1: Yup.string().required('Required').min(3, 'Minimum 3 characters are required'),
+    current_address_line2: Yup.string().required('Required').min(3, 'Minimum 3 characters are required'),
+    current_address_pincode: Yup.string().required('Required').min(6, 'Must be exactly 6 digits').max(6, 'Must be exactly 6 digits'),
+    current_address_district: Yup.string().required('Required').min(3, 'Minimum 3 characters are allowed')
     // state: Yup.string().required('Required')
 });
 
@@ -41,6 +42,18 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
         current_address_state: ''
     });
     console.log('state types in business', stateTypes);
+    const handleOnChange = (fieldName: string, event: any) => {
+        console.log('inside change', fieldName, event.target.value);
+        if (fieldName === 'current_address_pincode') {
+            let inputValue = event.target.value;
+            if (inputValue > 6) {
+                inputValue = inputValue.slice(0, 6); // Truncate input value to 6 digits
+            }
+            // formik.setFieldValue(fieldName, inputValue);
+        } else {
+            // formik.setFieldValue(fieldName, event.target.value);
+        }
+    };
     return (
         <>
             <Formik
@@ -57,7 +70,15 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                         <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full">
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Company/Firm's name</Labelglobal>
-                                <InputGlobal className="busin_drpdwn_input" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
+                                <InputGlobal
+                                    className="busin_drpdwn_input"
+                                    name="name"
+                                    value={values.name}
+                                    onChange={(event: any) => handleOnChange('name', event)}
+                                    id="username"
+                                    type="text"
+                                    placeholder=""
+                                />
                                 {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
                             </div>
                             <div>
@@ -68,7 +89,8 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     value={values.alternate_mobile}
                                     onChange={handleChange('alternate_mobile')}
                                     id="username"
-                                    type="text"
+                                    maxLength="10"
+                                    type="tel"
                                     placeholder=""
                                 />
                             </div>
@@ -110,7 +132,8 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     value={values.contact_person_cell}
                                     onChange={handleChange('contact_person_cell')}
                                     id="username"
-                                    type="text"
+                                    maxLength="10"
+                                    type="tel"
                                     placeholder=""
                                 />
                                 {errors.contact_person_cell && touched.contact_person_cell ? <div className="text-red">{errors.contact_person_cell}</div> : null}
@@ -126,6 +149,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     type="text"
                                     placeholder=""
                                 />
+                                {errors.current_address_line1 && touched.current_address_line1 ? <div className="text-red">{errors.current_address_line1}</div> : null}
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Registered Business address(Line2)</Labelglobal>
@@ -138,6 +162,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     type="text"
                                     placeholder=""
                                 />
+                                {errors.current_address_line2 && touched.current_address_line2 ? <div className="text-red">{errors.current_address_line2}</div> : null}
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Pincode</Labelglobal>
@@ -146,9 +171,14 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     name="current_address_pincode"
                                     value={values.current_address_pincode}
                                     onChange={handleChange('current_address_pincode')}
+                                    maxLength="6"
+                                    // onKeyPress={}
+                                    // onInput={(e:any) => {
+                                    //     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2);
+                                    // }}
                                     id="username"
                                     type="number"
-                                    max="999999"
+                                    max="9999999"
                                     placeholder=""
                                 />
                                 {errors.current_address_pincode && touched.current_address_pincode ? <div className="text-red">{errors.current_address_pincode}</div> : null}
