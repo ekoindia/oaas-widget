@@ -24,6 +24,7 @@ const InputGlobal = ({ type, id, className, placeholder, onChange, value, name, 
             }
         } else {
             e.preventDefault();
+            onChange(e);
         }
     };
     return (

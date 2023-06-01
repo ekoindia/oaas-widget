@@ -8,6 +8,7 @@ const consentText =
 const AadharConsent = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
     const [consentData, setConsentData] = useState('');
     const { label, description, isSkipable, primaryCTAText } = stepData;
+    console.log('my consent data', consentData);
     const handleAadharConsentClick = () => {
         handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
     };

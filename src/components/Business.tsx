@@ -3,8 +3,7 @@ import ButtonGlobal from './Common/ButtonGlobal';
 import InputGlobal from './Common/InputGlobal';
 import Labelglobal from './Common/Labelglobal';
 import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
-import { useStore } from '../store/zustand';
-import { Formik, Form, useFormikContext } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 const SignupSchema = Yup.object().shape({
@@ -15,7 +14,6 @@ const SignupSchema = Yup.object().shape({
     current_address_line2: Yup.string().required('Required').min(3, 'Minimum 3 characters are required'),
     current_address_pincode: Yup.string().required('Required').min(6, 'Must be exactly 6 digits').max(6, 'Must be exactly 6 digits'),
     current_address_district: Yup.string().required('Required').min(3, 'Minimum 3 characters are allowed')
-    // state: Yup.string().required('Required')
 });
 
 const companyTypeData = [
@@ -26,10 +24,7 @@ const companyTypeData = [
 ];
 
 const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [] }: GlobalStepPropsType) => {
-    const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     const [formValues, setFormValues] = useState({
-        // shopType: 'shop1',
-        // shopName: '',
         name: '',
         alternate_mobile: '',
         company_type: 1,
@@ -41,19 +36,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
         current_address_district: '',
         current_address_state: ''
     });
-    console.log('state types in business', stateTypes);
-    const handleOnChange = (fieldName: string, event: any) => {
-        console.log('inside change', fieldName, event.target.value);
-        if (fieldName === 'current_address_pincode') {
-            let inputValue = event.target.value;
-            if (inputValue > 6) {
-                inputValue = inputValue.slice(0, 6); // Truncate input value to 6 digits
-            }
-            // formik.setFieldValue(fieldName, inputValue);
-        } else {
-            // formik.setFieldValue(fieldName, event.target.value);
-        }
-    };
+
     return (
         <>
             <Formik
@@ -70,15 +53,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                         <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full">
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Company/Firm's name</Labelglobal>
-                                <InputGlobal
-                                    className="busin_drpdwn_input"
-                                    name="name"
-                                    value={values.name}
-                                    onChange={(event: any) => handleOnChange('name', event)}
-                                    id="username"
-                                    type="text"
-                                    placeholder=""
-                                />
+                                <InputGlobal className="busin_drpdwn_input" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
                                 {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
                             </div>
                             <div>
@@ -172,10 +147,6 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     value={values.current_address_pincode}
                                     onChange={handleChange('current_address_pincode')}
                                     maxLength="6"
-                                    // onKeyPress={}
-                                    // onInput={(e:any) => {
-                                    //     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2);
-                                    // }}
                                     id="username"
                                     type="number"
                                     max="9999999"
