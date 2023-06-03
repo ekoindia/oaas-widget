@@ -9,6 +9,7 @@ type HomepageProps = {
     selectedMerchantType: string | number;
     stateTypes: Array<any>;
     handleStepCallBack: any;
+    userData: any;
 };
-declare const HomePage: ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack }: HomepageProps) => JSX.Element;
+declare const HomePage: ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData }: HomepageProps) => JSX.Element;
 export default HomePage;

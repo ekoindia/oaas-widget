@@ -16,7 +16,9 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
     const [cameraType, setCameraType] = useState('');
     const { label, description, isSkipable, primaryCTAText } = stepData;
     const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-    const [aadharImages, setAadharImages] = useState({ back: { url: null }, front: { url: null } });
+    const [frontError, setFrontError] = useState(true);
+    const [backError, setBackError] = useState(true);
+    const [aadhaarImages, setAadhaarImages] = useState({ back: { url: null }, front: { url: null } });
     useEffect(() => {
         setCameraStatus(false);
     }, []);
@@ -26,46 +28,62 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
     //         console.log('image', image);
     //         // const objectUrl = URL.createObjectURL(image);
     //         // console.log('objectUrl', objectUrl);
-    //         setAadharImages({
-    //             ...aadharImages,
+    //         setAadhaarImages({
+    //             ...aadhaarImages,
     //             [cameraType]: { url: image }
     //         });
     //     }
     // }, [image]);
 
     const handleImageCapture = (image: any, fileData: any) => {
-        setAadharImages({
-            ...aadharImages,
+        setAadhaarImages({
+            ...aadhaarImages,
             [cameraType]: { url: image, fileData }
         });
+        if (cameraType === 'front') {
+            setFrontError(false);
+        } else {
+            setBackError(false);
+        }
     };
 
     const handleClickAdhar = () => {
         setShowInfoModal(true);
     };
-    console.log('here are the adhar images', aadharImages, cameraStatus, cameraType);
 
     const handleSkip = () => {
         handleSubmit({ ...stepData, stepStatus: 2 });
     };
     const handleOnclick = () => {
-        console.log('uploadedImage', uploadedImage, selectedFile);
-        handleSubmit({ ...stepData, form_data: { aadharImages }, stepStatus: 3 });
+        if (frontError === false && backError === false) {
+            console.log('inside submition', aadhaarImages);
+            handleSubmit({ ...stepData, form_data: { aadhaarImages }, stepStatus: 3 });
+        }
     };
 
     const handleImageUpload = (files: any, type: string, fileData: any) => {
-        console.log('files me hu', files, type, fileData);
-        setAadharImages({
-            ...aadharImages,
+        setAadhaarImages({
+            ...aadhaarImages,
             [type]: { url: files, fileData: fileData }
         });
+        console.log('aadhaarImags are ===> ', aadhaarImages);
+        if (type === 'front') {
+            setFrontError(false);
+        } else {
+            setBackError(false);
+        }
     };
 
     const handleRetake = (type: string) => {
-        setAadharImages({
-            ...aadharImages,
+        setAadhaarImages({
+            ...aadhaarImages,
             [type]: { url: null, fileData: null }
         });
+        if (type === 'front') {
+            setFrontError(true);
+        } else {
+            setBackError(true);
+        }
         setCameraStatus(true);
     };
     return (
@@ -80,23 +98,24 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                     // <div></div>
                     <div className="sm:flex flex-col text-center lg:flex-row max-[640px]:flex  max-[640px]:items-center ">
                         <div className="sm:flex flex-col text-center lg:flex-row w-[90%]">
-                            {cameraStatus === true && cameraType === 'front' && aadharImages?.front?.url == null ? (
-                                <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadharImages} />
+                            {cameraStatus === true && cameraType === 'front' && aadhaarImages?.front?.url == null ? (
+                                <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} />
                             ) : (
                                 <>
                                     {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4 sm:w-[100%] md:w-[80%] sm:mb-8 w-72 "> */}
-                                    {aadharImages?.front?.url !== null || undefined ? (
-                                        <Frontcam imageVal={aadharImages?.front?.url} handleRetake={() => handleRetake('front')} />
+                                    {aadhaarImages?.front?.url !== null || undefined ? (
+                                        <div className="flex flex-col w-[50%] md:w-[100%] lg:w-[50%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
+                                            <Frontcam imageVal={aadhaarImages?.front?.url} handleRetake={() => handleRetake('front')} />
+                                        </div>
                                     ) : (
-                                        <>
-                                            <div className="documentimgstyle xl:w-[50%] lg:w-[50%] md:w-[100%]  h-[190px] mr-4 sm:w-[100%] max-[640px]:mb-8 sm:mb-8 max-[640px]:mr-0  ">
+                                        <div className="flex flex-col xl:w-[50%] lg:w-[50%] lg:mr-4 max-[640px]:mr-0 md:mr-0 max-[640px]:mb-8 sm:mb-8 ">
+                                            <div className="documentimgstyle   md:w-[100%]  h-[190px] sm:w-[100%]   ">
                                                 <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
                                                 <div className="text-sm">Drag and drop front copy of Aadhaar or you can</div>
                                                 <div className="flex mt-4 ml-1.5">
                                                     <Uploadfile
                                                         type="front"
                                                         handleUpload={(files: any, type: any, fileData: any) => {
-                                                            console.log('11');
                                                             handleImageUpload(files, type, fileData);
                                                         }}
                                                     />
@@ -107,28 +126,28 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                        </>
+                                            {frontError === true && <div className="self-start text-red">required</div>}
+                                        </div>
                                     )}
                                     {/* </div> */}
                                 </>
                             )}
-                            {cameraStatus === true && cameraType === 'back' && aadharImages?.back?.url == null ? (
-                                <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadharImages} />
+                            {cameraStatus === true && cameraType === 'back' && aadhaarImages?.back?.url == null ? (
+                                <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} />
                             ) : (
                                 <>
                                     {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4  sm:w-[100%] md:w-[80%] "> */}
-                                    {aadharImages?.back?.url !== null || undefined ? (
-                                        <Backcam imageVal={aadharImages?.back?.url} handleRetake={() => handleRetake('back')} />
+                                    {aadhaarImages?.back?.url !== null || undefined ? (
+                                        <Backcam imageVal={aadhaarImages?.back?.url} handleRetake={() => handleRetake('back')} />
                                     ) : (
-                                        <>
-                                            <div className="documentimgstyle xl:w-[50%] lg:w-[50%] md:w-[100%] h-[190px] mr-4 max-[640px]:mr-0  sm:w-[100%] ">
+                                        <div className="flex flex-col xl:w-[50%] lg:w-[50%] lg:mr-4 max-[640px]:mr-0 md:mr-0 max-[640px]:mb-8 sm:mb-8 ">
+                                            <div className="documentimgstyle   md:w-[100%]  h-[190px] sm:w-[100%]   ">
                                                 <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
                                                 <div className="text-sm">Drag and drop back copy of Aadhaar or you can</div>
                                                 <div className="flex mt-4 ml-1.5">
                                                     <Uploadfile
                                                         type="back"
                                                         handleUpload={(files: any, type: any, fileData: any) => {
-                                                            console.log('22');
                                                             handleImageUpload(files, type, fileData);
                                                         }}
                                                     />
@@ -139,7 +158,8 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                        </>
+                                            {backError === true && <div className="self-start text-red">required</div>}
+                                        </div>
                                     )}
                                     {/* </div> */}
                                 </>

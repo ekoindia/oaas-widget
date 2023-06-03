@@ -65,7 +65,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                     onChange={handleChange('alternate_mobile')}
                                     id="username"
                                     maxLength="10"
-                                    type="tel"
+                                    type="number"
                                     placeholder=""
                                 />
                             </div>

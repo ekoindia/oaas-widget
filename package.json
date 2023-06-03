@@ -1,6 +1,6 @@
 {
     "name": "eko-oaas-package",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "On board as a service",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",

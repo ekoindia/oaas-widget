@@ -106,12 +106,12 @@ li::before {
 
 /* Aadhaar verification */
 
-/* PanAadharMatch */
+/* PanAadhaarMatch */
 
-.panaadhar_thumb {
+.panaadhaar_thumb {
     @apply rounded-[100%] w-[16vw] h-[16vw] sm:w-16 sm:h-16 border-2 flex justify-center items-center;
 }
-/* PanAadharMatch */
+/* PanAadhaarMatch */
 
 /* Business */
 

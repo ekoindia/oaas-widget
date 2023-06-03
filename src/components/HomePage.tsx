@@ -15,9 +15,9 @@ import Fetching from './Common/Fetching';
 import { SelectionScreen } from './SelectionScreen';
 import { StepDataType } from '../utils/data/stepsData';
 import SignAgreement from './SignAgreement';
-import AadharConsent from './AadharConsent';
-import ConfirmAadharNumber from './ConfirmAadharNumber';
-import AadharNumberOtpVerify from './AadharNumberOtpVerify';
+import AadhaarConsent from './AadharConsent';
+import ConfirmAadhaarNumber from './ConfirmAadharNumber';
+import AadhaarNumberOtpVerify from './AadharNumberOtpVerify';
 import BusinessMerchant from './BusinessMerchant';
 import SecretPin from './SecretPin';
 import ActivationPlan from './ActivationPlan';
@@ -31,13 +31,14 @@ type HomepageProps = {
     selectedMerchantType: string | number;
     stateTypes: Array<any>;
     handleStepCallBack: any;
+    userData: any;
 };
 
-const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack }: HomepageProps) => {
+const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData }: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
     const [isDisable, setIsDisable] = useState<boolean>(false);
     const [currentStepData, setCurrentStepData] = useState<any>();
-    console.log('preview => ', preview, ' selected ==> ', selectedFile, 'image => ', image, 'shopTypes => ', shopTypes);
+    console.log('userData is', userData);
     const handleStepSubmit = (data: any) => {
         console.log('data', data, steps);
         if (data.id === 1) {
@@ -65,21 +66,25 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                 case 4:
                     return <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 5:
-                    return <AadharConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 6:
-                    return <ConfirmAadharNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 7:
-                    return <AadharNumberOtpVerify stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <AadhaarNumberOtpVerify stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 8:
                     return <PanVerification stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} />;
                 case 9:
-                    if (selectedMerchantType === 2) {
-                        return <BusinessMerchant stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
-                    } else {
+                    if (userData.details.user_type === 3) {
                         return <Business stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
+                    } else {
+                        return <BusinessMerchant stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
                     }
                 case 10:
-                    return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
+                    if (userData.details.user_type === 3) {
+                        return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
+                    } else {
+                        return;
+                    }
 
                 case 11:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;

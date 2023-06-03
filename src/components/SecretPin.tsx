@@ -7,9 +7,8 @@ import * as Yup from 'yup';
 import Labelglobal from './Common/Labelglobal';
 
 const secretPinValidationSchema = Yup.object().shape({
-    first_okekey: Yup.number().integer().max(9999, 'Must be at most 4 digits').required('Secret PIN is required'),
-    second_okekey: Yup.number()
-        .integer()
+    first_okekey: Yup.string().required('Required').min(4, 'Must be exactly 4 digits').max(4, 'Must be exactly 4 digits'),
+    second_okekey: Yup.string()
         .oneOf([Yup.ref('first_okekey')], 'secret PIN must match')
         .required('required')
 });
@@ -25,7 +24,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
     };
     useEffect(() => {
         console.log('In stepSecretPin');
-        handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
+        // handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
     }, []);
@@ -54,6 +53,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                                     onChange={handleChange('first_okekey')}
                                     id="username"
                                     type="number"
+                                    maxLength="4"
                                     placeholder=""
                                 />
                                 {errors.first_okekey && touched.first_okekey ? <div className="text-red">{errors.first_okekey}</div> : null}
@@ -67,6 +67,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                                     onChange={handleChange('second_okekey')}
                                     id="username"
                                     type="number"
+                                    maxLength="4"
                                     placeholder=""
                                 />
                                 {errors.second_okekey && touched.second_okekey ? <div className="text-red">{errors.second_okekey}</div> : null}
@@ -78,7 +79,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                             </div>
                             <ButtonGlobal
                                 className="bg-sky hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
-                                // onClick={handleAadharConsentClick}
+                                // onClick={handleAadhaarConsentClick}
                                 type="submit"
                                 disabled={isDisabledCTA}
                             >

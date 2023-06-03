@@ -11,6 +11,7 @@ type OASSPackageProps = {
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
     handleStepCallBack?: any;
+    userData: any;
 };
-export declare const Home: ({ defaultStep, handleSubmit, isBranding, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack }: OASSPackageProps) => JSX.Element;
+export declare const Home: ({ defaultStep, handleSubmit, isBranding, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData }: OASSPackageProps) => JSX.Element;
 export {};

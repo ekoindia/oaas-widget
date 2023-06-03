@@ -18,8 +18,19 @@ type OASSPackageProps = {
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
     handleStepCallBack?: any;
+    userData: any;
 };
-export const Home = ({ defaultStep = '12400', handleSubmit, isBranding = true, stepResponse, shopTypes = [], selectedMerchantType, stateTypes = [], handleStepCallBack }: OASSPackageProps) => {
+export const Home = ({
+    defaultStep = '12400',
+    handleSubmit,
+    isBranding = true,
+    stepResponse,
+    shopTypes = [],
+    selectedMerchantType,
+    stateTypes = [],
+    handleStepCallBack,
+    userData
+}: OASSPackageProps) => {
     const { currentStep, setCurrentStepInitial } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
     const handleSidebarToggle = () => {
@@ -50,6 +61,7 @@ export const Home = ({ defaultStep = '12400', handleSubmit, isBranding = true, s
                     stateTypes={stateTypes}
                     selectedMerchantType={selectedMerchantType}
                     handleStepCallBack={handleStepCallBack}
+                    userData={userData}
                 />
                 {/* <SelectionScreen /> */}
             </div>

@@ -3,16 +3,15 @@ import ButtonGlobal from './Common/ButtonGlobal';
 import InputGlobal from './Common/InputGlobal';
 import Labelglobal from './Common/Labelglobal';
 import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
-import { useStore } from '../store/zustand';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 const SignupSchema = Yup.object().shape({
-    name: Yup.string().required('Required'),
-    shop_address_line2: Yup.string().required('Required'),
-    shop_address_pincode: Yup.string().required('Required'),
-    sender_district: Yup.string().required('Required'),
-    sender_state: Yup.string().required('Required')
+    name: Yup.string().required('Required').min(3, 'Minimum 3 characters required'),
+    shop_address_line2: Yup.string().required('Required').min(3, 'Minimum 3 characters required'),
+    shop_address_pincode: Yup.string().required('Required').min(6, 'Minimum 6 digits are required'),
+    sender_district: Yup.string().required('Required').min(3, 'Minimum 3 characters required')
+    // sender_state: Yup.string().required('Required')
 });
 
 const companyTypeData = [
@@ -32,11 +31,10 @@ const addressCheckData = [
 ];
 
 const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [] }: GlobalStepPropsType) => {
-    const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     const [formValues, setFormValues] = useState({
         name: '',
         gender: 49,
-        businessType: '',
+        businessType: 'privateltd',
         shop_address_line2: '',
         shop_landmark: '',
         shop_address_pincode: '',
@@ -45,7 +43,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
         // addressCheck: '',
         latlong: ''
     });
-    console.log('state types in business', stateTypes);
+    const [locationVal, setLocationVal] = useState<string>();
     const handleLocation = () => {
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
@@ -59,10 +57,8 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
         //         accuracy: location.coords.accuracy
         //     }
         // });
-        setFormValues({
-            ...formValues,
-            latlong: `${location.coords.latitude},${location.coords.longitude},${location.coords.accuracy}`
-        });
+        const locationValue = `${location.coords.latitude},${location.coords.longitude},${location.coords.accuracy}`;
+        setLocationVal(locationValue);
     };
     const onError = (error: any) => {
         console.log('Error in GeoLocation=>', error);
@@ -73,8 +69,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                 initialValues={formValues}
                 validationSchema={SignupSchema}
                 onSubmit={(formData) => {
-                    console.log('jalaj Data', formData);
-                    handleSubmit({ ...stepData, form_data: { ...formData }, stepStatus: 3 });
+                    handleSubmit({ ...stepData, form_data: { ...formData, latlong: locationVal }, stepStatus: 3 });
                 }}
             >
                 {({ errors, touched, values, handleChange }) => (
@@ -101,7 +96,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                     value={values.gender}
                                     onChange={handleChange('gender')}
                                     id="cars"
-                                    className="px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray"
+                                    className="px-0.5 py-[8px] border-2 border-gray-800 w-full rounded-md bg-white border-gray"
                                 >
                                     {genderData.map((gender, idx) => {
                                         return (
@@ -119,7 +114,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                     value={values.businessType}
                                     onChange={handleChange('businessType')}
                                     id="cars"
-                                    className="px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray"
+                                    className="px-0.5 py-[8px] border-2 border-gray-800 w-full rounded-md bg-white border-gray"
                                 >
                                     {companyTypeData.map((company, idx) => {
                                         return (
@@ -166,8 +161,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                     id="username"
                                     type="number"
                                     placeholder=""
-                                    maxLength={6}
-                                    minLength={6}
+                                    maxLength="6"
                                 />
                                 {errors.shop_address_pincode && touched.shop_address_pincode ? <div className="text-red">{errors.shop_address_pincode}</div> : null}
                             </div>
@@ -190,7 +184,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                     name="sender_state"
                                     value={values.sender_state}
                                     onChange={handleChange('sender_state')}
-                                    className="px-0.5 py-2.5 border-2 border-gray-800 w-full rounded-md bg-white border-gray"
+                                    className="px-0.5 py-[8px] border-2 border-gray-800 w-full rounded-md bg-white border-gray"
                                 >
                                     {stateTypes.map((state, idx) => {
                                         return (

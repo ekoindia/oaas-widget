@@ -5,12 +5,12 @@ import camera from '../assets/icons/camera.svg';
 import { useStore } from '../store/zustand';
 import ButtonGlobal from './Common/ButtonGlobal';
 import Camera from './Common/Camera';
-import InputGlobal from './Common/InputGlobal';
 import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
 import Frontcam from './Common/Frontcam';
 
 const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepPropsType) => {
-    const { cameraStatus, image, setCameraStatus } = useStore();
+    const { cameraStatus, setCameraStatus } = useStore();
+    const [videoKycError, setVideoKycError] = useState(true);
     const { label, description, isSkipable, primaryCTAText } = stepData;
     const [videoKyc, setVideoKyc] = useState({ url: null, fileData: null });
 
@@ -25,6 +25,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
             url: image,
             fileData
         });
+        setVideoKycError(false);
     };
     const handleRetake = () => {
         setVideoKyc({
@@ -32,9 +33,12 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
             fileData: null
         });
         setCameraStatus(true);
+        setVideoKycError(true);
     };
     const handleOnSubmit = () => {
-        handleSubmit({ ...stepData, form_data: { videoKyc }, stepStatus: 3 });
+        if (!videoKycError) {
+            handleSubmit({ ...stepData, form_data: { videoKyc }, stepStatus: 3 });
+        }
     };
     return (
         <div className="pt-8 sm:p-8 xl:w-4/5 md:w-full">
@@ -45,9 +49,11 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
             ) : (
                 <>
                     {videoKyc.url !== null || undefined ? (
-                        <Frontcam imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
+                        <div className="flex flex-col w-[50%] md:w-[100%] lg:w-[50%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
+                            <Frontcam imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
+                        </div>
                     ) : (
-                        <>
+                        <div>
                             <div className="relative sm:hidden block w-[100%]" onClick={() => setCameraStatus(true)}>
                                 <div className="videokycmobl w-[100%] h-[180px] text-center text-[22px]">
                                     <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
@@ -69,7 +75,8 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                                     </ButtonGlobal>
                                 </div>
                             </div>
-                        </>
+                            {videoKycError === true && <div className="flex justify-center text-red">*required</div>}
+                        </div>
                     )}
                     <span className={`flex flex-col items-center sm:block mt-8`}>
                         <ButtonGlobal
