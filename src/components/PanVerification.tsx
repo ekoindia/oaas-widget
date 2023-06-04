@@ -64,7 +64,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
             fileData: null
         });
         setPanError(true);
-        setCameraStatus(true);
+        setCameraStatus(false);
     };
     // const handleChange = (e: any) => {
     //     console.log('handleChange', e.target.name, e.target.value);
@@ -132,7 +132,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                                                         </ButtonGlobal>
                                                     </div>
                                                 </div>
-                                                {panError === true && <div className="self-start text-red">required</div>}
+                                                {panError === true && <div className="self-start text-red">Required</div>}
                                             </>
                                         )}
                                         {/* </div> */}

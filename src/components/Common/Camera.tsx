@@ -106,7 +106,6 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     {type === 'Pan' || type === 'videoRecord' ? (
                         <Webcam
                             audio={false}
-                            mirrored={true}
                             height={type === 'videoRecord' ? 500 : 500}
                             width={type === 'videoRecord' ? 500 : 500}
                             ref={webcamRef}
@@ -117,16 +116,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     ) : (
                         <>
                             <div className="flex flex-col mr-3">
-                                <Webcam
-                                    audio={false}
-                                    mirrored={true}
-                                    height={340}
-                                    width={340}
-                                    ref={webcamRef}
-                                    screenshotFormat="image/jpeg"
-                                    videoConstraints={videoConstraints}
-                                    className="rounded-[10px]"
-                                />
+                                <Webcam audio={false} height={340} width={340} ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints} className="rounded-[10px]" />
                                 <span className={`flex flex-col items-end mt-3`}>
                                     <ButtonGlobal onClick={capture} className="cam_btn">
                                         <>

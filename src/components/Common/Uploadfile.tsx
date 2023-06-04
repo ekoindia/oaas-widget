@@ -31,7 +31,7 @@ const Uploadfile = ({ type, handleUpload }: UploadFileProps) => {
     };
     return (
         <label htmlFor={type} className="documentbtn flex">
-            <input type="file" onChange={onSelectFile} name={type} id={type} style={{ display: 'none' }} />
+            <input type="file" onChange={onSelectFile} name={type} id={type} style={{ display: 'none' }} accept=".jpg, .jpeg, png" />
             <img src={imageicon} className="w-[18px] h-[18px] mr-2" />
             Browse
         </label>

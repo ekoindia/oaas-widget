@@ -80,11 +80,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                         return <BusinessMerchant stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
                     }
                 case 10:
-                    if (userData.details.user_type === 3) {
-                        return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
-                    } else {
-                        return;
-                    }
+                    return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
 
                 case 11:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
@@ -106,8 +102,10 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
         if (stepResponse) {
             if (stepResponse?.status === 0 || currentStepData?.id === 4) {
                 if (currentStepData) {
-                    const currentStepIndex = steps.map((step: StepDataType) => step?.id)?.indexOf(currentStepData?.id);
-                    setCurrentStepInitial(steps[currentStepIndex + 1]?.id);
+                    if (currentStepData?.id !== 2) {
+                        const currentStepIndex = steps.map((step: StepDataType) => step?.id)?.indexOf(currentStepData?.id);
+                        setCurrentStepInitial(steps[currentStepIndex + 1]?.id);
+                    }
                     setStepsData(currentStepData);
                     setCurrentStepData(null);
                 }
@@ -123,7 +121,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                     <div className="containerboxover relative">
                         <div className="sm:flex sm:justify-between">
                             <span className="hidden sm:block md:block lg:block xl:block">
-                                <Sidebar steps={steps} />
+                                <Sidebar steps={steps} userData={userData} />
                             </span>
                             <div className="flex w-full rounded-2xl sm:ml-8 mb-10 pb-10 sm:bg-white relative">
                                 {renderStep(currentStep)}
@@ -164,7 +162,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
             <span className="sm:hidden block">
                 {sideBarToggle ? (
                     <div className="mbl_sidebar">
-                        <Sidebar steps={steps} />
+                        <Sidebar steps={steps} userData={userData} />
                         <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
                     </div>
                 ) : (

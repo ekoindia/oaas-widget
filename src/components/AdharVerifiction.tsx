@@ -11,7 +11,7 @@ import Modal from './Common/Modal';
 import Frontcam from './Common/Frontcam';
 import Backcam from './Common/Backcam';
 
-const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
+const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
     const { cameraStatus, uploadedImage, setCameraStatus, image, selectedFile, setImage, preview } = useStore();
     const [cameraType, setCameraType] = useState('');
     const { label, description, isSkipable, primaryCTAText } = stepData;
@@ -48,7 +48,9 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
     };
 
     const handleClickAdhar = () => {
-        setShowInfoModal(true);
+        if (!frontError && !backError) {
+            setShowInfoModal(true);
+        }
     };
 
     const handleSkip = () => {
@@ -84,14 +86,14 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
         } else {
             setBackError(true);
         }
-        setCameraStatus(true);
+        setCameraStatus(false);
     };
     return (
         <div className="pt-8 sm:p-8 w-full">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
                 {description}
-                <span className="text-sky"> .jpg, .png, .pdf</span>
+                <span className="text-sky"> .jpg, .png</span>
             </div>
             <div className="mt-10 relative">
                 {uploadedImage == 0 ? (
@@ -121,12 +123,12 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                                                     />
                                                     <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('front'), setImage(null))}>
                                                         <>
-                                                            <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
+                                                            <img src={filledcamera} className="h-[4vh] mr-2" /> Open Camera
                                                         </>
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                            {frontError === true && <div className="self-start text-red">required</div>}
+                                            {frontError === true && <div className="self-start text-red">Required</div>}
                                         </div>
                                     )}
                                     {/* </div> */}
@@ -153,12 +155,12 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                                                     />
                                                     <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('back'))}>
                                                         <>
-                                                            <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
+                                                            <img src={filledcamera} className="h-[4vh] mr-2" /> Open Camera
                                                         </>
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                            {backError === true && <div className="self-start text-red">required</div>}
+                                            {backError === true && <div className="self-start text-red">Required</div>}
                                         </div>
                                     )}
                                     {/* </div> */}
@@ -176,8 +178,9 @@ const AdharVerifiction = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                     onClick={handleClickAdhar}
                     // setCapturelocationData={handleLocationCapture}
                     // getLocation={true}
+                    disabled={isDisabledCTA || frontError || backError}
                 >
-                    {primaryCTAText}
+                    {isDisabledCTA ? 'Please wait ...' : primaryCTAText}
                 </ButtonGlobal>
 
                 {isSkipable && (

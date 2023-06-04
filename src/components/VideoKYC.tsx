@@ -75,14 +75,14 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                                     </ButtonGlobal>
                                 </div>
                             </div>
-                            {videoKycError === true && <div className="flex justify-center text-red">*required</div>}
+                            {videoKycError === true && <div className="flex justify-center text-red">Required</div>}
                         </div>
                     )}
                     <span className={`flex flex-col items-center sm:block mt-8`}>
                         <ButtonGlobal
                             className="bg-sky hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
                             onClick={handleOnSubmit}
-                            disabled={isDisabledCTA}
+                            disabled={isDisabledCTA || videoKycError}
                             // setCapturelocationData={handleLocationCapture}
                             // getLocation={true}
                         >

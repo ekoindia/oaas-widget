@@ -10,7 +10,7 @@ const secretPinValidationSchema = Yup.object().shape({
     first_okekey: Yup.string().required('Required').min(4, 'Must be exactly 4 digits').max(4, 'Must be exactly 4 digits'),
     second_okekey: Yup.string()
         .oneOf([Yup.ref('first_okekey')], 'secret PIN must match')
-        .required('required')
+        .required('Required')
 });
 
 const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
