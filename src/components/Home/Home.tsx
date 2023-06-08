@@ -36,9 +36,14 @@ export const Home = ({
     const handleSidebarToggle = () => {
         setSideBarToggle((prev) => !prev);
     };
-
+    let visibleStepData = stepsData;
+    if (userData?.details?.user_type === 3) {
+        visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
+    } else {
+        visibleStepData = visibleStepData.filter((step) => step.isVisible);
+    }
     useEffect(() => {
-        const initialStep = stepsData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
+        const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
         console.log(':::::InitialStep => ', initialStep);
         setCurrentStepInitial(initialStep ? initialStep?.id : 3);
     }, [defaultStep]);

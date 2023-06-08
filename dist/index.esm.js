@@ -8993,14 +8993,43 @@ const aadhaarNumberVerifySchema = create$3().shape({
     otpVal: create$6().required('(Required) OTP received on Aadhaar linked mobile number through SMS').min(6, '(Minimum 6 digits required)OTP received on Aadhaar linked mobile number through SMS'),
     shareCode: create$6().required('(Required) Please set up your 4-digit share code').min(4, '(Minimum 4 digits required) Please set up your 4-digit share code')
 });
-const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA }) => {
+const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }) => {
     useState('');
     useState('');
+    const [isResend, setIsResend] = useState(false);
+    const [resendTimerCount, setResendTimerCount] = useState(30);
     const formValues = { otpVal: '', shareCode: '' };
     const { label, description, isSkipable, primaryCTAText } = stepData;
+    const handleResendTimer = () => {
+        let timer = 30;
+        console.log('Inside handleTimer', timer, resendTimerCount);
+        setInterval(() => {
+            console.log('Inside timwer', timer, resendTimerCount);
+            if (timer >= 0) {
+                timer = timer - 1;
+                setResendTimerCount(timer);
+            }
+            if (timer === 0) {
+                console.log('Inside timer complete', timer, resendTimerCount);
+                setIsResend(true);
+            }
+        }, 1000);
+        // if (timerOut !== null) {
+        //     timerOut;
+        // }
+    };
     const handleSkip = () => {
         handleSubmit(Object.assign(Object.assign({}, stepData), { stepStatus: 2 }));
     };
+    useEffect(() => {
+        if (resendTimerCount === 30) {
+            console.log('Inside detectTimer', resendTimerCount);
+            handleResendTimer();
+        }
+        // return () => {
+        //     clearTimeout(timerOut);
+        // };
+    }, []);
     return (React.createElement("div", { className: "pt-8 sm:p-8" },
         React.createElement("div", { className: "text-[22px] font-[500] sm:font-[400]" }, label),
         React.createElement("div", { className: "mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]" }, description),
@@ -9012,7 +9041,18 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA }) => {
                 React.createElement("div", { className: "mb-7 w-[65%]" },
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "OTP"),
                     React.createElement(InputGlobal, { className: "busin_drpdwn_input", maxLength: "6", name: "otpVal", value: values.otpVal, onChange: handleChange('otpVal'), id: "otp", type: "number", placeholder: "" }),
-                    errors.otpVal && touched.otpVal ? React.createElement("div", { className: "text-red" }, errors.otpVal) : null),
+                    errors.otpVal && touched.otpVal ? React.createElement("div", { className: "text-red" }, errors.otpVal) : null,
+                    !isResend ? (React.createElement("small", null,
+                        "Resend OTP in ",
+                        resendTimerCount,
+                        " sec")) : (React.createElement(React.Fragment, null,
+                        React.createElement("small", null, "Did not receive yet?"),
+                        React.createElement("p", { style: { color: 'rgb(31 90 167 / var(--tw-bg-opacity))', cursor: 'pointer' }, onClick: () => {
+                                setResendTimerCount(30);
+                                setIsResend(false);
+                                handleResendTimer();
+                                handleStepCallBack({ type: stepData.id, method: 'resendOtp' });
+                            } }, "Resend OTP")))),
                 React.createElement("div", { className: "mb-7 w-[65%]" },
                     React.createElement(Labelglobal, { className: "block text-black text-sm font-bold mb-2" }, "Share Code"),
                     React.createElement(InputGlobal, { className: "busin_drpdwn_input", name: "shareCode", value: values.shareCode, onChange: handleChange('shareCode'), maxLength: "4", id: "shareCode", type: "number", placeholder: "" }),
@@ -9132,14 +9172,14 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
     };
     useEffect(() => {
         console.log('In stepSecretPin');
-        // handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
+        handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
     }, []);
     return (React.createElement("div", { className: "pt-8 sm:p-8" },
         React.createElement(Formik, { initialValues: formValues, validationSchema: secretPinValidationSchema, onSubmit: (formData) => {
+                console.log('SecretPin FormData', formData);
                 handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: formData, stepStatus: 3 }));
-                console.log(formData);
             } }, ({ errors, touched, values, handleChange }) => (React.createElement(Form, { className: "bg-white mt-4 sm:ml-2 xl:ml-6 w-full mr-2" },
             React.createElement("div", { className: "text-[22px] font-[500] sm:font-[400]" }, label),
             React.createElement("div", { className: "mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]" }, description),
@@ -9224,11 +9264,11 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                 case 6:
                     return React.createElement(ConfirmAadhaarNumber, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
                 case 7:
-                    return React.createElement(AadhaarNumberOtpVerify, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable });
+                    return React.createElement(AadhaarNumberOtpVerify, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, handleStepCallBack: handleStepCallBack });
                 case 8:
                     return React.createElement(PanVerification, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes });
                 case 9:
-                    if (userData.details.user_type === 3) {
+                    if (userData.details.user_type === 1) {
                         return React.createElement(Business, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes, stateTypes: stateTypes });
                     }
                     else {
@@ -9291,13 +9331,21 @@ var css_248z = "/*\n! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com
 styleInject(css_248z);
 
 const Home = ({ defaultStep = '12400', handleSubmit, isBranding = true, stepResponse, shopTypes = [], selectedMerchantType, stateTypes = [], handleStepCallBack, userData }) => {
+    var _a;
     const { currentStep, setCurrentStepInitial } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState(false);
     const handleSidebarToggle = () => {
         setSideBarToggle((prev) => !prev);
     };
+    let visibleStepData = stepsData;
+    if (((_a = userData === null || userData === void 0 ? void 0 : userData.details) === null || _a === void 0 ? void 0 : _a.user_type) === 3) {
+        visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
+    }
+    else {
+        visibleStepData = visibleStepData.filter((step) => step.isVisible);
+    }
     useEffect(() => {
-        const initialStep = stepsData === null || stepsData === void 0 ? void 0 : stepsData.find((step) => step.role && (defaultStep === null || defaultStep === void 0 ? void 0 : defaultStep.includes(`${step.role}`)));
+        const initialStep = visibleStepData === null || visibleStepData === void 0 ? void 0 : visibleStepData.find((step) => step.role && (defaultStep === null || defaultStep === void 0 ? void 0 : defaultStep.includes(`${step.role}`)));
         console.log(':::::InitialStep => ', initialStep);
         setCurrentStepInitial(initialStep ? initialStep === null || initialStep === void 0 ? void 0 : initialStep.id : 3);
     }, [defaultStep]);

@@ -11,17 +11,45 @@ const aadhaarNumberVerifySchema = Yup.object().shape({
     shareCode: Yup.string().required('(Required) Please set up your 4-digit share code').min(4, '(Minimum 4 digits required) Please set up your 4-digit share code')
 });
 
-const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
+const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
     const [otpVal, setOtpVal] = useState('');
     const [shareCode, setShareCode] = useState('');
+    const [isResend, setIsResend] = useState(false);
+    const [resendTimerCount, setResendTimerCount] = useState(30);
     const formValues = { otpVal: '', shareCode: '' };
     const { label, description, isSkipable, primaryCTAText } = stepData;
-    const handleOtpAadhaarClick = () => {
-        handleSubmit({ ...stepData, form_data: { otp: otpVal, is_consent: 'Y', share_code: shareCode }, stepStatus: 3 });
+    let timerOut: any = null;
+    const handleResendTimer = () => {
+        let timer = 30;
+        console.log('Inside handleTimer', timer, resendTimerCount);
+        setInterval(() => {
+            console.log('Inside timwer', timer, resendTimerCount);
+            if (timer >= 0) {
+                timer = timer - 1;
+                setResendTimerCount(timer);
+            }
+            if (timer === 0) {
+                console.log('Inside timer complete', timer, resendTimerCount);
+                setIsResend(true);
+            }
+        }, 1000);
+        // if (timerOut !== null) {
+        //     timerOut;
+        // }
     };
     const handleSkip = () => {
         handleSubmit({ ...stepData, stepStatus: 2 });
     };
+    useEffect(() => {
+        if (resendTimerCount === 30) {
+            console.log('Inside detectTimer', resendTimerCount);
+
+            handleResendTimer();
+        }
+        // return () => {
+        //     clearTimeout(timerOut);
+        // };
+    }, []);
     return (
         <div className="pt-8 sm:p-8">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
@@ -41,6 +69,24 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA }: Globa
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">OTP</Labelglobal>
                                 <InputGlobal className="busin_drpdwn_input" maxLength="6" name="otpVal" value={values.otpVal} onChange={handleChange('otpVal')} id="otp" type="number" placeholder="" />
                                 {errors.otpVal && touched.otpVal ? <div className="text-red">{errors.otpVal}</div> : null}
+                                {!isResend ? (
+                                    <small>Resend OTP in {resendTimerCount} sec</small>
+                                ) : (
+                                    <>
+                                        <small>Did not receive yet?</small>
+                                        <p
+                                            style={{ color: 'rgb(31 90 167 / var(--tw-bg-opacity))', cursor: 'pointer' }}
+                                            onClick={() => {
+                                                setResendTimerCount(30);
+                                                setIsResend(false);
+                                                handleResendTimer();
+                                                handleStepCallBack({ type: stepData.id, method: 'resendOtp' });
+                                            }}
+                                        >
+                                            Resend OTP
+                                        </p>
+                                    </>
+                                )}
                             </div>
                             <div className="mb-7 w-[65%]">
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Share Code</Labelglobal>
