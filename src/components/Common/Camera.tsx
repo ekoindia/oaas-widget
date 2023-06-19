@@ -24,7 +24,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
     const videoConstraints = {
         width: { min: 1280 },
         height: { min: 720 },
-        aspectRatio: 0.6666666667,
+        aspectRatio: 3,
         facingMode: 'user'
     };
 
@@ -112,11 +112,23 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                             screenshotFormat="image/jpeg"
                             videoConstraints={videoConstraints}
                             className="rounded-[10px]"
+                            imageSmoothing={true}
+                            mirrored={false}
                         />
                     ) : (
                         <>
                             <div className="flex flex-col mr-3">
-                                <Webcam audio={false} height={340} width={340} ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints} className="rounded-[10px]" />
+                                <Webcam
+                                    audio={false}
+                                    height={500}
+                                    width={500}
+                                    ref={webcamRef}
+                                    screenshotFormat="image/jpeg"
+                                    videoConstraints={videoConstraints}
+                                    imageSmoothing={true}
+                                    mirrored={false}
+                                    className="rounded-[10px]"
+                                />
                                 <span className={`flex flex-col items-end mt-3`}>
                                     <ButtonGlobal onClick={capture} className="cam_btn">
                                         <>

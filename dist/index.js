@@ -964,7 +964,7 @@ const Sidebar = ({ steps, userData }) => {
     const { currentStep, completed, setCurrentStepInput } = useStore();
     console.log('currentStep => ', currentStep);
     let visibleStepData = steps;
-    if (((_a = userData === null || userData === void 0 ? void 0 : userData.details) === null || _a === void 0 ? void 0 : _a.user_type) === 3) {
+    if (((_a = userData === null || userData === void 0 ? void 0 : userData.userDetails) === null || _a === void 0 ? void 0 : _a.user_type) === 3) {
         visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
     }
     else {
@@ -1517,7 +1517,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
     const videoConstraints = {
         width: { min: 1280 },
         height: { min: 720 },
-        aspectRatio: 0.6666666667,
+        aspectRatio: 3,
         facingMode: 'user'
     };
     const webcamRef = React.useRef(null);
@@ -1574,9 +1574,9 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
     console.log('imagesVal', imagesVal, (_a = imagesVal === null || imagesVal === void 0 ? void 0 : imagesVal.front) === null || _a === void 0 ? void 0 : _a.url, (_b = imagesVal === null || imagesVal === void 0 ? void 0 : imagesVal.back) === null || _b === void 0 ? void 0 : _b.url);
     return (React.createElement("span", null,
         React.createElement(React.Fragment, null,
-            React.createElement("span", { className: `${type === 'Pan' || type === 'videoRecord' ? 'flex justify-end' : 'flex'}` }, type === 'Pan' || type === 'videoRecord' ? (React.createElement(Webcam, { audio: false, height: type === 'videoRecord' ? 500 : 500, width: type === 'videoRecord' ? 500 : 500, ref: webcamRef, screenshotFormat: "image/jpeg", videoConstraints: videoConstraints, className: "rounded-[10px]" })) : (React.createElement(React.Fragment, null,
+            React.createElement("span", { className: `${type === 'Pan' || type === 'videoRecord' ? 'flex justify-end' : 'flex'}` }, type === 'Pan' || type === 'videoRecord' ? (React.createElement(Webcam, { audio: false, height: type === 'videoRecord' ? 500 : 500, width: type === 'videoRecord' ? 500 : 500, ref: webcamRef, screenshotFormat: "image/jpeg", videoConstraints: videoConstraints, className: "rounded-[10px]", imageSmoothing: true, mirrored: false })) : (React.createElement(React.Fragment, null,
                 React.createElement("div", { className: "flex flex-col mr-3" },
-                    React.createElement(Webcam, { audio: false, height: 340, width: 340, ref: webcamRef, screenshotFormat: "image/jpeg", videoConstraints: videoConstraints, className: "rounded-[10px]" }),
+                    React.createElement(Webcam, { audio: false, height: 500, width: 500, ref: webcamRef, screenshotFormat: "image/jpeg", videoConstraints: videoConstraints, imageSmoothing: true, mirrored: false, className: "rounded-[10px]" }),
                     React.createElement("span", { className: `flex flex-col items-end mt-3` },
                         React.createElement(ButtonGlobal, { onClick: capture, className: "cam_btn" },
                             React.createElement(React.Fragment, null,
@@ -9270,7 +9270,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                 case 8:
                     return React.createElement(PanVerification, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes });
                 case 9:
-                    if (userData.details.user_type === 1) {
+                    if (userData.userDetails.user_type === 1) {
                         return React.createElement(Business, { stepData: stepData, handleSubmit: handleStepSubmit, isDisabledCTA: isDisable, shopTypes: shopTypes, stateTypes: stateTypes });
                     }
                     else {
@@ -9340,7 +9340,7 @@ const Home = ({ defaultStep = '12400', handleSubmit, isBranding = true, stepResp
         setSideBarToggle((prev) => !prev);
     };
     let visibleStepData = stepsData;
-    if (((_a = userData === null || userData === void 0 ? void 0 : userData.details) === null || _a === void 0 ? void 0 : _a.user_type) === 3) {
+    if (((_a = userData === null || userData === void 0 ? void 0 : userData.userDetails) === null || _a === void 0 ? void 0 : _a.user_type) === 3) {
         visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
     }
     else {

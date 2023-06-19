@@ -12,7 +12,7 @@ const Sidebar = ({ steps, userData }: StepperProps) => {
     const { currentStep, completed, setCurrentStepInput } = useStore();
     console.log('currentStep => ', currentStep);
     let visibleStepData = steps;
-    if (userData?.details?.user_type === 3) {
+    if (userData?.userDetails?.user_type === 3) {
         visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
     } else {
         visibleStepData = visibleStepData.filter((step) => step.isVisible);
