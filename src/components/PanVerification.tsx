@@ -73,7 +73,6 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
     //         [e.target.name]: e.target.value
     //     });
     // };
-    console.log('current value ===>  ', formValues);
     return (
         <div className="pt-8 sm:p-8 xl:w-[55%] lg:w-[70%]">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>

@@ -9,15 +9,15 @@ import filledcamera from '../../assets/icons/filledcamera.svg';
 type FrontcamProps = {
     handleRetake: (input: string) => void;
     imageVal: any;
+    type?: string;
 };
-const Frontcam = ({ handleRetake, imageVal }: FrontcamProps) => {
-    const { image, setImage, setCameraType } = useStore();
-    console.log('imagesVal inside', imageVal);
+const Frontcam = ({ handleRetake, imageVal, type }: FrontcamProps) => {
+    const { image } = useStore();
 
     return (
         <>
-            <div className="w-full justify-center flex h-[190px]">
-                <img src={imageVal || image} alt="screenshot" className="rounded-[10px] w-full" />
+            <div className={`w-full justify-center flex ${type === 'videoKyc' ? '' : 'h-[190px]'}`}>
+                <img src={imageVal || image} alt="screenshot" className="rounded-[10px] w-full" id="previewImage" />
             </div>
             <span className="flex flex-col justify-end items-end mt-3 ">
                 <ButtonGlobal onClick={handleRetake} className="cam_btn">

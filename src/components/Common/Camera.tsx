@@ -22,8 +22,8 @@ type CameraProps = {
 const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, imagesVal, handleImageCapture, cameraType }: CameraProps) => {
     const { image, setImage, setCameraStatus, setManageVeriyStepback } = useStore();
     const videoConstraints = {
-        width: { min: 1280 },
-        height: { min: 720 },
+        width: 1280,
+        height: 720,
         aspectRatio: 3,
         facingMode: 'user'
     };
@@ -34,7 +34,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
         async (e: any) => {
             e.preventDefault();
             const imageSrc = webcamRef?.current?.getScreenshot();
-            console.log('Image src', imageSrc);
+            console.log('Image src test', imageSrc);
             const blob = await fetch(imageSrc).then((res) => res.blob());
             const fileData = new File([blob], `${type}_${cameraType}.${blob.type.split('/')[1]}`, { type: blob.type });
             console.log('Image src Blob', blob, fileData);
@@ -106,8 +106,8 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     {type === 'Pan' || type === 'videoRecord' ? (
                         <Webcam
                             audio={false}
-                            height={type === 'videoRecord' ? 500 : 500}
-                            width={type === 'videoRecord' ? 500 : 500}
+                            height={1280}
+                            width={1280}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
                             videoConstraints={videoConstraints}
@@ -120,8 +120,8 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                             <div className="flex flex-col mr-3">
                                 <Webcam
                                     audio={false}
-                                    height={500}
-                                    width={500}
+                                    // height={500}
+                                    // width={500}
                                     ref={webcamRef}
                                     screenshotFormat="image/jpeg"
                                     videoConstraints={videoConstraints}

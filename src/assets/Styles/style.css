@@ -269,7 +269,7 @@ li::before {
 /* Camera */
 
 .cam_btn {
-    @apply bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[6rem];
+    @apply bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem];
 }
 /* Camera */
 

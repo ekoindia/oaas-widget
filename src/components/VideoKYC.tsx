@@ -4,7 +4,7 @@ import selfie from '../assets/icons/selfie.png';
 import camera from '../assets/icons/camera.svg';
 import { useStore } from '../store/zustand';
 import ButtonGlobal from './Common/ButtonGlobal';
-import Camera from './Common/Camera';
+import Camera from './Common/Camera/Camera';
 import { GlobalStepPropsType } from '../utils/globalInterfaces.ts/stepsInterface';
 import Frontcam from './Common/Frontcam';
 
@@ -49,8 +49,8 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
             ) : (
                 <>
                     {videoKyc.url !== null || undefined ? (
-                        <div className="flex flex-col w-[50%] md:w-[100%] lg:w-[50%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
-                            <Frontcam imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
+                        <div className="flex flex-col w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
+                            <Frontcam type="videoKyc" imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
                         </div>
                     ) : (
                         <div>

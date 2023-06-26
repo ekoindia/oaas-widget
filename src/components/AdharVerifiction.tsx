@@ -68,7 +68,6 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
             ...aadhaarImages,
             [type]: { url: files, fileData: fileData }
         });
-        console.log('aadhaarImags are ===> ', aadhaarImages);
         if (type === 'front') {
             setFrontError(false);
         } else {
