@@ -39,6 +39,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     const [isDisable, setIsDisable] = useState<boolean>(false);
     const [currentStepData, setCurrentStepData] = useState<any>();
     console.log('userData is', userData);
+    console.log('step response', stepResponse);
     const handleStepSubmit = (data: any) => {
         console.log('data', data, steps);
         if (data.id === 1) {
@@ -116,7 +117,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     }, [stepResponse]);
     return (
         <>
-            <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-7 w-full md:px-24`}>
+            <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-3 w-full md:px-24`}>
                 <div className="flex items-center">
                     <div className="containerboxover relative">
                         <div className="sm:flex sm:justify-between">

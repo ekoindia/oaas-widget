@@ -603,247 +603,9 @@ const createImpl = (createState) => {
 };
 const create = (createState) => createState ? createImpl(createState) : createImpl;
 
-/**
- * @value 0 @description default not yet started
- * @value 1 @description started
- * @value 2 @description skipped
- * @value 3 @description completed
- */
-const stepsData = [
-    {
-        id: 1,
-        name: 'Welcome',
-        label: 'Welcome',
-        isSkipable: false,
-        isRequired: false,
-        isVisible: false,
-        stepStatus: 0,
-        primaryCTAText: 'Start Onboarding',
-        description: '',
-        form_data: {}
-    },
-    {
-        id: 2,
-        name: 'RoleCapture',
-        label: 'Tell us who you are?',
-        isSkipable: false,
-        isRequired: false,
-        isVisible: false,
-        stepStatus: 0,
-        primaryCTAText: 'Continue',
-        description: '',
-        form_data: {
-            roles: [
-                {
-                    id: 1,
-                    merchant_type: 1,
-                    applicant_type: 0,
-                    label: "I'm a seller",
-                    description: 'I serve customers from my shop',
-                    icon: '../assets/icons/user_merchant.png',
-                    isVisible: true
-                },
-                {
-                    id: 2,
-                    merchant_type: 3,
-                    applicant_type: 2,
-                    label: "I'm a distributor",
-                    description: 'I have a network of seller and i want to serve them',
-                    icon: '../assets/icons/user_distributor.png',
-                    isVisible: true
-                },
-                {
-                    id: 3,
-                    merchant_type: 2,
-                    applicant_type: 1,
-                    label: "I'm a Enterprise",
-                    description: 'I want to use API and other solution to make my own service',
-                    icon: '../assets/icons/user_enterprise.png',
-                    isVisible: false
-                }
-            ]
-        }
-    },
-    {
-        id: 3,
-        name: 'LocationCapture',
-        label: 'Location Capturing',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 12400,
-        primaryCTAText: 'Start Location Capture',
-        description: '',
-        form_data: {},
-        success_message: 'Location captured successfully.'
-    },
-    {
-        id: 4,
-        name: 'AadhaarVerification',
-        label: 'Aadhaar Verification',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 12400,
-        primaryCTAText: 'Verify Aadhaar',
-        description: 'Upload your Aadhaar Copy front and back to verify yourself. Accepted formats are',
-        form_data: {},
-        success_message: 'Aadhaar uploaded successfully.'
-    },
-    {
-        id: 5,
-        name: 'Aadhaar Consent',
-        label: 'Aadhaar Consent',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 24000,
-        primaryCTAText: 'Verify Consent',
-        description: '',
-        form_data: {},
-        success_message: 'Aadhaar consent taken.'
-    },
-    {
-        id: 6,
-        name: 'Confirm Aadhaar Number',
-        label: 'Confirm Aadhaar Number',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 24000,
-        primaryCTAText: 'Proceed',
-        description: '',
-        form_data: {},
-        success_message: 'Aadhaar number confirmed.'
-    },
-    {
-        id: 7,
-        name: 'ConfirmAadhaarOTP',
-        label: 'Confirm Aadhaar OTP',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 24000,
-        primaryCTAText: 'Confirm',
-        description: '',
-        form_data: {},
-        success_message: 'Aadhaar confirmed successfully.'
-    },
-    {
-        id: 8,
-        name: 'PanVerification',
-        label: 'Pan Verification',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 12300,
-        primaryCTAText: 'Verify PAN',
-        description: 'Upload your PAN copy to verify your business. Accepted formats are',
-        form_data: {},
-        success_message: 'PAN verified successfully.'
-    },
-    {
-        id: 9,
-        name: 'BusinessDetails',
-        label: 'Business Details',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 13300,
-        primaryCTAText: 'Next',
-        description: '',
-        form_data: {}
-    },
-    {
-        id: 10,
-        name: 'SecretPin',
-        label: 'Secret Pin',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 12600,
-        primaryCTAText: 'Next',
-        description: 'Set Your 4-Digit Secret Pin',
-        form_data: {}
-    },
-    {
-        id: 11,
-        name: 'SelfieKYC',
-        label: 'Selfie KYC',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 12500,
-        primaryCTAText: 'Next',
-        description: 'Thanks for completing your personal and address verification. Take a selfie of 5-10 seconds to complete eKYC process.',
-        form_data: {},
-        success_message: 'KYC completed.'
-    },
-    {
-        id: 12,
-        name: 'Sign Agreement',
-        label: 'Sign Agreement',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: true,
-        stepStatus: 0,
-        role: 12800,
-        primaryCTAText: 'Sign Agreement',
-        description: '',
-        form_data: {},
-        success_message: 'Agreement signed successfully.'
-    },
-    {
-        id: 13,
-        name: 'Activation Plans',
-        label: 'Activation Plans',
-        isSkipable: false,
-        isRequired: true,
-        isVisible: false,
-        stepStatus: 0,
-        role: 13400,
-        primaryCTAText: 'Sign Agreement',
-        description: 'Select Plans To See Details',
-        form_data: {},
-        success_message: 'Agreement signed successfully.'
-    },
-    {
-        id: 14,
-        name: 'OnboardingStatus',
-        label: 'Onboarding Status',
-        isSkipable: false,
-        isRequired: false,
-        isVisible: false,
-        stepStatus: 0,
-        primaryCTAText: 'Submit',
-        description: '',
-        form_data: {}
-    },
-    {
-        id: 15,
-        name: 'PANAadhaarMatching',
-        label: 'PAN - Aadhaar Matching',
-        isSkipable: false,
-        isRequired: false,
-        isVisible: false,
-        stepStatus: 0,
-        primaryCTAText: 'Start Matching',
-        description: '',
-        form_data: {}
-    }
-];
-
 const useStore = create((set) => ({
-    steps: stepsData === null || stepsData === void 0 ? void 0 : stepsData.filter((step) => step.isVisible),
+    // steps: stepsData?.filter((step: StepDataType) => step.isVisible),
+    steps: [],
     image: null,
     finish: false,
     completed: false,
@@ -886,7 +648,8 @@ const useStore = create((set) => ({
     setManageVeriyStep: () => set((state) => ({ manageVeriyStep: state.manageVeriyStep + 1 })),
     setManageVeriyStepinital: () => set((state) => ({ manageVeriyStep: state.manageVeriyStep })),
     setManageVeriyStepback: () => set((state) => ({ manageVeriyStep: state.manageVeriyStep - 1 })),
-    setStepsData: (step) => set((state) => ({ steps: state.steps.map((stepItem) => (stepItem.id === step.id ? (stepItem = step) : stepItem)) }))
+    setStepsData: (step) => set((state) => ({ steps: state.steps.map((stepItem) => (stepItem.id === step.id ? (stepItem = step) : stepItem)) })),
+    setInitialStepsData: (stepData) => set(() => ({ steps: stepData }))
 }));
 
 var img$g = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8.612' height='15.692' viewBox='0 0 8.612 15.692'%3e %3cpath id='Path_8529' data-name='Path 8529' d='M413%2c3085.334l6.434%2c6.866L413%2c3099.334' transform='translate(-412.072 -3084.479)' fill='none' stroke='white' stroke-linejoin='round' stroke-width='2.5'/%3e%3c/svg%3e";
@@ -9387,6 +9150,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     const [isDisable, setIsDisable] = useState(false);
     const [currentStepData, setCurrentStepData] = useState();
     console.log('userData is', userData);
+    console.log('step response', stepResponse);
     const handleStepSubmit = (data) => {
         var _a, _b;
         console.log('data', data, steps);
@@ -9466,7 +9230,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
         }
     }, [stepResponse]);
     return (React.createElement(React.Fragment, null,
-        React.createElement("div", { className: `${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-7 w-full md:px-24` },
+        React.createElement("div", { className: `${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-3 w-full md:px-24` },
             React.createElement("div", { className: "flex items-center" },
                 React.createElement("div", { className: "containerboxover relative" },
                     React.createElement("div", { className: "sm:flex sm:justify-between" },
@@ -9484,27 +9248,35 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
             React.createElement("div", { className: "w-[25%]", onClick: () => setSideBarToggle((prev) => !prev) }))) : (''))));
 };
 
-var css_248z = "/*\n! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com\n*//*\n1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)\n2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)\n*/\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n::before,\n::after {\n  --tw-content: '';\n}\n\n/*\n1. Use a consistent sensible line-height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n3. Use a more readable tab size.\n4. Use the user's configured `sans` font-family by default.\n5. Use the user's configured `sans` font-feature-settings by default.\n*/\n\nhtml {\n  line-height: 1.5; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n  -moz-tab-size: 4; /* 3 */\n  -o-tab-size: 4;\n     tab-size: 4; /* 3 */\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 4 */\n  font-feature-settings: normal; /* 5 */\n}\n\n/*\n1. Remove the margin in all browsers.\n2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.\n*/\n\nbody {\n  margin: 0; /* 1 */\n  line-height: inherit; /* 2 */\n}\n\n/*\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n3. Ensure horizontal rules are visible by default.\n*/\n\nhr {\n  height: 0; /* 1 */\n  color: inherit; /* 2 */\n  border-top-width: 1px; /* 3 */\n}\n\n/*\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr:where([title]) {\n  -webkit-text-decoration: underline dotted;\n          text-decoration: underline dotted;\n}\n\n/*\nRemove the default font size and weight for headings.\n*/\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/*\nReset links to optimize for opt-in styling instead of opt-out.\n*/\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/*\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/*\n1. Use the user's configured `mono` font family by default.\n2. Correct the odd `em` font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/*\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n  font-size: 80%;\n}\n\n/*\nPrevent `sub` and `sup` elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/*\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n3. Remove gaps between table borders by default.\n*/\n\ntable {\n  text-indent: 0; /* 1 */\n  border-color: inherit; /* 2 */\n  border-collapse: collapse; /* 3 */\n}\n\n/*\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n3. Remove default padding in all browsers.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  font-weight: inherit; /* 1 */\n  line-height: inherit; /* 1 */\n  color: inherit; /* 1 */\n  margin: 0; /* 2 */\n  padding: 0; /* 3 */\n}\n\n/*\nRemove the inheritance of text transform in Edge and Firefox.\n*/\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Remove default button styles.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n  -webkit-appearance: button; /* 1 */\n  background-color: transparent; /* 2 */\n  background-image: none; /* 2 */\n}\n\n/*\nUse the modern Firefox focus style for all focusable elements.\n*/\n\n:-moz-focusring {\n  outline: auto;\n}\n\n/*\nRemove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)\n*/\n\n:-moz-ui-invalid {\n  box-shadow: none;\n}\n\n/*\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n  vertical-align: baseline;\n}\n\n/*\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/*\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/*\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to `inherit` in Safari.\n*/\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n  display: list-item;\n}\n\n/*\nRemoves the default spacing and border for appropriate elements.\n*/\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nlegend {\n  padding: 0;\n}\n\nol,\nul,\nmenu {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/*\nPrevent resizing textareas horizontally by default.\n*/\n\ntextarea {\n  resize: vertical;\n}\n\n/*\n1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)\n2. Set the default placeholder color to the user's configured gray 400 color.\n*/\n\ninput::-moz-placeholder, textarea::-moz-placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\n/*\nSet the default cursor for buttons.\n*/\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/*\nMake sure disabled buttons don't get the pointer cursor.\n*/\n:disabled {\n  cursor: default;\n}\n\n/*\n1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)\n2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)\n   This can trigger a poorly considered lint error in some tools but is included by design.\n*/\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/*\nConstrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)\n*/\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/* Make elements with the HTML hidden attribute stay hidden by default */\n[hidden] {\n  display: none;\n}\n\n*, ::before, ::after {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n\n::backdrop {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n.container {\n  width: 100%;\n  margin-right: auto;\n  margin-left: auto;\n  padding-right: 1rem;\n  padding-left: 1rem;\n}\n@media (min-width: 640px) {\n\n  .container {\n    max-width: 640px;\n    padding-right: 2rem;\n    padding-left: 2rem;\n  }\n}\n@media (min-width: 768px) {\n\n  .container {\n    max-width: 768px;\n  }\n}\n@media (min-width: 1024px) {\n\n  .container {\n    max-width: 1024px;\n    padding-right: 4rem;\n    padding-left: 4rem;\n  }\n}\n@media (min-width: 1280px) {\n\n  .container {\n    max-width: 1280px;\n    padding-right: 5rem;\n    padding-left: 5rem;\n  }\n}\n@media (min-width: 1536px) {\n\n  .container {\n    max-width: 1536px;\n    padding-right: 6rem;\n    padding-left: 6rem;\n  }\n}\n.fixed {\n  position: fixed;\n}\n.relative {\n  position: relative;\n}\n.inset-0 {\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n.z-40 {\n  z-index: 40;\n}\n.m-3 {\n  margin: 0.75rem;\n}\n.mx-auto {\n  margin-left: auto;\n  margin-right: auto;\n}\n.my-6 {\n  margin-top: 1.5rem;\n  margin-bottom: 1.5rem;\n}\n.mb-0 {\n  margin-bottom: 0px;\n}\n.mb-10 {\n  margin-bottom: 2.5rem;\n}\n.mb-2 {\n  margin-bottom: 0.5rem;\n}\n.mb-3 {\n  margin-bottom: 0.75rem;\n}\n.mb-4 {\n  margin-bottom: 1rem;\n}\n.mb-5 {\n  margin-bottom: 1.25rem;\n}\n.mb-6 {\n  margin-bottom: 1.5rem;\n}\n.mb-7 {\n  margin-bottom: 1.75rem;\n}\n.mb-8 {\n  margin-bottom: 2rem;\n}\n.ml-1 {\n  margin-left: 0.25rem;\n}\n.ml-1\\.5 {\n  margin-left: 0.375rem;\n}\n.ml-2 {\n  margin-left: 0.5rem;\n}\n.ml-3 {\n  margin-left: 0.75rem;\n}\n.ml-4 {\n  margin-left: 1rem;\n}\n.ml-5 {\n  margin-left: 1.25rem;\n}\n.ml-6 {\n  margin-left: 1.5rem;\n}\n.ml-8 {\n  margin-left: 2rem;\n}\n.mr-1 {\n  margin-right: 0.25rem;\n}\n.mr-2 {\n  margin-right: 0.5rem;\n}\n.mr-3 {\n  margin-right: 0.75rem;\n}\n.mr-4 {\n  margin-right: 1rem;\n}\n.mr-5 {\n  margin-right: 1.25rem;\n}\n.mt-1 {\n  margin-top: 0.25rem;\n}\n.mt-10 {\n  margin-top: 2.5rem;\n}\n.mt-2 {\n  margin-top: 0.5rem;\n}\n.mt-20 {\n  margin-top: 5rem;\n}\n.mt-3 {\n  margin-top: 0.75rem;\n}\n.mt-4 {\n  margin-top: 1rem;\n}\n.mt-6 {\n  margin-top: 1.5rem;\n}\n.mt-8 {\n  margin-top: 2rem;\n}\n.block {\n  display: block;\n}\n.flex {\n  display: flex;\n}\n.hidden {\n  display: none;\n}\n.h-12 {\n  height: 3rem;\n}\n.h-28 {\n  height: 7rem;\n}\n.h-4 {\n  height: 1rem;\n}\n.h-6 {\n  height: 1.5rem;\n}\n.h-8 {\n  height: 2rem;\n}\n.h-\\[11px\\] {\n  height: 11px;\n}\n.h-\\[12px\\] {\n  height: 12px;\n}\n.h-\\[16px\\] {\n  height: 16px;\n}\n.h-\\[180px\\] {\n  height: 180px;\n}\n.h-\\[18px\\] {\n  height: 18px;\n}\n.h-\\[190px\\] {\n  height: 190px;\n}\n.h-\\[2\\.3rem\\] {\n  height: 2.3rem;\n}\n.h-\\[2rem\\] {\n  height: 2rem;\n}\n.h-\\[2vh\\] {\n  height: 2vh;\n}\n.h-\\[32px\\] {\n  height: 32px;\n}\n.h-\\[35px\\] {\n  height: 35px;\n}\n.h-\\[3rem\\] {\n  height: 3rem;\n}\n.h-\\[4vh\\] {\n  height: 4vh;\n}\n.max-h-8 {\n  max-height: 2rem;\n}\n.min-h-screen {\n  min-height: 100vh;\n}\n.w-12 {\n  width: 3rem;\n}\n.w-28 {\n  width: 7rem;\n}\n.w-32 {\n  width: 8rem;\n}\n.w-4 {\n  width: 1rem;\n}\n.w-6 {\n  width: 1.5rem;\n}\n.w-72 {\n  width: 18rem;\n}\n.w-8 {\n  width: 2rem;\n}\n.w-\\[100\\%\\] {\n  width: 100%;\n}\n.w-\\[15px\\] {\n  width: 15px;\n}\n.w-\\[16px\\] {\n  width: 16px;\n}\n.w-\\[18px\\] {\n  width: 18px;\n}\n.w-\\[20\\%\\] {\n  width: 20%;\n}\n.w-\\[25\\%\\] {\n  width: 25%;\n}\n.w-\\[2rem\\] {\n  width: 2rem;\n}\n.w-\\[32px\\] {\n  width: 32px;\n}\n.w-\\[35px\\] {\n  width: 35px;\n}\n.w-\\[3rem\\] {\n  width: 3rem;\n}\n.w-\\[40\\%\\] {\n  width: 40%;\n}\n.w-\\[50\\%\\] {\n  width: 50%;\n}\n.w-\\[60\\%\\] {\n  width: 60%;\n}\n.w-\\[65\\%\\] {\n  width: 65%;\n}\n.w-\\[75\\%\\] {\n  width: 75%;\n}\n.w-\\[80\\%\\] {\n  width: 80%;\n}\n.w-\\[90\\%\\] {\n  width: 90%;\n}\n.w-auto {\n  width: auto;\n}\n.w-fit {\n  width: -moz-fit-content;\n  width: fit-content;\n}\n.w-full {\n  width: 100%;\n}\n.min-w-fit {\n  min-width: -moz-fit-content;\n  min-width: fit-content;\n}\n.max-w-3xl {\n  max-width: 48rem;\n}\n.max-w-\\[21rem\\] {\n  max-width: 21rem;\n}\n.max-w-md {\n  max-width: 28rem;\n}\n.flex-col {\n  flex-direction: column;\n}\n.items-end {\n  align-items: flex-end;\n}\n.items-center {\n  align-items: center;\n}\n.justify-start {\n  justify-content: flex-start;\n}\n.justify-end {\n  justify-content: flex-end;\n}\n.justify-center {\n  justify-content: center;\n}\n.justify-between {\n  justify-content: space-between;\n}\n.gap-4 {\n  gap: 1rem;\n}\n.self-start {\n  align-self: flex-start;\n}\n.overflow-hidden {\n  overflow: hidden;\n}\n.rounded {\n  border-radius: 0.25rem;\n}\n.rounded-2xl {\n  border-radius: 1rem;\n}\n.rounded-\\[10px\\] {\n  border-radius: 10px;\n}\n.rounded-full {\n  border-radius: 9999px;\n}\n.rounded-lg {\n  border-radius: 0.5rem;\n}\n.rounded-md {\n  border-radius: 0.375rem;\n}\n.border-2 {\n  border-width: 2px;\n}\n.border-gray {\n  --tw-border-opacity: 1;\n  border-color: rgb(242 242 242 / var(--tw-border-opacity));\n}\n.border-green {\n  --tw-border-opacity: 1;\n  border-color: rgb(0 195 65 / var(--tw-border-opacity));\n}\n.border-red {\n  --tw-border-opacity: 1;\n  border-color: rgb(255 64 64 / var(--tw-border-opacity));\n}\n.bg-black {\n  --tw-bg-opacity: 1;\n  background-color: rgb(12 36 59 / var(--tw-bg-opacity));\n}\n.bg-darkgray {\n  --tw-bg-opacity: 1;\n  background-color: rgb(212 212 212 / var(--tw-bg-opacity));\n}\n.bg-gray {\n  --tw-bg-opacity: 1;\n  background-color: rgb(242 242 242 / var(--tw-bg-opacity));\n}\n.bg-green {\n  --tw-bg-opacity: 1;\n  background-color: rgb(0 195 65 / var(--tw-bg-opacity));\n}\n.bg-orange {\n  --tw-bg-opacity: 1;\n  background-color: rgb(254 159 0 / var(--tw-bg-opacity));\n}\n.bg-red {\n  --tw-bg-opacity: 1;\n  background-color: rgb(255 64 64 / var(--tw-bg-opacity));\n}\n.bg-sky {\n  --tw-bg-opacity: 1;\n  background-color: rgb(31 90 167 / var(--tw-bg-opacity));\n}\n.bg-white {\n  --tw-bg-opacity: 1;\n  background-color: rgb(255 255 255 / var(--tw-bg-opacity));\n}\n.p-2 {\n  padding: 0.5rem;\n}\n.p-3 {\n  padding: 0.75rem;\n}\n.p-4 {\n  padding: 1rem;\n}\n.p-5 {\n  padding: 1.25rem;\n}\n.p-8 {\n  padding: 2rem;\n}\n.px-0 {\n  padding-left: 0px;\n  padding-right: 0px;\n}\n.px-0\\.5 {\n  padding-left: 0.125rem;\n  padding-right: 0.125rem;\n}\n.px-2 {\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n}\n.px-4 {\n  padding-left: 1rem;\n  padding-right: 1rem;\n}\n.px-7 {\n  padding-left: 1.75rem;\n  padding-right: 1.75rem;\n}\n.px-8 {\n  padding-left: 2rem;\n  padding-right: 2rem;\n}\n.py-2 {\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n}\n.py-2\\.5 {\n  padding-top: 0.625rem;\n  padding-bottom: 0.625rem;\n}\n.py-3 {\n  padding-top: 0.75rem;\n  padding-bottom: 0.75rem;\n}\n.py-\\[6px\\] {\n  padding-top: 6px;\n  padding-bottom: 6px;\n}\n.py-\\[7px\\] {\n  padding-top: 7px;\n  padding-bottom: 7px;\n}\n.py-\\[8px\\] {\n  padding-top: 8px;\n  padding-bottom: 8px;\n}\n.py-\\[9px\\] {\n  padding-top: 9px;\n  padding-bottom: 9px;\n}\n.pb-10 {\n  padding-bottom: 2.5rem;\n}\n.pb-2 {\n  padding-bottom: 0.5rem;\n}\n.pb-5 {\n  padding-bottom: 1.25rem;\n}\n.pl-2 {\n  padding-left: 0.5rem;\n}\n.pl-4 {\n  padding-left: 1rem;\n}\n.pl-5 {\n  padding-left: 1.25rem;\n}\n.pr-2 {\n  padding-right: 0.5rem;\n}\n.pr-4 {\n  padding-right: 1rem;\n}\n.pt-0 {\n  padding-top: 0px;\n}\n.pt-2 {\n  padding-top: 0.5rem;\n}\n.pt-7 {\n  padding-top: 1.75rem;\n}\n.pt-8 {\n  padding-top: 2rem;\n}\n.text-center {\n  text-align: center;\n}\n.font-sans {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n}\n.text-\\[15px\\] {\n  font-size: 15px;\n}\n.text-\\[16px\\] {\n  font-size: 16px;\n}\n.text-\\[18px\\] {\n  font-size: 18px;\n}\n.text-\\[22px\\] {\n  font-size: 22px;\n}\n.text-\\[24px\\] {\n  font-size: 24px;\n}\n.text-base {\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\n.text-lg {\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n}\n.text-sm {\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\n.text-xl {\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n}\n.text-xs {\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\n.font-\\[300\\] {\n  font-weight: 300;\n}\n.font-\\[400\\] {\n  font-weight: 400;\n}\n.font-\\[450\\] {\n  font-weight: 450;\n}\n.font-\\[500\\] {\n  font-weight: 500;\n}\n.font-bold {\n  font-weight: 700;\n}\n.font-light {\n  font-weight: 300;\n}\n.font-medium {\n  font-weight: 500;\n}\n.font-semibold {\n  font-weight: 600;\n}\n.text-black {\n  --tw-text-opacity: 1;\n  color: rgb(12 36 59 / var(--tw-text-opacity));\n}\n.text-extrdarkgray {\n  --tw-text-opacity: 1;\n  color: rgb(85 85 85 / var(--tw-text-opacity));\n}\n.text-green {\n  --tw-text-opacity: 1;\n  color: rgb(0 195 65 / var(--tw-text-opacity));\n}\n.text-orange {\n  --tw-text-opacity: 1;\n  color: rgb(254 159 0 / var(--tw-text-opacity));\n}\n.text-red {\n  --tw-text-opacity: 1;\n  color: rgb(255 64 64 / var(--tw-text-opacity));\n}\n.text-sky {\n  --tw-text-opacity: 1;\n  color: rgb(31 90 167 / var(--tw-text-opacity));\n}\n.text-white {\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n}\n.opacity-25 {\n  opacity: 0.25;\n}\n.shadow-2xl {\n  --tw-shadow: 0px 0px 7px -2px #1F5AA7;\n  --tw-shadow-colored: 0px 0px 7px -2px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.shadow-xl {\n  --tw-shadow: 0 20px 25px -20px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 20px 25px -20px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.filter {\n  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);\n}\n.hover\\:bg-black:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(12 36 59 / var(--tw-bg-opacity));\n}\n.hover\\:bg-white:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(255 255 255 / var(--tw-bg-opacity));\n}\n.focus\\:outline-none:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n.focus\\:ring-4:focus {\n  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);\n}\n.focus\\:ring-sky:focus {\n  --tw-ring-opacity: 1;\n  --tw-ring-color: rgb(31 90 167 / var(--tw-ring-opacity));\n}\n@media (max-width: 640px) {\n\n  .max-\\[640px\\]\\:mb-2 {\n    margin-bottom: 0.5rem;\n  }\n\n  .max-\\[640px\\]\\:mb-8 {\n    margin-bottom: 2rem;\n  }\n\n  .max-\\[640px\\]\\:mr-0 {\n    margin-right: 0px;\n  }\n\n  .max-\\[640px\\]\\:flex {\n    display: flex;\n  }\n\n  .max-\\[640px\\]\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .max-\\[640px\\]\\:items-center {\n    align-items: center;\n  }\n}\n@media (max-width: 450px) {\n\n  .max-\\[450px\\]\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n}\n@media (min-width: 640px) {\n\n  .sm\\:mb-2 {\n    margin-bottom: 0.5rem;\n  }\n\n  .sm\\:mb-8 {\n    margin-bottom: 2rem;\n  }\n\n  .sm\\:ml-0 {\n    margin-left: 0px;\n  }\n\n  .sm\\:ml-10 {\n    margin-left: 2.5rem;\n  }\n\n  .sm\\:ml-2 {\n    margin-left: 0.5rem;\n  }\n\n  .sm\\:ml-5 {\n    margin-left: 1.25rem;\n  }\n\n  .sm\\:ml-8 {\n    margin-left: 2rem;\n  }\n\n  .sm\\:mr-0 {\n    margin-right: 0px;\n  }\n\n  .sm\\:mt-0 {\n    margin-top: 0px;\n  }\n\n  .sm\\:mt-4 {\n    margin-top: 1rem;\n  }\n\n  .sm\\:block {\n    display: block;\n  }\n\n  .sm\\:flex {\n    display: flex;\n  }\n\n  .sm\\:hidden {\n    display: none;\n  }\n\n  .sm\\:h-2 {\n    height: 0.5rem;\n  }\n\n  .sm\\:h-2\\.5 {\n    height: 0.625rem;\n  }\n\n  .sm\\:h-7 {\n    height: 1.75rem;\n  }\n\n  .sm\\:w-7 {\n    width: 1.75rem;\n  }\n\n  .sm\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .sm\\:w-fit {\n    width: -moz-fit-content;\n    width: fit-content;\n  }\n\n  .sm\\:w-full {\n    width: 100%;\n  }\n\n  .sm\\:max-w-\\[57rem\\] {\n    max-width: 57rem;\n  }\n\n  .sm\\:flex-col {\n    flex-direction: column;\n  }\n\n  .sm\\:items-center {\n    align-items: center;\n  }\n\n  .sm\\:justify-center {\n    justify-content: center;\n  }\n\n  .sm\\:justify-between {\n    justify-content: space-between;\n  }\n\n  .sm\\:rounded-2xl {\n    border-radius: 1rem;\n  }\n\n  .sm\\:bg-gray {\n    --tw-bg-opacity: 1;\n    background-color: rgb(242 242 242 / var(--tw-bg-opacity));\n  }\n\n  .sm\\:bg-white {\n    --tw-bg-opacity: 1;\n    background-color: rgb(255 255 255 / var(--tw-bg-opacity));\n  }\n\n  .sm\\:p-8 {\n    padding: 2rem;\n  }\n\n  .sm\\:pt-7 {\n    padding-top: 1.75rem;\n  }\n\n  .sm\\:text-\\[14px\\] {\n    font-size: 14px;\n  }\n\n  .sm\\:text-xs {\n    font-size: 0.75rem;\n    line-height: 1rem;\n  }\n\n  .sm\\:font-\\[300\\] {\n    font-weight: 300;\n  }\n\n  .sm\\:font-\\[400\\] {\n    font-weight: 400;\n  }\n\n  .sm\\:font-normal {\n    font-weight: 400;\n  }\n\n  .min-\\[640px\\]\\:ml-6 {\n    margin-left: 1.5rem;\n  }\n\n  .min-\\[640px\\]\\:mr-3 {\n    margin-right: 0.75rem;\n  }\n}\n@media (min-width: 768px) {\n\n  .md\\:mb-2 {\n    margin-bottom: 0.5rem;\n  }\n\n  .md\\:mr-0 {\n    margin-right: 0px;\n  }\n\n  .md\\:mt-0 {\n    margin-top: 0px;\n  }\n\n  .md\\:block {\n    display: block;\n  }\n\n  .md\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .md\\:w-\\[80\\%\\] {\n    width: 80%;\n  }\n\n  .md\\:w-full {\n    width: 100%;\n  }\n\n  .md\\:px-24 {\n    padding-left: 6rem;\n    padding-right: 6rem;\n  }\n}\n@media (min-width: 1024px) {\n\n  .lg\\:mr-4 {\n    margin-right: 1rem;\n  }\n\n  .lg\\:block {\n    display: block;\n  }\n\n  .lg\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .lg\\:w-\\[50\\%\\] {\n    width: 50%;\n  }\n\n  .lg\\:w-\\[70\\%\\] {\n    width: 70%;\n  }\n\n  .lg\\:flex-row {\n    flex-direction: row;\n  }\n}\n@media (min-width: 1280px) {\n\n  .xl\\:ml-6 {\n    margin-left: 1.5rem;\n  }\n\n  .xl\\:ml-9 {\n    margin-left: 2.25rem;\n  }\n\n  .xl\\:mr-6 {\n    margin-right: 1.5rem;\n  }\n\n  .xl\\:block {\n    display: block;\n  }\n\n  .xl\\:grid {\n    display: grid;\n  }\n\n  .xl\\:w-4\\/5 {\n    width: 80%;\n  }\n\n  .xl\\:w-\\[36\\%\\] {\n    width: 36%;\n  }\n\n  .xl\\:w-\\[45\\%\\] {\n    width: 45%;\n  }\n\n  .xl\\:w-\\[50\\%\\] {\n    width: 50%;\n  }\n\n  .xl\\:w-\\[55\\%\\] {\n    width: 55%;\n  }\n\n  .xl\\:w-full {\n    width: 100%;\n  }\n\n  .xl\\:grid-cols-2 {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n\n  .xl\\:flex-row {\n    flex-direction: row;\n  }\n\n  .xl\\:justify-between {\n    justify-content: space-between;\n  }\n\n  .xl\\:rounded-md {\n    border-radius: 0.375rem;\n  }\n\n  .xl\\:border-dashed {\n    border-style: dashed;\n  }\n\n  .xl\\:border-darkgray {\n    --tw-border-opacity: 1;\n    border-color: rgb(212 212 212 / var(--tw-border-opacity));\n  }\n\n  .xl\\:bg-gray {\n    --tw-bg-opacity: 1;\n    background-color: rgb(242 242 242 / var(--tw-bg-opacity));\n  }\n}\n";
+var css_248z = "/*\n! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com\n*//*\n1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)\n2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)\n*/\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n::before,\n::after {\n  --tw-content: '';\n}\n\n/*\n1. Use a consistent sensible line-height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n3. Use a more readable tab size.\n4. Use the user's configured `sans` font-family by default.\n5. Use the user's configured `sans` font-feature-settings by default.\n*/\n\nhtml {\n  line-height: 1.5; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n  -moz-tab-size: 4; /* 3 */\n  -o-tab-size: 4;\n     tab-size: 4; /* 3 */\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 4 */\n  font-feature-settings: normal; /* 5 */\n}\n\n/*\n1. Remove the margin in all browsers.\n2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.\n*/\n\nbody {\n  margin: 0; /* 1 */\n  line-height: inherit; /* 2 */\n}\n\n/*\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n3. Ensure horizontal rules are visible by default.\n*/\n\nhr {\n  height: 0; /* 1 */\n  color: inherit; /* 2 */\n  border-top-width: 1px; /* 3 */\n}\n\n/*\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr:where([title]) {\n  -webkit-text-decoration: underline dotted;\n          text-decoration: underline dotted;\n}\n\n/*\nRemove the default font size and weight for headings.\n*/\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/*\nReset links to optimize for opt-in styling instead of opt-out.\n*/\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/*\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/*\n1. Use the user's configured `mono` font family by default.\n2. Correct the odd `em` font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/*\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n  font-size: 80%;\n}\n\n/*\nPrevent `sub` and `sup` elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/*\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n3. Remove gaps between table borders by default.\n*/\n\ntable {\n  text-indent: 0; /* 1 */\n  border-color: inherit; /* 2 */\n  border-collapse: collapse; /* 3 */\n}\n\n/*\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n3. Remove default padding in all browsers.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  font-weight: inherit; /* 1 */\n  line-height: inherit; /* 1 */\n  color: inherit; /* 1 */\n  margin: 0; /* 2 */\n  padding: 0; /* 3 */\n}\n\n/*\nRemove the inheritance of text transform in Edge and Firefox.\n*/\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Remove default button styles.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n  -webkit-appearance: button; /* 1 */\n  background-color: transparent; /* 2 */\n  background-image: none; /* 2 */\n}\n\n/*\nUse the modern Firefox focus style for all focusable elements.\n*/\n\n:-moz-focusring {\n  outline: auto;\n}\n\n/*\nRemove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)\n*/\n\n:-moz-ui-invalid {\n  box-shadow: none;\n}\n\n/*\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n  vertical-align: baseline;\n}\n\n/*\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/*\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/*\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to `inherit` in Safari.\n*/\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n  display: list-item;\n}\n\n/*\nRemoves the default spacing and border for appropriate elements.\n*/\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nlegend {\n  padding: 0;\n}\n\nol,\nul,\nmenu {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/*\nPrevent resizing textareas horizontally by default.\n*/\n\ntextarea {\n  resize: vertical;\n}\n\n/*\n1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)\n2. Set the default placeholder color to the user's configured gray 400 color.\n*/\n\ninput::-moz-placeholder, textarea::-moz-placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\n/*\nSet the default cursor for buttons.\n*/\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/*\nMake sure disabled buttons don't get the pointer cursor.\n*/\n:disabled {\n  cursor: default;\n}\n\n/*\n1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)\n2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)\n   This can trigger a poorly considered lint error in some tools but is included by design.\n*/\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/*\nConstrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)\n*/\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/* Make elements with the HTML hidden attribute stay hidden by default */\n[hidden] {\n  display: none;\n}\n\n*, ::before, ::after {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n\n::backdrop {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n.container {\n  width: 100%;\n  margin-right: auto;\n  margin-left: auto;\n  padding-right: 1rem;\n  padding-left: 1rem;\n}\n@media (min-width: 640px) {\n\n  .container {\n    max-width: 640px;\n    padding-right: 2rem;\n    padding-left: 2rem;\n  }\n}\n@media (min-width: 768px) {\n\n  .container {\n    max-width: 768px;\n  }\n}\n@media (min-width: 1024px) {\n\n  .container {\n    max-width: 1024px;\n    padding-right: 4rem;\n    padding-left: 4rem;\n  }\n}\n@media (min-width: 1280px) {\n\n  .container {\n    max-width: 1280px;\n    padding-right: 5rem;\n    padding-left: 5rem;\n  }\n}\n@media (min-width: 1536px) {\n\n  .container {\n    max-width: 1536px;\n    padding-right: 6rem;\n    padding-left: 6rem;\n  }\n}\n.fixed {\n  position: fixed;\n}\n.relative {\n  position: relative;\n}\n.inset-0 {\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n.z-40 {\n  z-index: 40;\n}\n.m-3 {\n  margin: 0.75rem;\n}\n.mx-auto {\n  margin-left: auto;\n  margin-right: auto;\n}\n.my-6 {\n  margin-top: 1.5rem;\n  margin-bottom: 1.5rem;\n}\n.mb-0 {\n  margin-bottom: 0px;\n}\n.mb-10 {\n  margin-bottom: 2.5rem;\n}\n.mb-2 {\n  margin-bottom: 0.5rem;\n}\n.mb-3 {\n  margin-bottom: 0.75rem;\n}\n.mb-4 {\n  margin-bottom: 1rem;\n}\n.mb-5 {\n  margin-bottom: 1.25rem;\n}\n.mb-6 {\n  margin-bottom: 1.5rem;\n}\n.mb-7 {\n  margin-bottom: 1.75rem;\n}\n.mb-8 {\n  margin-bottom: 2rem;\n}\n.ml-1 {\n  margin-left: 0.25rem;\n}\n.ml-1\\.5 {\n  margin-left: 0.375rem;\n}\n.ml-2 {\n  margin-left: 0.5rem;\n}\n.ml-3 {\n  margin-left: 0.75rem;\n}\n.ml-4 {\n  margin-left: 1rem;\n}\n.ml-5 {\n  margin-left: 1.25rem;\n}\n.ml-6 {\n  margin-left: 1.5rem;\n}\n.ml-8 {\n  margin-left: 2rem;\n}\n.mr-1 {\n  margin-right: 0.25rem;\n}\n.mr-2 {\n  margin-right: 0.5rem;\n}\n.mr-3 {\n  margin-right: 0.75rem;\n}\n.mr-4 {\n  margin-right: 1rem;\n}\n.mr-5 {\n  margin-right: 1.25rem;\n}\n.mt-1 {\n  margin-top: 0.25rem;\n}\n.mt-10 {\n  margin-top: 2.5rem;\n}\n.mt-2 {\n  margin-top: 0.5rem;\n}\n.mt-20 {\n  margin-top: 5rem;\n}\n.mt-3 {\n  margin-top: 0.75rem;\n}\n.mt-4 {\n  margin-top: 1rem;\n}\n.mt-6 {\n  margin-top: 1.5rem;\n}\n.mt-8 {\n  margin-top: 2rem;\n}\n.block {\n  display: block;\n}\n.flex {\n  display: flex;\n}\n.hidden {\n  display: none;\n}\n.h-12 {\n  height: 3rem;\n}\n.h-28 {\n  height: 7rem;\n}\n.h-4 {\n  height: 1rem;\n}\n.h-6 {\n  height: 1.5rem;\n}\n.h-8 {\n  height: 2rem;\n}\n.h-\\[11px\\] {\n  height: 11px;\n}\n.h-\\[12px\\] {\n  height: 12px;\n}\n.h-\\[16px\\] {\n  height: 16px;\n}\n.h-\\[180px\\] {\n  height: 180px;\n}\n.h-\\[18px\\] {\n  height: 18px;\n}\n.h-\\[190px\\] {\n  height: 190px;\n}\n.h-\\[2\\.3rem\\] {\n  height: 2.3rem;\n}\n.h-\\[2rem\\] {\n  height: 2rem;\n}\n.h-\\[2vh\\] {\n  height: 2vh;\n}\n.h-\\[32px\\] {\n  height: 32px;\n}\n.h-\\[35px\\] {\n  height: 35px;\n}\n.h-\\[3rem\\] {\n  height: 3rem;\n}\n.h-\\[4vh\\] {\n  height: 4vh;\n}\n.max-h-8 {\n  max-height: 2rem;\n}\n.min-h-screen {\n  min-height: 100vh;\n}\n.w-12 {\n  width: 3rem;\n}\n.w-28 {\n  width: 7rem;\n}\n.w-32 {\n  width: 8rem;\n}\n.w-4 {\n  width: 1rem;\n}\n.w-6 {\n  width: 1.5rem;\n}\n.w-72 {\n  width: 18rem;\n}\n.w-8 {\n  width: 2rem;\n}\n.w-\\[100\\%\\] {\n  width: 100%;\n}\n.w-\\[15px\\] {\n  width: 15px;\n}\n.w-\\[16px\\] {\n  width: 16px;\n}\n.w-\\[18px\\] {\n  width: 18px;\n}\n.w-\\[20\\%\\] {\n  width: 20%;\n}\n.w-\\[25\\%\\] {\n  width: 25%;\n}\n.w-\\[2rem\\] {\n  width: 2rem;\n}\n.w-\\[32px\\] {\n  width: 32px;\n}\n.w-\\[35px\\] {\n  width: 35px;\n}\n.w-\\[3rem\\] {\n  width: 3rem;\n}\n.w-\\[40\\%\\] {\n  width: 40%;\n}\n.w-\\[50\\%\\] {\n  width: 50%;\n}\n.w-\\[60\\%\\] {\n  width: 60%;\n}\n.w-\\[65\\%\\] {\n  width: 65%;\n}\n.w-\\[75\\%\\] {\n  width: 75%;\n}\n.w-\\[80\\%\\] {\n  width: 80%;\n}\n.w-\\[90\\%\\] {\n  width: 90%;\n}\n.w-auto {\n  width: auto;\n}\n.w-fit {\n  width: -moz-fit-content;\n  width: fit-content;\n}\n.w-full {\n  width: 100%;\n}\n.min-w-fit {\n  min-width: -moz-fit-content;\n  min-width: fit-content;\n}\n.max-w-3xl {\n  max-width: 48rem;\n}\n.max-w-\\[21rem\\] {\n  max-width: 21rem;\n}\n.max-w-md {\n  max-width: 28rem;\n}\n.flex-col {\n  flex-direction: column;\n}\n.items-end {\n  align-items: flex-end;\n}\n.items-center {\n  align-items: center;\n}\n.justify-start {\n  justify-content: flex-start;\n}\n.justify-end {\n  justify-content: flex-end;\n}\n.justify-center {\n  justify-content: center;\n}\n.justify-between {\n  justify-content: space-between;\n}\n.gap-4 {\n  gap: 1rem;\n}\n.self-start {\n  align-self: flex-start;\n}\n.overflow-hidden {\n  overflow: hidden;\n}\n.rounded {\n  border-radius: 0.25rem;\n}\n.rounded-2xl {\n  border-radius: 1rem;\n}\n.rounded-\\[10px\\] {\n  border-radius: 10px;\n}\n.rounded-full {\n  border-radius: 9999px;\n}\n.rounded-lg {\n  border-radius: 0.5rem;\n}\n.rounded-md {\n  border-radius: 0.375rem;\n}\n.border-2 {\n  border-width: 2px;\n}\n.border-gray {\n  --tw-border-opacity: 1;\n  border-color: rgb(242 242 242 / var(--tw-border-opacity));\n}\n.border-green {\n  --tw-border-opacity: 1;\n  border-color: rgb(0 195 65 / var(--tw-border-opacity));\n}\n.border-red {\n  --tw-border-opacity: 1;\n  border-color: rgb(255 64 64 / var(--tw-border-opacity));\n}\n.bg-black {\n  --tw-bg-opacity: 1;\n  background-color: rgb(12 36 59 / var(--tw-bg-opacity));\n}\n.bg-darkgray {\n  --tw-bg-opacity: 1;\n  background-color: rgb(212 212 212 / var(--tw-bg-opacity));\n}\n.bg-gray {\n  --tw-bg-opacity: 1;\n  background-color: rgb(242 242 242 / var(--tw-bg-opacity));\n}\n.bg-green {\n  --tw-bg-opacity: 1;\n  background-color: rgb(0 195 65 / var(--tw-bg-opacity));\n}\n.bg-orange {\n  --tw-bg-opacity: 1;\n  background-color: rgb(254 159 0 / var(--tw-bg-opacity));\n}\n.bg-red {\n  --tw-bg-opacity: 1;\n  background-color: rgb(255 64 64 / var(--tw-bg-opacity));\n}\n.bg-sky {\n  --tw-bg-opacity: 1;\n  background-color: rgb(31 90 167 / var(--tw-bg-opacity));\n}\n.bg-white {\n  --tw-bg-opacity: 1;\n  background-color: rgb(255 255 255 / var(--tw-bg-opacity));\n}\n.p-2 {\n  padding: 0.5rem;\n}\n.p-3 {\n  padding: 0.75rem;\n}\n.p-4 {\n  padding: 1rem;\n}\n.p-5 {\n  padding: 1.25rem;\n}\n.p-8 {\n  padding: 2rem;\n}\n.px-0 {\n  padding-left: 0px;\n  padding-right: 0px;\n}\n.px-0\\.5 {\n  padding-left: 0.125rem;\n  padding-right: 0.125rem;\n}\n.px-2 {\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n}\n.px-3 {\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n}\n.px-4 {\n  padding-left: 1rem;\n  padding-right: 1rem;\n}\n.px-8 {\n  padding-left: 2rem;\n  padding-right: 2rem;\n}\n.py-2 {\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n}\n.py-2\\.5 {\n  padding-top: 0.625rem;\n  padding-bottom: 0.625rem;\n}\n.py-3 {\n  padding-top: 0.75rem;\n  padding-bottom: 0.75rem;\n}\n.py-\\[6px\\] {\n  padding-top: 6px;\n  padding-bottom: 6px;\n}\n.py-\\[7px\\] {\n  padding-top: 7px;\n  padding-bottom: 7px;\n}\n.py-\\[8px\\] {\n  padding-top: 8px;\n  padding-bottom: 8px;\n}\n.py-\\[9px\\] {\n  padding-top: 9px;\n  padding-bottom: 9px;\n}\n.pb-10 {\n  padding-bottom: 2.5rem;\n}\n.pb-2 {\n  padding-bottom: 0.5rem;\n}\n.pb-5 {\n  padding-bottom: 1.25rem;\n}\n.pl-2 {\n  padding-left: 0.5rem;\n}\n.pl-4 {\n  padding-left: 1rem;\n}\n.pl-5 {\n  padding-left: 1.25rem;\n}\n.pr-2 {\n  padding-right: 0.5rem;\n}\n.pr-4 {\n  padding-right: 1rem;\n}\n.pt-0 {\n  padding-top: 0px;\n}\n.pt-2 {\n  padding-top: 0.5rem;\n}\n.pt-7 {\n  padding-top: 1.75rem;\n}\n.pt-8 {\n  padding-top: 2rem;\n}\n.text-center {\n  text-align: center;\n}\n.font-sans {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n}\n.text-\\[15px\\] {\n  font-size: 15px;\n}\n.text-\\[16px\\] {\n  font-size: 16px;\n}\n.text-\\[18px\\] {\n  font-size: 18px;\n}\n.text-\\[22px\\] {\n  font-size: 22px;\n}\n.text-\\[24px\\] {\n  font-size: 24px;\n}\n.text-base {\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\n.text-lg {\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n}\n.text-sm {\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\n.text-xl {\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n}\n.text-xs {\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\n.font-\\[300\\] {\n  font-weight: 300;\n}\n.font-\\[400\\] {\n  font-weight: 400;\n}\n.font-\\[450\\] {\n  font-weight: 450;\n}\n.font-\\[500\\] {\n  font-weight: 500;\n}\n.font-bold {\n  font-weight: 700;\n}\n.font-light {\n  font-weight: 300;\n}\n.font-medium {\n  font-weight: 500;\n}\n.font-semibold {\n  font-weight: 600;\n}\n.text-black {\n  --tw-text-opacity: 1;\n  color: rgb(12 36 59 / var(--tw-text-opacity));\n}\n.text-extrdarkgray {\n  --tw-text-opacity: 1;\n  color: rgb(85 85 85 / var(--tw-text-opacity));\n}\n.text-green {\n  --tw-text-opacity: 1;\n  color: rgb(0 195 65 / var(--tw-text-opacity));\n}\n.text-orange {\n  --tw-text-opacity: 1;\n  color: rgb(254 159 0 / var(--tw-text-opacity));\n}\n.text-red {\n  --tw-text-opacity: 1;\n  color: rgb(255 64 64 / var(--tw-text-opacity));\n}\n.text-sky {\n  --tw-text-opacity: 1;\n  color: rgb(31 90 167 / var(--tw-text-opacity));\n}\n.text-white {\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n}\n.opacity-25 {\n  opacity: 0.25;\n}\n.shadow-2xl {\n  --tw-shadow: 0px 0px 7px -2px #1F5AA7;\n  --tw-shadow-colored: 0px 0px 7px -2px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.shadow-xl {\n  --tw-shadow: 0 20px 25px -20px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 20px 25px -20px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.filter {\n  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);\n}\n.hover\\:bg-black:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(12 36 59 / var(--tw-bg-opacity));\n}\n.hover\\:bg-white:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(255 255 255 / var(--tw-bg-opacity));\n}\n.focus\\:outline-none:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n.focus\\:ring-4:focus {\n  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);\n}\n.focus\\:ring-sky:focus {\n  --tw-ring-opacity: 1;\n  --tw-ring-color: rgb(31 90 167 / var(--tw-ring-opacity));\n}\n@media (max-width: 640px) {\n\n  .max-\\[640px\\]\\:mb-2 {\n    margin-bottom: 0.5rem;\n  }\n\n  .max-\\[640px\\]\\:mb-8 {\n    margin-bottom: 2rem;\n  }\n\n  .max-\\[640px\\]\\:mr-0 {\n    margin-right: 0px;\n  }\n\n  .max-\\[640px\\]\\:flex {\n    display: flex;\n  }\n\n  .max-\\[640px\\]\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .max-\\[640px\\]\\:items-center {\n    align-items: center;\n  }\n}\n@media (max-width: 450px) {\n\n  .max-\\[450px\\]\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n}\n@media (min-width: 640px) {\n\n  .sm\\:mb-2 {\n    margin-bottom: 0.5rem;\n  }\n\n  .sm\\:mb-8 {\n    margin-bottom: 2rem;\n  }\n\n  .sm\\:ml-0 {\n    margin-left: 0px;\n  }\n\n  .sm\\:ml-10 {\n    margin-left: 2.5rem;\n  }\n\n  .sm\\:ml-2 {\n    margin-left: 0.5rem;\n  }\n\n  .sm\\:ml-5 {\n    margin-left: 1.25rem;\n  }\n\n  .sm\\:ml-8 {\n    margin-left: 2rem;\n  }\n\n  .sm\\:mr-0 {\n    margin-right: 0px;\n  }\n\n  .sm\\:mt-0 {\n    margin-top: 0px;\n  }\n\n  .sm\\:mt-4 {\n    margin-top: 1rem;\n  }\n\n  .sm\\:block {\n    display: block;\n  }\n\n  .sm\\:flex {\n    display: flex;\n  }\n\n  .sm\\:hidden {\n    display: none;\n  }\n\n  .sm\\:h-2 {\n    height: 0.5rem;\n  }\n\n  .sm\\:h-2\\.5 {\n    height: 0.625rem;\n  }\n\n  .sm\\:h-7 {\n    height: 1.75rem;\n  }\n\n  .sm\\:w-7 {\n    width: 1.75rem;\n  }\n\n  .sm\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .sm\\:w-fit {\n    width: -moz-fit-content;\n    width: fit-content;\n  }\n\n  .sm\\:w-full {\n    width: 100%;\n  }\n\n  .sm\\:max-w-\\[57rem\\] {\n    max-width: 57rem;\n  }\n\n  .sm\\:flex-col {\n    flex-direction: column;\n  }\n\n  .sm\\:items-center {\n    align-items: center;\n  }\n\n  .sm\\:justify-center {\n    justify-content: center;\n  }\n\n  .sm\\:justify-between {\n    justify-content: space-between;\n  }\n\n  .sm\\:rounded-2xl {\n    border-radius: 1rem;\n  }\n\n  .sm\\:bg-gray {\n    --tw-bg-opacity: 1;\n    background-color: rgb(242 242 242 / var(--tw-bg-opacity));\n  }\n\n  .sm\\:bg-white {\n    --tw-bg-opacity: 1;\n    background-color: rgb(255 255 255 / var(--tw-bg-opacity));\n  }\n\n  .sm\\:p-8 {\n    padding: 2rem;\n  }\n\n  .sm\\:pt-7 {\n    padding-top: 1.75rem;\n  }\n\n  .sm\\:text-\\[14px\\] {\n    font-size: 14px;\n  }\n\n  .sm\\:text-xs {\n    font-size: 0.75rem;\n    line-height: 1rem;\n  }\n\n  .sm\\:font-\\[300\\] {\n    font-weight: 300;\n  }\n\n  .sm\\:font-\\[400\\] {\n    font-weight: 400;\n  }\n\n  .sm\\:font-normal {\n    font-weight: 400;\n  }\n\n  .min-\\[640px\\]\\:ml-6 {\n    margin-left: 1.5rem;\n  }\n\n  .min-\\[640px\\]\\:mr-3 {\n    margin-right: 0.75rem;\n  }\n}\n@media (min-width: 768px) {\n\n  .md\\:mb-2 {\n    margin-bottom: 0.5rem;\n  }\n\n  .md\\:mr-0 {\n    margin-right: 0px;\n  }\n\n  .md\\:mt-0 {\n    margin-top: 0px;\n  }\n\n  .md\\:block {\n    display: block;\n  }\n\n  .md\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .md\\:w-\\[80\\%\\] {\n    width: 80%;\n  }\n\n  .md\\:w-full {\n    width: 100%;\n  }\n\n  .md\\:px-24 {\n    padding-left: 6rem;\n    padding-right: 6rem;\n  }\n}\n@media (min-width: 1024px) {\n\n  .lg\\:mr-4 {\n    margin-right: 1rem;\n  }\n\n  .lg\\:block {\n    display: block;\n  }\n\n  .lg\\:w-\\[100\\%\\] {\n    width: 100%;\n  }\n\n  .lg\\:w-\\[50\\%\\] {\n    width: 50%;\n  }\n\n  .lg\\:w-\\[70\\%\\] {\n    width: 70%;\n  }\n\n  .lg\\:flex-row {\n    flex-direction: row;\n  }\n}\n@media (min-width: 1280px) {\n\n  .xl\\:ml-6 {\n    margin-left: 1.5rem;\n  }\n\n  .xl\\:ml-9 {\n    margin-left: 2.25rem;\n  }\n\n  .xl\\:mr-6 {\n    margin-right: 1.5rem;\n  }\n\n  .xl\\:block {\n    display: block;\n  }\n\n  .xl\\:grid {\n    display: grid;\n  }\n\n  .xl\\:w-4\\/5 {\n    width: 80%;\n  }\n\n  .xl\\:w-\\[36\\%\\] {\n    width: 36%;\n  }\n\n  .xl\\:w-\\[45\\%\\] {\n    width: 45%;\n  }\n\n  .xl\\:w-\\[50\\%\\] {\n    width: 50%;\n  }\n\n  .xl\\:w-\\[55\\%\\] {\n    width: 55%;\n  }\n\n  .xl\\:w-full {\n    width: 100%;\n  }\n\n  .xl\\:grid-cols-2 {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n\n  .xl\\:flex-row {\n    flex-direction: row;\n  }\n\n  .xl\\:justify-between {\n    justify-content: space-between;\n  }\n\n  .xl\\:rounded-md {\n    border-radius: 0.375rem;\n  }\n\n  .xl\\:border-dashed {\n    border-style: dashed;\n  }\n\n  .xl\\:border-darkgray {\n    --tw-border-opacity: 1;\n    border-color: rgb(212 212 212 / var(--tw-border-opacity));\n  }\n\n  .xl\\:bg-gray {\n    --tw-bg-opacity: 1;\n    background-color: rgb(242 242 242 / var(--tw-bg-opacity));\n  }\n}\n";
 styleInject(css_248z);
 
-const Home = ({ defaultStep = '12400', handleSubmit, isBranding = true, stepResponse, shopTypes = [], selectedMerchantType, stateTypes = [], handleStepCallBack, userData }) => {
+const Home = ({ defaultStep = '12400', handleSubmit, isBranding = true, stepResponse, shopTypes = [], selectedMerchantType, stateTypes = [], handleStepCallBack, userData, stepsData }) => {
     var _a;
-    const { currentStep, setCurrentStepInitial } = useStore();
+    const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState(false);
     const handleSidebarToggle = () => {
         setSideBarToggle((prev) => !prev);
     };
     let visibleStepData = stepsData;
-    if (((_a = userData === null || userData === void 0 ? void 0 : userData.userDetails) === null || _a === void 0 ? void 0 : _a.user_type) === 3) {
-        visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
-    }
-    else {
-        visibleStepData = visibleStepData.filter((step) => step.isVisible);
+    if (visibleStepData) {
+        if (((_a = userData === null || userData === void 0 ? void 0 : userData.userDetails) === null || _a === void 0 ? void 0 : _a.user_type) === 3) {
+            visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
+        }
+        else {
+            visibleStepData = visibleStepData.filter((step) => step.isVisible);
+        }
     }
     useEffect(() => {
-        const initialStep = visibleStepData === null || visibleStepData === void 0 ? void 0 : visibleStepData.find((step) => step.role && (defaultStep === null || defaultStep === void 0 ? void 0 : defaultStep.includes(`${step.role}`)));
-        console.log(':::::InitialStep => ', initialStep);
-        setCurrentStepInitial(initialStep ? initialStep === null || initialStep === void 0 ? void 0 : initialStep.id : 3);
+        setInitialStepsData(stepsData === null || stepsData === void 0 ? void 0 : stepsData.filter((step) => step.isVisible));
+    }, [stepsData]);
+    console.log('desired console is ===> ', stepsData, steps, selectedMerchantType);
+    useEffect(() => {
+        if (visibleStepData) {
+            const initialStep = visibleStepData === null || visibleStepData === void 0 ? void 0 : visibleStepData.find((step) => step.role && (defaultStep === null || defaultStep === void 0 ? void 0 : defaultStep.includes(`${step.role}`)));
+            console.log(':::::InitialStep => ', initialStep);
+            setCurrentStepInitial(initialStep ? initialStep === null || initialStep === void 0 ? void 0 : initialStep.id : 3);
+        }
     }, [defaultStep]);
     return (React.createElement(React.Fragment, null,
         React.createElement("div", { className: `${currentStep === 0 ? 'bg-gray' : 'bg-white'} sm:bg-gray w-full min-h-screen` },

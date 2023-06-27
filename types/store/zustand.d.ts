@@ -44,6 +44,7 @@ type Zustand = {
     setPanVerificationdone: (input: number) => void;
     setPanVerificationfailed: (input: number) => void;
     setStepsData: (input: StepDataType) => void;
+    setInitialStepsData: (input: StepDataType[]) => void;
 };
 export declare const useStore: import("zustand").UseBoundStore<import("zustand").StoreApi<Zustand>>;
 export {};

@@ -5,7 +5,7 @@ import SncdHeadermobile from '../Common/SncdHeadermobile';
 import HomePage from '../HomePage';
 import { useStore } from '../../store/zustand';
 import '../../index.css';
-import { StepDataType, stepsData } from '../../utils/data/stepsData';
+import { StepDataType } from '../../utils/data/stepsData';
 
 type OASSPackageProps = {
     defaultStep: string;
@@ -19,6 +19,7 @@ type OASSPackageProps = {
     stateTypes?: Array<any>;
     handleStepCallBack?: any;
     userData: any;
+    stepsData: Array<StepDataType>;
 };
 export const Home = ({
     defaultStep = '12400',
@@ -29,23 +30,32 @@ export const Home = ({
     selectedMerchantType,
     stateTypes = [],
     handleStepCallBack,
-    userData
+    userData,
+    stepsData
 }: OASSPackageProps) => {
-    const { currentStep, setCurrentStepInitial } = useStore();
+    const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
     const handleSidebarToggle = () => {
         setSideBarToggle((prev) => !prev);
     };
     let visibleStepData = stepsData;
-    if (userData?.userDetails?.user_type === 3) {
-        visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
-    } else {
-        visibleStepData = visibleStepData.filter((step) => step.isVisible);
+    if (visibleStepData) {
+        if (userData?.userDetails?.user_type === 3) {
+            visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
+        } else {
+            visibleStepData = visibleStepData.filter((step) => step.isVisible);
+        }
     }
     useEffect(() => {
-        const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
-        console.log(':::::InitialStep => ', initialStep);
-        setCurrentStepInitial(initialStep ? initialStep?.id : 3);
+        setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
+    }, [stepsData]);
+    console.log('desired console is ===> ', stepsData, steps, selectedMerchantType);
+    useEffect(() => {
+        if (visibleStepData) {
+            const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
+            console.log(':::::InitialStep => ', initialStep);
+            setCurrentStepInitial(initialStep ? initialStep?.id : 3);
+        }
     }, [defaultStep]);
 
     return (

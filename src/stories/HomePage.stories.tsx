@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Home } from '../components/Home';
+import { DistributorStepsData, sellerStepsData } from '../utils/data/stepsData';
 
 const HomeStory = {
     title: 'ReactComponentLibrary/Home'
@@ -10,5 +11,7 @@ export default HomeStory;
 const handleStepDataSubmit = (data: any) => {
     console.log('HandleWlcStepData', data);
 };
-const Template: ComponentStory<typeof Home> = () => <Home userData="1" defaultStep="12500" isBranding={false} handleSubmit={handleStepDataSubmit} selectedMerchantType="1" />;
+const Template: ComponentStory<typeof Home> = () => (
+    <Home stepsData={DistributorStepsData} userData="1" defaultStep="12400" isBranding={false} handleSubmit={handleStepDataSubmit} selectedMerchantType="1" />
+);
 export const homepage = Template.bind({});

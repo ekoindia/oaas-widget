@@ -19,3 +19,5 @@ export type StepDataType = {
  * @value 3 @description completed
  */
 export declare const stepsData: Array<StepDataType>;
+export declare const sellerStepsData: Array<StepDataType>;
+export declare const DistributorStepsData: Array<StepDataType>;

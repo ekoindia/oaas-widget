@@ -46,10 +46,12 @@ type Zustand = {
     setPanVerificationdone: (input: number) => void;
     setPanVerificationfailed: (input: number) => void;
     setStepsData: (input: StepDataType) => void;
+    setInitialStepsData: (input: StepDataType[]) => void;
 };
 
 export const useStore = create<Zustand>((set) => ({
-    steps: stepsData?.filter((step: StepDataType) => step.isVisible),
+    // steps: stepsData?.filter((step: StepDataType) => step.isVisible),
+    steps: [],
     image: null,
     finish: false,
     completed: false,
@@ -92,5 +94,6 @@ export const useStore = create<Zustand>((set) => ({
     setManageVeriyStep: () => set((state) => ({ manageVeriyStep: state.manageVeriyStep + 1 })),
     setManageVeriyStepinital: () => set((state) => ({ manageVeriyStep: state.manageVeriyStep })),
     setManageVeriyStepback: () => set((state) => ({ manageVeriyStep: state.manageVeriyStep - 1 })),
-    setStepsData: (step: StepDataType) => set((state) => ({ steps: state.steps.map((stepItem) => (stepItem.id === step.id ? (stepItem = step) : stepItem)) }))
+    setStepsData: (step: StepDataType) => set((state) => ({ steps: state.steps.map((stepItem) => (stepItem.id === step.id ? (stepItem = step) : stepItem)) })),
+    setInitialStepsData: (stepData: StepDataType[]) => set(() => ({ steps: stepData }))
 }));

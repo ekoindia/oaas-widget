@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-declare const HomeStory: ComponentMeta<({ defaultStep, handleSubmit, isBranding, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData }: {
+declare const HomeStory: ComponentMeta<({ defaultStep, handleSubmit, isBranding, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData, stepsData }: {
     defaultStep: string;
     handleSubmit: (data: any) => void;
     developerKey?: string | undefined;
@@ -11,9 +11,10 @@ declare const HomeStory: ComponentMeta<({ defaultStep, handleSubmit, isBranding,
     stateTypes?: any[] | undefined;
     handleStepCallBack?: any;
     userData: any;
+    stepsData: import("../utils/data/stepsData").StepDataType[];
 }) => JSX.Element>;
 export default HomeStory;
-export declare const homepage: ComponentStory<({ defaultStep, handleSubmit, isBranding, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData }: {
+export declare const homepage: ComponentStory<({ defaultStep, handleSubmit, isBranding, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData, stepsData }: {
     defaultStep: string;
     handleSubmit: (data: any) => void;
     developerKey?: string | undefined;
@@ -25,4 +26,5 @@ export declare const homepage: ComponentStory<({ defaultStep, handleSubmit, isBr
     stateTypes?: any[] | undefined;
     handleStepCallBack?: any;
     userData: any;
+    stepsData: import("../utils/data/stepsData").StepDataType[];
 }) => JSX.Element>;
