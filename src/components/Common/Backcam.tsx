@@ -11,8 +11,6 @@ type BackcamProps = {
     imageVal: any;
 };
 const Backcam = ({ handleRetake, imageVal }: BackcamProps) => {
-    console.log('imagesVal inside back', imageVal);
-
     return (
         <div className="flex flex-col w-[50%] md:w-[100%] lg:w-[50%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] md:mb-2 sm:mb-2  mr-3">
             <div className="w-full justify-center flex h-[190px]">

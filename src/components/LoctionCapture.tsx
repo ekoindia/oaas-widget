@@ -5,7 +5,6 @@ import ButtonGlobal from './Common/ButtonGlobal';
 const LoctionCapture = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
     const onSuccess = (location: any) => {
-        console.log('Location', location);
         handleLocationCapture({
             loaded: true,
             coordinates: {
@@ -22,7 +21,6 @@ const LoctionCapture = ({ stepData, handleSubmit, isDisabledCTA = false }: Globa
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
     const handleLocationCapture = (location: any) => {
-        console.log('loc', location);
         handleSubmit({ ...stepData, form_data: { latlong: `${location?.coordinates?.lat},${location?.coordinates?.lng},${location?.coordinates?.accuracy}` }, stepStatus: 3 });
     };
 

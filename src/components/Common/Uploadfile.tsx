@@ -24,7 +24,6 @@ const Uploadfile = ({ type, handleUpload }: UploadFileProps) => {
             // setSelectedFile(undefined);
             return;
         }
-        console.log('Inside handleUpload => ', typeof e.target.files[0], e.target.files);
         const objectUrl = URL.createObjectURL(e.target.files[0]);
         handleUpload(objectUrl, type, e.target.files[0]);
         // setManageVeriyStep();

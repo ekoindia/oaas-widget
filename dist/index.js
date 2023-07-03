@@ -681,7 +681,6 @@ const UseGeoLocation = () => {
         coordinates: { lat: 'nothing', lng: '' }
     });
     const onSuccess = (location) => {
-        console.log('location', location);
         setLocation({
             loaded: true,
             coordinates: {
@@ -735,7 +734,6 @@ const Sidebar = ({ steps, userData }) => {
     }
     const progressRef = React.useRef(null);
     const currentStepIndex = (_b = visibleStepData === null || visibleStepData === void 0 ? void 0 : visibleStepData.map((step) => step.id)) === null || _b === void 0 ? void 0 : _b.indexOf(currentStep);
-    console.log('currentStepIndex', currentStepIndex, visibleStepData, currentStep);
     React.useEffect(() => {
         let progress = `0%`;
         if (currentStepIndex + 1 > 1) {
@@ -1275,7 +1273,6 @@ var reactWebcam = {
 var Webcam = /*@__PURE__*/getDefaultExportFromCjs(reactWebcamExports);
 
 const Camera$1 = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, imagesVal, handleImageCapture, cameraType }) => {
-    var _a, _b;
     const { image, setImage, setCameraStatus, setManageVeriyStepback } = useStore();
     const videoConstraints = {
         width: 1280,
@@ -1285,13 +1282,11 @@ const Camera$1 = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, s
     };
     const webcamRef = React.useRef(null);
     const capture = React.useCallback((e) => __awaiter(void 0, void 0, void 0, function* () {
-        var _c;
+        var _a;
         e.preventDefault();
-        const imageSrc = (_c = webcamRef === null || webcamRef === void 0 ? void 0 : webcamRef.current) === null || _c === void 0 ? void 0 : _c.getScreenshot();
-        console.log('Image src test', imageSrc);
+        const imageSrc = (_a = webcamRef === null || webcamRef === void 0 ? void 0 : webcamRef.current) === null || _a === void 0 ? void 0 : _a.getScreenshot();
         const blob = yield fetch(imageSrc).then((res) => res.blob());
         const fileData = new File([blob], `${type}_${cameraType}.${blob.type.split('/')[1]}`, { type: blob.type });
-        console.log('Image src Blob', blob, fileData);
         // formData.append('images', blob);
         handleImageCapture(imageSrc, fileData);
         setCameraStatus(false);
@@ -1334,7 +1329,6 @@ const Camera$1 = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, s
             setRecordedChunks === null || setRecordedChunks === void 0 ? void 0 : setRecordedChunks([]);
         }
     }, [recordedChunks]);
-    console.log('imagesVal', imagesVal, (_a = imagesVal === null || imagesVal === void 0 ? void 0 : imagesVal.front) === null || _a === void 0 ? void 0 : _a.url, (_b = imagesVal === null || imagesVal === void 0 ? void 0 : imagesVal.back) === null || _b === void 0 ? void 0 : _b.url);
     return (React.createElement("span", null,
         React.createElement(React.Fragment, null,
             React.createElement("span", { className: `${type === 'Pan' || type === 'videoRecord' ? 'flex justify-end' : 'flex'}` }, type === 'Pan' || type === 'videoRecord' ? (React.createElement(Webcam, { audio: false, height: 1280, width: 1280, ref: webcamRef, screenshotFormat: "image/jpeg", videoConstraints: videoConstraints, className: "rounded-[10px]", imageSmoothing: true, mirrored: false })) : (React.createElement(React.Fragment, null,
@@ -1433,7 +1427,6 @@ const Uploadfile = ({ type, handleUpload }) => {
             // setSelectedFile(undefined);
             return;
         }
-        console.log('Inside handleUpload => ', typeof e.target.files[0], e.target.files);
         const objectUrl = URL.createObjectURL(e.target.files[0]);
         handleUpload(objectUrl, type, e.target.files[0]);
         // setManageVeriyStep();
@@ -8149,9 +8142,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
         });
         setPanError(false);
     };
-    console.log('panImage =>', panImage);
     const handleImageUpload = (files, type, fileData) => {
-        console.log('files', files);
         setPanImage({
             url: files,
             fileData: fileData
@@ -8179,7 +8170,6 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
             description,
             React.createElement("span", { className: "text-sky" }, " .jpg, .png, .pdf")),
         React.createElement(Formik, { initialValues: formValues, validationSchema: panSchema, onSubmit: (formData) => {
-                console.log(formData);
                 if (!panError) {
                     handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: Object.assign({ panImage }, formData), stepStatus: 3 }));
                 }
@@ -8243,7 +8233,6 @@ const Modal = ({ showModal, setShowModal, handleOnclick, attentionmsg }) => {
 };
 
 const Backcam = ({ handleRetake, imageVal }) => {
-    console.log('imagesVal inside back', imageVal);
     return (React.createElement("div", { className: "flex flex-col w-[50%] md:w-[100%] lg:w-[50%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] md:mb-2 sm:mb-2  mr-3" },
         React.createElement("div", { className: "w-full justify-center flex h-[190px]" },
             React.createElement("img", { src: imageVal, alt: "screenshot", className: "rounded-[10px] w-full" })),
@@ -8296,7 +8285,6 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }) => {
     };
     const handleOnclick = () => {
         if (frontError === false && backError === false) {
-            console.log('inside submition', aadhaarImages);
             handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: { aadhaarImages }, stepStatus: 3 }));
         }
     };
@@ -8428,7 +8416,6 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
     return (React.createElement(React.Fragment, null,
         React.createElement(Formik, { initialValues: formValues, validationSchema: SignupSchema$1, onSubmit: (formData) => {
                 handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: formData, stepStatus: 3 }));
-                console.log('this is form data', formData);
             } }, ({ errors, touched, values, handleChange }) => (React.createElement(Form, { className: "bg-white mt-4 min-[640px]:ml-6 w-full min-[640px]:mr-3 xl:mr-6 sm:mr-0 sm:ml-0" },
             React.createElement("div", { className: "mt-8 text-black text-lg mb-4 font-bold" }, "Business Type"),
             React.createElement("div", { className: "xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full" },
@@ -8493,7 +8480,6 @@ const resolutions = [
 ];
 
 const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, imagesVal, handleImageCapture, cameraType }) => {
-    var _a, _b;
     const { setCameraStatus } = useStore();
     /**
      * Camera facing mode: "envoironment" or "user"
@@ -8514,7 +8500,6 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
     const webcamRef = React.useRef(null);
     const [deviceId, setDeviceId] = React.useState();
     const handleDevices = React.useCallback((mediaDevices) => {
-        console.log('mediaDevices', mediaDevices);
         setCamDevices(mediaDevices.filter(({ kind }) => kind === 'videoinput'));
     }, [setCamDevices]);
     const detectFlashSupport = React.useCallback(() => {
@@ -8528,7 +8513,6 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
             imageCapture
                 .getPhotoCapabilities()
                 .then((result) => {
-                console.log('result', result);
                 setHasFlash(result.fillLightMode.includes('flash') ? true : false);
             })
                 .catch(() => {
@@ -8579,13 +8563,11 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
         setFacingMode(facingMode === 'user' ? 'environment' : 'user');
     };
     const capture = React.useCallback((e) => __awaiter(void 0, void 0, void 0, function* () {
-        var _c;
+        var _a;
         e.preventDefault();
-        const imageSrc = (_c = webcamRef === null || webcamRef === void 0 ? void 0 : webcamRef.current) === null || _c === void 0 ? void 0 : _c.getScreenshot();
-        console.log('Image src test', imageSrc);
+        const imageSrc = (_a = webcamRef === null || webcamRef === void 0 ? void 0 : webcamRef.current) === null || _a === void 0 ? void 0 : _a.getScreenshot();
         const blob = yield fetch(imageSrc).then((res) => res.blob());
         const fileData = new File([blob], `${type}_${cameraType}.${blob.type.split('/')[1]}`, { type: blob.type });
-        console.log('Image src Blob', blob, fileData);
         // formData.append('images', blob);
         handleImageCapture(imageSrc, fileData);
         setCameraStatus(false);
@@ -8609,8 +8591,6 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
             initCamera(resolutionIndex);
         }
     }, [webcamRef === null || webcamRef === void 0 ? void 0 : webcamRef.current, facingMode]);
-    console.log('window', window);
-    console.log('imagesVal', imagesVal, (_a = imagesVal === null || imagesVal === void 0 ? void 0 : imagesVal.front) === null || _a === void 0 ? void 0 : _a.url, (_b = imagesVal === null || imagesVal === void 0 ? void 0 : imagesVal.back) === null || _b === void 0 ? void 0 : _b.url);
     return (React.createElement("span", null,
         React.createElement(React.Fragment, null,
             React.createElement("span", { className: `${type === 'Pan' || type === 'videoRecord' ? 'flex justify-end' : 'flex'}` },
@@ -8619,7 +8599,6 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                         // height={500}
                         // width={500}
                         ref: webcamRef, minScreenshotHeight: 500, minScreenshotWidth: 500, screenshotFormat: "image/jpeg", videoConstraints: videoConstraints, imageSmoothing: true, mirrored: false, className: "rounded-[10px]", onUserMediaError: (err) => {
-                            console.log('In media Error', err);
                             initCamera(resolutionIndex > resolutions.length ? 0 : resolutionIndex + 1);
                         } }),
                     React.createElement("div", { className: `flex justify-between mt-3` },
@@ -8730,7 +8709,6 @@ const OnboardingStatus = ({ stepData, handleSubmit }) => {
 const LoctionCapture = ({ stepData, handleSubmit, isDisabledCTA = false }) => {
     const { label, description, primaryCTAText } = stepData;
     const onSuccess = (location) => {
-        console.log('Location', location);
         handleLocationCapture({
             loaded: true,
             coordinates: {
@@ -8748,7 +8726,6 @@ const LoctionCapture = ({ stepData, handleSubmit, isDisabledCTA = false }) => {
     };
     const handleLocationCapture = (location) => {
         var _a, _b, _c;
-        console.log('loc', location);
         handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: { latlong: `${(_a = location === null || location === void 0 ? void 0 : location.coordinates) === null || _a === void 0 ? void 0 : _a.lat},${(_b = location === null || location === void 0 ? void 0 : location.coordinates) === null || _b === void 0 ? void 0 : _b.lng},${(_c = location === null || location === void 0 ? void 0 : location.coordinates) === null || _c === void 0 ? void 0 : _c.accuracy}` }, stepStatus: 3 }));
     };
     const handleSkip = () => {
@@ -8810,9 +8787,7 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }) => {
     var _a, _b;
     const { id, name, label, primaryCTAText, form_data } = stepData;
     const [roleVal, setRoleVal] = React.useState(2);
-    console.log('form selection data', form_data, roleVal);
     const handleChange = (e) => {
-        console.log('change', e.target.value);
         setRoleVal(parseInt(e.target.value));
     };
     return (React.createElement("div", { className: "bg-gray-100 rounded-lg p-8 flex flex-col max-w-md mt-10 md:mt-0", id: `step_${id}_${name}` },
@@ -9092,14 +9067,12 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
         handleSubmit(Object.assign(Object.assign({}, stepData), { stepStatus: 2 }));
     };
     React.useEffect(() => {
-        console.log('In stepSecretPin');
         handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
     }, []);
     return (React.createElement("div", { className: "pt-8 sm:p-8" },
         React.createElement(Formik, { initialValues: formValues, validationSchema: secretPinValidationSchema, onSubmit: (formData) => {
-                console.log('SecretPin FormData', formData);
                 handleSubmit(Object.assign(Object.assign({}, stepData), { form_data: formData, stepStatus: 3 }));
             } }, ({ errors, touched, values, handleChange }) => (React.createElement(Form, { className: "bg-white mt-4 sm:ml-2 xl:ml-6 w-full mr-2" },
             React.createElement("div", { className: "text-[22px] font-[500] sm:font-[400]" }, label),
@@ -9151,11 +9124,8 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
     const [isDisable, setIsDisable] = React.useState(false);
     const [currentStepData, setCurrentStepData] = React.useState();
-    console.log('userData is', userData);
-    console.log('step response', stepResponse);
     const handleStepSubmit = (data) => {
         var _a, _b;
-        console.log('data', data, steps);
         if (data.id === 1) {
             const currentStepIndex = (_a = steps.map((step) => step === null || step === void 0 ? void 0 : step.id)) === null || _a === void 0 ? void 0 : _a.indexOf(data === null || data === void 0 ? void 0 : data.id);
             setCurrentStepInitial((_b = steps[currentStepIndex + 1]) === null || _b === void 0 ? void 0 : _b.id);
@@ -9173,7 +9143,6 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     const renderStep = (currentStep) => {
         var _a;
         const stepData = steps === null || steps === void 0 ? void 0 : steps.find((step) => step.id === currentStep);
-        console.log(stepData, 'currentStep', currentStep, steps);
         if (stepData) {
             switch (currentStep) {
                 case 2:
@@ -9227,7 +9196,6 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                     setCurrentStepData(null);
                 }
             }
-            console.log('stepResponse', steps, currentStepData);
             setIsDisable(false);
         }
     }, [stepResponse]);
@@ -9241,11 +9209,11 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                         React.createElement("div", { className: "flex w-full rounded-2xl sm:ml-8 mb-10 pb-10 sm:bg-white relative" }, renderStep(currentStep))),
                     finish === true ? (React.createElement("span", { className: "hidden sm:block" },
                         React.createElement(Alert, null))) : ('')))),
-        fetchData === true ? (React.createElement("span", { className: "block sm:hidden" },
+        fetchData === true ? (React.createElement("span", { className: "hidden" },
             React.createElement(Fetching, null))) : (''),
-        finish === true ? (React.createElement("span", { className: "block sm:hidden" },
+        finish === true ? (React.createElement("span", { className: "hidden" },
             React.createElement(Alert, null))) : (''),
-        React.createElement("span", { className: "sm:hidden block" }, sideBarToggle ? (React.createElement("div", { className: "mbl_sidebar" },
+        React.createElement("span", { className: "hidden block" }, sideBarToggle ? (React.createElement("div", { className: "mbl_sidebar" },
             React.createElement(Sidebar, { steps: steps, userData: userData }),
             React.createElement("div", { className: "w-[25%]", onClick: () => setSideBarToggle((prev) => !prev) }))) : (''))));
 };
@@ -9272,11 +9240,9 @@ const Home = ({ defaultStep = '12400', handleSubmit, isBranding = true, stepResp
     React.useEffect(() => {
         setInitialStepsData(stepsData === null || stepsData === void 0 ? void 0 : stepsData.filter((step) => step.isVisible));
     }, [stepsData]);
-    console.log('desired console is ===> ', stepsData, steps, selectedMerchantType);
     React.useEffect(() => {
         if (visibleStepData) {
             const initialStep = visibleStepData === null || visibleStepData === void 0 ? void 0 : visibleStepData.find((step) => step.role && (defaultStep === null || defaultStep === void 0 ? void 0 : defaultStep.includes(`${step.role}`)));
-            console.log(':::::InitialStep => ', initialStep);
             setCurrentStepInitial(initialStep ? initialStep === null || initialStep === void 0 ? void 0 : initialStep.id : 3);
         }
     }, [defaultStep]);

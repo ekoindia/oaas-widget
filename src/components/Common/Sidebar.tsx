@@ -19,7 +19,6 @@ const Sidebar = ({ steps, userData }: StepperProps) => {
     }
     const progressRef = useRef<any>(null);
     const currentStepIndex = visibleStepData?.map((step) => step.id)?.indexOf(currentStep);
-    console.log('currentStepIndex', currentStepIndex, visibleStepData, currentStep);
     useEffect(() => {
         let progress = `0%`;
         if (currentStepIndex + 1 > 1) {

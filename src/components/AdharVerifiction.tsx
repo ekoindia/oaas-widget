@@ -58,7 +58,6 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
     };
     const handleOnclick = () => {
         if (frontError === false && backError === false) {
-            console.log('inside submition', aadhaarImages);
             handleSubmit({ ...stepData, form_data: { aadhaarImages }, stepStatus: 3 });
         }
     };

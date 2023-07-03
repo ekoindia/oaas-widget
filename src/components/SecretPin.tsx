@@ -23,7 +23,6 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
         handleSubmit({ ...stepData, stepStatus: 2 });
     };
     useEffect(() => {
-        console.log('In stepSecretPin');
         handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
@@ -34,7 +33,6 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                 initialValues={formValues}
                 validationSchema={secretPinValidationSchema}
                 onSubmit={(formData) => {
-                    console.log('SecretPin FormData', formData);
                     handleSubmit({ ...stepData, form_data: formData, stepStatus: 3 });
                 }}
             >

@@ -8,9 +8,7 @@ import ButtonGlobal from './Common/ButtonGlobal';
 export const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
     const [roleVal, setRoleVal] = React.useState<number>(2);
-    console.log('form selection data', form_data, roleVal);
     const handleChange = (e: any) => {
-        console.log('change', e.target.value);
         setRoleVal(parseInt(e.target.value));
     };
     return (

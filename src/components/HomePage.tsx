@@ -38,10 +38,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
     const [isDisable, setIsDisable] = useState<boolean>(false);
     const [currentStepData, setCurrentStepData] = useState<any>();
-    console.log('userData is', userData);
-    console.log('step response', stepResponse);
     const handleStepSubmit = (data: any) => {
-        console.log('data', data, steps);
         if (data.id === 1) {
             const currentStepIndex = steps.map((step: StepDataType) => step?.id)?.indexOf(data?.id);
             setCurrentStepInitial(steps[currentStepIndex + 1]?.id);
@@ -57,7 +54,6 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     };
     const renderStep = (currentStep: number): any => {
         const stepData: StepDataType | undefined = steps?.find((step: StepDataType) => step.id === currentStep);
-        console.log(stepData, 'currentStep', currentStep, steps);
         if (stepData) {
             switch (currentStep) {
                 case 2:
@@ -111,13 +107,12 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                     setCurrentStepData(null);
                 }
             }
-            console.log('stepResponse', steps, currentStepData);
             setIsDisable(false);
         }
     }, [stepResponse]);
     return (
         <>
-            <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-3 w-full md:px-24`}>
+            <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
                 <div className="flex items-center">
                     <div className="containerboxover relative">
                         <div className="sm:flex sm:justify-between">
@@ -147,20 +142,20 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
                 </div>
             </div>
             {fetchData === true ? (
-                <span className="block sm:hidden">
+                <span className="hidden">
                     <Fetching />
                 </span>
             ) : (
                 ''
             )}
             {finish === true ? (
-                <span className="block sm:hidden">
+                <span className="hidden">
                     <Alert />
                 </span>
             ) : (
                 ''
             )}
-            <span className="sm:hidden block">
+            <span className="hidden block">
                 {sideBarToggle ? (
                     <div className="mbl_sidebar">
                         <Sidebar steps={steps} userData={userData} />

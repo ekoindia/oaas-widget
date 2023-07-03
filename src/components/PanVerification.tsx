@@ -49,9 +49,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
         });
         setPanError(false);
     };
-    console.log('panImage =>', panImage);
     const handleImageUpload = (files: any, type: any, fileData: any) => {
-        console.log('files', files);
         setPanImage({
             url: files,
             fileData: fileData
@@ -84,7 +82,6 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                 initialValues={formValues}
                 validationSchema={panSchema}
                 onSubmit={(formData) => {
-                    console.log(formData);
                     if (!panError) {
                         handleSubmit({ ...stepData, form_data: { panImage, ...formData }, stepStatus: 3 });
                     }

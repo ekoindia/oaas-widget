@@ -34,10 +34,8 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
         async (e: any) => {
             e.preventDefault();
             const imageSrc = webcamRef?.current?.getScreenshot();
-            console.log('Image src test', imageSrc);
             const blob = await fetch(imageSrc).then((res) => res.blob());
             const fileData = new File([blob], `${type}_${cameraType}.${blob.type.split('/')[1]}`, { type: blob.type });
-            console.log('Image src Blob', blob, fileData);
 
             // formData.append('images', blob);
             handleImageCapture(imageSrc, fileData);
@@ -97,7 +95,6 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
             setRecordedChunks?.([]);
         }
     }, [recordedChunks]);
-    console.log('imagesVal', imagesVal, imagesVal?.front?.url, imagesVal?.back?.url);
     return (
         <span>
             {/* {image === null ? ( */}

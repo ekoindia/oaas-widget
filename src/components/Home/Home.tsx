@@ -49,11 +49,9 @@ export const Home = ({
     useEffect(() => {
         setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
     }, [stepsData]);
-    console.log('desired console is ===> ', stepsData, steps, selectedMerchantType);
     useEffect(() => {
         if (visibleStepData) {
             const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
-            console.log(':::::InitialStep => ', initialStep);
             setCurrentStepInitial(initialStep ? initialStep?.id : 3);
         }
     }, [defaultStep]);
