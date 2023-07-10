@@ -40,7 +40,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
     const [currentStepData, setCurrentStepData] = useState<any>();
     const handleStepSubmit = (data: any) => {
         if (data.id === 1) {
-            const currentStepIndex = steps.map((step: StepDataType) => step?.id)?.indexOf(data?.id);
+            const currentStepIndex = steps?.map((step: StepDataType) => step?.id)?.indexOf(data?.id);
             setCurrentStepInitial(steps[currentStepIndex + 1]?.id);
             setStepsData(data);
             setCurrentStepData(data);

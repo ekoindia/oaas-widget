@@ -41,9 +41,9 @@ export const Home = ({
     let visibleStepData = stepsData;
     if (visibleStepData) {
         if (userData?.userDetails?.user_type === 3) {
-            visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
+            visibleStepData = visibleStepData?.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
         } else {
-            visibleStepData = visibleStepData.filter((step) => step.isVisible);
+            visibleStepData = visibleStepData?.filter((step) => step.isVisible);
         }
     }
     useEffect(() => {

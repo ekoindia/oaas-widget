@@ -13,10 +13,11 @@ const Sidebar = ({ steps, userData }: StepperProps) => {
     const { currentStep, completed, setCurrentStepInput } = useStore();
     console.log('currentStep => ', currentStep);
     let visibleStepData = steps;
+    console.log('Jalaj Steps', steps, visibleStepData);
     if (userData?.userDetails?.user_type === 3) {
-        visibleStepData = visibleStepData.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
+        visibleStepData = visibleStepData?.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
     } else {
-        visibleStepData = visibleStepData.filter((step) => step.isVisible);
+        visibleStepData = visibleStepData?.filter((step) => step.isVisible);
     }
     const progressRef = useRef<any>(null);
     const currentStepIndex = visibleStepData?.map((step) => step.id)?.indexOf(currentStep);

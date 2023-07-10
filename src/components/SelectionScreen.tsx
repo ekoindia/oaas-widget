@@ -16,7 +16,7 @@ export const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }: Globa
             <h2 className="text-gray-900 text-lg font-medium title-font mb-5">{label}</h2>
             {form_data?.roles?.length > 0 &&
                 form_data.roles
-                    .filter((role: any) => role.isVisible)
+                    ?.filter((role: any) => role.isVisible)
                     ?.map((role: any, idx: number) => (
                         <div className="flex mb-5" key={`${idx}_${role.id}`}>
                             <div className="mr-5 border-2 border-slate-200  p-4 rounded-full">
