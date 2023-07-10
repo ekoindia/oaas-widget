@@ -39,7 +39,15 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPro
                     {({ errors, touched, values, handleChange }) => (
                         <Form>
                             <Labelglobal className="block text-black text-sm font-bold mb-2">Name</Labelglobal>
-                            <InputGlobal className="busin_drpdwn_input" name="name" value={values.name} onChange={handleChange('name')} id="name" type="text" placeholder="" />
+                            <InputGlobal
+                                className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
+                                name="name"
+                                value={values.name}
+                                onChange={handleChange('name')}
+                                id="name"
+                                type="text"
+                                placeholder=""
+                            />
                             {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
                             <ButtonGlobal className="bg-sky hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}

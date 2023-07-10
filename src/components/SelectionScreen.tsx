@@ -68,7 +68,7 @@ export const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }: Globa
                 </div>
             </div> */}
             <ButtonGlobal
-                className="welcome_btn"
+                className="bg-sky bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded"
                 onClick={() => {
                     handleSubmit({ ...stepData, form_data: { merchant_type: roleVal } });
                 }}

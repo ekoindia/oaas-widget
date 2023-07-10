@@ -16,14 +16,14 @@ const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA = false, handleSt
     const link = 'https://karzatechnologies.sandbox.leegality.com/sign/1f1b1fdd-a903-44f7-a2fc-84653bdf9829';
 
     return (
-        <div className="welcome">
+        <div className="w-full min-h-[80vh] sm:min-h-[85%] flex items-center justify-center bg-white rounded-2xl">
             <div className="items-center text-center text-black">
-                <img src="https://files.eko.co.in/docs/onborading/agreement.png" alt="welcome icon" className="welcome_img" />
+                <img src="https://files.eko.co.in/docs/onborading/agreement.png" alt="welcome icon" className="flex items-center text-center h-48 w-48 h-52 w-52 mr-auto ml-auto mt-auto mb-6 mb-6" />
                 <p className="sm:font-normal text-[18px] pt-2 pl-4 pr-4">
                     <span className="sm:block">Happy to see you here. Lets start your onboarding journey.</span>
                     <span className="sm:block"> We ensure, you&apos;ll be assisted at every step.</span>
                 </p>
-                <ButtonGlobal className="welcome_btn" disabled={isDisabledCTA} onClick={openPopupTab}>
+                <ButtonGlobal className="bg-sky bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded" disabled={isDisabledCTA} onClick={openPopupTab}>
                     {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                 </ButtonGlobal>
             </div>

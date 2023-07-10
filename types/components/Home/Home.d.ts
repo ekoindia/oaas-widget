@@ -1,4 +1,3 @@
-import '../../assets/Styles/style.css';
 import '../../index.css';
 import { StepDataType } from '../../utils/data/stepsData';
 type OASSPackageProps = {

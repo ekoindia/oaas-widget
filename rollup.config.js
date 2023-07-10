@@ -27,7 +27,18 @@ export default {
         commonjs(),
         typescript({ useTsconfigDeclarationDir: true }),
         postcss({
-            extensions: ['.css', 'module.css']
+            extensions: ['.css', 'module.css'],
+            extract: false,
+            modules: false,
+            inject: {
+                insertAt: 'top'
+            },
+            autoModules: true,
+            getExportNamed: false,
+            minimize: true,
+            module: {
+                generateScopedName: '[name]__[local]___[hash:base64:5]'
+            }
         }),
         image({ extract: 'src/assets/icons' })
     ]

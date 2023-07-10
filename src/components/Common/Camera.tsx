@@ -127,7 +127,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                                     className="rounded-[10px]"
                                 />
                                 <span className={`flex flex-col items-end mt-3`}>
-                                    <ButtonGlobal onClick={capture} className="cam_btn">
+                                    <ButtonGlobal onClick={capture} className="bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
                                         <>
                                             <img src={filledcamera} className="w-[16px] h-[16px] mr-1" /> Capture
                                         </>
@@ -144,7 +144,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     <>
                         <img src={image} alt="screenshot" className="rounded-[10px]" />
                         <span className="flex justify-end mt-3">
-                            <ButtonGlobal onClick={handleRetake} className="cam_btn">
+                            <ButtonGlobal onClick={handleRetake} className="bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
                                 <>
                                     <img src={retry} alt="retry_icon" className="w-[16px] h-[16px] mr-1" /> Re-Capture
                                 </>

@@ -9,7 +9,7 @@ const OnboardingStatus = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
         <>
             <div className="flex mt-8">
                 <span className="w-[20%] sm:w-fit">
-                    <span className="onbord_thump_icn">
+                    <span className="ounded-[100%] w-[16vw] h-[16vw] w-16 h-16 flex items-center justify-center border-2 border-green">
                         <img src={thumb} alt="thump up icon" className="w-[35px] h-[35px] sm:w-7 sm:h-7" />
                     </span>
                 </span>
@@ -21,28 +21,28 @@ const OnboardingStatus = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                             <div className="text-sm text-extrdarkgray">Skipped</div>
                             <div className="text-md text-black font-bold">Aadhaar Verification</div>
                         </span>
-                        <ButtonGlobal className="onbord_rty_btn">
+                        <ButtonGlobal className="flex items-center justify-center bg-sky bg-black text-white font-semibold w-28 h-8 px-5 rounded">
                             <>
                                 <img src={retry} alt="retry_icon" className="w-4 h-4 mr-2" /> Retry
                             </>
                         </ButtonGlobal>
                     </span>
-                    <span className="onbord_disqual_spn">
+                    <span className="hidden flex mt-8 mb-4 items-center justify-between w-[60%]">
                         <span className="flex-col">
                             <span className="text-sm text-extrdarkgray">Disqualified</span>
                             <div className="text-md text-black font-bold">Video KYC</div>
                         </span>
-                        <div className="onbord_attmp_msg">No Attempts Left</div>
+                        <div className="w-fit rounded-full p-2 text-xs text-center text-red bg-white border-red border-2">No Attempts Left</div>
                     </span>
                 </span>
             </div>
             <div className="sm:hidden border-2 border-gray rounded-2xl mt-6">
-                <span className="onbord_disqual_spn_mbl">
+                <span className="flex items-center justify-between w-[100%] border-b-2 border-gray p-5">
                     <span className="flex-col">
                         <div className="text-md text-extrdarkgray">Skipped</div>
                         <div className="text-md text-black font-bold">Aadhaar Verification</div>
                     </span>
-                    <ButtonGlobal className="onbord_rty_btn_mbl">
+                    <ButtonGlobal className="flex items-center justify-center bg-sky bg-black text-white font-[400] w-28 h-8 px-2 rounded text-[18px] py-5">
                         <>
                             <img src={retry} alt="retry_icon" className="w-4 h-4 mr-2" /> Retry
                         </>
@@ -53,7 +53,7 @@ const OnboardingStatus = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                         <span className="text-md text-extrdarkgray">Disqualified</span>
                         <div className="text-md text-black font-bold">Video KYC</div>
                     </span>
-                    <div className="onbord_attmp_msg_mbl">No Attempts Left</div>
+                    <div className="w-fit rounded-full py-2 px-5 text-[14px] text-center text-red bg-white border-red border-2">No Attempts Left</div>
                 </span>
             </div>
         </>

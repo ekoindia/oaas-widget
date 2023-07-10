@@ -114,7 +114,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
         <>
             <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
                 <div className="flex items-center">
-                    <div className="containerboxover relative">
+                    <div className="flex flex-col w-full h-full relative">
                         <div className="sm:flex sm:justify-between">
                             <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={steps} userData={userData} />
@@ -157,7 +157,7 @@ const HomePage = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse,
             )}
             <span className="hidden block">
                 {sideBarToggle ? (
-                    <div className="mbl_sidebar">
+                    <div className="z-20 absolute top-14 top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
                         <Sidebar steps={steps} userData={userData} />
                         <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
                     </div>

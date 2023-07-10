@@ -92,7 +92,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                         <div>
                             <Labelglobal className="block text-black text-sm font-bold mb-2">Pan Card Number</Labelglobal>
                             <InputGlobal
-                                className="busin_drpdwn_input"
+                                className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                 name="panNumber"
                                 value={values.panNumber.toUpperCase()}
                                 maxLength="10"
@@ -116,12 +116,15 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                                             </div>
                                         ) : (
                                             <>
-                                                <div className="documentimgstyle overflow-hidden w-[100%]">
+                                                <div className="p-8 text-sm text-extrdarkgray border border-darkgray rounded-md bg-gray border-dashed flex flex-col justify-center items-center overflow-hidden w-[100%]">
                                                     <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
                                                     Drag and drop copy of PAN Card or you can
                                                     <div className="flex  mt-8">
                                                         <Uploadfile type="pan" handleUpload={(files: any, type: any, fileData: any) => handleImageUpload(files, type, fileData)} />
-                                                        <ButtonGlobal className="documentbtn" onClick={() => setCameraStatus(true)}>
+                                                        <ButtonGlobal
+                                                            className="text-white text-xs bottom-1.5 bg-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center"
+                                                            onClick={() => setCameraStatus(true)}
+                                                        >
                                                             <>
                                                                 <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
                                                             </>
@@ -157,7 +160,15 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                         </div>
                         <div className="mt-2">
                             <Labelglobal className="block text-black text-sm font-bold mb-2">Shop Name</Labelglobal>
-                            <InputGlobal className="busin_drpdwn_input" name="shopName" value={values.shopName} onChange={handleChange('shopName')} id="shopName" type="text" placeholder="" />
+                            <InputGlobal
+                                className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
+                                name="shopName"
+                                value={values.shopName}
+                                onChange={handleChange('shopName')}
+                                id="shopName"
+                                type="text"
+                                placeholder=""
+                            />
                             {errors.shopName && touched.shopName ? <div className="text-red">{errors.shopName}</div> : null}
                         </div>
                         <span className={`flex flex-col items-center sm:block`}>

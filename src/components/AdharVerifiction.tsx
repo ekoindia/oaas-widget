@@ -109,7 +109,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                         </div>
                                     ) : (
                                         <div className="flex flex-col xl:w-[50%] lg:w-[50%] lg:mr-4 max-[640px]:mr-0 md:mr-0 max-[640px]:mb-8 sm:mb-8 ">
-                                            <div className="documentimgstyle   md:w-[100%]  h-[190px] sm:w-[100%]   ">
+                                            <div className="p-8 text-sm text-extrdarkgray border border-darkgray rounded-md bg-gray border-dashed flex flex-col justify-center items-center md:w-[100%]  h-[190px] sm:w-[100%]   ">
                                                 <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
                                                 <div className="text-sm">Drag and drop front copy of Aadhaar or you can</div>
                                                 <div className="flex mt-4 ml-1.5">
@@ -119,7 +119,10 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                             handleImageUpload(files, type, fileData);
                                                         }}
                                                     />
-                                                    <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('front'), setImage(null))}>
+                                                    <ButtonGlobal
+                                                        className="text-white text-xs bottom-1.5 bg-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center"
+                                                        onClick={() => (setCameraStatus(true), setCameraType('front'), setImage(null))}
+                                                    >
                                                         <>
                                                             <img src={filledcamera} className="h-[4vh] mr-2" /> Open Camera
                                                         </>
@@ -141,7 +144,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                         <Backcam imageVal={aadhaarImages?.back?.url} handleRetake={() => handleRetake('back')} />
                                     ) : (
                                         <div className="flex flex-col xl:w-[50%] lg:w-[50%] lg:mr-4 max-[640px]:mr-0 md:mr-0 max-[640px]:mb-8 sm:mb-8 ">
-                                            <div className="documentimgstyle   md:w-[100%]  h-[190px] sm:w-[100%]   ">
+                                            <div className="p-8 text-sm text-extrdarkgray border border-darkgray rounded-md bg-gray border-dashed flex flex-col justify-center items-center md:w-[100%]  h-[190px] sm:w-[100%]   ">
                                                 <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
                                                 <div className="text-sm">Drag and drop back copy of Aadhaar or you can</div>
                                                 <div className="flex mt-4 ml-1.5">
@@ -151,7 +154,10 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                             handleImageUpload(files, type, fileData);
                                                         }}
                                                     />
-                                                    <ButtonGlobal className="documentbtn" onClick={() => (setCameraStatus(true), setCameraType('back'))}>
+                                                    <ButtonGlobal
+                                                        className="text-white text-xs bottom-1.5 bg-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center"
+                                                        onClick={() => (setCameraStatus(true), setCameraType('back'))}
+                                                    >
                                                         <>
                                                             <img src={filledcamera} className="h-[4vh] mr-2" /> Open Camera
                                                         </>

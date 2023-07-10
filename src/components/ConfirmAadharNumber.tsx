@@ -38,7 +38,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA }: GlobalS
                             <div className="mb-7 w-[80%] xl:w-[45%]">
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Aadhaar card Number</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="aadhaarCardNumber"
                                     value={values.aadhaarCardNumber}
                                     onChange={handleChange('aadhaarCardNumber')}

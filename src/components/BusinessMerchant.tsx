@@ -86,7 +86,15 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                         <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full	">
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Full Name(as per your panCard)</Labelglobal>
-                                <InputGlobal className="busin_drpdwn_input mb-0" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
+                                <InputGlobal
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none mb-0"
+                                    name="name"
+                                    value={values.name}
+                                    onChange={handleChange('name')}
+                                    id="username"
+                                    type="text"
+                                    placeholder=""
+                                />
                                 {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
                             </div>
                             <div>
@@ -128,7 +136,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Business Address</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="shop_address_line2"
                                     value={values.shop_address_line2}
                                     onChange={handleChange('shop_address_line2')}
@@ -141,7 +149,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Landmark(optional)</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="shop_landmark"
                                     value={values.shop_landmark}
                                     onChange={handleChange('shop_landmark')}
@@ -154,7 +162,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Pincode</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="shop_address_pincode"
                                     value={values.shop_address_pincode}
                                     onChange={handleChange('shop_address_pincode')}
@@ -168,7 +176,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">City</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="sender_district"
                                     value={values.sender_district}
                                     onChange={handleChange('sender_district')}
@@ -213,7 +221,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                 </select>
                             </div> */}
                         </div>
-                        <ButtonGlobal className="welcome_btn" disabled={isDisabledCTA}>
+                        <ButtonGlobal className="bg-sky bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded" disabled={isDisabledCTA}>
                             {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                         </ButtonGlobal>
                     </Form>

@@ -21,7 +21,9 @@ const SncdHeadermobile = ({ handleSidebarToggle }: SncdHeadermobileProps) => {
                             <span key={val.id}>
                                 {currentStep - 1 === index ? (
                                     <span className="flex">
-                                        <span className="mbl_snd_head_step mr-2">{index + 1}</span>
+                                        <span className="text-white text-xs bottom-1.5 bg-sky font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center mr-2">
+                                            {index + 1}
+                                        </span>
                                         <span>
                                             <div className="text-[18px] text-sky font-[500]">{val.label}</div>
                                             <div className="text-[15px] text-orange">In-Progress</div>

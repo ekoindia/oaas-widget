@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../assets/Styles/style.css';
+// import '../../assets/Styles/style.css';
 import Header from '../Common/Header';
 import SncdHeadermobile from '../Common/SncdHeadermobile';
 import HomePage from '../HomePage';

@@ -45,7 +45,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Secret PIN</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="first_okekey"
                                     value={values.first_okekey}
                                     onChange={handleChange('first_okekey')}
@@ -59,7 +59,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Confirm Secret PIN</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="second_okekey"
                                     value={values.second_okekey}
                                     onChange={handleChange('second_okekey')}

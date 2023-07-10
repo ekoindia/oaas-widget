@@ -55,7 +55,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                     ) : (
                         <div>
                             <div className="relative sm:hidden block w-[100%]" onClick={() => setCameraStatus(true)}>
-                                <div className="videokycmobl w-[100%] h-[180px] text-center text-[22px]">
+                                <div className="p-5 text-lg text-extrdarkgray border border-darkgray rounded-md bg-gray border-dashed flex flex-col justify-center items-center w-[100%] h-[180px] text-center text-[22px]">
                                     <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
                                     Click here to take a live photo/video with ID proof
                                 </div>

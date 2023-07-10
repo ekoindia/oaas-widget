@@ -52,13 +52,21 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                         <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full">
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Company/Firm's name</Labelglobal>
-                                <InputGlobal className="busin_drpdwn_input" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
+                                <InputGlobal
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
+                                    name="name"
+                                    value={values.name}
+                                    onChange={handleChange('name')}
+                                    id="username"
+                                    type="text"
+                                    placeholder=""
+                                />
                                 {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Alternate mobile number(optional)</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="alternate_mobile"
                                     value={values.alternate_mobile}
                                     onChange={handleChange('alternate_mobile')}
@@ -88,7 +96,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Director/Authorised Signatory Full Name</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="authorized_signatory_name"
                                     value={values.authorized_signatory_name}
                                     onChange={handleChange('authorized_signatory_name')}
@@ -101,7 +109,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Contact Person's Cell Number </Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="contact_person_cell"
                                     value={values.contact_person_cell}
                                     onChange={handleChange('contact_person_cell')}
@@ -115,7 +123,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Registered Business address(Line1)</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="current_address_line1"
                                     value={values.current_address_line1}
                                     onChange={handleChange('current_address_line1')}
@@ -128,7 +136,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Registered Business address(Line2)</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="current_address_line2"
                                     value={values.current_address_line2}
                                     onChange={handleChange('current_address_line2')}
@@ -141,7 +149,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Pincode</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="current_address_pincode"
                                     value={values.current_address_pincode}
                                     onChange={handleChange('current_address_pincode')}
@@ -156,7 +164,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">City</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="current_address_district"
                                     value={values.current_address_district}
                                     onChange={handleChange('current_address_district')}
@@ -184,7 +192,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                 </select>
                             </div>
                         </div>
-                        <ButtonGlobal className="welcome_btn" disabled={isDisabledCTA}>
+                        <ButtonGlobal className="bg-sky bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded" disabled={isDisabledCTA}>
                             {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                         </ButtonGlobal>
                     </Form>

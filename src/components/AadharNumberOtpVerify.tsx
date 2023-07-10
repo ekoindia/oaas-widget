@@ -67,7 +67,16 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                         <Form>
                             <div className="mb-7 w-[65%]">
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">OTP</Labelglobal>
-                                <InputGlobal className="busin_drpdwn_input" maxLength="6" name="otpVal" value={values.otpVal} onChange={handleChange('otpVal')} id="otp" type="number" placeholder="" />
+                                <InputGlobal
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
+                                    maxLength="6"
+                                    name="otpVal"
+                                    value={values.otpVal}
+                                    onChange={handleChange('otpVal')}
+                                    id="otp"
+                                    type="number"
+                                    placeholder=""
+                                />
                                 {errors.otpVal && touched.otpVal ? <div className="text-red">{errors.otpVal}</div> : null}
                                 {!isResend ? (
                                     <small>Resend OTP in {resendTimerCount} sec</small>
@@ -91,7 +100,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                             <div className="mb-7 w-[65%]">
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Share Code</Labelglobal>
                                 <InputGlobal
-                                    className="busin_drpdwn_input"
+                                    className="block w-full border-2 border-gray rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="shareCode"
                                     value={values.shareCode}
                                     onChange={handleChange('shareCode')}
