@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
         "target": "ES6",
-        "lib": ["ES5", "ES2015", "ES2016", "DOM", "ESNext", "dom", "dom.iterable"],
+        "lib": ["ES2018", "DOM"],
         "jsx": "react",
         "allowJs": true,
-        "module": "ES2015",
+        "module": "ESNext",
         "declarationDir": "types",
         "moduleResolution": "node",
         "strict": true,
@@ -22,5 +22,6 @@
         "noImplicitAny": true,
         "skipLibCheck": true
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "jest.config.ts"]
+    "include": ["src/**/*.ts", "src/**/*.tsx", "jest.config.ts"],
+    "exclude": ["node_modules", "dist"]
 }

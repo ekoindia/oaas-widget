@@ -6,7 +6,7 @@ const Fetching = () => {
     const { setFetchData } = useStore();
     return (
         <div className="z-20 absolute top-[7.5rem] top-0 backdrop-blur-[70px] left-0 bottom-0 right-0 rounded-2xl flex flex-col items-center justify-center">
-            <span className="w-32 h-32 items-center justify-center flex rounded-full border-4 border-green">
+            <span className="w-32 h-32 items-center justify-center flex rounded-full border-4 border-success">
                 <span
                     className="w-24 h-24 items-center justify-center flex rounded-full bg-white drop-shadow-2xl"
                     onClick={() => {
@@ -15,7 +15,7 @@ const Fetching = () => {
                 >
                     <span className="w-24 h-24 items-center justify-center flex flex-col rounded-full">
                         <img src={tickmark} alt="complete mark" className="w-[3rem] h-[2.3rem]" />
-                        <div className="text-green">70%</div>
+                        <div className="text-success">70%</div>
                     </span>
                 </span>
             </span>
