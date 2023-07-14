@@ -1,3 +1,5 @@
+// This is Image Preview Component name has to be changed
+
 import React from 'react';
 import { useStore } from '../../../store/zustand';
 import ButtonGlobal from '../ButtonGlobal';

@@ -3,20 +3,18 @@
 module.exports = {
     content: ['./src/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './stories/**/*.{ts,tsx}'],
     theme: {
-        extend: {
-            colors: {
-                white: 'white',
-                black: '#0C243B',
-                lightdefault: '#F2F2F2',
-                default: '#D4D4D4',
-                darkdefault: '#555555',
-                success: '#00C341',
-                warning: '#FE9F00',
-                darkdanger: '#FF4040',
-                danger: '#FF40401A',
-                lightdanger: '#FF4081',
-                primary: '#1F5AA7'
-            }
+        colors: {
+            white: 'white',
+            black: '#0C243B',
+            lightdefault: '#F2F2F2',
+            default: '#D4D4D4',
+            darkdefault: '#555555',
+            success: '#00C341',
+            warning: '#FE9F00',
+            darkdanger: '#FF4040',
+            danger: '#FF40401A',
+            lightdanger: '#FF4081',
+            primary: '#1F5AA7'
         },
         boxShadow: {
             xl: '0 20px 25px -20px rgb(0 0 0 / 0.1)',
