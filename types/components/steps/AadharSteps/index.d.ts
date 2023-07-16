@@ -1,4 +1,4 @@
 export * from './AadharConsent';
 export * from './AdharVerifiction';
 export * from './AadharNumberOtpVerify';
-export * from './/ConfirmAadharNumber';
+export * from './ConfirmAadharNumber';
