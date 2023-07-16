@@ -5,9 +5,6 @@ import filledcamera from '../../../assets/icons/filledcamera.svg';
 // import retry from '../../assets/icons/retry.png';
 import { useStore } from '../../../store/zustand';
 import { resolutions } from './cameraConfig';
-// import Frontcam from '../Frontcam';
-// import Backcam from '../Backcam';
-// import FrontBackcapture from '../FrontBackcapture';
 
 type CameraProps = {
     mediaRecorderRef?: any | null;
@@ -179,17 +176,17 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                         />
                         <div className={`flex justify-between mt-3`}>
                             {hasFlash && (
-                                <ButtonGlobal onClick={toggleFlash} className="bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
+                                <ButtonGlobal onClick={toggleFlash} className="bg-primary flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
                                     <>Turn Flash {flashOn ? 'Off' : 'On'}</>
                                 </ButtonGlobal>
                             )}
-                            <ButtonGlobal onClick={capture} className="bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
+                            <ButtonGlobal onClick={capture} className="bg-primary flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
                                 <>
                                     <img src={filledcamera} className="w-[16px] h-[16px] mr-1" /> Capture
                                 </>
                             </ButtonGlobal>
                             {setCamDevices?.length > 1 && (
-                                <ButtonGlobal onClick={switchCamera} className="bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
+                                <ButtonGlobal onClick={switchCamera} className="bg-primary flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
                                     Switch Camera
                                 </ButtonGlobal>
                             )}
@@ -202,7 +199,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     <>
                         <img src={image} alt="screenshot" className="rounded-[10px]" />
                         <span className="flex justify-end mt-3">
-                            <ButtonGlobal onClick={handleRetake} className="bg-sky flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
+                            <ButtonGlobal onClick={handleRetake} className="bg-primary flex justify-center items-center text-white text-[12px] p-1 rounded-[4px] w-[10rem]">
                                 <>
                                     <img src={retry} alt="retry_icon" className="w-[16px] h-[16px] mr-1" /> Re-Capture
                                 </>

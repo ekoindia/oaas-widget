@@ -30,7 +30,10 @@ const Modal = ({ showModal, setShowModal, handleOnclick, attentionmsg }: ModalPr
                             {/*content*/}
                             <div className="border-0 rounded-lg relative flex flex-col w-full bg-white outline-none outline-none shadow-lg">
                                 {/*header*/}
-                                <button className="flex absolute text-lg -right-2.5 -top-2.5 bg-black text-white outline-none font-medium rounded-full p-2 bg-sky" onClick={() => setShowModal(false)}>
+                                <button
+                                    className="flex absolute text-lg -right-2.5 -top-2.5 bg-black text-white outline-none font-medium rounded-full p-2 bg-primary"
+                                    onClick={() => setShowModal(false)}
+                                >
                                     <span className="flex absolute text-lg -right-2.5 -top-2.5 bg-black text-white outline-none font-medium rounded-full p-2 bg-sky_spn">×</span>
                                 </button>
                                 {/*body*/}
@@ -39,7 +42,7 @@ const Modal = ({ showModal, setShowModal, handleOnclick, attentionmsg }: ModalPr
                                     <div className="flex flex-col justify-center items-center p-5 p-10 text-center">{attentionmsg}</div>
                                     <div className="mt-6 sm:mt-4">
                                         <button
-                                            className="bg-sky text-white bg-black text-[18px] text-[14px] px-8 py-2 rounded outline-none outline-none mr-1 mb-1 ease-linear transition-all duration-150 block inline-block text-center font-[500] font-normal"
+                                            className="bg-primary text-white bg-black text-[18px] text-[14px] px-8 py-2 rounded outline-none outline-none mr-1 mb-1 ease-linear transition-all duration-150 block inline-block text-center font-[500] font-normal"
                                             onClick={handleproceed}
                                         >
                                             Yes, Proceed

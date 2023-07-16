@@ -1,2 +1,2 @@
-export * from './components/Home';
-export * from './components/SelectionScreen';
+export { OnboardingWidget } from './components/OnboardingWidget';
+export { SelectionScreen } from './components/Steps/SelectionScreen';
