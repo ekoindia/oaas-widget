@@ -1,7 +1,7 @@
 {
-    "name": "eko-oaas-package",
+    "name": "@ekoindia/oaas-widget",
     "version": "1.1.9",
-    "description": "On board as a service",
+    "description": "Web widget for onboarding-as-a-service",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
     "files": [
