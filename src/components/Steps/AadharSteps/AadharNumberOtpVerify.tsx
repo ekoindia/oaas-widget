@@ -12,11 +12,11 @@ const aadhaarNumberVerifySchema = Yup.object().shape({
 });
 
 const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
-    const [otpVal, setOtpVal] = useState('');
-    const [shareCode, setShareCode] = useState('');
+    // const [otpVal, setOtpVal] = useState('');
+    // const [shareCode, setShareCode] = useState('0000');
     const [isResend, setIsResend] = useState(false);
     const [resendTimerCount, setResendTimerCount] = useState(30);
-    const formValues = { otpVal: '', shareCode: '' };
+    const formValues = { otpVal: '', shareCode: '0000' };
     const { label, description, isSkipable, primaryCTAText } = stepData;
     let timerOut: any = null;
     const handleResendTimer = () => {
@@ -98,7 +98,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                 )}
                             </div>
                             <div className="mb-7 w-[65%]">
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Share Code</Labelglobal>
+                                {/* <Labelglobal className="block text-black text-sm font-bold mb-2">Share Code</Labelglobal> */}
                                 <InputGlobal
                                     className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="shareCode"
@@ -106,7 +106,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                     onChange={handleChange('shareCode')}
                                     maxLength="4"
                                     id="shareCode"
-                                    type="number"
+                                    type="hidden" // number
                                     placeholder=""
                                 />
                                 {errors.shareCode && touched.shareCode ? <div className="text-darkdanger">{errors.shareCode}</div> : null}

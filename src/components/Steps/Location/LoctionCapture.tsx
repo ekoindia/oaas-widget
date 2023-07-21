@@ -5,12 +5,16 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 const LoctionCapture = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
     const onSuccess = (location: any) => {
+        if (!(location && location.coords && location.coords.latitude)) {
+            console.error('Error in GeoLocation=>', location);
+            return;
+        }
         handleLocationCapture({
             loaded: true,
             coordinates: {
-                lat: location.coords.latitude,
-                lng: location.coords.longitude,
-                accuracy: location.coords.accuracy
+                lat: parseFloat(location.coords.latitude).toFixed(6),
+                lng: parseFloat(location.coords.longitude).toFixed(6),
+                accuracy: Math.round(+(location.coords.accuracy || 0))
             }
         });
     };

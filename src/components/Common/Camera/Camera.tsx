@@ -160,12 +160,12 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     <div className="flex flex-col mr-3">
                         <Webcam
                             audio={false}
-                            // height={500}
-                            // width={500}
                             ref={webcamRef}
                             minScreenshotHeight={500}
                             minScreenshotWidth={500}
                             screenshotFormat="image/jpeg"
+                            screenshotQuality={0.98}
+                            forceScreenshotSourceSize={true}
                             videoConstraints={videoConstraints}
                             imageSmoothing={true}
                             mirrored={false}

@@ -5,12 +5,22 @@ import userEnterprise from '../../../assets/icons/user_enterprise.png';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
+const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
     const [roleVal, setRoleVal] = React.useState<number>(2);
     const handleChange = (e: any) => {
         setRoleVal(parseInt(e.target.value));
     };
+
+    React.useEffect(() => {
+        // Set Primary Color as css var "color-primary"
+        if (primaryColor) {
+            document.documentElement.style.setProperty('--color-primary', primaryColor);
+        }
+    }, [primaryColor]);
+
+    // console.log('[oaas] SelectionScreen started: ', stepData);
+
     return (
         <div className="bg-lightdefault-100 rounded-lg p-8 flex flex-col max-w-md mt-10 md:mt-0" id={`step_${id}_${name}`}>
             <h2 className="text-lightdefault-900 text-lg font-medium title-font mb-5">{label}</h2>
@@ -18,18 +28,24 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPr
                 form_data.roles
                     ?.filter((role: any) => role.isVisible)
                     ?.map((role: any, idx: number) => (
-                        <div className="flex mb-5" key={`${idx}_${role.id}`}>
+                        <label className="flex mb-5 cursor-pointer" key={`${idx}_${role.id}`}>
                             <div className="mr-5 border-2 border-slate-200  p-4 rounded-full">
                                 <img src={role.id === 1 ? userMerchant : role.id === 2 ? userDistributor : userEnterprise}></img>
                             </div>
                             <div className="flex flex-col mr-5 w-full justify-center">
-                                <label>{role.label}</label>
+                                <div>{role.label}</div>
                                 <div className="text-xs font-light">{role.description}</div>
                             </div>
-                            <div>
-                                <input id={role.id} type="radio" value={role.merchant_type} name="role" onChange={handleChange} checked={roleVal === role.merchant_type} />
-                            </div>
-                        </div>
+                            <input
+                                id={role.id}
+                                type="radio"
+                                className="w-6 h-6 cursor-pointer accent-primary"
+                                value={role.merchant_type}
+                                name="role"
+                                onChange={handleChange}
+                                checked={roleVal === role.merchant_type}
+                            />
+                        </label>
                     ))}
             {/* <div className="flex mb-5">
                 <div className="mr-5 border-slate-200 border-2 p-4 rounded-full">

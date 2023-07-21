@@ -1,6 +1,4 @@
-eko-oaas-package TypeScript NPM Package
-
-Description:
+# React/Web Widget for Onboarding-as-a-Service
 
 Welcome to eko-oaas-package TypeScript NPM package! This package provides onboarding as a service which includes several steps like:
 
@@ -12,24 +10,18 @@ Welcome to eko-oaas-package TypeScript NPM package! This package provides onboar
 6. Video KYC
 7. Onboarding status
 
-It is written in TypeScript, which allows you to take advantage of static typing and provides a great development experience.
+## Usage:
 
-Installation:
-
-To install this package, you can use npm.
-
-Run the following command:
-
-npm i 'eko-oaas-package'
+Install the package in your Javascript project: `npm i @ekoindia/oaas-widget`
 
 After installing the package, you can import and use it in your TypeScript project. Here's an example of how to use it:
 
-import { OnBoradingVist, SelectionScreen } from "eko-oaas-package";
+import { OnBoradingVist, SelectionScreen } from "@ekoindia/oaas-widget";
 
 <!-- And just use component.  -->
 
 <OnBoradingVist
-	defaultStep={}	
+	defaultStep={}
 	isBranding={false}
 	userData={userData}
 	handleSubmit={handleStepDataSubmit}
@@ -46,7 +38,20 @@ import { OnBoradingVist, SelectionScreen } from "eko-oaas-package";
    handleSubmit={}
 />
 
-Folder Structure:
+## Local Testing:
+
+To include the package in your project, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import it as a local
+dependency.
+
+To test the package locally, follow these steps:
+
+1. Run the npm link command in the package directory to create a symlink.
+
+2. Run the npm link @ekoindia/oaas-widget command in your project directory to link the package.
+
+3. Import the package in your project and use it as a local dependency.
+
+## Folder Structure:
 
     ┣src
     ┃ ┣ assets
@@ -161,9 +166,8 @@ Folder Structure:
     ┃ ┣ utils
     ┃ ┃ ┣ data
     ┃ ┃ ┃ ┗ stepsData.ts
-    ┃ ┃ ┣ globalInterfaces
-    ┃ ┃ ┃ ┗ stepsInterface.ts
-    ┃ ┃ ┗ defaultTheme.ts
+    ┃ ┃ ┗ globalInterfaces
+    ┃ ┃   ┗ stepsInterface.ts
     ┃ ┣ index.css
     ┃ ┗ index.ts.babelrc
     ┃ .env
@@ -180,39 +184,7 @@ Folder Structure:
     ┃ tsconfig.json
     ┗.babelrc
 
-Why Tailwind CSS?
-
-Tailwind CSS is a highly popular utility-first CSS framework that offers numerous benefits, which influenced our decision to include it in our npm package.
-
-Rapid Prototyping:
-
-Tailwind CSS enables developers to rapidly prototype and iterate on designs by providing an extensive set of utility classes. These classes can be easily combined to create complex layouts and styling
-without the need for writing custom CSS.
-
-Consistent Design System:
-
-Tailwind CSS promotes a consistent design system by enforcing a strict utility class-based approach. This ensures that styling remains consistent throughout the application, regardless of the
-developer working on it.
-
-Modularity and Customization:
-
-Tailwind CSS is highly modular and customizable. Developers can easily configure and extend the framework to suit their specific project requirements. This flexibility allows for creating unique and
-tailored user interfaces.
-
-Performance Optimization:
-
-Tailwind CSS is designed to generate minimal, optimized CSS. By utilizing only the necessary utility classes, the resulting CSS file is significantly smaller compared to traditional frameworks. This
-optimization leads to faster load times and improved performance.
-
-Community and Ecosystem:
-
-Tailwind CSS has a vibrant and active community that contributes to its growth. It has an extensive ecosystem of plugins, themes, and extensions that further enhance its functionality. This ecosystem
-ensures ongoing support and a wide range of resources available to developers.
-
-Developer Productivity:
-
-Tailwind CSS eliminates the need for writing repetitive CSS code. The utility classes provided by Tailwind CSS reduce the time spent on styling and allow developers to focus more on building
-functionality and features.
+## Tailwind CSS
 
 By including Tailwind CSS in our npm package, we aim to provide developers with a powerful and efficient toolset that enhances their productivity, fosters consistent design systems, and allows for
 rapid development and customization.
@@ -243,12 +215,12 @@ The tailwind.config.js file contains the custom configuration for your Tailwind 
 
 8. Plugins The plugins property is an array where you can include any Tailwind CSS plugins you want to use in your project. Currently, no plugins are included in this configuration.
 
-tsconfig.json File
+## tsconfig.json File
 
 The tsconfig.json file is a configuration file used in TypeScript projects to specify compiler options and settings. It is located in the root directory of your project and helps define how TypeScript
 should compile your code.
 
-Compiler Options
+Compiler Options:
 
 The compilerOptions section in your tsconfig.json file contains various options that control the behavior of the TypeScript compiler. Let's go through each option:
 
@@ -365,7 +337,7 @@ By configuring these options, you can control which files are processed by TypeS
 
 }, "include": ["src/**/*.ts", "src/**/*.tsx", "jest.config.ts"], "exclude": ["node_modules", "dist"] }
 
-Rollup Feature:
+## Rollup Features:
 
 The Rollup feature is a powerful tool that allows you to consolidate and bundle your JavaScript code into a single file for deployment. It simplifies the process of managing dependencies, optimizing
 code size, and improving performance. This README file provides an overview of the Rollup feature and instructions on how to use it effectively.
@@ -406,8 +378,7 @@ bash Copy code npm install --global rollup
 
 import { terser } from 'rollup-plugin-terser';
 
-export default {  
- input: 'src/index.js',
+export default { input: 'src/index.js',
 
 output: { file: 'dist/bundle.js', format: 'umd', }, plugins: [terser()],
 

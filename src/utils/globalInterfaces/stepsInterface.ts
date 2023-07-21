@@ -7,4 +7,6 @@ export type GlobalStepPropsType = {
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
     handleStepCallBack?: any;
+    primaryColor?: string;
+    esignReady?: boolean;
 };

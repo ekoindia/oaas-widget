@@ -2,6 +2,8 @@ export const resolutions = [
     // All possible resolution sets
 
     //{ w:{min:1920, max:1980}, h:{min:1080, max:1200} },
+    { w: 1920, h: 1080 },
+    { w: 1280, h: 720 },
     { w: { min: 1280, max: 1920 }, h: { min: 720, max: 1200 } },
     { w: { min: 1024, max: 1920 }, h: { min: 768, max: 1200 } },
     { w: { min: 960, max: 1920 }, h: { min: 720, max: 1200 } },

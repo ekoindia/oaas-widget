@@ -19,6 +19,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
     const [frontError, setFrontError] = useState(true);
     const [backError, setBackError] = useState(true);
     const [aadhaarImages, setAadhaarImages] = useState({ back: { url: null }, front: { url: null } });
+
     useEffect(() => {
         setCameraStatus(false);
     }, []);

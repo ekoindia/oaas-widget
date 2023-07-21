@@ -14,7 +14,7 @@ module.exports = {
             darkdanger: '#FF4040',
             danger: '#FF40401A',
             lightdanger: '#FF4081',
-            primary: '#1F5AA7'
+            primary: 'var(--color-primary)' // '#1F5AA7'
         },
         boxShadow: {
             xl: '0 20px 25px -20px rgb(0 0 0 / 0.1)',

@@ -32,9 +32,21 @@ type HomepageProps = {
     stateTypes: Array<any>;
     handleStepCallBack: any;
     userData: any;
+    esignReady: boolean;
 };
 
-export const OnBoradingWrapper = ({ sideBarToggle, setSideBarToggle, handleSubmit, stepResponse, shopTypes, selectedMerchantType, stateTypes, handleStepCallBack, userData }: HomepageProps) => {
+export const OnBoradingWrapper = ({
+    sideBarToggle,
+    setSideBarToggle,
+    handleSubmit,
+    stepResponse,
+    shopTypes,
+    selectedMerchantType,
+    stateTypes,
+    handleStepCallBack,
+    userData,
+    esignReady
+}: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
     const [isDisable, setIsDisable] = useState<boolean>(false);
     const [currentStepData, setCurrentStepData] = useState<any>();
@@ -84,7 +96,7 @@ export const OnBoradingWrapper = ({ sideBarToggle, setSideBarToggle, handleSubmi
                 case 11:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 12:
-                    return <SignAgreement stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
+                    return <SignAgreement stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} esignReady={esignReady} />;
                 case 13:
                     return <ActivationPlan stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case 14:
@@ -99,7 +111,12 @@ export const OnBoradingWrapper = ({ sideBarToggle, setSideBarToggle, handleSubmi
 
     useEffect(() => {
         if (stepResponse) {
-            if (stepResponse?.status === 0 || currentStepData?.id === 4) {
+            const success =
+                stepResponse?.status === 0 && // Status is successful
+                !(Object.keys(stepResponse?.invalid_params || {}).length > 0); // No "invalid-params" present
+
+            if (success /* || currentStepData?.id === 4 */) {
+                // [Ques for Jalaj] Why goto next step when Aadhaar upload (step.id=4) fails?
                 if (currentStepData) {
                     if (currentStepData?.id !== 2) {
                         const currentStepIndex = steps.map((step: StepDataType) => step?.id)?.indexOf(currentStepData?.id);
@@ -112,6 +129,7 @@ export const OnBoradingWrapper = ({ sideBarToggle, setSideBarToggle, handleSubmi
             setIsDisable(false);
         }
     }, [stepResponse]);
+
     return (
         <>
             <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>

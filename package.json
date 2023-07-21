@@ -1,6 +1,6 @@
 {
     "name": "@ekoindia/oaas-widget",
-    "version": "1.1.9",
+    "version": "2.0.0",
     "description": "Web widget for onboarding-as-a-service",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -9,7 +9,9 @@
     ],
     "types": "dist/index.d.ts",
     "scripts": {
-        "rollup": "rollup -c --bundleConfigAsCjs",
+        "build": "rollup -c --bundleConfigAsCjs",
+        "publish": "npm publish --access=public || true",
+        "check-updates": "npm outdated --depth=0",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
         "test": "jest",

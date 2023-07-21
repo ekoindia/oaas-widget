@@ -36,7 +36,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA }: GlobalS
                     {({ errors, touched, values, handleChange }) => (
                         <Form>
                             <div className="mb-7 w-[80%] xl:w-[45%]">
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Aadhaar card Number</Labelglobal>
+                                <Labelglobal className="block text-black text-sm font-bold mb-2">Aadhaar Card Number</Labelglobal>
                                 <InputGlobal
                                     className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="aadhaarCardNumber"
