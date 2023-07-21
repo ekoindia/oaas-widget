@@ -38,18 +38,25 @@ import { OnBoradingVist, SelectionScreen } from "@ekoindia/oaas-widget";
    handleSubmit={}
 />
 
-## Local Testing:
+## Local Development:
 
-To include the package in your project, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import it as a local
-dependency.
+To include the package in your local project for testing, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import
+it as a local dependency.
 
-To test the package locally, follow these steps:
+#### To test the package locally:
 
 1. Run the npm link command in the package directory to create a symlink.
+1. Run the npm link @ekoindia/oaas-widget command in your project directory to link the package.
+1. Import the package in your project and use it as a local dependency.
 
-2. Run the npm link @ekoindia/oaas-widget command in your project directory to link the package.
+#### To build and publish to npm:
 
-3. Import the package in your project and use it as a local dependency.
+1. Increment the package version in `package.json` file.
+1. Build the package: `npm run build`
+1. Add your npm credentials using `npm adduser` (app.admin account).
+    1. Enter username, email and password.
+    1. Enter OTP sent to app.admin's email.
+1. Publich the package: `npm run publish`
 
 ## Folder Structure:
 
