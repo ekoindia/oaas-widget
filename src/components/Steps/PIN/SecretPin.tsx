@@ -72,7 +72,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                             </div>
                             Note:
                             <div className="ml-8">
-                                <li>Please set a stron secret PIN to secure your account</li>
+                                <li>Please set a strong secret PIN to secure your account</li>
                                 <li>Your 4-digit secret pin will be required in all the transactions</li>
                             </div>
                             <ButtonGlobal
