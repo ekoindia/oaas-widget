@@ -1,1 +1,1 @@
-export { default as LoctionCapture } from './LoctionCapture';
+export { default as LocationCapture } from './LocationCapture';

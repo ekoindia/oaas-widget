@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const LoctionCapture = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepPropsType) => {
+const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
+
+    React.useEffect(() => {
+        if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'grantPermission' });
+    }, []);
+
     const onSuccess = (location: any) => {
         if (!(location && location.coords && location.coords.latitude)) {
             console.error('Error in GeoLocation=>', location);
@@ -61,4 +66,4 @@ const LoctionCapture = ({ stepData, handleSubmit, isDisabledCTA = false }: Globa
     );
 };
 
-export default LoctionCapture;
+export default LocationCapture;

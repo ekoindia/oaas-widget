@@ -137,7 +137,7 @@ it as a local dependency.
     ┃ ┃ ┃ ┃ ┣ VideoKYC.tsx
     ┃ ┃ ┃ ┃ ┗ index.ts
     ┃ ┃ ┃ ┣ Location
-    ┃ ┃ ┃ ┃ ┣ LoctionCapture.tsx
+    ┃ ┃ ┃ ┃ ┣ LocationCapture.tsx
     ┃ ┃ ┃ ┃ ┗ index.ts
     ┃ ┃ ┃ ┣ OnBoardingStatus
     ┃ ┃ ┃ ┃ ┣ OnboardingStatus.tsx

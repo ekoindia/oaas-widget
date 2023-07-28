@@ -8,7 +8,7 @@ import PanAdharMatch from '../PanSteps/PanAdharMatch';
 import Business from '../../Steps/Business/Business';
 import VideoKYC from '../../Steps/KYC/VideoKYC';
 import OnboardingStatus from '../../Steps/OnBoardingStatus/OnboardingStatus';
-import LoctionCapture from '../../Steps/Location/LoctionCapture';
+import LocationCapture from '../Location/LocationCapture';
 import { useStore } from '../../../store/zustand';
 import Alert from '../../Common/Alert';
 import Fetching from '../../Common/Fetching';
@@ -73,7 +73,7 @@ export const OnBoradingWrapper = ({
                 case 2:
                     return <SelectionScreen handleSubmit={handleStepSubmit} stepData={stepData} isDisabledCTA={isDisable} />;
                 case 3:
-                    return <LoctionCapture stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <LocationCapture stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case 4:
                     return <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 5:
