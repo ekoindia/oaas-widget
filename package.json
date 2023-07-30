@@ -10,7 +10,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "rollup -c --bundleConfigAsCjs",
-        "publish": "npm publish --access=public || true",
+        "publish-try": "npm publish --access=public || true",
         "check-updates": "npm outdated --depth=0",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
