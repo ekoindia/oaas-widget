@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useStore } from '../../store/zustand';
+import React from 'react';
 import imageicon from '../../assets/icons/imageicon.svg';
 type UploadFileProps = {
     type: any;
