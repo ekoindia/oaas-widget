@@ -1,11 +1,16 @@
 import React from 'react';
 
 type LabelProps = {
-  className: string;
-  children?: JSX.Element | string;
+    className?: string;
+    htmlFor?: string;
+    children?: JSX.Element | string;
 };
-const Labelglobal = ({ className, children }: LabelProps) => {
-  return <label className={className}>{children}</label>;
+const Labelglobal = ({ className, htmlFor, children }: LabelProps) => {
+    return (
+        <label className={`block text-black text-sm font-bold mb-1 ${className}`} htmlFor={htmlFor}>
+            {children}
+        </label>
+    );
 };
 
 export default Labelglobal;

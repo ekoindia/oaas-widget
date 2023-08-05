@@ -1,12 +1,9 @@
 // This is Image Preview Component name has to be changed
 
 import React from 'react';
+import retry from '../../../assets/icons/retry.png';
 import { useStore } from '../../../store/zustand';
 import ButtonGlobal from '../ButtonGlobal';
-import retry from '../../../assets/icons/retry.png';
-import camera from '../../assets/icons/camera.svg';
-import Uploadfile from '../Uploadfile';
-import filledcamera from '../../assets/icons/filledcamera.svg';
 
 type FrontcamProps = {
     handleRetake: (input: string) => void;

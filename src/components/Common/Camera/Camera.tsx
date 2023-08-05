@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import ButtonGlobal from '../ButtonGlobal';
 import filledcamera from '../../../assets/icons/filledcamera.svg';
+import ButtonGlobal from '../ButtonGlobal';
 // import retry from '../../assets/icons/retry.png';
 import { useStore } from '../../../store/zustand';
 import { resolutions } from './cameraConfig';

@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import CompleteMark from '../../../assets/icons/completemark.svg';
-import ButtonGlobal from '../ButtonGlobal';
 import { useStore } from '../../../store/zustand';
-import { StepDataType, stepsData } from '../../../utils/data/stepsData';
+import { StepDataType } from '../../../utils/data/stepsData';
 import './Sidebar.css';
 
 type StepperProps = {
