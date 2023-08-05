@@ -3,10 +3,10 @@ import { useStore } from '../../store/zustand';
 import alert from '../../assets/icons/alert.svg';
 import ButtonGlobal from './ButtonGlobal';
 
-type Browse = {
+type BrowseProps = {
     copyType: string;
 };
-const Browse = ({ copyType }: Browse) => {
+const Browse = ({ copyType }: BrowseProps) => {
     const { panVerificationfailed, preview, selectedFile, isYourPan, setIsYourPan, setManageVeriyStep, setPanVerificationfailed, setSelectedFile, setManageVeriyStepback, setUploadedImage } =
         useStore();
 
