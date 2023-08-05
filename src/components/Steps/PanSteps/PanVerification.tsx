@@ -1,76 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import camera from '../../../assets/icons/camera.svg';
-import filledcamera from '../../../assets/icons/filledcamera.svg';
-import ButtonGlobal from '../../Common/ButtonGlobal';
-import Camera from '../../Common/Camera/Camera';
+import React, { useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useStore } from '../../../store/zustand';
-import Browse from '../../Common/Browse';
-import Uploadfile from '../../Common/Uploadfile';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
-import Frontcam from '../../Common/Camera/Frontcam';
-import InputGlobal from '../../Common/InputGlobal';
-import Labelglobal from '../../Common/Labelglobal';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
+import { ButtonGlobal, CamDropzone, InputGlobal, Labelglobal } from '../../Common';
 
-const panRegex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
-
-const panSchema = Yup.object().shape({
-    shopName: Yup.string().required('Required'),
-    panNumber: Yup.string().required('Required').matches(panRegex, 'Pan number is invalid')
-    // shopType: Yup.string().required('Please select any one option')
-});
+const PANREGEX = /^([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
 
 const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [] }: GlobalStepPropsType) => {
-    const { cameraStatus, uploadedImage, setCameraStatus, selectedFile, preview } = useStore();
-    const [panError, setPanError] = useState(true);
+    // console.log('[PanVerification] handleSubmit', handleSubmit);
     const { label, description, isSkipable, primaryCTAText } = stepData;
-    const formValues = {
-        shopType: '',
-        shopName: '',
-        panNumber: ''
-    };
-    const [panImage, setPanImage] = useState({ url: null, fileData: null });
+
+    const { cameraStatus, uploadedImage, setCameraStatus, selectedFile, preview } = useStore();
 
     useEffect(() => {
         setCameraStatus(false);
     }, []);
-    // const handleOnSubmit = () => {
-    //     handleSubmit({ ...stepData, form_data: { panImage, ...formValues }, stepStatus: 3 });
-    // };
+
     const handleSkip = () => {
         handleSubmit({ ...stepData, stepStatus: 2 });
     };
 
-    const handleImageCapture = (image: any, fileData: any) => {
-        setPanImage({
-            url: image,
-            fileData: fileData
-        });
-        setPanError(false);
-    };
-    const handleImageUpload = (files: any, type: any, fileData: any) => {
-        setPanImage({
-            url: files,
-            fileData: fileData
-        });
-        setPanError(false);
-    };
-    const handleRetake = () => {
-        setPanImage({
-            url: null,
-            fileData: null
-        });
-        setPanError(true);
-        setCameraStatus(false);
-    };
-    // const handleChange = (e: any) => {
-    //     console.log('handleChange', e.target.name, e.target.value);
-    //     setFormValues({
-    //         ...formValues,
-    //         [e.target.name]: e.target.value
-    //     });
-    // };
+    const {
+        handleSubmit: handleSubmitRhf,
+        register,
+        formState: { errors },
+        control,
+        watch,
+        setValue
+    } = useForm(
+        {mode: 'onChange'}
+    );
+
+    const watchAll = watch();
+    // console.log('[PAN Verification] watchAll', watchAll);
+    // console.log('[PAN Verification] errors', errors);
+
+    const panVerificationFormMetadata = [
+        { id: 'panNumber', label: 'PAN Number', required: true, type: 'TEXT', placeholder: 'XXXXXXXXXX', validation: { required: true, pattern: PANREGEX, maxLength: 10, minLength: 10 } },
+        {
+            id: 'panImage',
+            label: 'PAN Image',
+            required: true,
+            type: 'IMAGE',
+            validation: { required: true }
+        },
+        {
+            id: 'shopType',
+            label: 'Shop Type',
+            required: true,
+            type: 'LIST',
+            list_elements: shopTypes
+        },
+        {
+            id: 'shopName',
+            label: 'Shop Name',
+            required: true,
+            type: 'TEXT',
+            validation: { required: true }
+        }
+    ];
+
     return (
         <div className="pt-8 sm:p-8 xl:w-[55%] lg:w-[70%]">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
@@ -78,119 +67,110 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                 {description}
                 <span className="text-primary"> .jpg, .png, .pdf</span>
             </div>
-            <Formik
-                initialValues={formValues}
-                validationSchema={panSchema}
-                onSubmit={(formData) => {
-                    if (!panError) {
-                        handleSubmit({ ...stepData, form_data: { panImage, ...formData }, stepStatus: 3 });
-                    }
-                }}
-            >
-                {({ errors, touched, values, handleChange }) => (
-                    <Form>
-                        <div>
-                            <Labelglobal className="block text-black text-sm font-bold mb-2">Pan Card Number</Labelglobal>
-                            <InputGlobal
-                                className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                name="panNumber"
-                                value={values.panNumber.toUpperCase()}
-                                maxLength="10"
-                                onChange={handleChange('panNumber')}
-                                id="panNumber"
-                                type="text"
-                                placeholder=""
-                            />
-                            {errors.panNumber && touched.panNumber ? <div className="text-red">{errors.panNumber}</div> : null}
-                        </div>
-                        <div className="relative sm:block mt-10">
-                            {uploadedImage === 0 ? (
-                                cameraStatus === true && panImage?.url === null ? (
-                                    <Camera type="pan" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={panImage} />
-                                ) : (
-                                    <>
-                                        {/* <div className="documentimgstyle overflow-hidden w-[100%]"> */}
-                                        {panImage.url !== null || undefined ? (
-                                            <div className="flex flex-col w-[100%] md:w-[100%] lg:w-[100%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
-                                                <Frontcam imageVal={panImage.url} handleRetake={() => handleRetake()} />
-                                            </div>
-                                        ) : (
-                                            <>
-                                                <div className="p-8 text-sm text-darkdefault border border-default rounded-md bg-lightdefault border-dashed flex flex-col justify-center items-center overflow-hidden w-[100%]">
-                                                    <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
-                                                    Drag and drop copy of PAN Card or you can
-                                                    <div className="flex  mt-8">
-                                                        <Uploadfile type="pan" handleUpload={(files: any, type: any, fileData: any) => handleImageUpload(files, type, fileData)} />
-                                                        <ButtonGlobal
-                                                            className="text-white text-xs bottom-1.5 bg-primary font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center"
-                                                            onClick={() => setCameraStatus(true)}
-                                                        >
-                                                            <>
-                                                                <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
-                                                            </>
-                                                        </ButtonGlobal>
-                                                    </div>
-                                                </div>
-                                                {panError === true && <div className="self-start text-red">Required</div>}
-                                            </>
-                                        )}
-                                        {/* </div> */}
-                                    </>
-                                )
-                            ) : (
-                                <Browse copyType="Pan Copy" />
-                            )}
-                        </div>
-                        <div className="mt-2">
-                            <Labelglobal className="block text-black text-sm font-bold mb-2">Shop Type</Labelglobal>
-                            <select
-                                name="shopType"
-                                value={values.shopType}
-                                onChange={handleChange('shopType')}
-                                id="cars"
-                                className="px-0.5 py-[9px] border-2 border-lightdefault-800 w-full rounded-md bg-white border-lightdefault"
-                            >
-                                {shopTypes?.length > 0 &&
-                                    shopTypes?.map((shop: any, idx: number) => (
-                                        <option value={shop.value} key={`${idx}_${shop.value}`}>
-                                            {shop.label}
-                                        </option>
-                                    ))}
-                            </select>
-                        </div>
-                        <div className="mt-2">
-                            <Labelglobal className="block text-black text-sm font-bold mb-2">Shop Name</Labelglobal>
-                            <InputGlobal
-                                className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                name="shopName"
-                                value={values.shopName}
-                                onChange={handleChange('shopName')}
-                                id="shopName"
-                                type="text"
-                                placeholder=""
-                            />
-                            {errors.shopName && touched.shopName ? <div className="text-red">{errors.shopName}</div> : null}
-                        </div>
-                        <span className={`flex flex-col items-center sm:block`}>
-                            <ButtonGlobal
-                                className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
-                                disabled={isDisabledCTA}
-                                // onClick={handleOnSubmit}
-                            >
-                                {isDisabledCTA ? 'Loading...' : primaryCTAText}
-                            </ButtonGlobal>
 
-                            {isSkipable && (
-                                <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
-                                    Skip this step
-                                </ButtonGlobal>
-                            )}
-                        </span>
-                    </Form>
-                )}
-            </Formik>
+            <form onSubmit={handleSubmitRhf(handleSubmit)}>
+                <Value
+                    {...{
+                        formHeading: 'PAN Verification',
+                        formLabel: 'Upload your PAN copy to verify your business. Accepted formats are .jpg, .png, .pdf',
+                        renderer: panVerificationFormMetadata,
+                        register,
+                        control,
+                        setValue,
+                        errors
+                    }}
+                />
+                <div className="flex flex-col items-center sm:block">
+                    <ButtonGlobal className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA} type="submit">
+                        {isDisabledCTA ? 'Loading...' : primaryCTAText}
+                    </ButtonGlobal>
+
+                    {isSkipable && (
+                        <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
+                            Skip this step
+                        </ButtonGlobal>
+                    )}
+                </div>
+            </form>
         </div>
     );
 };
 
 export default PanVerification;
+
+type FormProps = {
+    renderer: Array<any>;
+    register: Function;
+    control: any;
+    setValue: Function;
+    errors: any;
+};
+
+const Value = ({ renderer, register, control, setValue, errors }: FormProps) => {
+    return (
+        <div className="flex flex-col gap-y-2">
+            {renderer?.map(({ id, label, required, value, disabled, list_elements, type, placeholder, validation }) => {
+                switch (type) {
+                    case 'TEXT':
+                        return (
+                            <div>
+                                <Labelglobal htmlFor={id}>{label}</Labelglobal>
+                                <InputGlobal
+                                    className="block w-full px-3 py-2 mb-1 leading-tight border-2 rounded outline-none border-lightdefault"
+                                    id={id}
+                                    name={id}
+                                    value={value}
+                                    required={required}
+                                    placeholder={placeholder}
+                                    disabled={disabled}
+                                    {...register(id, { ...validation })}
+                                />
+                                {errors[id]?.type === 'required' && <p className="text-xs text-darkdanger">Required</p>}
+                                {errors[id]?.type === 'pattern' && <p className="text-xs text-darkdanger">Please enter correct value</p>}
+                                {errors[id]?.type === 'maxLength' && <p className="text-xs text-darkdanger">Length exceeds</p>}
+                                {errors[id]?.type === 'minLength' && <p className="text-xs text-darkdanger">Length not correct</p>}
+                            </div>
+                        );
+                    case 'IMAGE':
+                        return (
+                            <Controller
+                                name={id}
+                                control={control}
+                                render={({ field: { value } }) => {
+                                    return (
+                                        <div>
+                                            <CamDropzone file={value} setFile={(file) => setValue(id, file)} />
+                                            {errors[id]?.type === 'required' && <p className="text-xs text-darkdanger">Required</p>}
+                                        </div>
+                                    );
+                                }}
+                                rules={{
+                                    ...validation
+                                }}
+                            />
+                        );
+                    case 'LIST':
+                        return (
+                            <div>
+                                <Labelglobal htmlFor={id}>{label}</Labelglobal>
+                                <select
+                                    id={id}
+                                    name={id}
+                                    className="px-0.5 py-[9px] border-2 border-lightdefault-800 w-full rounded-md bg-white border-lightdefault"
+                                    {...register(id, { ...validation })}
+                                >
+                                    {list_elements?.length > 0 &&
+                                        list_elements.map((shop: any, idx: number) => (
+                                            <option value={shop.value} key={`${idx}_${shop.value}`}>
+                                                {shop.label}
+                                            </option>
+                                        ))}
+                                </select>
+                                {errors[id]?.type === 'required' && <p className="text-xs text-darkdanger">Required</p>}
+                            </div>
+                        );
+                }
+            })}
+        </div>
+    );
+};

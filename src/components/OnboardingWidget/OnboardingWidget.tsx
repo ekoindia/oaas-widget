@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import '../../index.css';
+import { useStore } from '../../store/zustand';
+import { StepDataType } from '../../utils/data/stepsData';
 import Header from '../Common/Header/Header';
 import Headermobile from '../Common/Header/Headermobile';
 import { OnBoradingWrapper } from '../Steps';
-import { useStore } from '../../store/zustand';
-import { StepDataType } from '../../utils/data/stepsData';
-import '../../index.css';
+
+const selectOption = [
+    {
+        label: '--Select--',
+        value: ''
+    }
+];
 
 type OAASPackageProps = {
     defaultStep: string;
@@ -36,6 +43,7 @@ const OnboardingWidget = ({
     // theme,
     primaryColor
 }: OAASPackageProps) => {
+
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
     const [esignReady, setEsignReady] = useState<boolean>(true); // TODO: Set to false & then it will be set to true after a call from the parent app
@@ -112,8 +120,8 @@ const OnboardingWidget = ({
                     setSideBarToggle={setSideBarToggle}
                     handleSubmit={handleSubmit}
                     stepResponse={stepResponse}
-                    shopTypes={shopTypes}
-                    stateTypes={stateTypes}
+                    shopTypes={[...selectOption, ...shopTypes]}
+                    stateTypes={[...selectOption, ...stateTypes]}
                     selectedMerchantType={selectedMerchantType}
                     handleStepCallBack={handleStepCallBack}
                     userData={userData}
