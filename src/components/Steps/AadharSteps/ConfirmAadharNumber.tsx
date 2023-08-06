@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { Form, Formik } from 'formik';
+import React from 'react';
+import * as Yup from 'yup';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
-import Labelglobal from '../../Common/Labelglobal';
 import InputGlobal from '../../Common/InputGlobal';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
+import Labelglobal from '../../Common/Labelglobal';
 
 const ConfirmAadhaarNumberSchema = Yup.object().shape({
     aadhaarCardNumber: Yup.string().required('Required').min(12, 'Minimum 12 characters required')
 });
 
-const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
+const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgDetail }: GlobalStepPropsType) => {
     const formValues = { aadhaarCardNumber: '' };
     const { label, description, isSkipable, primaryCTAText } = stepData;
     // const handleConfirmAadhaarClick = () => {
@@ -24,7 +24,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA }: GlobalS
         <div className="pt-8 sm:p-8">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
-            <div className="mt-10 relative"></div>
+            <div className="relative mt-10"></div>
             <span className={`flex flex-col items-center sm:block`}>
                 <Formik
                     initialValues={formValues}
@@ -36,9 +36,9 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA }: GlobalS
                     {({ errors, touched, values, handleChange }) => (
                         <Form>
                             <div className="mb-7 w-[80%] xl:w-[45%]">
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Aadhaar Card Number</Labelglobal>
+                                <Labelglobal className="block mb-2 text-sm font-bold text-black">Aadhaar Card Number</Labelglobal>
                                 <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
+                                    className="block w-full px-3 py-2 mb-2 leading-tight border-2 rounded outline-none border-lightdefault"
                                     name="aadhaarCardNumber"
                                     value={values.aadhaarCardNumber}
                                     onChange={handleChange('aadhaarCardNumber')}
@@ -50,15 +50,15 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA }: GlobalS
                                 {errors.aadhaarCardNumber && touched.aadhaarCardNumber ? <div className="text-darkdanger">{errors.aadhaarCardNumber}</div> : null}
                             </div>
                             <div>
-                                You hereby consent to Eko India Financial Services Private Limited as your authorized representative to receive your Aadhaar verification information from UIDAI to
-                                validate your Aadhaar details.
+                                You hereby consent to {orgDetail?.org_name || 'Eko India Financial Services Private Limited'} as your authorized representative to receive your Aadhaar verification
+                                information from UIDAI to validate your Aadhaar details.
                             </div>
                             <ButtonGlobal className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                             </ButtonGlobal>
 
                             {isSkipable && (
-                                <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
+                                <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
                                     Skip this step
                                 </ButtonGlobal>
                             )}

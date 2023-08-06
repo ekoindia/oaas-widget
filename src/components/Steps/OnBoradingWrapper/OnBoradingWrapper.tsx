@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useStore } from '../../../store/zustand';
+import { StepDataType } from '../../../utils/data/stepsData';
+import Alert from '../../Common/Alert';
+import Fetching from '../../Common/Fetching';
 import Sidebar from '../../Common/Sidebar/Sidebar';
-import SupersetComponent from '../SupersetComponent/SupersetComponent';
-import Welcome from '../Welcome/Welcome';
-import PanVerification from '../PanSteps/PanVerification';
-import AdharVerifiction from '../AadharSteps/AdharVerifiction';
-import PanAdharMatch from '../PanSteps/PanAdharMatch';
 import Business from '../../Steps/Business/Business';
 import VideoKYC from '../../Steps/KYC/VideoKYC';
 import OnboardingStatus from '../../Steps/OnBoardingStatus/OnboardingStatus';
-import LocationCapture from '../Location/LocationCapture';
-import { useStore } from '../../../store/zustand';
-import Alert from '../../Common/Alert';
-import Fetching from '../../Common/Fetching';
-import SelectionScreen from '../SelectionScreen/SelectionScreen';
-import { StepDataType } from '../../../utils/data/stepsData';
-import SignAgreement from '../Agreement/SignAgreement';
 import AadhaarConsent from '../AadharSteps/AadharConsent';
-import ConfirmAadhaarNumber from '../AadharSteps/ConfirmAadharNumber';
 import AadhaarNumberOtpVerify from '../AadharSteps/AadharNumberOtpVerify';
-import BusinessMerchant from '../Business/BusinessMerchant';
-import SecretPin from '../PIN/SecretPin';
+import AdharVerifiction from '../AadharSteps/AdharVerifiction';
+import ConfirmAadhaarNumber from '../AadharSteps/ConfirmAadharNumber';
 import ActivationPlan from '../ActivationPlan/ActivationPlan';
+import SignAgreement from '../Agreement/SignAgreement';
+import BusinessMerchant from '../Business/BusinessMerchant';
+import LocationCapture from '../Location/LocationCapture';
+import SecretPin from '../PIN/SecretPin';
+import PanAdharMatch from '../PanSteps/PanAdharMatch';
+import PanVerification from '../PanSteps/PanVerification';
+import SelectionScreen from '../SelectionScreen/SelectionScreen';
+import Welcome from '../Welcome/Welcome';
 
 type HomepageProps = {
     sideBarToggle: boolean;
@@ -33,6 +32,7 @@ type HomepageProps = {
     handleStepCallBack: any;
     userData: any;
     esignReady: boolean;
+    orgDetail?: any;
 };
 
 export const OnBoradingWrapper = ({
@@ -45,7 +45,8 @@ export const OnBoradingWrapper = ({
     stateTypes,
     handleStepCallBack,
     userData,
-    esignReady
+    esignReady,
+    orgDetail
 }: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
     const [isDisable, setIsDisable] = useState<boolean>(false);
@@ -77,9 +78,9 @@ export const OnBoradingWrapper = ({
                 case 4:
                     return <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 5:
-                    return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
                 case 6:
-                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
                 case 7:
                     return <AadhaarNumberOtpVerify stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case 8:
@@ -134,12 +135,12 @@ export const OnBoradingWrapper = ({
         <>
             <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
                 <div className="flex items-center">
-                    <div className="flex flex-col w-full h-full relative">
+                    <div className="relative flex flex-col w-full h-full">
                         <div className="sm:flex sm:justify-between">
                             <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={steps} userData={userData} />
                             </span>
-                            <div className="flex w-full rounded-2xl sm:ml-8 mb-10 pb-10 sm:bg-white relative">
+                            <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">
                                 {renderStep(currentStep)}
                                 {/* {fetchData === true ? (
                                     <span className="hidden sm:block">

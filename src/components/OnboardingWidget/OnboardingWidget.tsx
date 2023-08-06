@@ -28,6 +28,7 @@ type OAASPackageProps = {
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
     primaryColor?: string;
+    orgDetail: any;
 };
 const OnboardingWidget = ({
     defaultStep = '12400',
@@ -41,9 +42,9 @@ const OnboardingWidget = ({
     userData,
     stepsData,
     // theme,
-    primaryColor
+    primaryColor,
+    orgDetail
 }: OAASPackageProps) => {
-
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
     const [esignReady, setEsignReady] = useState<boolean>(true); // TODO: Set to false & then it will be set to true after a call from the parent app
@@ -126,6 +127,7 @@ const OnboardingWidget = ({
                     handleStepCallBack={handleStepCallBack}
                     userData={userData}
                     esignReady={esignReady}
+                    orgDetail={orgDetail}
                 />
                 {/* <SelectionScreen /> */}
             </div>

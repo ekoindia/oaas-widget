@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import { Form, Formik } from 'formik';
+import React from 'react';
+import * as Yup from 'yup';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
-import Labelglobal from '../../Common/Labelglobal';
 import InputGlobal from '../../Common/InputGlobal';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-const consentText =
-    'You hereby consent to Eko India Financial Services Private Limited as your authorized representative to receive your personal and credit information from UIDAI, CIBIL and other government and private agencies for the purpose of providing you credit in the form of loans or line of credit through our lending partners (&quot;End Use Purpose&quot;).';
+import Labelglobal from '../../Common/Labelglobal';
 
 const aadhaarConsentSchema = Yup.object().shape({
     name: Yup.string().required('Required').min(3, 'Minimum 3 characters required')
 });
 
-const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
+const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgDetail }: GlobalStepPropsType) => {
     const { label, description, isSkipable, primaryCTAText } = stepData;
     console.log('stepDAta', stepData);
+    const consentText = `You hereby consent to { ${
+        orgDetail?.org_name
+    } || ${'Eko India Financial Services Private Limited'}} as your authorized representative to receive your personal and credit information from UIDAI, CIBIL and other government and private agencies for the purpose of providing you credit in the form of loans or line of credit through our lending partners (&quot;End Use Purpose&quot;).`;
     // const handleAadhaarConsentClick = () => {
     //     handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
     // };
@@ -26,7 +27,7 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPro
         <div className="pt-8 sm:p-8">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
-            <div className="mt-10 relative"></div>
+            <div className="relative mt-10"></div>
             <span className={`flex flex-col items-center sm:block`}>
                 <Formik
                     initialValues={formValues}
@@ -39,9 +40,9 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPro
                 >
                     {({ errors, touched, values, handleChange }) => (
                         <Form>
-                            <Labelglobal className="block text-black text-sm font-bold mb-2">Name</Labelglobal>
+                            <Labelglobal className="block mb-2 text-sm font-bold text-black">Name</Labelglobal>
                             <InputGlobal
-                                className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
+                                className="block w-full px-3 py-2 mb-2 leading-tight border-2 rounded outline-none border-lightdefault"
                                 name="name"
                                 value={values.name}
                                 onChange={handleChange('name')}
@@ -55,7 +56,7 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPro
                             </ButtonGlobal>
 
                             {isSkipable && (
-                                <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
+                                <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
                                     Skip this step
                                 </ButtonGlobal>
                             )}

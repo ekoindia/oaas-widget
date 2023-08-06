@@ -9,4 +9,5 @@ export type GlobalStepPropsType = {
     handleStepCallBack?: any;
     primaryColor?: string;
     esignReady?: boolean;
+    orgDetail?: any;
 };
