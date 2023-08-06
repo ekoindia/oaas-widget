@@ -58,7 +58,7 @@ it as a local dependency.
 1. Add your npm credentials using `npm adduser` (app.admin account).
     1. Enter username, email and password.
     1. Enter OTP sent to app.admin's email.
-1. Publich the package: `npm run publish`
+1. Publich the package: `npm run publish-try`
 
 ## Folder Structure:
 
