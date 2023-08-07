@@ -15,7 +15,6 @@ type InputProps = {
 };
 
 const InputGlobal = forwardRef(({ type = 'text', id, className, placeholder, onChange, value, name, maxLength, max, minLength, ...rest }: InputProps, ref: Ref<HTMLInputElement>) => {
-    console.log('[InputGlobal] value', value);
     return (
         <input
             type={type}

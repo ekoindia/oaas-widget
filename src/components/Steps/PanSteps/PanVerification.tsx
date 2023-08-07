@@ -25,18 +25,24 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
         register,
         formState: { errors },
         control,
-        watch,
+        // watch,
         setValue
-    } = useForm(
-        {mode: 'onChange'}
-    );
+    } = useForm(/* { mode: 'onChange' } */);
 
-    const watchAll = watch();
+    // const watchAll = watch();
     // console.log('[PAN Verification] watchAll', watchAll);
     // console.log('[PAN Verification] errors', errors);
 
     const panVerificationFormMetadata = [
-        { id: 'panNumber', label: 'PAN Number', required: true, type: 'TEXT', placeholder: 'XXXXXXXXXX', validation: { required: true, pattern: PANREGEX, maxLength: 10, minLength: 10 } },
+        {
+            id: 'panNumber',
+            label: 'PAN Number',
+            required: true,
+            type: 'TEXT',
+            placeholder: 'XXXXXXXXXX',
+            validation: { required: true, pattern: PANREGEX, maxLength: 10, minLength: 10 },
+            capitalize: true
+        },
         {
             id: 'panImage',
             label: 'PAN Image',
@@ -68,7 +74,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                 <span className="text-primary"> .jpg, .png, .pdf</span>
             </div>
 
-            <form onSubmit={handleSubmitRhf(handleSubmit)}>
+            <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 3 }))}>
                 <Value
                     {...{
                         formHeading: 'PAN Verification',
@@ -109,7 +115,7 @@ type FormProps = {
 const Value = ({ renderer, register, control, setValue, errors }: FormProps) => {
     return (
         <div className="flex flex-col gap-y-2">
-            {renderer?.map(({ id, label, required, value, disabled, list_elements, type, placeholder, validation }) => {
+            {renderer?.map(({ id, label, required, value, disabled, list_elements, type, placeholder, validation, maxLength, minLength, capitalize }) => {
                 switch (type) {
                     case 'TEXT':
                         return (
@@ -123,12 +129,21 @@ const Value = ({ renderer, register, control, setValue, errors }: FormProps) => 
                                     required={required}
                                     placeholder={placeholder}
                                     disabled={disabled}
-                                    {...register(id, { ...validation })}
+                                    maxLength={maxLength}
+                                    minLength={minLength}
+                                    {...register(id, {
+                                        ...validation,
+                                        onChange: (e: any) => {
+                                            let _text = e.target.value;
+                                            _text = capitalize ? _text.toUpperCase() : _text;
+                                            setValue(id, _text);
+                                        }
+                                    })}
                                 />
                                 {errors[id]?.type === 'required' && <p className="text-xs text-darkdanger">Required</p>}
                                 {errors[id]?.type === 'pattern' && <p className="text-xs text-darkdanger">Please enter correct value</p>}
                                 {errors[id]?.type === 'maxLength' && <p className="text-xs text-darkdanger">Length exceeds</p>}
-                                {errors[id]?.type === 'minLength' && <p className="text-xs text-darkdanger">Length not correct</p>}
+                                {errors[id]?.type === 'minLength' && <p className="text-xs text-darkdanger">Insufficient Characters</p>}
                             </div>
                         );
                     case 'IMAGE':
