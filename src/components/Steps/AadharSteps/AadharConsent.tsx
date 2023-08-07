@@ -13,7 +13,7 @@ const aadhaarConsentSchema = Yup.object().shape({
 const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgDetail }: GlobalStepPropsType) => {
     const { label, description, isSkipable, primaryCTAText } = stepData;
     console.log('stepDAta', stepData);
-    const org_name = orgDetail?.org_name || 'us';
+    const org_name = orgDetail?.org_name || orgDetail?.app_name || 'us';
     const consentText = `You hereby consent to ${org_name} as your authorized representative to receive your personal and credit information from UIDAI, CIBIL and other government and private agencies for the purpose of providing you credit in the form of loans or line of credit through our lending partners (&quot;End Use Purpose&quot;).`;
     // const handleAadhaarConsentClick = () => {
     //     handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
