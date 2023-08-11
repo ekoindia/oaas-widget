@@ -11,3 +11,4 @@ export { default as Labelglobal } from './Labelglobal';
 export { default as Modal } from './Modal';
 export { Sidebar } from './Sidebar';
 export { default as Uploadfile } from './Uploadfile';
+export { default as Spinner } from './Spinner';
