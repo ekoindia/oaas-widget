@@ -31,7 +31,7 @@ type HomepageProps = {
     stateTypes: Array<any>;
     handleStepCallBack: any;
     userData: any;
-    esignReady: boolean;
+    esignStatus: any;
     orgDetail?: any;
 };
 
@@ -45,7 +45,7 @@ export const OnBoradingWrapper = ({
     stateTypes,
     handleStepCallBack,
     userData,
-    esignReady,
+    esignStatus,
     orgDetail
 }: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
@@ -97,7 +97,7 @@ export const OnBoradingWrapper = ({
                 case 11:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 12:
-                    return <SignAgreement stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} esignReady={esignReady} />;
+                    return <SignAgreement stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} esignStatus={esignStatus} />;
                 case 13:
                     return <ActivationPlan stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case 14:

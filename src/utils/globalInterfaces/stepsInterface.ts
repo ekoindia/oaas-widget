@@ -8,6 +8,6 @@ export type GlobalStepPropsType = {
     stateTypes?: Array<any>;
     handleStepCallBack?: any;
     primaryColor?: string;
-    esignReady?: boolean;
+    esignStatus?: number;
     orgDetail?: any;
 };

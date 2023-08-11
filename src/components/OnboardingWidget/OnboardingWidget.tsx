@@ -28,8 +28,10 @@ type OAASPackageProps = {
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
     primaryColor?: string;
+    esignStatus: number;
     orgDetail: any;
 };
+
 const OnboardingWidget = ({
     defaultStep = '12400',
     handleSubmit,
@@ -43,11 +45,12 @@ const OnboardingWidget = ({
     stepsData,
     // theme,
     primaryColor,
+    esignStatus,
     orgDetail
 }: OAASPackageProps) => {
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
-    const [esignReady, setEsignReady] = useState<boolean>(true); // TODO: Set to false & then it will be set to true after a call from the parent app
+    // const [esignStatus, setEsignStatus] = useState<number>(0); // 0: loading, 1: ready, 2: failed
 
     useEffect(() => {
         // Set Primary Color as css var "color-primary"
@@ -67,21 +70,25 @@ const OnboardingWidget = ({
         data?: object;
     };
 
-    /**
-     * receive message from the parent app
-     * @param options
-     * @param options.type  type/action of message
-     * @param options.data  additional data to be passed
-     */
-    const postMessage = ({ type, data }: PostMessageType) => {
-        console.log('[oaas] > postMessage: ', type, data);
-
-        switch (type) {
-            case 'esign:ready':
-                setEsignReady(true);
-                break;
-        }
-    };
+    // useImperativeHandle(ref, () => ({
+    //     /**
+    //      * receive message from the parent app
+    //      * @param options
+    //      * @param options.type  type/action of message
+    //      * @param options.data  additional data to be passed
+    //      */
+    //     // postMessage: ({ type, data }: PostMessageType) => {
+    //     //     console.log('[oaas] > postMessage: ', type, data);
+    //     //     switch (type) {
+    //     //         case 'esign:ready':
+    //     //             setEsignStatus(1);
+    //     //             break;
+    //     //         case 'esign:failed':
+    //     //             setEsignStatus(2);
+    //     //             break;
+    //     //     }
+    //     // }
+    // }));
 
     let visibleStepData = stepsData;
 
@@ -126,7 +133,7 @@ const OnboardingWidget = ({
                     selectedMerchantType={selectedMerchantType}
                     handleStepCallBack={handleStepCallBack}
                     userData={userData}
-                    esignReady={esignReady}
+                    esignStatus={esignStatus}
                     orgDetail={orgDetail}
                 />
                 {/* <SelectionScreen /> */}

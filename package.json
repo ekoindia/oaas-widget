@@ -1,6 +1,6 @@
 {
     "name": "@ekoindia/oaas-widget",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "Web widget for onboarding-as-a-service",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -81,6 +81,7 @@
         "react-webcam": "^7.0.1",
         "rollup-plugin-typescript2": "^0.34.1",
         "sass-loader": "^13.2.1",
+        "tailwind-merge": "^1.14.0",
         "tesseract.js": "^4.0.3",
         "ts-node": "^10.9.1",
         "yup": "^1.1.1",
