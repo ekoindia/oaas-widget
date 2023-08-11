@@ -7,7 +7,7 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
-    const [roleVal, setRoleVal] = React.useState<number>(2);
+    const [roleVal, setRoleVal] = React.useState<number>(0);
     const handleChange = (e: any) => {
         setRoleVal(parseInt(e.target.value));
     };
@@ -29,7 +29,7 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor }
                     ?.filter((role: any) => role.isVisible)
                     ?.map((role: any, idx: number) => (
                         <label className="flex mb-5 cursor-pointer" key={`${idx}_${role.id}`}>
-                            <div className="mr-5 border-2 border-slate-200  p-4 rounded-full">
+                            <div className="mr-5 border-2 border-slate-200 p-4 rounded-full">
                                 <img src={role.id === 1 ? userMerchant : role.id === 2 ? userDistributor : userEnterprise}></img>
                             </div>
                             <div className="flex flex-col mr-5 w-full justify-center">
@@ -84,11 +84,11 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor }
                 </div>
             </div> */}
             <ButtonGlobal
-                className="bg-primary bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded"
+                className="mt-6 mt-8"
                 onClick={() => {
                     handleSubmit({ ...stepData, form_data: { merchant_type: roleVal } });
                 }}
-                disabled={isDisabledCTA}
+                disabled={isDisabledCTA || roleVal <= 0}
             >
                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
             </ButtonGlobal>
