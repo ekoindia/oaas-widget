@@ -528,8 +528,4 @@ Please refer to the project documentation for detailed instructions and code exa
 
 License [MIT]
 
-Git Address: https://github.com/ekoindia/oaas_eko_package
-
-NPM Link: https://www.npmjs.com/package/eko-oaas-package
-
-Thank you for using eko-oaas-package TypeScript NPM package!
+NPM Link: https://www.npmjs.com/package/@ekoindia/oaas-widget
