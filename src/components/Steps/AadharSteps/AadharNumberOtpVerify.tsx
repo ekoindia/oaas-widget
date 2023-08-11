@@ -111,12 +111,12 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                 />
                                 {errors.shareCode && touched.shareCode ? <div className="text-darkdanger">{errors.shareCode}</div> : null}
                             </div>
-                            <ButtonGlobal className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
+                            <ButtonGlobal className="w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                             </ButtonGlobal>
 
                             {isSkipable && (
-                                <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
+                                <ButtonGlobal className="sm:ml-10 mt-6" onClick={handleSkip}>
                                     Skip this step
                                 </ButtonGlobal>
                             )}

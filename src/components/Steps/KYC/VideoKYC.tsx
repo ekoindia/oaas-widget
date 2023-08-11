@@ -66,7 +66,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                                     <div className="sm:hidden xl:block">Take a live photo/video with ID proof</div>
                                     {/* <InputGlobal type="search" id="search" className="videoKyc min-w-fit" placeholder="Take a live photo/video with ID proof" value={image} /> */}
                                     <ButtonGlobal
-                                        className="text-white text-xs bg-primary hover:bg-black focus:ring-4 focus:outline-none focus:ring-primary max-h-8 min-w-fit font-medium rounded-md pl-2 pr-2 py-[6px] w-fit flex justify-center items-center"
+                                        className="text-xs focus:ring-4 focus:outline-none focus:ring-primary max-h-8 min-w-fit font-medium rounded-md pl-2 pr-2 py-[6px] w-fit"
                                         onClick={() => setCameraStatus(true)}
                                     >
                                         <>
@@ -80,7 +80,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                     )}
                     <span className={`flex flex-col items-center sm:block mt-8`}>
                         <ButtonGlobal
-                            className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
+                            className="mt-4 w-fit sm:w-fit text-[16px]"
                             onClick={handleOnSubmit}
                             disabled={isDisabledCTA || videoKycError}
                             // setCapturelocationData={handleLocationCapture}

@@ -76,7 +76,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                                 <li>Your 4-digit secret pin will be required in all the transactions</li>
                             </div>
                             <ButtonGlobal
-                                className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
+                                className="mt-4 w-fit sm:w-fit text-[16px]"
                                 // onClick={handleAadhaarConsentClick}
                                 type="submit"
                                 disabled={isDisabledCTA}
@@ -84,7 +84,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                             </ButtonGlobal>
                             {isSkipable && (
-                                <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
+                                <ButtonGlobal className="sm:ml-10 mt-6" onClick={handleSkip}>
                                     Skip this step
                                 </ButtonGlobal>
                             )}

@@ -17,7 +17,7 @@ const Alert = () => {
                 Your onboarding process can not be completed without Aadhaar verification. Please complete the same to proceed.
             </span>
             <ButtonGlobal
-                className="bg-bg-sky bg-black text-white font-semibold mt-8 py-2 py-2 px-8 w-[80%] w-[10%] text-lg px-8 rounded"
+                className="bg-bg-sky font-semibold mt-8 w-[80%] w-[10%] text-lg px-8"
                 onClick={() => {
                     setFinish(false);
                 }}

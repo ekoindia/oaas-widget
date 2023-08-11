@@ -76,7 +76,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                     <Form className="bg-white mt-4 ml-6 w-full mr-2">
                         <div className="mt-8 text-black text-lg mb-4 font-bold">Enter Your Details</div>
                         <ButtonGlobal
-                            className="bg-primary hover:bg-black text-white font-semibold mt-3 mb-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
+                            className="mt-3 mb-4 w-fit sm:w-fit text-[16px]"
                             onClick={handleLocation}
                             type="button"
                             // disabled={}
@@ -221,7 +221,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                 </select>
                             </div> */}
                         </div>
-                        <ButtonGlobal className="bg-primary bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded" disabled={isDisabledCTA}>
+                        <ButtonGlobal className="mt-8" disabled={isDisabledCTA}>
                             {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                         </ButtonGlobal>
                     </Form>

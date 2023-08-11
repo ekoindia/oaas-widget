@@ -53,12 +53,12 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgDetail
                                 You hereby consent to {orgDetail?.org_name || orgDetail?.app_name || 'us'} as your authorized representative to receive your Aadhaar verification information from UIDAI
                                 to validate your Aadhaar details.
                             </div>
-                            <ButtonGlobal className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
+                            <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                             </ButtonGlobal>
 
                             {isSkipable && (
-                                <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
+                                <ButtonGlobal className="mt-6 sm:ml-10" onClick={handleSkip}>
                                     Skip this step
                                 </ButtonGlobal>
                             )}

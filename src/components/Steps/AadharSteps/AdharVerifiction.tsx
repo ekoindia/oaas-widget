@@ -121,7 +121,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                         }}
                                                     />
                                                     <ButtonGlobal
-                                                        className="text-white text-xs bottom-1.5 bg-primary font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center"
+                                                        className="text-xs bottom-1.5 font-medium rounded-md pl-2 pr-2 py-[6px] w-max mr-2"
                                                         onClick={() => (setCameraStatus(true), setCameraType('front'), setImage(null))}
                                                     >
                                                         <>
@@ -156,7 +156,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                         }}
                                                     />
                                                     <ButtonGlobal
-                                                        className="text-white text-xs bottom-1.5 bg-primary font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center"
+                                                        className="text-xs bottom-1.5 font-medium rounded-md pl-2 pr-2 py-[6px] w-max mr-2"
                                                         onClick={() => (setCameraStatus(true), setCameraType('back'))}
                                                     >
                                                         <>
@@ -179,7 +179,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
             </div>
             <span className={`flex flex-col items-center sm:block`}>
                 <ButtonGlobal
-                    className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
+                    className="mt-4 py-2 px-8 w-fit sm:w-fit text-[16px]"
                     onClick={handleClickAdhar}
                     // setCapturelocationData={handleLocationCapture}
                     // getLocation={true}

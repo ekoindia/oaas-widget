@@ -20,7 +20,7 @@ const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                     <span className="sm:block"> We ensure, you&apos;ll be assisted at every step.</span>
                 </p>
                 <ButtonGlobal
-                    className="bg-primary bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded"
+                    className="mt-6 mt-8"
                     // onClick={() => {
                     //     currentStep === steps.length + 1 ? setCompleted(true) : (setCurrentStepPlus(), setStepsStatus([...stepsStatus, { progress: 'In Progress', step: currentStep + 1 }]));
                     // }}

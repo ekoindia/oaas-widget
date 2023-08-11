@@ -87,10 +87,10 @@ const Browse = ({ copyType }: BrowseProps) => {
                             </div>
                             {isYourPan === false ? (
                                 <div>
-                                    <ButtonGlobal className="bg-primary text-white mr-3 hover:bg-black brws_btn" onClick={() => (setIsYourPan(true), setManageVeriyStep())}>
+                                    <ButtonGlobal className="mr-3 brws_btn" onClick={() => (setIsYourPan(true), setManageVeriyStep())}>
                                         Yes
                                     </ButtonGlobal>
-                                    <ButtonGlobal className="bg-white text-primary hover:bg-white shadow-2xl brws_btn" onClick={() => (setPanVerificationfailed(0), setSelectedFile(undefined))}>
+                                    <ButtonGlobal className="bg-white text-primary brws_btn" onClick={() => (setPanVerificationfailed(0), setSelectedFile(undefined))}>
                                         No
                                     </ButtonGlobal>
                                 </div>

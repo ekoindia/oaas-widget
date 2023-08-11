@@ -192,7 +192,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                                 </select>
                             </div>
                         </div>
-                        <ButtonGlobal className="bg-primary bg-black text-white font-bold mt-6 mt-8 py-2 px-8 rounded" disabled={isDisabledCTA}>
+                        <ButtonGlobal className="mt-6 mt-8" disabled={isDisabledCTA}>
                             {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                         </ButtonGlobal>
                     </Form>

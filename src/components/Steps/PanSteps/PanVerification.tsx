@@ -87,12 +87,12 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                     }}
                 />
                 <div className="flex flex-col items-center sm:block">
-                    <ButtonGlobal className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA} type="submit">
+                    <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA} type="submit">
                         {isDisabledCTA ? 'Loading...' : primaryCTAText}
                     </ButtonGlobal>
 
                     {isSkipable && (
-                        <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
+                        <ButtonGlobal className="mt-6 sm:ml-10" onClick={handleSkip}>
                             Skip this step
                         </ButtonGlobal>
                     )}

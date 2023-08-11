@@ -47,7 +47,7 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
             </ul>
             <span className={`flex flex-col items-center sm:block`}>
                 <ButtonGlobal
-                    className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]"
+                    className="mt-4 w-fit sm:w-fit text-[16px]"
                     onClick={handleLocation}
                     // setCapturelocationData={handleLocationCapture}
                     // getLocation={true}
@@ -57,7 +57,7 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
                 </ButtonGlobal>
 
                 {stepData?.isSkipable && (
-                    <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
+                    <ButtonGlobal className="sm:ml-10 mt-6" onClick={handleSkip}>
                         Skip this step
                     </ButtonGlobal>
                 )}

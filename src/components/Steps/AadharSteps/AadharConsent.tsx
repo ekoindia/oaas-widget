@@ -50,12 +50,12 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgDetail }: Gl
                                 placeholder=""
                             />
                             {errors.name && touched.name ? <div className="text-darkdanger">{errors.name}</div> : null}
-                            <ButtonGlobal className="bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA}>
+                            <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                             </ButtonGlobal>
 
                             {isSkipable && (
-                                <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
+                                <ButtonGlobal className="mt-6 sm:ml-10" onClick={handleSkip}>
                                     Skip this step
                                 </ButtonGlobal>
                             )}

@@ -21,7 +21,7 @@ const OnboardingStatus = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                             <div className="text-sm text-darkdefault">Skipped</div>
                             <div className="text-md text-black font-bold">Aadhaar Verification</div>
                         </span>
-                        <ButtonGlobal className="flex items-center justify-center bg-primary bg-black text-white font-semibold w-28 h-8 px-5 rounded">
+                        <ButtonGlobal className="w-28 h-8">
                             <>
                                 <img src={retry} alt="retry_icon" className="w-4 h-4 mr-2" /> Retry
                             </>
@@ -42,7 +42,7 @@ const OnboardingStatus = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                         <div className="text-md text-darkdefault">Skipped</div>
                         <div className="text-md text-black font-bold">Aadhaar Verification</div>
                     </span>
-                    <ButtonGlobal className="flex items-center justify-center bg-primary bg-black text-white font-[400] w-28 h-8 px-2 rounded text-[18px] py-5">
+                    <ButtonGlobal className="font-[400] w-28 h-8 px-2 rounded text-[18px] py-5">
                         <>
                             <img src={retry} alt="retry_icon" className="w-4 h-4 mr-2" /> Retry
                         </>

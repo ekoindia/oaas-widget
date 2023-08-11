@@ -107,8 +107,8 @@ const SupersetComponent = ({ pagename, steps, children, btnName, tagLine, captur
                 <ButtonGlobal
                     className={
                         (manageVeriyStep === 0 && btnName === 'Verify PAN') || (manageVeriyStep === 0 && btnName === 'Verify Aadhaar')
-                            ? 'bg-default text-white mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]'
-                            : 'bg-primary hover:bg-black text-white font-semibold mt-4 py-2 px-8 rounded w-fit sm:w-fit text-[16px]'
+                            ? 'bg-default mt-4 w-fit sm:w-fit text-[16px]'
+                            : 'bg-primary mt-4 w-fit sm:w-fit text-[16px]'
                     }
                     onClick={btnName === 'Verify PAN' || btnName === 'Verify Aadhaar' ? showInfromation : handleOnclick}
                     disabled={
@@ -139,7 +139,7 @@ const SupersetComponent = ({ pagename, steps, children, btnName, tagLine, captur
                 {currentStep === steps.length + 1 || currentStep === 8 ? (
                     ''
                 ) : (
-                    <ButtonGlobal className={`font-semibold sm:ml-10 ${currentStep === 5 ? `mt-10` : `mt-6`}`} onClick={handleStatus}>
+                    <ButtonGlobal className={`sm:ml-10 ${currentStep === 5 ? `mt-10` : `mt-6`}`} onClick={handleStatus}>
                         Skip this step
                     </ButtonGlobal>
                 )}
