@@ -52,6 +52,11 @@ module.exports = {
 
             '2xl': '1536px'
             // => @media (min-width: 1536px) { ... }
+        },
+        extend: {
+            scale: {
+                98: '0.98'
+            }
         }
     },
     plugins: []
