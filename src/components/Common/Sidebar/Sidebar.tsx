@@ -10,7 +10,7 @@ type StepperProps = {
 };
 const Sidebar = ({ steps, userData }: StepperProps) => {
     const { currentStep, completed, setCurrentStepInput } = useStore();
-    console.log('currentStep => ', currentStep);
+    // console.log('currentStep => ', currentStep);
     // let visibleStepData = steps;
     // console.log('Jalaj Steps', steps, visibleStepData);
     // if (userData?.userDetails?.user_type === 3) {
@@ -49,14 +49,15 @@ const Sidebar = ({ steps, userData }: StepperProps) => {
                     <div className="mb-2 text-base text-white">ONBOARDING PROGRESS</div>
                     <div className="w-[100%] bg-white rounded-full h-[12px] h-2.5 mb-4">
                         <div ref={progressRef} className={`bg-success h-[12px] sm:h-3.0 rounded-full`}></div>
-                        <div className="text-[14px] text-xs text-end pt-1 text-white mt-2 mt-1">{currentStepIndex > 1 ? `${currentStepIndex} Steps` : '0 Step'} Completed</div>
+                        <div className="text-[14px] text-xs text-end pt-1 text-white mt-2 mt-1">
+                            {currentStepIndex}
+                            {currentStepIndex > 1 ? ' Steps' : ' Step'} Completed
+                        </div>
                     </div>
                 </div>
             </div>
             <div className="pt-4 pl-3 p-5 bg-white rounded-b-2xl  h-full mb-10">
                 {visibleStepData?.map((step: StepDataType, i: number) => {
-                    // console.log('\n\n\n>>>>>>>> Sidebar Step:: ', i, currentStepIndex, step);
-
                     // if (step.stepStatus === 0 && currentStep === step.id) {
                     //     step.stepStatus = 1; // In progress
                     // }
@@ -64,8 +65,10 @@ const Sidebar = ({ steps, userData }: StepperProps) => {
                     const isCurrent = currentStep === step.id;
                     const isFuture = i > currentStepIndex;
 
+                    // console.log('>>>>>>>> Sidebar Step:: ', isDone ? '↙️' : isFuture ? '↗️' : '—', i, currentStepIndex, step, currentStep);
+
                     return (
-                        <span key={step.id} className={`stepbox flex flex-col relative w-60 ${currentStep === step.id ? 'active' : ''} ${step.id < currentStep ? 'complete' : ''}`}>
+                        <span key={step.id} className={`stepbox flex flex-col relative w-60 ${isCurrent ? 'active' : ''} ${isDone ? 'complete' : ''}`}>
                             <div
                             // onClick={() => {
                             //     i > 0 && steps[i - 1].stepStatus !== 0 && setCurrentStepInput(steps[i]?.id);

@@ -39,7 +39,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
             label: 'PAN Number',
             required: true,
             type: 'TEXT',
-            placeholder: 'XXXXXXXXXX',
+            // placeholder: 'XXXXXXXXXX',
             validation: { required: true, pattern: PANREGEX, maxLength: 10, minLength: 10 },
             capitalize: true
         },
@@ -71,7 +71,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="mt-3 mb-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
                 {description}
-                <span className="text-primary"> .jpg, .png, .pdf</span>
+                <span className="text-primary"> .jpg, .png</span>
             </div>
 
             <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 3 }))}>
@@ -122,7 +122,6 @@ const Value = ({ renderer, register, control, setValue, errors }: FormProps) => 
                             <div>
                                 <Labelglobal htmlFor={id}>{label}</Labelglobal>
                                 <InputGlobal
-                                    className="block w-full px-3 py-2 mb-1 leading-tight border-2 rounded outline-none border-lightdefault"
                                     id={id}
                                     name={id}
                                     value={value}
@@ -168,12 +167,7 @@ const Value = ({ renderer, register, control, setValue, errors }: FormProps) => 
                         return (
                             <div>
                                 <Labelglobal htmlFor={id}>{label}</Labelglobal>
-                                <select
-                                    id={id}
-                                    name={id}
-                                    className="px-0.5 py-[9px] border-2 border-lightdefault-800 w-full rounded-md bg-white border-lightdefault"
-                                    {...register(id, { ...validation })}
-                                >
+                                <select id={id} name={id} className="px-1 py-[9px] border-2 w-full rounded bg-white border-default outline-primary" {...register(id, { ...validation })}>
                                     {list_elements?.length > 0 &&
                                         list_elements.map((shop: any, idx: number) => (
                                             <option value={shop.value} key={`${idx}_${shop.value}`}>

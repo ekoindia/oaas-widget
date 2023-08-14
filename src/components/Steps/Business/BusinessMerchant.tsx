@@ -86,15 +86,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                         <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full	">
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Full Name(as per your panCard)</Labelglobal>
-                                <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none mb-0"
-                                    name="name"
-                                    value={values.name}
-                                    onChange={handleChange('name')}
-                                    id="username"
-                                    type="text"
-                                    placeholder=""
-                                />
+                                <InputGlobal className="mb-0" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
                                 {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
                             </div>
                             <div>
@@ -135,34 +127,17 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Business Address</Labelglobal>
-                                <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                    name="shop_address_line2"
-                                    value={values.shop_address_line2}
-                                    onChange={handleChange('shop_address_line2')}
-                                    id="username"
-                                    type="text"
-                                    placeholder=""
-                                />
+                                <InputGlobal name="shop_address_line2" value={values.shop_address_line2} onChange={handleChange('shop_address_line2')} id="username" type="text" placeholder="" />
                                 {errors.shop_address_line2 && touched.shop_address_line2 ? <div className="text-red">{errors.shop_address_line2}</div> : null}
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Landmark(optional)</Labelglobal>
-                                <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                    name="shop_landmark"
-                                    value={values.shop_landmark}
-                                    onChange={handleChange('shop_landmark')}
-                                    id="username"
-                                    type="text"
-                                    placeholder=""
-                                />
+                                <InputGlobal name="shop_landmark" value={values.shop_landmark} onChange={handleChange('shop_landmark')} id="username" type="text" placeholder="" />
                             </div>
 
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Pincode</Labelglobal>
                                 <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="shop_address_pincode"
                                     value={values.shop_address_pincode}
                                     onChange={handleChange('shop_address_pincode')}
@@ -175,15 +150,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">City</Labelglobal>
-                                <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                    name="sender_district"
-                                    value={values.sender_district}
-                                    onChange={handleChange('sender_district')}
-                                    id="username"
-                                    type="text"
-                                    placeholder=""
-                                />
+                                <InputGlobal name="sender_district" value={values.sender_district} onChange={handleChange('sender_district')} id="username" type="text" placeholder="" />
                                 {errors.sender_district && touched.sender_district ? <div className="text-red">{errors.sender_district}</div> : null}
                             </div>
                             <div>

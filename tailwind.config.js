@@ -14,13 +14,14 @@ module.exports = {
             darkdanger: '#FF4040',
             danger: '#FF40401A',
             lightdanger: '#FF4081',
-            primary: 'var(--color-primary)' // '#1F5AA7'
+            primary: 'var(--color-primary)', // '#1F5AA7'
+            curtain: 'rgba(0, 0, 0, 0.9)'
         },
-        boxShadow: {
-            xl: '0 20px 25px -20px rgb(0 0 0 / 0.1)',
-            '3xl': '0 35px 60px -15px #00C34133',
-            '2xl': '0px 0px 7px -2px #1F5AA7'
-        },
+        // boxShadow: {
+        //     xl: '0 20px 25px -20px rgb(0 0 0 / 0.1)',
+        //     '3xl': '0 35px 60px -15px #00C34133',
+        //     '2xl': '0px 0px 7px -2px #1F5AA7'
+        // },
         container: {
             center: true,
             padding: {

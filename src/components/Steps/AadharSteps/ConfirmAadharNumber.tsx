@@ -38,7 +38,6 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgDetail
                             <div className="mb-7 w-[80%] xl:w-[45%]">
                                 <Labelglobal className="block mb-2 text-sm font-bold text-black">Aadhaar Card Number</Labelglobal>
                                 <InputGlobal
-                                    className="block w-full px-3 py-2 mb-2 leading-tight border-2 rounded outline-none border-lightdefault"
                                     name="aadhaarCardNumber"
                                     value={values.aadhaarCardNumber}
                                     onChange={handleChange('aadhaarCardNumber')}
@@ -47,7 +46,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgDetail
                                     type="number"
                                     placeholder=""
                                 />
-                                {errors.aadhaarCardNumber && touched.aadhaarCardNumber ? <div className="text-darkdanger">{errors.aadhaarCardNumber}</div> : null}
+                                {errors.aadhaarCardNumber && touched.aadhaarCardNumber ? <div className="text-darkdanger text-xs">{errors.aadhaarCardNumber}</div> : null}
                             </div>
                             <div>
                                 You hereby consent to {orgDetail?.org_name || orgDetail?.app_name || 'us'} as your authorized representative to receive your Aadhaar verification information from UIDAI

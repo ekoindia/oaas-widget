@@ -1,10 +1,11 @@
 import React, { Ref, forwardRef } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type InputProps = {
-    type: string;
-    id: string;
-    className: string;
-    placeholder: string;
+    type?: string;
+    id?: string;
+    className?: string;
+    placeholder?: string;
     value?: any;
     name?: string;
     onChange?: any;
@@ -19,7 +20,7 @@ const InputGlobal = forwardRef(({ type = 'text', id, className, placeholder, onC
         <input
             type={type}
             id={id}
-            className={className}
+            className={twMerge('w-full px-3 py-2 mb-2 leading-tight border-2 rounded outline-primary border-default transition-all duration-300 ease-in-out', className)}
             onChange={onChange}
             placeholder={placeholder}
             value={value}

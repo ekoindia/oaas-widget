@@ -28,8 +28,8 @@ type OAASPackageProps = {
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
     primaryColor?: string;
-    esignStatus: number;
-    orgDetail: any;
+    esignStatus?: number;
+    orgDetail?: any;
 };
 
 const OnboardingWidget = ({

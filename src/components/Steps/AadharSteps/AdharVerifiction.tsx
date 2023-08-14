@@ -94,7 +94,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                 {description}
                 <span className="text-primary"> .jpg, .png</span>
             </div>
-            <div className="mt-10 relative">
+            <div className="mt-10">
                 {uploadedImage == 0 ? (
                     // <div></div>
                     <div className="sm:flex flex-col text-center lg:flex-row max-[640px]:flex  max-[640px]:items-center ">
@@ -104,7 +104,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                             ) : (
                                 <>
                                     {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4 sm:w-[100%] md:w-[80%] sm:mb-8 w-72 "> */}
-                                    {aadhaarImages?.front?.url !== null || undefined ? (
+                                    {aadhaarImages?.front?.url ? (
                                         <div className="flex flex-col w-[50%] md:w-[100%] lg:w-[50%] sm:w-[100%] max-[450px]:w-[100%] max-[640px]:w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
                                             <Frontcam imageVal={aadhaarImages?.front?.url} handleRetake={() => handleRetake('front')} />
                                         </div>
@@ -112,7 +112,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                         <div className="flex flex-col xl:w-[50%] lg:w-[50%] lg:mr-4 max-[640px]:mr-0 md:mr-0 max-[640px]:mb-8 sm:mb-8 ">
                                             <div className="p-8 text-sm text-darkdefault border border-default rounded-md bg-lightdefault border-dashed flex flex-col justify-center items-center md:w-[100%]  h-[190px] sm:w-[100%]   ">
                                                 <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
-                                                <div className="text-sm">Drag and drop front copy of Aadhaar or you can</div>
+                                                <div className="text-sm">Upload or click front side of your Aadhaar</div>
                                                 <div className="flex mt-4 ml-1.5">
                                                     <Uploadfile
                                                         type="front"
@@ -122,15 +122,15 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                     />
                                                     <ButtonGlobal
                                                         className="text-xs bottom-1.5 font-medium rounded-md pl-2 pr-2 py-[6px] w-max mr-2"
-                                                        onClick={() => (setCameraStatus(true), setCameraType('front'), setImage(null))}
+                                                        onClick={() => (setCameraType('front'), setImage(null), setCameraStatus(true))}
                                                     >
                                                         <>
-                                                            <img src={filledcamera} className="h-[4vh] mr-2" /> Open Camera
+                                                            <img src={filledcamera} className="h-[15px] mr-2" /> Open Camera
                                                         </>
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                            {frontError === true && <div className="self-start text-darkdanger">Required</div>}
+                                            {frontError === true && <div className="self-start text-darkdanger text-xs">Required</div>}
                                         </div>
                                     )}
                                     {/* </div> */}
@@ -147,7 +147,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                         <div className="flex flex-col xl:w-[50%] lg:w-[50%] lg:mr-4 max-[640px]:mr-0 md:mr-0 max-[640px]:mb-8 sm:mb-8 ">
                                             <div className="p-8 text-sm text-darkdefault border border-default rounded-md bg-lightdefault border-dashed flex flex-col justify-center items-center md:w-[100%]  h-[190px] sm:w-[100%]   ">
                                                 <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" />
-                                                <div className="text-sm">Drag and drop back copy of Aadhaar or you can</div>
+                                                <div className="text-sm">Upload or click back side of your Aadhaar</div>
                                                 <div className="flex mt-4 ml-1.5">
                                                     <Uploadfile
                                                         type="back"
@@ -157,15 +157,15 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                     />
                                                     <ButtonGlobal
                                                         className="text-xs bottom-1.5 font-medium rounded-md pl-2 pr-2 py-[6px] w-max mr-2"
-                                                        onClick={() => (setCameraStatus(true), setCameraType('back'))}
+                                                        onClick={() => (setCameraType('back'), setCameraStatus(true))}
                                                     >
                                                         <>
-                                                            <img src={filledcamera} className="h-[4vh] mr-2" /> Open Camera
+                                                            <img src={filledcamera} className="h-[15px] mr-2" /> Open Camera
                                                         </>
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                            {backError === true && <div className="self-start text-darkdanger">Required</div>}
+                                            {backError === true && <div className="self-start text-darkdanger text-xs">Required</div>}
                                         </div>
                                     )}
                                     {/* </div> */}
@@ -200,7 +200,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                 handleOnclick={handleOnclick}
                 attentionmsg={
                     <>
-                        Are you sure you want to upload this Aadhaar. You will <br /> get only one attempt for Aadhaar verification.
+                        Are you sure you want to upload this Aadhaar? You will <br /> get only one attempt for Aadhaar verification.
                     </>
                 }
             />

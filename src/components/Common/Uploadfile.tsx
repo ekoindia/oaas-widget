@@ -28,9 +28,12 @@ const Uploadfile = ({ type, handleUpload }: UploadFileProps) => {
         // setManageVeriyStep();
     };
     return (
-        <label htmlFor={type} className="text-white text-xs bottom-1.5 bg-primary font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center flex">
+        <label
+            htmlFor={type}
+            className="bg-primary text-white text-xs bottom-1.5 font-medium rounded-md pl-2 pr-2 py-[6px] w-max flex mr-2 justify-center items-center cursor-pointer drop-shadow-md hover:drop-shadow-lg hover:-translate-y-[1px] active:scale-98 active:filter-none transition-all duration-200 ease-in-out"
+        >
             <input type="file" onChange={onSelectFile} name={type} id={type} style={{ display: 'none' }} accept=".jpg, .jpeg, .png" />
-            <img src={imageicon} className="w-[18px] h-[18px] mr-2" />
+            <img src={imageicon} className="w-[16px] h-[16px] mr-2" />
             Browse
         </label>
     );

@@ -10,5 +10,9 @@
 
 .disabled {
     color: gray !important;
+}
+
+.disabled,
+[disabled] {
     pointer-events: none;
 }

@@ -23,11 +23,11 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgDetail }: Gl
         handleSubmit({ ...stepData, stepStatus: 2 });
     };
     return (
-        <div className="pt-8 sm:p-8">
+        <div className="pt-8 sm:p-8 w-full">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
             <div className="relative mt-10"></div>
-            <span className={`flex flex-col items-center sm:block`}>
+            <div className={`flex flex-col items-center sm:block w-full max-w-full md:max-w-[400px]`}>
                 <Formik
                     initialValues={formValues}
                     validationSchema={aadhaarConsentSchema}
@@ -40,16 +40,8 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgDetail }: Gl
                     {({ errors, touched, values, handleChange }) => (
                         <Form>
                             <Labelglobal className="block mb-2 text-sm font-bold text-black">Name</Labelglobal>
-                            <InputGlobal
-                                className="block w-full px-3 py-2 mb-2 leading-tight border-2 rounded outline-none border-lightdefault"
-                                name="name"
-                                value={values.name}
-                                onChange={handleChange('name')}
-                                id="name"
-                                type="text"
-                                placeholder=""
-                            />
-                            {errors.name && touched.name ? <div className="text-darkdanger">{errors.name}</div> : null}
+                            <InputGlobal name="name" className="w-full" value={values.name} onChange={handleChange('name')} id="name" type="text" placeholder="" />
+                            {errors.name && touched.name ? <div className="text-darkdanger text-xs">{errors.name}</div> : null}
                             <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                             </ButtonGlobal>
@@ -62,7 +54,7 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgDetail }: Gl
                         </Form>
                     )}
                 </Formik>
-            </span>
+            </div>
         </div>
     );
 };

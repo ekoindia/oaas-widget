@@ -63,12 +63,12 @@ const CamDropzone = ({ file, setFile }: CamDropzoneProps) => {
                             <>
                                 <div className="p-8 text-sm text-darkdefault border border-default rounded-md bg-lightdefault border-dashed flex flex-col justify-center items-center overflow-hidden w-[100%]">
                                     <img src={camera} className="w-[3rem] h-[3rem] flex-col mb-6" />
-                                    Drag and drop copy of PAN Card or you can
+                                    Upload or click a copy of your PAN card
                                     <div className="flex mt-8">
                                         <Uploadfile type="pan" handleUpload={(files: any, type: any, fileData: any) => handleImageUpload(files, type, fileData)} />
                                         <ButtonGlobal className="text-white text-xs bottom-1.5 font-medium rounded-md pl-2 pr-2 py-[6px] w-max mr-2" onClick={() => setCameraStatus(true)}>
                                             <span className="flex">
-                                                <img src={filledcamera} className="h-[2vh] mr-2" /> Open Camera
+                                                <img src={filledcamera} className="h-[15px] mr-2" /> Open Camera
                                             </span>
                                         </ButtonGlobal>
                                     </div>

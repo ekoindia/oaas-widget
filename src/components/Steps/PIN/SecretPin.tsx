@@ -44,30 +44,12 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                         <span className={`flex flex-col sm:block`}>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Secret PIN</Labelglobal>
-                                <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                    name="first_okekey"
-                                    value={values.first_okekey}
-                                    onChange={handleChange('first_okekey')}
-                                    id="username"
-                                    type="number"
-                                    maxLength="4"
-                                    placeholder=""
-                                />
+                                <InputGlobal name="first_okekey" value={values.first_okekey} onChange={handleChange('first_okekey')} id="username" type="number" maxLength="4" placeholder="" />
                                 {errors.first_okekey && touched.first_okekey ? <div className="text-red">{errors.first_okekey}</div> : null}
                             </div>
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Confirm Secret PIN</Labelglobal>
-                                <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                    name="second_okekey"
-                                    value={values.second_okekey}
-                                    onChange={handleChange('second_okekey')}
-                                    id="username"
-                                    type="number"
-                                    maxLength="4"
-                                    placeholder=""
-                                />
+                                <InputGlobal name="second_okekey" value={values.second_okekey} onChange={handleChange('second_okekey')} id="username" type="number" maxLength="4" placeholder="" />
                                 {errors.second_okekey && touched.second_okekey ? <div className="text-red">{errors.second_okekey}</div> : null}
                             </div>
                             Note:

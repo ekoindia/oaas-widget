@@ -67,17 +67,8 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                         <Form>
                             <div className="mb-7 w-[65%]">
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">OTP</Labelglobal>
-                                <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
-                                    maxLength="6"
-                                    name="otpVal"
-                                    value={values.otpVal}
-                                    onChange={handleChange('otpVal')}
-                                    id="otp"
-                                    type="number"
-                                    placeholder=""
-                                />
-                                {errors.otpVal && touched.otpVal ? <div className="text-darkdanger">{errors.otpVal}</div> : null}
+                                <InputGlobal className="mb-2" maxLength="6" name="otpVal" value={values.otpVal} onChange={handleChange('otpVal')} id="otp" type="number" placeholder="" />
+                                {errors.otpVal && touched.otpVal ? <div className="text-darkdanger text-xs">{errors.otpVal}</div> : null}
                                 {!isResend ? (
                                     <small>Resend OTP in {resendTimerCount} sec</small>
                                 ) : (
@@ -100,7 +91,6 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                             <div className="mb-7 w-[65%]">
                                 {/* <Labelglobal className="block text-black text-sm font-bold mb-2">Share Code</Labelglobal> */}
                                 <InputGlobal
-                                    className="block w-full border-2 border-lightdefault rounded py-2 px-3 mb-2 leading-tight outline-none"
                                     name="shareCode"
                                     value={values.shareCode}
                                     onChange={handleChange('shareCode')}
@@ -109,7 +99,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                     type="hidden" // number
                                     placeholder=""
                                 />
-                                {errors.shareCode && touched.shareCode ? <div className="text-darkdanger">{errors.shareCode}</div> : null}
+                                {errors.shareCode && touched.shareCode ? <div className="text-darkdanger text-xs">{errors.shareCode}</div> : null}
                             </div>
                             <ButtonGlobal className="w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
