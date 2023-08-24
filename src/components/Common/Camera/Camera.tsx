@@ -45,7 +45,9 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
 
     const handleDevices = React.useCallback(
         (mediaDevices: any) => {
-            setCamDevices(mediaDevices.filter(({ kind }: any) => kind === 'videoinput'));
+            let _mediaDevices = mediaDevices.filter(({ kind }: any) => kind === 'videoinput');
+            setCamDevices(_mediaDevices);
+            setDeviceId(_mediaDevices?.[0]?.deviceId);
         },
         [setCamDevices]
     );
@@ -102,14 +104,12 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
     };
 
     const switchCamera = () => {
-        const currentCamIdx = camDevices.map((cd: any) => cd.deviceId).indexOf(deviceId);
-        let newCamIdx = camDevices.map((cd: any) => cd.deviceId).indexOf(deviceId);
-        if (camDevices[currentCamIdx + 1]) {
-            newCamIdx = camDevices[currentCamIdx + 1];
-        } else {
-            newCamIdx = camDevices[0];
-        }
-        setDeviceId(newCamIdx);
+        // const _currentCamIndex = camDevices?.map((cd: any) => cd).indexOf(deviceId);
+        // const _availableDeviceId = camDevices?.map((cd: any) => cd.deviceId);
+        // const _currentCamIndex = _availableDeviceId.indexOf(deviceId);
+        // let _newCamIndex = _currentCamIndex < camDevices?.length - 1 ? _currentCamIndex + 1 : 0;
+        // let _newCamId = camDevices?.[_newCamIndex]?.deviceId;
+        // setDeviceId(_newCamId);
         setFacingMode(facingMode === 'user' ? 'environment' : 'user');
     };
 
