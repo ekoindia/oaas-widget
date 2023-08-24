@@ -48,7 +48,7 @@ it as a local dependency.
 1. Create build using `npm run build` to create dist folder which will serve target projects.
 2. Run the `npm link` command in this project's root directory to create a symlink.
 3. Run the `npm link @ekoindia/oaas-widget` command in your target project's root directory to link this package.
-    1. A folder callbed `@ekoindia` will be created in your target project's node_modules directory with a symlink to this package. You may delete that folder to remove the symlink.
+    1. A folder called `@ekoindia` will be created in your target project's node_modules directory with a symlink to this package. You may delete that folder to remove the symlink.
 4. Import the package in your project and use it as a local dependency.
 
 #### To build and publish to npm:

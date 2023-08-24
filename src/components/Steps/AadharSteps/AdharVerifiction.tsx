@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import camera from '../../../assets/icons/camera.svg';
 import filledcamera from '../../../assets/icons/filledcamera.svg';
-import ButtonGlobal from '../../Common/ButtonGlobal';
-import Camera from '../../Common/Camera/Camera';
 import { useStore } from '../../../store/zustand';
-import Browse from '../../Common/Browse';
-import Uploadfile from '../../Common/Uploadfile';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
+import { Backcam, Camera, FACING_MODE_ENVIRONMENT, Frontcam } from '../../Common';
+import Browse from '../../Common/Browse';
+import ButtonGlobal from '../../Common/ButtonGlobal';
 import Modal from '../../Common/Modal';
-import Frontcam from '../../Common/Camera/Frontcam';
-import Backcam from '../../Common/Backcam';
+import Uploadfile from '../../Common/Uploadfile';
 
 const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
     const { cameraStatus, uploadedImage, setCameraStatus, image, selectedFile, setImage, preview } = useStore();
@@ -88,7 +86,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
         setCameraStatus(false);
     };
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div className="w-full pt-8 sm:p-8">
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
                 {description}
@@ -100,7 +98,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                     <div className="sm:flex flex-col text-center lg:flex-row max-[640px]:flex  max-[640px]:items-center ">
                         <div className="sm:flex flex-col text-center lg:flex-row w-[90%]">
                             {cameraStatus === true && cameraType === 'front' && aadhaarImages?.front?.url == null ? (
-                                <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} />
+                                <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} preferredFacingMode={FACING_MODE_ENVIRONMENT} />
                             ) : (
                                 <>
                                     {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4 sm:w-[100%] md:w-[80%] sm:mb-8 w-72 "> */}
@@ -130,7 +128,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                            {frontError === true && <div className="self-start text-darkdanger text-xs">Required</div>}
+                                            {frontError === true && <div className="self-start text-xs text-darkdanger">Required</div>}
                                         </div>
                                     )}
                                     {/* </div> */}
@@ -165,7 +163,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                                     </ButtonGlobal>
                                                 </div>
                                             </div>
-                                            {backError === true && <div className="self-start text-darkdanger text-xs">Required</div>}
+                                            {backError === true && <div className="self-start text-xs text-darkdanger">Required</div>}
                                         </div>
                                     )}
                                     {/* </div> */}
@@ -189,7 +187,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                 </ButtonGlobal>
 
                 {isSkipable && (
-                    <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
+                    <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
                         Skip this step
                     </ButtonGlobal>
                 )}

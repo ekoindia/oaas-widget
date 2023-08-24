@@ -3,7 +3,7 @@ export { default as Backcam } from './Backcam';
 export { default as Browse } from './Browse';
 export { default as ButtonGlobal } from './ButtonGlobal';
 export { CamDropzone } from './CamDropzone';
-export { Camera, Frontcam } from './Camera';
+export { Camera, Frontcam, FACING_MODE_ENVIRONMENT, FACING_MODE_USER } from './Camera';
 export { default as Fetching } from './Fetching';
 export { Header } from './Header';
 export { default as InputGlobal } from './InputGlobal';

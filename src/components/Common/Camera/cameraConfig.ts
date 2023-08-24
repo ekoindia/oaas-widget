@@ -14,3 +14,6 @@ export const resolutions = [
     { w: { min: 640, max: 1920 }, h: { min: 360, max: 1200 } },
     { w: undefined, h: undefined }
 ];
+
+export const FACING_MODE_USER = 'user';
+export const FACING_MODE_ENVIRONMENT = 'environment';

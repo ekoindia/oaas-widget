@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Browse, ButtonGlobal, Camera, Frontcam, Uploadfile } from '..';
+import { Browse, ButtonGlobal, Camera, FACING_MODE_ENVIRONMENT, Frontcam, Uploadfile } from '..';
 import camera from '../../../assets/icons/camera.svg';
 import filledcamera from '../../../assets/icons/filledcamera.svg';
 import { useStore } from '../../../store/zustand';
@@ -52,7 +52,7 @@ const CamDropzone = ({ file, setFile }: CamDropzoneProps) => {
         <div>
             {uploadedImage === 0 ? (
                 cameraStatus === true && docImage?.url === null ? (
-                    <Camera type="pan" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={docImage} />
+                    <Camera type="pan" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={docImage} preferredFacingMode={FACING_MODE_ENVIRONMENT} />
                 ) : (
                     <>
                         {docImage?.url !== null || undefined ? (

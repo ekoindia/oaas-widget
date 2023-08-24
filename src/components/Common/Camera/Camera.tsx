@@ -4,7 +4,7 @@ import filledcamera from '../../../assets/icons/filledcamera.svg';
 import ButtonGlobal from '../ButtonGlobal';
 // import retry from '../../assets/icons/retry.png';
 import { useStore } from '../../../store/zustand';
-import { resolutions } from './cameraConfig';
+import { FACING_MODE_ENVIRONMENT, FACING_MODE_USER, resolutions } from './cameraConfig';
 
 type CameraProps = {
     mediaRecorderRef?: any | null;
@@ -16,32 +16,35 @@ type CameraProps = {
     cameraType: string;
     handleImageCapture?: any;
     imagesVal: any;
+    preferredFacingMode?: 'user' | 'environment';
 };
-const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, setRecordedChunks, type, imagesVal, handleImageCapture, cameraType }: CameraProps) => {
+const Camera = ({
+    capturing,
+    setCapturing,
+    mediaRecorderRef,
+    recordedChunks,
+    setRecordedChunks,
+    type,
+    imagesVal,
+    handleImageCapture,
+    cameraType,
+    preferredFacingMode = FACING_MODE_USER
+}: CameraProps) => {
     const { setCameraStatus } = useStore();
-    /**
-     * Camera facing mode: "envoironment" or "user"
-     */
-    const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
-    // Check if camers has flash or not
-    const [hasFlash, setHasFlash] = useState<boolean>(false);
+    const [facingMode, setFacingMode] = useState<'user' | 'environment'>(preferredFacingMode);
+    const [hasFlash, setHasFlash] = useState<boolean>(false); // Check if camera has flash or not
     const [flashOn, setFlashOn] = useState<boolean>(false);
-
-    const [resolutionIndex, setResolutionIndex] = useState<number>(0);
-
+    const [resolutionIndex /* , setResolutionIndex */] = useState<number>(0);
     const [camDevices, setCamDevices] = useState<any[]>([]);
-
+    const [deviceId, setDeviceId] = React.useState<number>();
     const [videoConstraints, setVideoConstraints] = useState<any>({
         audio: false,
         width: 1280,
         height: 720,
         aspectRatio: 0.8,
-        facingMode: 'user'
+        facingMode: FACING_MODE_USER
     });
-
     const webcamRef = useRef<any | null>(null);
-
-    const [deviceId, setDeviceId] = React.useState<number>();
 
     const handleDevices = React.useCallback(
         (mediaDevices: any) => {
@@ -85,7 +88,6 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
             .getUserMedia({ video: true })
             .then((mediaStream) => {
                 webcamRef.current.srcObject = mediaStream;
-
                 return mediaStream.getVideoTracks()[0];
             })
             .catch((error) => console.error(error));
@@ -104,13 +106,22 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
     };
 
     const switchCamera = () => {
-        // const _currentCamIndex = camDevices?.map((cd: any) => cd).indexOf(deviceId);
-        // const _availableDeviceId = camDevices?.map((cd: any) => cd.deviceId);
-        // const _currentCamIndex = _availableDeviceId.indexOf(deviceId);
-        // let _newCamIndex = _currentCamIndex < camDevices?.length - 1 ? _currentCamIndex + 1 : 0;
-        // let _newCamId = camDevices?.[_newCamIndex]?.deviceId;
-        // setDeviceId(_newCamId);
-        setFacingMode(facingMode === 'user' ? 'environment' : 'user');
+        // const currentCamIdx = camDevices.map((cd: any) => cd.deviceId).indexOf(deviceId);
+        // let newCamIdx = camDevices.map((cd: any) => cd.deviceId).indexOf(deviceId);
+        // if (camDevices[currentCamIdx + 1]) {
+        //     newCamIdx = camDevices[currentCamIdx + 1];
+        // } else {
+        //     newCamIdx = camDevices[0];
+        // }
+        // setDeviceId(newCamIdx);
+
+        const _availableDeviceId = camDevices?.map((cd: any) => cd.deviceId);
+        const _currentCamIndex = _availableDeviceId.indexOf(deviceId);
+        let _newCamIndex = _currentCamIndex < camDevices?.length - 1 ? _currentCamIndex + 1 : 0;
+        let _newCamId = camDevices?.[_newCamIndex]?.deviceId;
+        setDeviceId(_newCamId);
+
+        setFacingMode((prev) => (prev === FACING_MODE_USER ? FACING_MODE_ENVIRONMENT : FACING_MODE_USER));
     };
 
     const capture = useCallback(
@@ -127,11 +138,13 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
         },
         [webcamRef]
     );
-    //Initializing Camera with effects
 
-    const initCamera = (residx: number = 0) => {
-        const res = resolutions[residx];
-        const dev = camDevices && camDevices[0] ? camDevices[0]?.deviceId : undefined;
+    /**
+     * Initializing Camera with effects
+     */
+    const initCamera = (resIndex: number = 0) => {
+        const res = resolutions[resIndex];
+        // const dev = camDevices && camDevices[0] ? camDevices[0]?.deviceId : undefined;
         setVideoConstraints({
             ...videoConstraints,
             audio: false,
@@ -148,10 +161,12 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
 
     useEffect(() => {
         navigator.mediaDevices.enumerateDevices().then(handleDevices);
-    }, [handleDevices]);
+    }, []);
+
     useEffect(() => {
         detectFlashSupport();
-    }, [detectFlashSupport]);
+    }, [deviceId, facingMode]);
+
     useEffect(() => {
         if (webcamRef?.current) {
             initCamera(resolutionIndex);
@@ -165,6 +180,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
             {/* ${type === 'Pan' || type === 'videoRecord' ? 'flex justify-end' : 'flex'} */}
             <div className="flex flex-col mr-3 mt-[65px] w-full max-w-[800px] max-h-[95%]">
                 <Webcam
+                    className="rounded-[10px]"
                     audio={false}
                     ref={webcamRef}
                     minScreenshotHeight={500}
@@ -172,11 +188,11 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     screenshotFormat="image/jpeg"
                     screenshotQuality={0.98}
                     forceScreenshotSourceSize={true}
-                    videoConstraints={videoConstraints}
                     imageSmoothing={true}
                     mirrored={true}
-                    className="rounded-[10px]"
+                    videoConstraints={videoConstraints}
                     onUserMediaError={(err) => {
+                        console.error('[Camera] err', err);
                         initCamera(resolutionIndex > resolutions.length ? 0 : resolutionIndex + 1);
                     }}
                 />
