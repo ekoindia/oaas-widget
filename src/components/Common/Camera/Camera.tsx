@@ -174,7 +174,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                     forceScreenshotSourceSize={true}
                     videoConstraints={videoConstraints}
                     imageSmoothing={true}
-                    mirrored={false}
+                    mirrored={true}
                     className="rounded-[10px]"
                     onUserMediaError={(err) => {
                         initCamera(resolutionIndex > resolutions.length ? 0 : resolutionIndex + 1);
@@ -189,7 +189,7 @@ const Camera = ({ capturing, setCapturing, mediaRecorderRef, recordedChunks, set
                             <>Turn Flash {flashOn ? 'Off' : 'On'}</>
                         </ButtonGlobal>
                     )}
-                    {setCamDevices?.length > 1 && (
+                    {camDevices?.length > 1 && (
                         <ButtonGlobal onClick={switchCamera} className={btnClasses}>
                             Switch Camera
                         </ButtonGlobal>
