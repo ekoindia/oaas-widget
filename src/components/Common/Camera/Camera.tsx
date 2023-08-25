@@ -48,20 +48,18 @@ const Camera = ({
     const [flashOn, setFlashOn] = useState<boolean>(false);
     const [resolutionIndex] = useState<number>(0);
     const [camDevices, setCamDevices] = useState<any[]>([]);
-    const [deviceId, setDeviceId] = useState<number>();
+    const [currDeviceId, setCurrDeviceId] = useState<string>();
     const [videoConstraints, setVideoConstraints] = useState<any>({
         ...VIDEO_CONSTRAINTS,
         facingMode: facingMode
     });
 
-    const handleDevices = useCallback(
-        (mediaDevices: any) => {
-            let _mediaDevices = mediaDevices.filter(({ kind }: any) => kind === 'videoinput');
-            setCamDevices(_mediaDevices);
-            setDeviceId(_mediaDevices?.[0]?.deviceId);
-        },
-        [setCamDevices]
-    );
+    const getDevices = useCallback((mediaDevices: any) => {
+        const _videoMediaDevices = mediaDevices.filter(({ kind }: any) => kind === 'videoinput');
+        const _mediaDevices = _videoMediaDevices.map(({ deviceId, label }: { deviceId: string; label: string }) => ({ deviceId, label }));
+        setCamDevices(_mediaDevices);
+        setCurrDeviceId(_mediaDevices?.[0]?.deviceId);
+    }, []);
 
     const detectFlashSupport = useCallback(() => {
         if (!('ImageCapture' in window)) {
@@ -115,11 +113,10 @@ const Camera = ({
 
     const switchCamera = () => {
         const _availableDeviceId = camDevices?.map((cd: any) => cd.deviceId);
-        const _currentCamIndex = _availableDeviceId.indexOf(deviceId);
-        let _newCamIndex = _currentCamIndex < camDevices?.length - 1 ? _currentCamIndex + 1 : 0;
+        const _currentCamIndex = _availableDeviceId.indexOf(currDeviceId);
+        let _newCamIndex = _currentCamIndex < camDevices.length - 1 ? _currentCamIndex + 1 : 0;
         let _newCamId = camDevices?.[_newCamIndex]?.deviceId;
-        setDeviceId(_newCamId);
-
+        setCurrDeviceId(_newCamId);
         setFacingMode((prev) => (prev === FACING_MODE_USER ? FACING_MODE_ENVIRONMENT : FACING_MODE_USER));
     };
 
@@ -129,11 +126,8 @@ const Camera = ({
             const imageSrc = webcamRef?.current?.getScreenshot();
             const blob = await fetch(imageSrc).then((res) => res.blob());
             const fileData = new File([blob], `${type}_${cameraType}.${blob.type.split('/')[1]}`, { type: blob.type });
-
-            // formData.append('images', blob);
             handleImageCapture(imageSrc, fileData);
             setCameraStatus(false);
-            // setManageVeriyStep();
         },
         [webcamRef]
     );
@@ -147,7 +141,7 @@ const Camera = ({
             ...videoConstraints,
             width: res.w,
             height: res.h,
-            deviceId: deviceId
+            deviceId: currDeviceId
         });
     };
 
@@ -156,12 +150,12 @@ const Camera = ({
     };
 
     useEffect(() => {
-        navigator.mediaDevices.enumerateDevices().then(handleDevices);
+        navigator.mediaDevices.enumerateDevices().then(getDevices);
     }, []);
 
     useEffect(() => {
         detectFlashSupport();
-    }, [deviceId, facingMode]);
+    }, [currDeviceId, facingMode]);
 
     useEffect(() => {
         if (webcamRef?.current) {
