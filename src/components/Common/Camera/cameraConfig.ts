@@ -1,6 +1,7 @@
+/**
+ *   All possible resolution sets
+ */
 export const resolutions = [
-    // All possible resolution sets
-
     //{ w:{min:1920, max:1980}, h:{min:1080, max:1200} },
     { w: 1920, h: 1080 },
     { w: 1280, h: 720 },
@@ -15,5 +16,8 @@ export const resolutions = [
     { w: undefined, h: undefined }
 ];
 
+/**
+ * Facing modes for camera
+ */
 export const FACING_MODE_USER = 'user';
 export const FACING_MODE_ENVIRONMENT = 'environment';

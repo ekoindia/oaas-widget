@@ -6,6 +6,13 @@ import ButtonGlobal from '../ButtonGlobal';
 import { useStore } from '../../../store/zustand';
 import { FACING_MODE_ENVIRONMENT, FACING_MODE_USER, resolutions } from './cameraConfig';
 
+const VIDEO_CONSTRAINTS = {
+    audio: false,
+    width: 1280,
+    height: 720,
+    aspectRatio: 0.8
+};
+
 type CameraProps = {
     mediaRecorderRef?: any | null;
     capturing?: boolean;
@@ -18,6 +25,10 @@ type CameraProps = {
     imagesVal: any;
     preferredFacingMode?: 'user' | 'environment';
 };
+
+/**
+ * Camera Component
+ */
 const Camera = ({
     capturing,
     setCapturing,
@@ -30,23 +41,20 @@ const Camera = ({
     cameraType,
     preferredFacingMode = FACING_MODE_USER
 }: CameraProps) => {
-    const { setCameraStatus } = useStore();
-    const [facingMode, setFacingMode] = useState<'user' | 'environment'>(preferredFacingMode);
-    const [hasFlash, setHasFlash] = useState<boolean>(false); // Check if camera has flash or not
-    const [flashOn, setFlashOn] = useState<boolean>(false);
-    const [resolutionIndex /* , setResolutionIndex */] = useState<number>(0);
-    const [camDevices, setCamDevices] = useState<any[]>([]);
-    const [deviceId, setDeviceId] = React.useState<number>();
-    const [videoConstraints, setVideoConstraints] = useState<any>({
-        audio: false,
-        width: 1280,
-        height: 720,
-        aspectRatio: 0.8,
-        facingMode: FACING_MODE_USER
-    });
     const webcamRef = useRef<any | null>(null);
+    const { setCameraStatus } = useStore();
+    const [facingMode, setFacingMode] = useState<CameraProps['preferredFacingMode']>(preferredFacingMode);
+    const [hasFlash, setHasFlash] = useState<boolean>(false);
+    const [flashOn, setFlashOn] = useState<boolean>(false);
+    const [resolutionIndex] = useState<number>(0);
+    const [camDevices, setCamDevices] = useState<any[]>([]);
+    const [deviceId, setDeviceId] = useState<number>();
+    const [videoConstraints, setVideoConstraints] = useState<any>({
+        ...VIDEO_CONSTRAINTS,
+        facingMode: facingMode
+    });
 
-    const handleDevices = React.useCallback(
+    const handleDevices = useCallback(
         (mediaDevices: any) => {
             let _mediaDevices = mediaDevices.filter(({ kind }: any) => kind === 'videoinput');
             setCamDevices(_mediaDevices);
@@ -55,7 +63,7 @@ const Camera = ({
         [setCamDevices]
     );
 
-    const detectFlashSupport = React.useCallback(() => {
+    const detectFlashSupport = useCallback(() => {
         if (!('ImageCapture' in window)) {
             // return Promise.resolve(false);
             setHasFlash(false);
@@ -106,15 +114,6 @@ const Camera = ({
     };
 
     const switchCamera = () => {
-        // const currentCamIdx = camDevices.map((cd: any) => cd.deviceId).indexOf(deviceId);
-        // let newCamIdx = camDevices.map((cd: any) => cd.deviceId).indexOf(deviceId);
-        // if (camDevices[currentCamIdx + 1]) {
-        //     newCamIdx = camDevices[currentCamIdx + 1];
-        // } else {
-        //     newCamIdx = camDevices[0];
-        // }
-        // setDeviceId(newCamIdx);
-
         const _availableDeviceId = camDevices?.map((cd: any) => cd.deviceId);
         const _currentCamIndex = _availableDeviceId.indexOf(deviceId);
         let _newCamIndex = _currentCamIndex < camDevices?.length - 1 ? _currentCamIndex + 1 : 0;
@@ -142,16 +141,13 @@ const Camera = ({
     /**
      * Initializing Camera with effects
      */
-    const initCamera = (resIndex: number = 0) => {
-        const res = resolutions[resIndex];
-        // const dev = camDevices && camDevices[0] ? camDevices[0]?.deviceId : undefined;
+    const initCamera = (resolutionIndex: number = 0) => {
+        const res = resolutions[resolutionIndex];
         setVideoConstraints({
             ...videoConstraints,
-            audio: false,
-            deviceId: deviceId,
             width: res.w,
             height: res.h,
-            facingMode: facingMode
+            deviceId: deviceId
         });
     };
 

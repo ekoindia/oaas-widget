@@ -135,7 +135,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                 </>
                             )}
                             {cameraStatus === true && cameraType === 'back' && aadhaarImages?.back?.url == null ? (
-                                <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} />
+                                <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} preferredFacingMode={FACING_MODE_ENVIRONMENT} />
                             ) : (
                                 <>
                                     {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4  sm:w-[100%] md:w-[80%] "> */}
