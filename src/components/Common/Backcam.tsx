@@ -1,10 +1,6 @@
 import React from 'react';
-import { useStore } from '../../store/zustand';
-import ButtonGlobal from './ButtonGlobal';
 import retry from '../../assets/icons/retry.png';
-import camera from '../../assets/icons/camera.svg';
-import Uploadfile from './Uploadfile';
-import filledcamera from '../../assets/icons/filledcamera.svg';
+import ButtonGlobal from './ButtonGlobal';
 
 type BackcamProps = {
     handleRetake: (input: string) => void;
@@ -16,8 +12,8 @@ const Backcam = ({ handleRetake, imageVal }: BackcamProps) => {
             <div className="w-full bg-curtain rounded-[10px] justify-center flex h-[190px]">
                 <img src={imageVal} alt="screenshot" className="object-contain rounded-[10px] w-full" />
             </div>
-            <span className="flex flex-col justify-end items-end mt-3">
-                <ButtonGlobal onClick={handleRetake} className="text-[12px] p-1 rounded-[4px] w-[6rem]">
+            <span className="flex flex-col items-end justify-end mt-3">
+                <ButtonGlobal onClick={handleRetake} className="text-[12px] p-1 rounded-[4px] w-[10rem]">
                     <>
                         <img src={retry} alt="retry_icon" className="w-[16px] h-[16px] mr-1" /> Re-Capture
                     </>
