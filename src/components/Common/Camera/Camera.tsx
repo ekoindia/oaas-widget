@@ -38,8 +38,8 @@ const Camera = ({
     const webcamRef = useRef<any | null>(null);
     const { setCameraStatus } = useStore();
     const [facingMode, setFacingMode] = useState<CameraProps['preferredFacingMode']>(preferredFacingMode);
-    const [hasFlash, setHasFlash] = useState<boolean>(false);
-    const [flashOn, setFlashOn] = useState<boolean>(false);
+    // const [hasFlash, setHasFlash] = useState<boolean>(false);
+    // const [flashOn, setFlashOn] = useState<boolean>(false);
     const [resolutionIndex] = useState<number>(0);
     const [camDevices, setCamDevices] = useState<any[]>([]);
     const [deviceIdx, setDeviceIdx] = useState<number>(0);
@@ -63,7 +63,7 @@ const Camera = ({
      */
     const initCamera = (resolutionIndex: number = 0) => {
         const res = resolutions[resolutionIndex];
-        const _deviceId = camDevices?.[deviceIdx]?.deviceId
+        const _deviceId = camDevices?.[deviceIdx]?.deviceId;
         setVideoConstraints((prev) => ({
             ...prev,
             width: res.w,
@@ -245,7 +245,7 @@ const Camera = ({
                     screenshotQuality={0.98}
                     forceScreenshotSourceSize={true}
                     imageSmoothing={true}
-                    mirrored={true}
+                    mirrored={false}
                     videoConstraints={videoConstraints}
                     onUserMediaError={(err) => {
                         console.error('[Camera] err', err);
