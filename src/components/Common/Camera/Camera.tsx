@@ -245,7 +245,7 @@ const Camera = ({
                     screenshotQuality={0.98}
                     forceScreenshotSourceSize={true}
                     imageSmoothing={true}
-                    mirrored={false}
+                    mirrored={camDevices?.length > 1 ? false : true}
                     videoConstraints={videoConstraints}
                     onUserMediaError={(err) => {
                         console.error('[Camera] err', err);
