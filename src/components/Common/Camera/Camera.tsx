@@ -24,13 +24,13 @@ type CameraProps = {
  *
  */
 const Camera = ({
-    capturing,
-    setCapturing,
-    mediaRecorderRef,
-    recordedChunks,
-    setRecordedChunks,
+    // capturing,
+    // setCapturing,
+    // mediaRecorderRef,
+    // recordedChunks,
+    // setRecordedChunks,
+    //imagesVal,
     type,
-    imagesVal,
     handleImageCapture,
     cameraType,
     preferredFacingMode = FACING_MODE_USER
@@ -52,11 +52,14 @@ const Camera = ({
     /**
      * To get all the connected devices
      */
-    const getDevices = useCallback((mediaDevices: any) => {
-        const _videoMediaDevices = mediaDevices.filter(({ kind }: any) => kind === 'videoinput');
-        const _mediaDevices = _videoMediaDevices.map(({ deviceId, label }: { deviceId: string; label: string }) => ({ deviceId, label }));
-        setCamDevices(_mediaDevices);
-    }, []);
+    const getDevices = useCallback(
+        (mediaDevices: any) => {
+            const _videoMediaDevices = mediaDevices.filter(({ kind }: any) => kind === 'videoinput');
+            const _mediaDevices = _videoMediaDevices.map(({ deviceId, label }: { deviceId: string; label: string }) => ({ deviceId, label }));
+            setCamDevices(_mediaDevices);
+        },
+        [setCamDevices]
+    );
 
     /**
      * Initializing Camera
@@ -105,7 +108,7 @@ const Camera = ({
      * To switch between cameras/facing mode
      */
     const switchCamera = () => {
-        setDeviceIdx((prev) => (prev < camDevices.length - 1 ? prev + 1 : 0));
+        setDeviceIdx((prev) => (prev < camDevices?.length - 1 ? prev + 1 : 0));
         setFacingMode((prev) => (prev === FACING_MODE_USER ? FACING_MODE_ENVIRONMENT : FACING_MODE_USER));
     };
 
@@ -192,13 +195,6 @@ const Camera = ({
     };
 
     useEffect(() => {
-        navigator.mediaDevices
-            .enumerateDevices()
-            .then(getDevices)
-            .catch((err) => console.error('[Camera] error: Devices not found', err));
-    }, []);
-
-    useEffect(() => {
         if (camDevices.length > 0) {
             initCamera();
         }
@@ -247,6 +243,12 @@ const Camera = ({
                     imageSmoothing={true}
                     mirrored={camDevices?.length > 1 ? false : true}
                     videoConstraints={videoConstraints}
+                    onUserMedia={() => {
+                        navigator.mediaDevices
+                            .enumerateDevices()
+                            .then(getDevices)
+                            .catch((err) => console.error('[Camera] error: Devices not found', err));
+                    }}
                     onUserMediaError={(err) => {
                         console.error('[Camera] err', err);
                         initCamera(resolutionIndex > resolutions.length ? 0 : resolutionIndex + 1);
