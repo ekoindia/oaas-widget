@@ -74,34 +74,6 @@ const Camera = ({
             facingMode: facingMode,
             deviceId: _deviceId
         }));
-
-        // if (!cameraStatus) {
-        //     navigator.mediaDevices
-        //         .getUserMedia({
-        //             audio: false,
-        //             video: {
-        //                 ...videoConstraints
-        //             }
-        //         })
-        //         /* Will request permission from user */
-        //         .then((mediaStream) => {
-        //             /* Permission Granted */
-        //             setCameraStatus(true);
-
-        //             webcamRef.current.srcObject = mediaStream;
-
-        //             // detectFlashSupport(); /* temporary commenting this */
-
-        //             // const _videoTracks = mediaStream.getVideoTracks()[0];
-        //             // setVideoTrack(_videoTracks);
-        //         })
-        //         .catch((error) => {
-        //             /* Permission Denied */
-        //             console.error(error);
-        //             setCameraStatus(false);
-        //             throw error;
-        //         });
-        // }
     };
 
     /**
@@ -199,31 +171,6 @@ const Camera = ({
             initCamera();
         }
     }, [deviceIdx, camDevices]);
-
-    // useEffect(() => {
-    //     const constraints = {
-    //         facingMode: preferredFacingMode === FACING_MODE_USER ? FACING_MODE_USER : FACING_MODE_ENVIRONMENT
-    //     };
-    //     const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
-    //     console.debug('supportedConstraints', supportedConstraints);
-    //     const userMedia = navigator.mediaDevices
-    //         .getUserMedia({ video: constraints })
-    //         .then((mediaStream) => {
-    //             console.debug('mediaStream', mediaStream);
-    //             return mediaStream;
-    //         })
-    //         .catch((error) => console.error(error));
-    // }, [currDeviceId]);
-
-    // useEffect(() => {
-    //     detectFlashSupport();
-    // }, [currDeviceId, facingMode]);
-
-    // useEffect(() => {
-    //     if (webcamRef?.current) {
-    //         initCamera(resolutionIndex);
-    //     }
-    // }, [webcamRef?.current, facingMode]);
 
     const btnClasses = 'bg-curtain text-white border-2 border-white text-[12px] rounded-[6px] px-4';
 
