@@ -71,7 +71,7 @@ const Camera = ({ type, handleImageCapture, cameraType, preferredFacingMode = FA
     );
 
     /**
-     * Function to get camera device list based on different conditions
+     * Function to get camera device list based on different conditions like priority and preferred facing mode
      */
     const getModifiedDeviceList = (_mediaDevices: DeviceList) => {
         const _deviceList: DeviceList = [];
