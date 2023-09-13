@@ -3,7 +3,7 @@ import camera from '../../../assets/icons/camera.svg';
 import filledcamera from '../../../assets/icons/filledcamera.svg';
 import { useStore } from '../../../store/zustand';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
-import { Backcam, Camera, FACING_MODE_ENVIRONMENT, Frontcam } from '../../Common';
+import { Backcam, Camera, Frontcam } from '../../Common';
 import Browse from '../../Common/Browse';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 import Modal from '../../Common/Modal';
@@ -98,7 +98,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                     <div className="sm:flex flex-col text-center lg:flex-row max-[640px]:flex  max-[640px]:items-center ">
                         <div className="sm:flex flex-col text-center lg:flex-row w-[90%]">
                             {cameraStatus === true && cameraType === 'front' && aadhaarImages?.front?.url == null ? (
-                                <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} preferredFacingMode={FACING_MODE_ENVIRONMENT} />
+                                <Camera type="Aadhaar" cameraType="front" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} />
                             ) : (
                                 <>
                                     {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4 sm:w-[100%] md:w-[80%] sm:mb-8 w-72 "> */}
@@ -135,7 +135,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                                 </>
                             )}
                             {cameraStatus === true && cameraType === 'back' && aadhaarImages?.back?.url == null ? (
-                                <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} preferredFacingMode={FACING_MODE_ENVIRONMENT} />
+                                <Camera type="Aadhaar" cameraType="back" handleImageCapture={handleImageCapture} imagesVal={aadhaarImages} />
                             ) : (
                                 <>
                                     {/* <div className="documentimgstyle xl:w-[36%] lg:[80%] w-[80%] h-[190px] mr-4  sm:w-[100%] md:w-[80%] "> */}

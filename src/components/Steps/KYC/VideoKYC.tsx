@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import camera from '../../../assets/icons/camera.svg';
 import filledcamera from '../../../assets/icons/filledcamera.svg';
 import selfie from '../../../assets/icons/selfie.png';
-import camera from '../../../assets/icons/camera.svg';
 import { useStore } from '../../../store/zustand';
+import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
+import { FACING_MODE_USER } from '../../Common';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 import Camera from '../../Common/Camera/Camera';
 import Frontcam from '../../Common/Camera/Frontcam';
-import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 
 const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepPropsType) => {
     const { cameraStatus, setCameraStatus } = useStore();
@@ -45,7 +46,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
             <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
             <div className="sm:font-[400] my-6">{description}</div>
             {cameraStatus === true ? (
-                <Camera handleImageCapture={handleImageCapture} imagesVal={videoKyc} type="videoRecor" cameraType="front" />
+                <Camera handleImageCapture={handleImageCapture} imagesVal={videoKyc} type="videoRecord" cameraType="front" preferredFacingMode={FACING_MODE_USER} />
             ) : (
                 <>
                     {videoKyc.url !== null || undefined ? (
@@ -68,9 +69,9 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                                     </ButtonGlobal>
                                 </div>
                             </div>
-                            <div className="hidden sm:flex w-full mt-8 sm:flex-col sm:items-center xl:flex-row ">
+                            <div className="hidden w-full mt-8 sm:flex sm:flex-col sm:items-center xl:flex-row ">
                                 <img src={String(selfie)} alt="selfie icon" className="w-28 h-28" />
-                                <div className=" w-full py-3 pl-2 text-sm xl:border-default xl:rounded-md xl:bg-lightdefault xl:border-dashed sm:justify-center sm:bg-white px-2 w-[60%] xl:ml-9 sm:ml-0 sm:mt-4 sm:w-[100%] flex xl:justify-between items-center flex-col xl:flex-row gap-4 xl:gap-0">
+                                <div className=" w-full py-3 pl-2 text-sm xl:border-default xl:rounded-md xl:bg-lightdefault xl:border-dashed sm:justify-center sm:bg-white px-2 xl:ml-9 sm:ml-0 sm:mt-4 sm:w-[100%] flex xl:justify-between items-center flex-col xl:flex-row gap-4 xl:gap-0">
                                     <div>Take a live photo/video with ID proof</div>
                                     {/* <InputGlobal type="search" id="search" className="videoKyc min-w-fit" placeholder="Take a live photo/video with ID proof" value={image} /> */}
                                     <ButtonGlobal
@@ -99,7 +100,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                         </ButtonGlobal>
 
                         {isSkipable && (
-                            <ButtonGlobal className="font-semibold sm:ml-10 mt-6" onClick={handleSkip}>
+                            <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
                                 Skip this step
                             </ButtonGlobal>
                         )}
