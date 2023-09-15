@@ -98,22 +98,20 @@ const Camera = ({ type, handleImageCapture, cameraType, preferredFacingMode = FA
         /* Step 2: Get the device index */
         let _activeDeviceIdx = 0;
 
-        const deviceIdxObj: { [key: string]: number[] } = {};
+        const deviceIdxObj: { [key: string]: number } = {};
 
         for (let idx in deviceList) {
             let type: string = deviceList[idx]?.type || 'other';
 
             if (!deviceIdxObj[type]) {
-                deviceIdxObj[type] = [+idx];
-            } else {
-                deviceIdxObj[type].push(+idx);
+                deviceIdxObj[type] = +idx;
             }
         }
 
-        if (deviceIdxObj['webcam']?.length > 0) {
-            _activeDeviceIdx = +deviceIdxObj['webcam'][0];
-        } else if (deviceIdxObj[preferredFacingMode]?.length > 0) {
-            _activeDeviceIdx = deviceIdxObj[preferredFacingMode][0];
+        if (deviceIdxObj['webcam']) {
+            _activeDeviceIdx = +deviceIdxObj['webcam'];
+        } else if (deviceIdxObj[preferredFacingMode]) {
+            _activeDeviceIdx = deviceIdxObj[preferredFacingMode];
         }
 
         return _activeDeviceIdx;
@@ -139,9 +137,7 @@ const Camera = ({ type, handleImageCapture, cameraType, preferredFacingMode = FA
     const switchCamera = () => {
         let _deviceIdx = deviceIdx < camDevices?.length - 1 ? deviceIdx + 1 : 0;
 
-        if (camDevices.length > 0) {
-            initCamera(camDevices, _deviceIdx);
-        }
+        initCamera(camDevices, _deviceIdx);
         setDeviceIdx(_deviceIdx);
     };
 
@@ -171,9 +167,7 @@ const Camera = ({ type, handleImageCapture, cameraType, preferredFacingMode = FA
 
     return (
         <div className={'fixed top-0 left-0 right-0 bottom-0 z-50 bg-curtain lg:p-5 p-2 flex flex-col justify-center items-center'}>
-            <p className="p-2 text-white border-2 border-white border-solid rounded-lg">
-                {camDevices[deviceIdx]?.label}-{camDevices[deviceIdx]?.type}
-            </p>
+            {process.env.NEXT_PUBLIC_ENV !== 'production' && camDevices.length && <p className="p-2 text-white border-2 border-white border-solid rounded-lg ">{camDevices[deviceIdx]?.label}</p>}
             <div className="flex flex-col mr-3 mt-[65px] w-full max-w-[800px] max-h-[95%]">
                 <Webcam
                     className="rounded-[10px]"
@@ -199,20 +193,25 @@ const Camera = ({ type, handleImageCapture, cameraType, preferredFacingMode = FA
                         console.error('[Camera] err', err);
                     }}
                 />
+                {/* {!camDevices.length && <p className="text-lg text-black bg-white">Please "Allow" browser to use your camera.</p>} */}
                 <div className={`fixed left-0 right-0 bottom-[10px] lg:bottom-[20px] flex flex-row flex-wrap gap-2 justify-around mt-3 w-full`}>
-                    <ButtonGlobal onClick={closeCamera} className={btnClasses}>
-                        Cancel
-                    </ButtonGlobal>
+                    {camDevices.length && (
+                        <ButtonGlobal onClick={closeCamera} className={btnClasses}>
+                            Cancel
+                        </ButtonGlobal>
+                    )}
                     {camDevices?.length > 1 && (
                         <ButtonGlobal onClick={switchCamera} className={btnClasses}>
                             Switch Camera
                         </ButtonGlobal>
                     )}
-                    <ButtonGlobal onClick={capture} className={btnClasses}>
-                        <>
-                            <img src={filledcamera} className="w-[16px] h-[16px] mr-2" /> Capture
-                        </>
-                    </ButtonGlobal>
+                    {camDevices.length && (
+                        <ButtonGlobal onClick={capture} className={btnClasses}>
+                            <>
+                                <img src={filledcamera} className="w-[16px] h-[16px] mr-2" /> Capture
+                            </>
+                        </ButtonGlobal>
+                    )}
                 </div>
             </div>
         </div>
