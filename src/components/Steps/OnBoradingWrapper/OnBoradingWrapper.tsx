@@ -19,6 +19,7 @@ import SecretPin from '../PIN/SecretPin';
 import PanAdharMatch from '../PanSteps/PanAdharMatch';
 import PanVerification from '../PanSteps/PanVerification';
 import SelectionScreen from '../SelectionScreen/SelectionScreen';
+import PanVerificationDistributor from '../PanSteps/PanVerificationDistributor';
 import Welcome from '../Welcome/Welcome';
 
 type HomepageProps = {
@@ -104,6 +105,8 @@ export const OnBoradingWrapper = ({
                     return <OnboardingStatus stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case 15:
                     return <PanAdharMatch />;
+                case 16:
+                    return <PanVerificationDistributor stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} /* shopTypes={shopTypes}*/ />;
                 default:
                     return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }
