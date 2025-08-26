@@ -1,531 +1,752 @@
-# React/Web Widget for Onboarding-as-a-Service
-
-Welcome to eko-oaas-package TypeScript NPM package! This package provides onboarding as a service which includes several steps like:
-
-1. Location Capturing
-2. Pan verification
-3. Aadhar verification
-4. Pan - Aadhar matching
-5. Business details
-6. Video KYC
-7. Onboarding status
-
-## Usage:
-
-Install the package in your Javascript project: `npm i @ekoindia/oaas-widget`
-
-After installing the package, you can import and use it in your TypeScript project. Here's an example of how to use it:
-
-import { OnBoradingVist, SelectionScreen } from "@ekoindia/oaas-widget";
-
-<!-- And just use component.  -->
-
-<OnBoradingVist
-	defaultStep={}
-	isBranding={false}
-	userData={userData}
-	handleSubmit={handleStepDataSubmit}
-	stepResponse={lastStepResponse}
-	selectedMerchantType={selectedRole}
-	shopTypes={shopTypesData}
-	stateTypes={stateTypesData}
-	stepsData={stepperData}
-	handleStepCallBack={handleStepCallBack}
-/>
-
-<SelectionScreen
-   stepData={selectionStepData}
-   handleSubmit={}
-/>
-
-## Local Development:
-
-To include the package in your local project for testing, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import
-it as a local dependency.
-
-#### To test the package locally:
-
-1. Create build using `npm run build` to create dist folder which will serve target projects.
-2. Run the `npm link` command in this project's root directory to create a symlink.
-3. Run the `npm link @ekoindia/oaas-widget` command in your target project's root directory to link this package.
-    1. A folder called `@ekoindia` will be created in your target project's node_modules directory with a symlink to this package. You may delete that folder to remove the symlink.
-4. Import the package in your project and use it as a local dependency.
-
-#### To build and publish to npm:
-
-1. Increment the package version in `package.json` file.
-1. Build the package: `npm run build`
-1. Add your npm credentials using `npm adduser` (app.admin account).
-    1. Enter username, email and password.
-    1. Enter OTP sent to app.admin's email.
-1. Publich the package: `npm run publish-try`
-
-## Folder Structure:
-
-    ┣src
-    ┃ ┣ assets
-    ┃ ┃ ┣ Styles
-    ┃ ┃ ┣ icons
-    ┃ ┃ ┃ ┣ alert.png
-    ┃ ┃ ┃ ┣ alert.svg
-    ┃ ┃ ┃ ┣ camera.svg
-    ┃ ┃ ┃ ┣ completemark.svg
-    ┃ ┃ ┃ ┣ cross.svg
-    ┃ ┃ ┃ ┣ downarrowfilled.svg
-    ┃ ┃ ┃ ┣ filledcamera.svg
-    ┃ ┃ ┃ ┣ imageicon.svg
-    ┃ ┃ ┃ ┣ logo.png
-    ┃ ┃ ┃ ┣ nextarrow.svg
-    ┃ ┃ ┃ ┣ previousarrow.svg
-    ┃ ┃ ┃ ┣ retry.png
-    ┃ ┃ ┃ ┣ selfie.png
-    ┃ ┃ ┃ ┣ thumb.svg
-    ┃ ┃ ┃ ┣ thumpdown.svg
-    ┃ ┃ ┃ ┣ tickmark.svg
-    ┃ ┃ ┃ ┣ user_distributor.png
-    ┃ ┃ ┃ ┣ user_enterprise.png
-    ┃ ┃ ┃ ┣ user_merchant.png
-    ┃ ┃ ┃ ┗ welcomeIcon.png
-    ┃ ┃ ┣ CloseIcon.tsx
-    ┃ ┃ ┗ DropdownIcon.tsx
-    ┃ ┣ components
-    ┃ ┃ ┣ Common
-    ┃ ┃ ┃ ┣ Camera
-    ┃ ┃ ┃ ┃ ┣ Camera.tsx
-    ┃ ┃ ┃ ┃ ┣ Frontcam.tsx
-    ┃ ┃ ┃ ┃ ┣ cameraConfig.ts
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ Header
-    ┃ ┃ ┃ ┃ ┣ Header.tsx
-    ┃ ┃ ┃ ┃ ┣ Headermobile.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ Sidebar
-    ┃ ┃ ┃ ┃ ┣ Sidebar.css
-    ┃ ┃ ┃ ┃ ┣ Sidebar.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ Alert.tsx
-    ┃ ┃ ┃ ┣ Backcam.tsx
-    ┃ ┃ ┃ ┣ Browse.tsx
-    ┃ ┃ ┃ ┣ ButtonGlobal.tsx
-    ┃ ┃ ┃ ┣ Fetching.tsx
-    ┃ ┃ ┃ ┣ InputGlobal.tsx
-    ┃ ┃ ┃ ┣ Labelglobal.tsx
-    ┃ ┃ ┃ ┣ Modal.tsx
-    ┃ ┃ ┃ ┗ Uploadfile.tsx
-    ┃ ┃ ┣ CustomHooks
-    ┃ ┃ ┃ ┗ UseGeoLocation.tsx
-    ┃ ┃ ┣ OnboardingWidget
-    ┃ ┃ ┃ ┣ OnboardingWidget.tsx
-    ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┗ Steps
-    ┃ ┃ ┃ ┣ AadharSteps
-    ┃ ┃ ┃ ┃ ┣ AadharConsent.tsx
-    ┃ ┃ ┃ ┃ ┣ AadharNumberOtpVerify.tsx
-    ┃ ┃ ┃ ┃ ┣ AdharVerifiction.tsx
-    ┃ ┃ ┃ ┃ ┣ ConfirmAadharNumber.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ ActivationPlan
-    ┃ ┃ ┃ ┃ ┣ ActivationPlan.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ Agreement
-    ┃ ┃ ┃ ┃ ┣ SignAgreement.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ Business
-    ┃ ┃ ┃ ┃ ┣ Business.tsx
-    ┃ ┃ ┃ ┃ ┣ BusinessMerchant.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ KYC
-    ┃ ┃ ┃ ┃ ┣ VideoKYC.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ Location
-    ┃ ┃ ┃ ┃ ┣ LocationCapture.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ OnBoardingStatus
-    ┃ ┃ ┃ ┃ ┣ OnboardingStatus.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ OnBoradingWrapper
-    ┃ ┃ ┃ ┃ ┣ OnBoradingWrapper.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ PIN
-    ┃ ┃ ┃ ┃ ┣ SecretPin.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ PanSteps
-    ┃ ┃ ┃ ┃ ┣ PanAdharMatch.tsx
-    ┃ ┃ ┃ ┃ ┣ PanVerification.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ SelectionScreen
-    ┃ ┃ ┃ ┃ ┣ SelectionScreen.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ SupersetComponent
-    ┃ ┃ ┃ ┃ ┣ SupersetComponent.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┣ Welcome
-    ┃ ┃ ┃ ┃ ┣ Welcome.tsx
-    ┃ ┃ ┃ ┃ ┗ index.ts
-    ┃ ┃ ┃ ┗ index.ts
-    ┃ ┣ scripts
-    ┃ ┃ ┗ leegalityv5.min.js
-    ┃ ┣ store
-    ┃ ┃ ┗ zustand.tsx
-    ┃ ┣ stories
-    ┃ ┃ ┣ Asdhar.stories.tsx
-    ┃ ┃ ┗ HomePage.stories.tsx
-    ┃ ┣ types
-    ┃ ┃ ┗ index.d.ts
-    ┃ ┣ utils
-    ┃ ┃ ┣ data
-    ┃ ┃ ┃ ┗ stepsData.ts
-    ┃ ┃ ┗ globalInterfaces
-    ┃ ┃   ┗ stepsInterface.ts
-    ┃ ┣ index.css
-    ┃ ┗ index.ts.babelrc
-    ┃ .env
-    ┃ .gitignore
-    ┃ .npmrc
-    ┃ .prettierrrc
-    ┃ api.js
-    ┃ package-lock.json
-    ┃ package.json
-    ┃ postcss.config.js
-    ┃ README.md
-    ┃ rollup.config.js
-    ┃ tailwind.config.js
-    ┃ tsconfig.json
-    ┗.babelrc
-
-## Tailwind CSS
-
-By including Tailwind CSS in our npm package, we aim to provide developers with a powerful and efficient toolset that enhances their productivity, fosters consistent design systems, and allows for
-rapid development and customization.
-
-tailwind.config.js
-
-The tailwind.config.js file contains the custom configuration for your Tailwind CSS framework. Let's go through the features specified in this configuration:
-
-1. Content Configuration The content property defines the files to be scanned by PurgeCSS, which removes unused CSS. In this configuration, the content property includes TypeScript and TypeScript
-   React files (_.ts, _.tsx) located in the src/ directory, components/ directory, and stories/ directory.
-
-2. Theme Customization The theme property allows you to customize various aspects of the Tailwind CSS framework. In this configuration, the extend property is used to add or override color
-   definitions. Several custom colors such as white, black, lightdefault, default, darkdefault, success, warning, darkdanger, danger, lightdanger, and primary are defined.
-
-3. Box Shadows The boxShadow property allows you to define custom box shadow utilities. In this configuration, box shadow utilities with the names xl, 3xl, and 2xl are defined with specific shadow
-   values.
-
-4. Container Configuration The container property allows you to configure the behavior of the container utility class. In this configuration, the container is set to be centered (center: true) and
-   padding values are defined for different screen sizes (sm, lg, xl, 2xl). The default padding is set to 1rem.
-
-5. Variants Configuration The variants property lets you enable or disable variants for utilities. In this configuration, the container variant is set to an empty array, meaning no additional variants
-   are added specifically for the container utility.
-
-6. Core Plugins Configuration The corePlugins property allows you to control which core plugins are enabled or disabled. In this configuration, the container plugin is disabled.
-
-7. Responsive Breakpoints The screens property defines the breakpoints for responsive design. It sets the screen sizes for different breakpoints such as sm, md, lg, xl, and 2xl. These breakpoints can
-   be used to create responsive utility classes.
-
-8. Plugins The plugins property is an array where you can include any Tailwind CSS plugins you want to use in your project. Currently, no plugins are included in this configuration.
-
-## tsconfig.json File
-
-The tsconfig.json file is a configuration file used in TypeScript projects to specify compiler options and settings. It is located in the root directory of your project and helps define how TypeScript
-should compile your code.
-
-Compiler Options:
-
-The compilerOptions section in your tsconfig.json file contains various options that control the behavior of the TypeScript compiler. Let's go through each option:
-
-target:
-
-Specifies the ECMAScript target version for the compiled JavaScript code. In this case, the target is set to "ES6".
-
-lib:
-
-Defines the libraries to include automatically in the compilation. Here, the "ES2018" and "DOM" libraries are included.
-
-jsx:
-
-Specifies the JSX factory function to use for React. It is set to "react".
-
-allowJs:
-
-Allows JavaScript files to be included in the TypeScript compilation. It is set to true.
-
-module:
-
-Determines the module code generation for the compiled JavaScript. Here, the module is set to "ESNext".
-
-declarationDir:
-
-Specifies the output directory for generated declaration files (.d.ts). In this case, the declarations will be placed in the "types" directory.
-
-moduleResolution:
-
-Defines the strategy TypeScript uses to resolve module dependencies. It is set to "node".
-
-strict:
-
-Enables strict type-checking and additional TypeScript features to enforce stricter code quality. It is set to true.
-
-forceConsistentCasingInFileNames:
-
-Ensures consistent casing of file names. It is set to true.
-
-noFallthroughCasesInSwitch:
-
-Checks for missing break statements in switch cases. It is set to true. resolveJsonModule: Enables importing JSON files as modules. It is set to true.
-
-isolatedModules:
-
-Treats each file as a separate module, which allows faster incremental builds. It is set to true.
-
-plugins:
-
-Specifies a TypeScript plugin to be used. Here, the "typescript-plugin-css-modules" plugin is added.
-
-types:
-
-Specifies the type declaration files to be included. Here, the "node" type is included.
-
-declaration:
-
-Enables the generation of declaration files (.d.ts) alongside the compiled JavaScript for type-checking in other projects. It is set to true.
-
-sourceMap:
-
-Generates source map files that link the compiled JavaScript to the original TypeScript code for debugging purposes. It is set to true.
-
-outDir:
-
-Defines the output directory for compiled JavaScript files. In this case, the output will be placed in the "dist/esm" directory.
-
-allowSyntheticDefaultImports:
-
-Allows importing modules with a default export from modules that have no default export. It is set to true.
-
-esModuleInterop:
-
-Enables compatibility with CommonJS modules using default exports. It is set to true. noImplicitAny: Raises an error on expressions and declarations with an implied any type. It is set to true.
-
-skipLibCheck:
-
-Skips type-checking of all the type declaration files from the TypeScript standard library. It is set to true.
-
-File Inclusion and Exclusion
-
-The include and exclude options determine which files are included or excluded during the compilation process.
-
-include:
-
-Specifies the files and/or directories to include in the compilation. Here, the "src" directory, including _.ts, _.tsx, and the "jest.config.ts" files, are included. exclude: Specifies the files
-and/or directories to exclude from the compilation. Here, the "node_modules" and "dist" directories are excluded.
-
-By configuring these options, you can control which files are processed by TypeScript during compilation.
-
-{ "compilerOptions": {
-
-    "target": "ES6",
-    "lib": ["ES2018", "DOM"],
-    "jsx": "react",
-    "allowJs": true,
-    "module": "ESNext",
-    "declarationDir": "types",
-    "moduleResolution": "node",
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
-    "types": ["node"],
-    "declaration": true,
-    "sourceMap": true,
-    "outDir": "dist/esm",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "skipLibCheck": true
-
-}, "include": ["src/**/*.ts", "src/**/*.tsx", "jest.config.ts"], "exclude": ["node_modules", "dist"] }
-
-## Rollup Features:
-
-The Rollup feature is a powerful tool that allows you to consolidate and bundle your JavaScript code into a single file for deployment. It simplifies the process of managing dependencies, optimizing
-code size, and improving performance. This README file provides an overview of the Rollup feature and instructions on how to use it effectively.
-
-Why Use Rollup?
-
-Rollup offers several advantages over traditional bundlers like Webpack or Browserify. It focuses on creating smaller, optimized bundles by following an ES module-centric approach. Here are some key
-benefits of using Rollup:
-
-Efficient Bundle Size:
-
-Rollup analyzes your code and tree-shakes unused modules, resulting in smaller bundle sizes compared to other bundlers. This can lead to faster load times and improved performance for your
-applications.
-
-ES Module Support:
-
-Rollup natively supports ES modules, allowing you to take full advantage of the module syntax and features. It can handle both ES modules and CommonJS modules, making it suitable for a wide range of
-projects.
-
-Code Splitting and Dynamic Imports:
-
-Rollup supports code splitting and dynamic imports, enabling you to load specific modules only when needed. This feature can significantly reduce the initial load time of your application.
-
-Plugins and Customization:
-
-Rollup has a rich ecosystem of plugins that extend its functionality. You can use plugins to optimize your code, transform assets, integrate with other tools, and more. Additionally, Rollup's
-configuration is highly customizable, giving you fine-grained control over the bundling process.
-
-Getting Started
-
-To use the Rollup feature in your project, follow these steps:
-
-Installation:
-
-Install Rollup globally or as a development dependency using npm or yarn.
-
-bash Copy code npm install --global rollup
-
-import { terser } from 'rollup-plugin-terser';
-
-export default { input: 'src/index.js',
-
-output: { file: 'dist/bundle.js', format: 'umd', }, plugins: [terser()],
-
+# Onboarding-as-a-Service (OaaS) Widget
+
+[![NPM Version](https://img.shields.io/npm/v/@ekoindia/oaas-widget.svg)](https://www.npmjs.com/package/@ekoindia/oaas-widget)
+[![License](https://img.shields.io/npm/l/@ekoindia/oaas-widget.svg)](https://github.com/ekoindia/oaas-widget/blob/main/LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+
+A comprehensive React-based widget for digital onboarding processes, providing step-by-step user verification including KYC, document verification, location capture, and compliance checks.
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+npm install @ekoindia/oaas-widget
+```
+
+### Basic Usage
+
+```typescript
+import { OnboardingWidget } from '@ekoindia/oaas-widget';
+
+const MyApp = () => {
+    const handleSubmit = (stepData) => {
+        console.log('Step completed:', stepData);
+        // Handle step submission to your backend
+    };
+
+    const stepsData = [
+        {
+            id: 2,
+            name: 'selection',
+            label: 'Select Your Role',
+            primaryCTAText: 'Continue',
+            description: 'Choose your business type',
+            isSkipable: false,
+            isRequired: true,
+            isVisible: true,
+            stepStatus: 1,
+            form_data: {
+                /* step-specific data */
+            }
+        }
+        // ... other steps
+    ];
+
+    return <OnboardingWidget defaultStep="2" handleSubmit={handleSubmit} userData={{ userDetails: { user_type: 1 } }} stepsData={stepsData} primaryColor="#007bff" isBranding={true} />;
 };
+```
 
-In this example, we specify an input file (src/index.js), an output file (dist/bundle.js), and use the umd format for compatibility with different environments. We also include the terser plugin for
-code minification.
+## 📋 Table of Contents
 
-Run Rollup:
+1. [Architecture Overview](#-architecture-overview)
+2. [User Flow](#-user-flow)
+3. [Available Steps](#-available-steps)
+4. [Integration Guide](#-integration-guide)
+5. [API Integration](#-api-integration)
+6. [Configuration](#-configuration)
+7. [Development Setup](#-development-setup)
+8. [Project Structure](#-project-structure)
+9. [Build & Deployment](#-build--deployment)
 
-Use the Rollup command-line interface (CLI) or integrate it into your build process. By default, Rollup will look for the rollup.config.js file and bundle your code accordingly.
+## 🏗️ Architecture Overview
 
-rollup -c
+The widget follows a modular architecture with the following key layers:
 
-Storybook Feature:
+```mermaid
+graph TD
+    A[OnboardingWidget] --> B[OnboardingWrapper]
+    B --> C[Individual Step Components]
+    C --> D[Common UI Components]
+    B --> E[Zustand Store]
+    E --> F[State Management]
 
-The Storybook feature is an exciting addition to your project that allows you to create and showcase interactive UI components in a visually appealing and organized manner. This README file provides a
-comprehensive overview of the Storybook feature, guiding you through its installation, usage, and customization options.
+    A -->|Props & Configuration| B
+    B -->|Step Orchestration| C
+    C -->|Reusable Components| D
+    E -->|Global State| B
+    E -->|Global State| C
+```
 
-Table of Contents:
+### Core Components
 
-Installation
+| Component             | Location                                  | Purpose                                           |
+| --------------------- | ----------------------------------------- | ------------------------------------------------- |
+| **OnboardingWidget**  | `src/components/OnboardingWidget/`        | Main container, handles configuration and theming |
+| **OnboardingWrapper** | `src/components/Steps/OnboardingWrapper/` | Step orchestrator, manages flow and navigation    |
+| **Individual Steps**  | `src/components/Steps/*/`                 | Step-specific implementations                     |
+| **Common Components** | `src/components/Common/`                  | Reusable UI components                            |
+| **Zustand Store**     | `src/store/zustand.tsx`                   | Global state management                           |
 
-Getting Started
+## 🔄 User Flow
 
-Creating Stories
+### Complete Onboarding Flow
 
-Customizing Stories
+```mermaid
+flowchart TD
+    A[Start] --> B[Selection Screen]
+    B --> C{User Type?}
+    C -->|Merchant/Distributor| D[Location Capture]
+    D --> E[Aadhaar Upload]
+    E --> F[Aadhaar Consent]
+    F --> G[Confirm Aadhaar Number]
+    G --> H[Aadhaar OTP Verification]
+    H --> I[PAN Verification]
+    I --> J{User Type?}
+    J -->|Distributor| K[Business Details]
+    J -->|Merchant| L[Secret PIN]
+    J -->|Retailer| M[Video KYC]
+    K --> L
+    L --> M
+    M --> N[Agreement Signing]
+    N --> O[Activation Plan]
+    O --> P[Onboarding Status]
+    P --> Q[Complete]
+```
 
-Add-Ons and Plugins
+### User Type Variations
 
-Deploying Storybook
+```mermaid
+graph LR
+    A[User Types] --> B[Retailer<br/>user_type: 3]
+    A --> C[Merchant<br/>user_type: 2]
+    A --> D[Distributor<br/>user_type: 1]
 
-Troubleshooting
+    B --> E[Excludes:<br/>• Business Details<br/>• Secret PIN]
+    C --> F[Standard Flow]
+    D --> G[Includes:<br/>• All Steps<br/>• Additional Validations]
+```
 
-Contributing
+## 📝 Available Steps
 
-License
+### Core Verification Steps
 
-Installation:
+| Step ID | Component                    | Purpose                   | Required | User Type Dependent    |
+| ------- | ---------------------------- | ------------------------- | -------- | ---------------------- |
+| 2       | `SelectionScreen`            | Role selection            | ✅       | All                    |
+| 3       | `LocationCapture`            | GPS coordinates           | ✅       | All                    |
+| 4-7     | `Aadhaar*`                   | Aadhaar verification flow | ✅       | All                    |
+| 8       | `PanVerification`            | PAN card verification     | ✅       | All                    |
+| 9       | `Business`                   | Business information      | ✅       | Distributors/Merchants |
+| 10      | `SecretPin`                  | Security PIN setup        | ✅       | Distributors/Merchants |
+| 11      | `VideoKYC`                   | Live video verification   | ✅       | All                    |
+| 12      | `SignAgreement`              | Digital signature         | ✅       | All                    |
+| 13      | `ActivationPlan`             | Service plan selection    | ✅       | All                    |
+| 14      | `OnboardingStatus`           | Completion status         | ✅       | All                    |
+| 15      | `PanAdharMatch`              | PAN-Aadhaar linkage       | ✅       | All                    |
+| 16      | `PanVerificationDistributor` | Distributor PAN           | ✅       | Distributors           |
+| 20      | `DigilockerRedirection`      | Digilocker integration    | ⚪       | Optional               |
 
-Start by installing the Storybook package using your preferred package manager. Typically, this involves running a command such as npm install --global @storybook/cli or yarn add @storybook/react.
-Refer to the official documentation for detailed installation instructions tailored to your project's specific requirements.
+### Step Status Values
 
-Getting Started:
+-   **0 (Pending)**: Step not yet started
+-   **1 (Active)**: Currently active step
+-   **2 (Skipped)**: Step was skipped
+-   **3 (Completed)**: Step successfully completed
 
-Once the installation is complete, initialize Storybook in your project directory using the appropriate command, such as npx sb init or yarn run sb init. This will set up the necessary configuration
-files and folders for your Storybook.
+## 🔧 Integration Guide
 
-Creating Stories:
+### Props Configuration
 
-Stories are individual components or UI elements that you want to showcase in Storybook. You can create stories by creating files ending with .stories.js or using the new "CSF" (Component Story
-Format) syntax. In these files, you define various states and variations of your component, allowing you to present them in an interactive and isolated manner.
+```typescript
+interface OnboardingWidgetProps {
+    defaultStep: string; // Starting step ID
+    handleSubmit: (data: any) => void; // Step completion callback
+    userData: {
+        // User information
+        userDetails: {
+            user_type: 1 | 2 | 3; // 1: Distributor, 2: Merchant, 3: Retailer
+            // ... other user details
+        };
+    };
+    stepsData: StepDataType[]; // Step configuration array
+    handleStepCallBack?: (params: {
+        // Step-specific callback
+        type: number;
+        method: string;
+        data?: any;
+    }) => void;
+    primaryColor?: string; // Theme color (default: #007bff)
+    isBranding?: boolean; // Show/hide branding
+    shopTypes?: Array<any>; // Available shop types
+    stateTypes?: Array<any>; // Available states
+    stepResponse?: any; // API response data
+    selectedMerchantType?: any; // Merchant type selection
+    esignStatus?: number; // E-signature status
+    orgDetail?: any; // Organization details
+    digilockerData?: any; // Digilocker integration data
+}
+```
 
-Customizing Stories:
+### Step Data Structure
 
-Storybook provides a range of customization options to enhance the appearance and functionality of your stories. You can configure the layout, add global decorators to wrap your components, define
-parameters to control the story behavior, and specify controls for interactive props. Additionally, you can use addons and plugins to extend Storybook's capabilities.
+```typescript
+type StepDataType = {
+    id: number; // Unique step identifier
+    name: string; // Step name/slug
+    label: string; // Display title
+    primaryCTAText: string; // Button text
+    description: string; // Step description
+    isSkipable: boolean; // Can be skipped
+    isRequired: boolean; // Required for completion
+    isVisible: boolean; // Should be shown in UI
+    stepStatus: 0 | 1 | 2 | 3; // Step status
+    role?: number; // Associated user role
+    form_data: any; // Step-specific data
+    success_message?: string; // Success message
+};
+```
 
-Add-Ons and Plugins:
+## 🔌 API Integration
 
-Storybook supports a vast ecosystem of add-ons and plugins that extend its functionality. These additional tools allow you to integrate design systems, showcase documentation, test component behavior,
-and more. You can browse the official Storybook Addons website or consult the Storybook documentation to explore the available options and learn how to incorporate them into your project.
+### Step Callbacks
 
-Deploying Storybook:
+```typescript
+const handleStepCallBack = ({ type, method, data }) => {
+    switch (`${type}-${method}`) {
+        case '20-getDigilockerUrl':
+            // Get Digilocker redirection URL
+            return fetch('/api/digilocker/generate-url', {
+                method: 'POST',
+                body: JSON.stringify({ userId, sessionId }),
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => response.json());
 
-Once you have created and customized your stories, you can deploy your Storybook for easy sharing and collaboration with others. Storybook provides various deployment options, including static site
-generators, hosting platforms, and cloud services. Refer to the documentation for step-by-step instructions on deploying Storybook to your preferred hosting environment.
+        case '7-verifyOtp':
+            // Verify Aadhaar OTP
+            return fetch('/api/aadhaar/verify-otp', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => response.json());
 
-Troubleshooting:
+        case '12-esignDocument':
+            // Handle e-signature
+            return fetch('/api/esign/initiate', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => response.json());
+    }
+};
+```
 
-Encountering issues while using Storybook? The Troubleshooting section of this README provides guidance on common problems and their solutions. It covers topics such as configuration errors,
-incompatible dependencies, and debugging techniques.
+### Step Submission
 
-Contributing:
+```typescript
+const handleSubmit = async (stepData) => {
+    try {
+        const response = await fetch('/api/onboarding/step', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                stepId: stepData.id,
+                formData: stepData.form_data,
+                status: stepData.stepStatus
+            })
+        });
 
-Contributions to Storybook are always welcome! If you find a bug, have an idea for a new feature, or want to improve the documentation, follow the guidelines outlined in the Contributing section. It
-provides instructions for submitting bug reports, feature requests, and pull requests.
+        const result = await response.json();
 
-License:
+        if (result.status === 0) {
+            // Success - widget will auto-progress
+            setStepResponse(result);
+        } else {
+            // Handle validation errors
+            setStepResponse({
+                status: 1,
+                invalid_params: result.errors
+            });
+        }
+    } catch (error) {
+        console.error('Step submission failed:', error);
+    }
+};
+```
 
-Storybook is typically released under an open-source license, such as the MIT License. Make sure to review the license file included in the Storybook package to understand your rights and obligations
-when using Storybook in your project.
+## ⚙️ Configuration
 
-Chromatic:
+### Environment Setup
 
-The chromatic feature in this project refers to a unique and visually striking characteristic that adds color diversity and vibrancy to the user interface. This feature enhances the overall aesthetics
-of the project, providing an engaging and captivating visual experience for users.
+Create a `.env` file in your project root:
 
-Color Palette:
+```bash
+# API Configuration
+REACT_APP_API_BASE_URL=https://your-api-base-url.com
+REACT_APP_ENVIRONMENT=development
 
-A carefully curated color palette has been selected to ensure harmonious and visually appealing combinations. The palette includes a diverse range of colors that complement each other and create a
-balanced visual composition.
+# Feature Flags
+REACT_APP_ENABLE_DIGILOCKER=true
+REACT_APP_ENABLE_VIDEO_KYC=true
 
-Dynamic Color Rendering:
+# Third-party Integrations
+REACT_APP_ESIGN_PROVIDER_URL=https://esign-provider.com
+```
 
-The chromatic feature dynamically renders colors based on specific conditions or user interactions. This dynamic behavior adds an element of interactivity and responsiveness to the user interface.
+### Theming
 
-Gradient Effects:
+```typescript
+// Custom theme configuration
+<OnboardingWidget
+    primaryColor="#ff6b35" // Primary color
+    isBranding={false} // Hide header/branding
+    // CSS custom property --color-primary will be set
+/>
+```
 
-Gradients are utilized to create smooth color transitions and depth. By blending multiple colors seamlessly, gradients enhance the visual richness of the project and contribute to a captivating
-experience.
+### Step Visibility Control
 
-Color Customization:
+```typescript
+const stepsData = [
+    {
+        id: 9,
+        name: 'business',
+        // ... other properties
+        isVisible: userData.userType !== 3, // Hide for retailers
+        role: 1 // Only for distributors
+    }
+];
+```
 
-Users have the ability to customize colors within the application. This customization feature empowers users to personalize their experience according to their preferences and create a unique visual
-environment.
+## 🛠️ Development Setup
 
-Benefits The chromatic feature offers several benefits to the project, including:
+### Prerequisites
 
-Visual Appeal:
+-   Node.js (v16+)
+-   React (v18+)
+-   TypeScript (v4.9+)
 
-The vibrant and diverse color palette creates an engaging visual experience, capturing users' attention and making the project aesthetically pleasing.
+### Local Development
 
-User Engagement:
+```bash
+# Clone the repository
+git clone https://github.com/ekoindia/oaas-widget.git
+cd oaas-widget
 
-The dynamic color rendering and interactive elements foster user engagement and provide a sense of interactivity, increasing user satisfaction and enjoyment.
+# Install dependencies
+npm install
 
-Branding and Identity:
+# Build the package
+npm run build
 
-The chromatic feature can be used to reinforce a project's brand identity by incorporating brand colors or aligning with the project's overall visual identity.
+# Link for local testing
+npm link
 
-Accessibility:
+# In your target project
+npm link @ekoindia/oaas-widget
+```
 
-The use of a carefully designed color palette ensures that the project remains accessible to users with different color vision abilities, considering factors such as contrast and readability.
+### Development Scripts
 
-Usage To incorporate the chromatic feature into your project, follow these steps:
+```bash
+# Build the package
+npm run build
 
-Install the necessary dependencies and frameworks specified in the project documentation.
+# Run tests
+npm test
+npm run test-coverage
 
-Import the color palette or define custom colors according to the project's requirements.
+# Start Storybook
+npm run storybook
 
-Implement the dynamic color rendering logic based on your project's specifications.
+# Build Storybook
+npm run build-storybook
 
-Integrate the chromatic feature within the user interface components where appropriate.
+# Visual testing with Chromatic
+npm run chromatic
 
-Please refer to the project documentation for detailed instructions and code examples related to the chromatic feature implementation.
+# Check for updates
+npm run check-updates
+```
 
-License [MIT]
+### Testing Locally
 
-NPM Link: https://www.npmjs.com/package/@ekoindia/oaas-widget
+```bash
+# 1. Create build
+npm run build
+
+# 2. Create symlink
+npm link
+
+# 3. In your target project
+npm link @ekoindia/oaas-widget
+
+# 4. Import and use
+import { OnboardingWidget } from '@ekoindia/oaas-widget';
+```
+
+## 📁 Project Structure
+
+```
+oaas-widget/
+├── 📁 src/                          # Source code
+│   ├── 📁 assets/                   # Static assets
+│   │   ├── 📁 icons/               # SVG and PNG icons
+│   │   ├── CloseIcon.tsx           # Close icon component
+│   │   └── DropdownIcon.tsx        # Dropdown icon component
+│   │
+│   ├── 📁 components/              # React components
+│   │   ├── 📁 Common/              # Reusable components
+│   │   │   ├── 📁 Camera/          # Camera-related components
+│   │   │   ├── 📁 Header/          # Header components
+│   │   │   ├── 📁 Sidebar/         # Sidebar components
+│   │   │   ├── 📁 CamDropzone/     # Camera dropzone
+│   │   │   ├── Alert.tsx           # Alert component
+│   │   │   ├── ButtonGlobal.tsx    # Global button component
+│   │   │   ├── InputGlobal.tsx     # Global input component
+│   │   │   ├── Modal.tsx           # Modal component
+│   │   │   ├── Spinner.tsx         # Loading spinner
+│   │   │   └── ...                 # Other common components
+│   │   │
+│   │   ├── 📁 CustomHooks/         # Custom React hooks
+│   │   │   └── UseGeoLocation.tsx  # Geolocation hook
+│   │   │
+│   │   ├── 📁 OnboardingWidget/    # Main widget component
+│   │   │   ├── OnboardingWidget.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   └── 📁 Steps/               # Step components
+│   │       ├── 📁 AadharSteps/     # Aadhaar verification steps
+│   │       ├── 📁 ActivationPlan/  # Activation plan selection
+│   │       ├── 📁 Agreement/       # Agreement signing
+│   │       ├── 📁 Business/        # Business details
+│   │       ├── 📁 DigilockerRedirection/ # Digilocker integration
+│   │       ├── 📁 KYC/            # Video KYC
+│   │       ├── 📁 Location/        # Location capture
+│   │       ├── 📁 OnBoardingStatus/ # Onboarding status
+│   │       ├── 📁 OnboardingWrapper/ # Step orchestrator
+│   │       ├── 📁 PanSteps/        # PAN verification steps
+│   │       ├── 📁 PIN/             # Secret PIN setup
+│   │       ├── 📁 SelectionScreen/ # Role selection
+│   │       ├── 📁 SupersetComponent/ # Superset integration
+│   │       ├── 📁 Welcome/         # Welcome screen
+│   │       └── index.ts
+│   │
+│   ├── 📁 scripts/                 # External scripts
+│   │   └── leegalityv5.min.js     # Leegality integration
+│   │
+│   ├── 📁 store/                   # State management
+│   │   └── zustand.tsx            # Zustand store configuration
+│   │
+│   ├── 📁 types/                   # TypeScript type definitions
+│   │   └── index.d.ts             # Global type definitions
+│   │
+│   ├── 📁 utils/                   # Utility functions
+│   │   ├── 📁 data/               # Data configurations
+│   │   │   └── stepsData.ts       # Step data types
+│   │   └── 📁 globalInterfaces/   # Global interfaces
+│   │       └── stepsInterface.ts  # Step interface definitions
+│   │
+│   ├── index.css                  # Global styles
+│   └── index.ts                   # Main entry point
+│
+├── 📁 types/                       # Generated TypeScript declarations
+├── 📁 dist/                        # Built package output
+├── package.json                    # Package configuration
+├── tsconfig.json                   # TypeScript configuration
+├── tailwind.config.js              # Tailwind CSS configuration
+├── postcss.config.js               # PostCSS configuration
+├── rollup.config.js                # Rollup build configuration
+└── README.md                       # This documentation
+```
+
+### Key Directories Explained
+
+| Directory                | Purpose                                                           |
+| ------------------------ | ----------------------------------------------------------------- |
+| `src/components/Steps/`  | Contains all step-specific components for the onboarding flow     |
+| `src/components/Common/` | Reusable UI components used across different steps                |
+| `src/store/`             | Zustand-based state management for global application state       |
+| `src/utils/`             | Utility functions, data configurations, and interface definitions |
+| `src/assets/`            | Static assets including icons and images                          |
+| `types/`                 | Generated TypeScript declaration files for the built package      |
+
+## 🚀 Build & Deployment
+
+### Build Configuration
+
+The project uses **Rollup** for efficient bundling with the following features:
+
+-   **Tree Shaking**: Removes unused code for smaller bundle sizes
+-   **ES Module Support**: Native ES module compatibility
+-   **Multiple Output Formats**: UMD and ESM builds
+-   **TypeScript Support**: Full TypeScript compilation and declaration generation
+-   **CSS Processing**: PostCSS and Tailwind CSS integration
+
+### Build Scripts
+
+```bash
+# Production build
+npm run build
+
+# Generates:
+# ├── dist/
+# │   ├── index.js          # UMD bundle
+# │   ├── index.esm.js      # ES module bundle
+# │   ├── index.d.ts        # TypeScript declarations
+# │   └── styles/           # Processed CSS
+```
+
+### Publishing to NPM
+
+```bash
+# 1. Update version in package.json
+npm version patch|minor|major
+
+# 2. Build the package
+npm run build
+
+# 3. Login to NPM (if not already logged in)
+npm login
+
+# 4. Publish
+npm run publish-try
+```
+
+### Configuration Files
+
+#### TypeScript Configuration (`tsconfig.json`)
+
+```json
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "lib": ["ES2018", "DOM"],
+        "jsx": "react",
+        "module": "ESNext",
+        "declaration": true,
+        "declarationDir": "types",
+        "outDir": "dist/esm",
+        "strict": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
+```
+
+#### Rollup Configuration
+
+-   **Input**: `src/index.ts`
+-   **Output**: Multiple formats (UMD, ESM)
+-   **Plugins**: TypeScript, PostCSS, Terser
+-   **External**: React, React-DOM (peer dependencies)
+
+#### Tailwind CSS Configuration
+
+```javascript
+module.exports = {
+    content: ['src/**/*.{ts,tsx}'],
+    theme: {
+        extend: {
+            colors: {
+                primary: 'var(--color-primary, #007bff)'
+                // ... custom color palette
+            },
+            boxShadow: {
+                xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
+                // ... custom shadows
+            }
+        },
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: '1rem',
+                sm: '2rem',
+                lg: '4rem',
+                xl: '5rem',
+                '2xl': '6rem'
+            }
+        }
+    }
+};
+```
+
+## 🧪 Testing & Quality
+
+### Testing Framework
+
+-   **Jest**: Unit and integration testing
+-   **React Testing Library**: Component testing
+-   **TypeScript**: Static type checking
+
+```bash
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test-coverage
+
+# Watch mode
+npm test -- --watch
+```
+
+### Storybook Integration
+
+Interactive component development and documentation:
+
+```bash
+# Start Storybook development server
+npm run storybook
+
+# Build Storybook static site
+npm run build-storybook
+```
+
+## 🔧 Advanced Features
+
+### State Management with Zustand
+
+```typescript
+// Global state structure
+interface OnboardingState {
+    // Step Management
+    steps: StepDataType[];
+    currentStep: number;
+
+    // UI State
+    fetchData: boolean;
+    sideBarToggle: boolean;
+
+    // Media & Camera
+    image: any | null;
+    cameraType: string;
+    cameraStatus: boolean;
+
+    // Verification Status
+    panStatus: number;
+    esignStatus: number;
+
+    // Actions
+    setCurrentStep: (step: number) => void;
+    setStepsData: (data: StepDataType) => void;
+    // ... other actions
+}
+```
+
+### Custom Hooks
+
+#### useGeoLocation
+
+```typescript
+const { location, error, loading } = useGeoLocation();
+```
+
+### Error Handling
+
+```typescript
+const handleSubmit = async (stepData) => {
+    try {
+        const response = await apiCall('/onboarding/step', stepData);
+
+        if (response.status === 0) {
+            // Success
+            proceedToNextStep(response);
+        } else {
+            // Validation errors
+            showErrors(response.invalid_params);
+        }
+    } catch (error) {
+        // Network/system errors
+        showErrorMessage('Something went wrong. Please try again.');
+    }
+};
+```
+
+## 🌐 Browser Support
+
+| Browser | Version |
+| ------- | ------- |
+| Chrome  | ≥ 60    |
+| Firefox | ≥ 60    |
+| Safari  | ≥ 12    |
+| Edge    | ≥ 79    |
+
+## 📱 Mobile Support
+
+-   **Responsive Design**: Mobile-first approach
+-   **Touch Interactions**: Optimized for touch devices
+-   **Camera Access**: Native camera integration
+-   **Geolocation**: GPS coordinate capture
+-   **Progressive Web App**: PWA-ready
+
+## 🔒 Security Features
+
+-   **HTTPS Required**: For camera and location access
+-   **Data Encryption**: Secure data transmission
+-   **Input Validation**: Client and server-side validation
+-   **CSP Headers**: Content Security Policy support
+-   **GDPR Compliance**: Privacy regulation compliance
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+#### Camera Not Working
+
+```bash
+# Check browser permissions
+# Ensure HTTPS is enabled
+# Verify camera access in browser settings
+```
+
+#### Location Not Captured
+
+```bash
+# Check geolocation permissions
+# Ensure HTTPS is enabled
+# Verify location services are enabled
+```
+
+#### Step Not Progressing
+
+```bash
+# Check stepResponse prop format
+# Verify API response structure
+# Check browser console for errors
+```
+
+#### Build Errors
+
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+
+# Clear build cache
+rm -rf dist
+npm run build
+```
+
+## 📞 Support
+
+-   **Documentation**: [README.md](./README.md)
+-   **NPM Package**: [@ekoindia/oaas-widget](https://www.npmjs.com/package/@ekoindia/oaas-widget)
+-   **Issues**: [GitHub Issues](https://github.com/ekoindia/oaas-widget/issues)
+-   **License**: MIT
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new features
+5. Run the test suite
+6. Submit a pull request
+
+---
+
+**Made with ❤️ by [Eko India Financial Services](https://www.eko.in)**
