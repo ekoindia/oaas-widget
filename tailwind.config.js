@@ -15,6 +15,7 @@ module.exports = {
             danger: '#FF40401A',
             lightdanger: '#FF4081',
             primary: 'var(--color-primary)', // '#1F5AA7'
+            redirect: '#42A5F5', // Redirection links color
             curtain: 'rgba(0, 0, 0, 0.9)'
         },
         // boxShadow: {
