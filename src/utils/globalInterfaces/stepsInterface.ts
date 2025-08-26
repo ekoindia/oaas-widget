@@ -10,4 +10,5 @@ export type GlobalStepPropsType = {
     primaryColor?: string;
     esignStatus?: number;
     orgDetail?: any;
+    digilockerData?: any;
 };
