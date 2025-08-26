@@ -170,6 +170,7 @@ export const OnboardingWrapper = ({
     useEffect(() => {
         if (stepResponse) {
             console.log('[OnboardingWrapper] stepResponse', stepResponse);
+
             const success =
                 stepResponse?.status === 0 && // Status is successful
                 !(Object.keys(stepResponse?.invalid_params || {}).length > 0); // No "invalid-params" present
@@ -185,6 +186,12 @@ export const OnboardingWrapper = ({
                     }
                     setStepsData(currentStepData);
                     setCurrentStepData(null);
+                }
+            } else {
+                // Handle error cases
+                if (stepResponse.status === 1709) {
+                    // OnboardingRedirection error - show toast and go back to AadhaarConsent
+                    setCurrentStepInitial(5); // Jump back to AadhaarConsent step (step 5)
                 }
             }
             setIsDisable(false);
