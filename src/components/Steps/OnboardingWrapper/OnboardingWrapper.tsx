@@ -21,6 +21,7 @@ import PanAdharMatch from '../PanSteps/PanAdharMatch';
 import PanVerification from '../PanSteps/PanVerification';
 import PanVerificationDistributor from '../PanSteps/PanVerificationDistributor';
 import SelectionScreen from '../SelectionScreen/SelectionScreen';
+import { Welcome } from '../Welcome';
 
 type HomepageProps = {
     sideBarToggle: boolean;
@@ -158,9 +159,7 @@ export const OnboardingWrapper = ({
                         <DigilockerRedirection stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />
                     );
                 default:
-                    console.log('[OnboardingWrapper] Rendering default hello div for step:', currentStep);
-                    return <div>hello - step {currentStep}</div>;
-                // return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }
         } else {
             console.log('[OnboardingWrapper] No stepData found for currentStep:', currentStep);
