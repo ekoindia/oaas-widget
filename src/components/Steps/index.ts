@@ -5,7 +5,7 @@ export * from './Business';
 export * from './KYC';
 export * from './Location';
 export * from './OnBoardingStatus';
-export * from './OnBoradingWrapper';
+export * from './OnboardingWrapper';
 export * from './PanSteps';
 export * from './PIN';
 export * from './SelectionScreen';

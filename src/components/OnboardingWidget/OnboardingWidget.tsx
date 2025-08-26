@@ -4,7 +4,7 @@ import { useStore } from '../../store/zustand';
 import { StepDataType } from '../../utils/data/stepsData';
 import Header from '../Common/Header/Header';
 import Headermobile from '../Common/Header/Headermobile';
-import { OnBoradingWrapper } from '../Steps';
+import { OnboardingWrapper } from '../Steps';
 
 const selectOption = [
     {
@@ -30,6 +30,7 @@ type OAASPackageProps = {
     primaryColor?: string;
     esignStatus?: number;
     orgDetail?: any;
+    digilockerData?: any;
 };
 
 const OnboardingWidget = ({
@@ -46,7 +47,8 @@ const OnboardingWidget = ({
     // theme,
     primaryColor,
     esignStatus,
-    orgDetail
+    orgDetail,
+    digilockerData
 }: OAASPackageProps) => {
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
@@ -123,7 +125,7 @@ const OnboardingWidget = ({
                         <Headermobile handleSidebarToggle={handleSidebarToggle} />
                     </>
                 )}
-                <OnBoradingWrapper
+                <OnboardingWrapper
                     sideBarToggle={sideBarToggle}
                     setSideBarToggle={setSideBarToggle}
                     handleSubmit={handleSubmit}
@@ -135,6 +137,7 @@ const OnboardingWidget = ({
                     userData={userData}
                     esignStatus={esignStatus}
                     orgDetail={orgDetail}
+                    digilockerData={digilockerData}
                 />
                 {/* <SelectionScreen /> */}
             </div>

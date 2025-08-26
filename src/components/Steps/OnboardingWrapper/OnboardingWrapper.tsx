@@ -14,13 +14,13 @@ import ConfirmAadhaarNumber from '../AadharSteps/ConfirmAadharNumber';
 import ActivationPlan from '../ActivationPlan/ActivationPlan';
 import SignAgreement from '../Agreement/SignAgreement';
 import BusinessMerchant from '../Business/BusinessMerchant';
+import { DigilockerRedirection } from '../DigilockerRedirection';
 import LocationCapture from '../Location/LocationCapture';
 import SecretPin from '../PIN/SecretPin';
 import PanAdharMatch from '../PanSteps/PanAdharMatch';
 import PanVerification from '../PanSteps/PanVerification';
-import SelectionScreen from '../SelectionScreen/SelectionScreen';
 import PanVerificationDistributor from '../PanSteps/PanVerificationDistributor';
-import Welcome from '../Welcome/Welcome';
+import SelectionScreen from '../SelectionScreen/SelectionScreen';
 
 type HomepageProps = {
     sideBarToggle: boolean;
@@ -34,9 +34,10 @@ type HomepageProps = {
     userData: any;
     esignStatus: any;
     orgDetail?: any;
+    digilockerData?: any;
 };
 
-export const OnBoradingWrapper = ({
+export const OnboardingWrapper = ({
     sideBarToggle,
     setSideBarToggle,
     handleSubmit,
@@ -47,16 +48,53 @@ export const OnBoradingWrapper = ({
     handleStepCallBack,
     userData,
     esignStatus,
-    orgDetail
+    orgDetail,
+    digilockerData
 }: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
+    console.log('[OnboardingWrapper] RENDER - currentStep:', currentStep);
+    console.log('[OnboardingWrapper] RENDER - steps length:', steps?.length);
+    console.log(
+        '[OnboardingWrapper] RENDER - all steps:',
+        steps?.map((s) => `${s.id}:${s.name}(visible:${s.isVisible})`)
+    );
+
     const [isDisable, setIsDisable] = useState<boolean>(false);
     const [currentStepData, setCurrentStepData] = useState<any>();
 
+    /**
+     * Finds the next visible step after the current step in the steps array
+     * @param currentStepId - The ID of the current step
+     * @returns The ID of the next visible step, or null if no next step exists
+     */
+    const findNextVisibleStep = (currentStepId: number): number | null => {
+        const currentStepIndex = steps?.map((step: StepDataType) => step?.id)?.indexOf(currentStepId);
+
+        if (currentStepIndex === -1 || !steps) {
+            return null;
+        }
+
+        // Look for the next visible step starting from current index + 1
+        for (let i = currentStepIndex + 1; i < steps.length; i++) {
+            const step = steps[i];
+            if (step.isVisible) {
+                console.log(`[OnboardingWrapper] findNextVisibleStep: current step ${currentStepId} -> next step ${step.id} (${step.name})`);
+                return step.id;
+            }
+        }
+
+        console.log(`[OnboardingWrapper] findNextVisibleStep: no next visible step found after step ${currentStepId}`);
+        return null; // No next visible step found
+    };
+
     const handleStepSubmit = (data: any) => {
+        console.log('[OnBoardingWrapper] handleStepSubmit data', data);
+
         if (data.id === 1) {
-            const currentStepIndex = steps?.map((step: StepDataType) => step?.id)?.indexOf(data?.id);
-            setCurrentStepInitial(steps[currentStepIndex + 1]?.id);
+            const nextStepId = findNextVisibleStep(data.id);
+            if (nextStepId) {
+                setCurrentStepInitial(nextStepId);
+            }
             setStepsData(data);
             setCurrentStepData(data);
             // handleSubmit(data);
@@ -69,7 +107,15 @@ export const OnBoradingWrapper = ({
     };
 
     const renderStep = (currentStep: number): any => {
+        console.log('[OnboardingWrapper] renderStep called for currentStep:', currentStep);
+        console.log(
+            '[OnboardingWrapper] Available steps:',
+            steps?.map((s) => ({ id: s.id, name: s.name, isVisible: s.isVisible }))
+        );
+
         const stepData: StepDataType | undefined = steps?.find((step: StepDataType) => step.id === currentStep);
+        console.log('[OnboardingWrapper] Found stepData for step', currentStep, ':', stepData);
+
         if (stepData) {
             switch (currentStep) {
                 case 2:
@@ -107,14 +153,24 @@ export const OnBoradingWrapper = ({
                     return <PanAdharMatch />;
                 case 16:
                     return <PanVerificationDistributor stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} /* shopTypes={shopTypes}*/ />;
+                case 20:
+                    return (
+                        <DigilockerRedirection stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />
+                    );
                 default:
-                    return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    console.log('[OnboardingWrapper] Rendering default hello div for step:', currentStep);
+                    return <div>hello - step {currentStep}</div>;
+                // return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }
+        } else {
+            console.log('[OnboardingWrapper] No stepData found for currentStep:', currentStep);
+            return <div>No step data found for step {currentStep}</div>;
         }
     };
 
     useEffect(() => {
         if (stepResponse) {
+            console.log('[OnboardingWrapper] stepResponse', stepResponse);
             const success =
                 stepResponse?.status === 0 && // Status is successful
                 !(Object.keys(stepResponse?.invalid_params || {}).length > 0); // No "invalid-params" present
@@ -123,8 +179,10 @@ export const OnBoradingWrapper = ({
                 // [Ques for Jalaj] Why goto next step when Aadhaar upload (step.id=4) fails?
                 if (currentStepData) {
                     if (currentStepData?.id !== 2) {
-                        const currentStepIndex = steps.map((step: StepDataType) => step?.id)?.indexOf(currentStepData?.id);
-                        setCurrentStepInitial(steps[currentStepIndex + 1]?.id);
+                        const nextStepId = findNextVisibleStep(currentStepData.id);
+                        if (nextStepId) {
+                            setCurrentStepInitial(nextStepId);
+                        }
                     }
                     setStepsData(currentStepData);
                     setCurrentStepData(null);
