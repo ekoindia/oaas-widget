@@ -44,7 +44,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
     }, []);
 
     const handleOpenDigilocker = () => {
-        if (digilockerData.link) {
+        if (digilockerData?.link) {
             // Open Digilocker in new tab
             window.open(digilockerData.link, '_blank', 'noopener,noreferrer');
 
