@@ -33,7 +33,7 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
  * The API should return a response with a redirectUrl field that contains the Digilocker URL.
  */
 export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, digilockerData }: GlobalStepPropsType) => {
-    console.log('[DigilockerRedirection] digilockerData', digilockerData);
+    // console.log('[DigilockerRedirection] digilockerData', digilockerData);
     const { label, description, primaryCTAText, isSkipable } = stepData;
 
     useEffect(() => {

@@ -53,12 +53,6 @@ export const OnboardingWrapper = ({
     digilockerData
 }: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
-    console.log('[OnboardingWrapper] RENDER - currentStep:', currentStep);
-    console.log('[OnboardingWrapper] RENDER - steps length:', steps?.length);
-    console.log(
-        '[OnboardingWrapper] RENDER - all steps:',
-        steps?.map((s) => `${s.id}:${s.name}(visible:${s.isVisible})`)
-    );
 
     const [isDisable, setIsDisable] = useState<boolean>(false);
     const [currentStepData, setCurrentStepData] = useState<any>();
@@ -79,18 +73,14 @@ export const OnboardingWrapper = ({
         for (let i = currentStepIndex + 1; i < steps.length; i++) {
             const step = steps[i];
             if (step.isVisible) {
-                console.log(`[OnboardingWrapper] findNextVisibleStep: current step ${currentStepId} -> next step ${step.id} (${step.name})`);
                 return step.id;
             }
         }
 
-        console.log(`[OnboardingWrapper] findNextVisibleStep: no next visible step found after step ${currentStepId}`);
         return null; // No next visible step found
     };
 
     const handleStepSubmit = (data: any) => {
-        console.log('[OnBoardingWrapper] handleStepSubmit data', data);
-
         if (data.id === 1) {
             const nextStepId = findNextVisibleStep(data.id);
             if (nextStepId) {
@@ -108,14 +98,7 @@ export const OnboardingWrapper = ({
     };
 
     const renderStep = (currentStep: number): any => {
-        console.log('[OnboardingWrapper] renderStep called for currentStep:', currentStep);
-        console.log(
-            '[OnboardingWrapper] Available steps:',
-            steps?.map((s) => ({ id: s.id, name: s.name, isVisible: s.isVisible }))
-        );
-
         const stepData: StepDataType | undefined = steps?.find((step: StepDataType) => step.id === currentStep);
-        console.log('[OnboardingWrapper] Found stepData for step', currentStep, ':', stepData);
 
         if (stepData) {
             switch (currentStep) {
@@ -162,15 +145,12 @@ export const OnboardingWrapper = ({
                     return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }
         } else {
-            console.log('[OnboardingWrapper] No stepData found for currentStep:', currentStep);
             return <div>No step data found for step {currentStep}</div>;
         }
     };
 
     useEffect(() => {
         if (stepResponse) {
-            console.log('[OnboardingWrapper] stepResponse', stepResponse);
-
             const success =
                 stepResponse?.status === 0 && // Status is successful
                 !(Object.keys(stepResponse?.invalid_params || {}).length > 0); // No "invalid-params" present
