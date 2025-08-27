@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../../store/zustand';
+import { API_STATUS, STEP_IDS } from '../../../utils/constants';
 import { StepDataType } from '../../../utils/data/stepsData';
 import Alert from '../../Common/Alert';
 import Fetching from '../../Common/Fetching';
@@ -81,7 +82,7 @@ export const OnboardingWrapper = ({
     };
 
     const handleStepSubmit = (data: any) => {
-        if (data.id === 1) {
+        if (data.id === STEP_IDS.WELCOME) {
             const nextStepId = findNextVisibleStep(data.id);
             if (nextStepId) {
                 setCurrentStepInitial(nextStepId);
@@ -102,42 +103,42 @@ export const OnboardingWrapper = ({
 
         if (stepData) {
             switch (currentStep) {
-                case 2:
+                case STEP_IDS.SELECTION_SCREEN:
                     return <SelectionScreen handleSubmit={handleStepSubmit} stepData={stepData} isDisabledCTA={isDisable} />;
-                case 3:
+                case STEP_IDS.LOCATION_CAPTURE:
                     return <LocationCapture stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
-                case 4:
+                case STEP_IDS.AADHAAR_VERIFICATION:
                     return <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
-                case 5:
+                case STEP_IDS.AADHAAR_CONSENT:
                     return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
-                case 6:
+                case STEP_IDS.CONFIRM_AADHAAR_NUMBER:
                     return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
-                case 7:
+                case STEP_IDS.AADHAAR_NUMBER_OTP_VERIFY:
                     return <AadhaarNumberOtpVerify stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
-                case 8:
+                case STEP_IDS.PAN_VERIFICATION:
                     return <PanVerification stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} />;
-                case 9:
+                case STEP_IDS.BUSINESS:
                     if (userData?.userDetails?.user_type === 1) {
                         return <Business stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
                     } else {
                         return <BusinessMerchant stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} shopTypes={shopTypes} stateTypes={stateTypes} />;
                     }
-                case 10:
+                case STEP_IDS.SECRET_PIN:
                     return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
 
-                case 11:
+                case STEP_IDS.VIDEO_KYC:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
-                case 12:
+                case STEP_IDS.SIGN_AGREEMENT:
                     return <SignAgreement stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} esignStatus={esignStatus} />;
-                case 13:
+                case STEP_IDS.ACTIVATION_PLAN:
                     return <ActivationPlan stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
-                case 14:
+                case STEP_IDS.ONBOARDING_STATUS:
                     return <OnboardingStatus stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
-                case 15:
+                case STEP_IDS.PAN_AADHAAR_MATCH:
                     return <PanAdharMatch />;
-                case 16:
+                case STEP_IDS.PAN_VERIFICATION_DISTRIBUTOR:
                     return <PanVerificationDistributor stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} /* shopTypes={shopTypes}*/ />;
-                case 20:
+                case STEP_IDS.DIGILOCKER_REDIRECTION:
                     return (
                         <DigilockerRedirection stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />
                     );
@@ -152,13 +153,13 @@ export const OnboardingWrapper = ({
     useEffect(() => {
         if (stepResponse) {
             const success =
-                stepResponse?.status === 0 && // Status is successful
+                stepResponse?.status === API_STATUS.SUCCESS && // Status is successful
                 !(Object.keys(stepResponse?.invalid_params || {}).length > 0); // No "invalid-params" present
 
-            if (success /* || currentStepData?.id === 4 */) {
-                // [Ques for Jalaj] Why goto next step when Aadhaar upload (step.id=4) fails?
+            if (success /* || currentStepData?.id === STEP_IDS.AADHAAR_VERIFICATION */) {
+                // [Ques for Jalaj] Why goto next step when Aadhaar upload (step.id=AADHAAR_VERIFICATION) fails?
                 if (currentStepData) {
-                    if (currentStepData?.id !== 2) {
+                    if (currentStepData?.id !== STEP_IDS.SELECTION_SCREEN) {
                         const nextStepId = findNextVisibleStep(currentStepData.id);
                         if (nextStepId) {
                             setCurrentStepInitial(nextStepId);
@@ -169,9 +170,9 @@ export const OnboardingWrapper = ({
                 }
             } else {
                 // Handle error cases
-                if (stepResponse.status === 1709) {
+                if (stepResponse.status === API_STATUS.ONBOARDING_REDIRECTION_ERROR) {
                     // OnboardingRedirection error - show toast and go back to AadhaarConsent
-                    setCurrentStepInitial(5); // Jump back to AadhaarConsent step (step 5)
+                    setCurrentStepInitial(STEP_IDS.AADHAAR_CONSENT);
                 }
             }
             setIsDisable(false);
@@ -180,7 +181,7 @@ export const OnboardingWrapper = ({
 
     return (
         <>
-            <div className={`${currentStep === 1 && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
+            <div className={`${currentStep === STEP_IDS.WELCOME && 'pt-0'} ${currentStep === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
                 <div className="flex items-center">
                     <div className="relative flex flex-col w-full h-full">
                         <div className="sm:flex sm:justify-between">
