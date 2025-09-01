@@ -328,62 +328,16 @@ const stepsData = [
 
 ### Local Development
 
-```bash
-# Clone the repository
-git clone https://github.com/ekoindia/oaas-widget.git
-cd oaas-widget
+To include the package in your local project for testing, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import
+it as a local dependency.
 
-# Install dependencies
-npm install
+#### To test the package locally:
 
-# Build the package
-npm run build
-
-# Link for local testing
-npm link
-
-# In your target project
-npm link @ekoindia/oaas-widget
-```
-
-### Development Scripts
-
-```bash
-# Build the package
-npm run build
-
-# Run tests
-npm test
-npm run test-coverage
-
-# Start Storybook
-npm run storybook
-
-# Build Storybook
-npm run build-storybook
-
-# Visual testing with Chromatic
-npm run chromatic
-
-# Check for updates
-npm run check-updates
-```
-
-### Testing Locally
-
-```bash
-# 1. Create build
-npm run build
-
-# 2. Create symlink
-npm link
-
-# 3. In your target project
-npm link @ekoindia/oaas-widget
-
-# 4. Import and use
-import { OnboardingWidget } from '@ekoindia/oaas-widget';
-```
+1. Create build using `npm run build` to create dist folder which will serve target projects.
+2. Run the `npm link` command in this project's root directory to create a symlink.
+3. Run the `npm link @ekoindia/oaas-widget` command in your target project's root directory to link this package.
+    1. A folder called `@ekoindia` will be created in your target project's node_modules directory with a symlink to this package. You may delete that folder to remove the symlink.
+4. Import the package in your project and use it as a local dependency.
 
 ## 📁 Project Structure
 
@@ -499,19 +453,12 @@ npm run build
 
 ### Publishing to NPM
 
-```bash
-# 1. Update version in package.json
-npm version patch|minor|major
-
-# 2. Build the package
-npm run build
-
-# 3. Login to NPM (if not already logged in)
-npm login
-
-# 4. Publish
-npm run publish-try
-```
+1. Increment the package version in `package.json` file.
+2. Build the package: `npm run build`
+3. Add your npm credentials using `npm adduser` (app.admin account).
+    1. Enter username, email and password.
+    1. Enter OTP sent to app.admin's email.
+4. Publish the package: `npm run publish-try`
 
 ### Configuration Files
 
