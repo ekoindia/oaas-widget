@@ -74,7 +74,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
     };
 
     return (
-        <div className="pt-8 sm:p-8 max-w-md mx-auto">
+        <div className="pt-8 sm:p-8 max-w-md">
             <div className="text-[22px] font-[500] sm:font-[400] mb-4">{label || 'Digilocker Redirection'}</div>
 
             <div className="mt-3 mb-6 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
@@ -92,10 +92,10 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
                     </>
                 </ButtonGlobal>
 
-                {/* Instructions */}
+                {/* Steps */}
                 <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
                     <p className="text-sm text-blue-800">
-                        <strong>Instructions:</strong>
+                        <strong>Steps:</strong>
                     </p>
                     <ul className="mt-2 text-sm text-blue-700 list-disc pl-5 space-y-1">
                         <li>Click "Open Digilocker" to access your digital documents</li>
