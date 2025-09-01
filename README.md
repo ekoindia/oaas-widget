@@ -697,3 +697,108 @@ npm run build
 ---
 
 **Made with ❤️ by [Eko India Financial Services](https://www.eko.in)**
+
+## 📝 Adding a New Step
+
+The widget is designed to be modular, allowing developers to easily add new steps to the onboarding flow. Here’s a step-by-step guide on how to add a new custom step:
+
+### 1. Create the Step Component
+
+First, create a new directory for your step inside `src/components/Steps/`. For example, to add a "CustomStep":
+
+-   Create a folder: `src/components/Steps/CustomStep/`
+-   Create the component file: `src/components/Steps/CustomStep/CustomStep.tsx`
+
+The component will receive `step` data and other props from the `OnboardingWrapper`.
+
+```tsx
+// src/components/Steps/CustomStep/CustomStep.tsx
+import React from 'react';
+import { StepProps } from '../../../utils/globalInterfaces/stepsInterface';
+
+const CustomStep: React.FC<StepProps> = ({ step }) => {
+    return (
+        <div>
+            <h2>{step.label}</h2>
+            <p>{step.description}</p>
+            {/* Add your custom form fields and logic here */}
+        </div>
+    );
+};
+
+export default CustomStep;
+```
+
+### 2. Register the New Step
+
+You need to register the new step so the `OnboardingWrapper` can render it.
+
+#### a. Export from `index.ts`
+
+Export the new component from `src/components/Steps/index.ts`:
+
+```ts
+// src/components/Steps/index.ts
+// ... existing exports
+export { default as CustomStep } from './CustomStep/CustomStep';
+```
+
+#### b. Add to the Step Renderer
+
+Open `src/components/Steps/OnboardingWrapper/OnboardingWrapper.tsx` and add your new step to the `steps` object. This maps the step name from the configuration to the component.
+
+```tsx
+// src/components/Steps/OnboardingWrapper/OnboardingWrapper.tsx
+// ... imports
+import {
+    // ... other steps
+    CustomStep
+} from '..';
+
+// ... inside the OnboardingWrapper component
+const steps = {
+    // ... other step mappings
+    custom: CustomStep
+};
+```
+
+### 3. Update Type Definitions
+
+Add the new step's name to the `StepName` type in `src/utils/globalInterfaces/stepsInterface.ts` to ensure type safety.
+
+```ts
+// src/utils/globalInterfaces/stepsInterface.ts
+export type StepName =
+    | 'welcome'
+    | 'selection'
+    // ... other step names
+    | 'custom'; // Add your new step name here
+```
+
+### 4. Configure the Step in `stepsData`
+
+Finally, when using the `OnboardingWidget`, add the configuration for your new step to the `stepsData` array.
+
+```typescript
+const stepsData = [
+    // ... other steps
+    {
+        id: 21, // Ensure the ID is unique
+        name: 'custom', // This must match the key in the 'steps' object
+        label: 'My Custom Step',
+        primaryCTAText: 'Submit',
+        description: 'This is a new custom step.',
+        isSkipable: false,
+        isRequired: true,
+        isVisible: true,
+        stepStatus: 0, // 0: Pending, 1: Active, 2: Skipped, 3: Completed
+        form_data: {
+            // Add any specific data fields for your step
+        }
+    }
+];
+```
+
+> **Note:** This `stepsData` configuration should be added to the `OnboardingSteps` constant within the parent project (e.g., Eloka).
+
+By following these steps, you can seamlessly integrate new functionalities into the onboarding flow.
