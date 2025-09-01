@@ -28,6 +28,7 @@ type OAASPackageProps = {
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
     primaryColor?: string;
+    accentColor?: string;
     esignStatus?: number;
     orgDetail?: any;
     digilockerData?: any;
@@ -46,6 +47,7 @@ const OnboardingWidget = ({
     stepsData,
     // theme,
     primaryColor,
+    accentColor,
     esignStatus,
     orgDetail,
     digilockerData
@@ -59,7 +61,12 @@ const OnboardingWidget = ({
         if (primaryColor) {
             document.documentElement.style.setProperty('--color-primary', primaryColor);
         }
-    }, [primaryColor]);
+
+        // Set Accent Color as css var "color-accent"
+        if (accentColor) {
+            document.documentElement.style.setProperty('--color-accent', accentColor);
+        }
+    }, [primaryColor, accentColor]);
 
     // console.log('[oaas] OnboardingWidget Started', defaultStep, stepsData);
 
