@@ -83,7 +83,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
 
             <div className="space-y-4">
                 {/* Open Digilocker Button */}
-                <ButtonGlobal className="w-full flex items-center justify-center gap-2 bg-redirect hover:bg-blue-400" onClick={handleOpenDigilocker} disabled={isDisabledCTA}>
+                <ButtonGlobal className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-blue-400" onClick={handleOpenDigilocker} disabled={isDisabledCTA}>
                     <>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -97,11 +97,11 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
                     <p className="text-sm text-blue-800">
                         <strong>Steps:</strong>
                     </p>
-                    <ul className="mt-2 text-sm text-blue-700 list-disc pl-5 space-y-1">
+                    <ol className="mt-2 text-sm text-blue-700 list-decimal pl-5 space-y-1">
                         <li>Click "Open Digilocker" to access your digital documents</li>
                         <li>Complete the required verification process</li>
                         <li>Return to this page and click "Proceed" to continue</li>
-                    </ul>
+                    </ol>
                 </div>
 
                 {/* Proceed Button */}
