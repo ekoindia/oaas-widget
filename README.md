@@ -696,8 +696,6 @@ npm run build
 
 ---
 
-**Made with ❤️ by [Eko India Financial Services](https://www.eko.in)**
-
 ## 📝 Adding a New Step
 
 The widget is designed to be modular, allowing developers to easily add new steps to the onboarding flow. Here’s a step-by-step guide on how to add a new custom step:
