@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import userDistributor from '../../../assets/icons/user_distributor.png';
 import userEnterprise from '../../../assets/icons/user_enterprise.png';
 import userMerchant from '../../../assets/icons/user_merchant.png';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor }: GlobalStepPropsType) => {
+const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, accentColor }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
-    const [roleVal, setRoleVal] = React.useState<number>(0);
+    const [roleVal, setRoleVal] = useState<number>(0);
     const handleChange = (e: any) => {
         setRoleVal(parseInt(e.target.value));
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Set Primary Color as css var "color-primary"
         if (primaryColor) {
             document.documentElement.style.setProperty('--color-primary', primaryColor);
         }
-    }, [primaryColor]);
+
+        // Set Accent Color as css var "color-accent"
+        if (accentColor) {
+            document.documentElement.style.setProperty('--color-accent', accentColor);
+        }
+    }, [primaryColor, accentColor]);
 
     // console.log('[oaas] SelectionScreen started: ', stepData);
 
