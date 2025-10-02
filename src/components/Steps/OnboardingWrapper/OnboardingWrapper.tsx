@@ -35,7 +35,8 @@ type HomepageProps = {
     handleStepCallBack: any;
     userData: any;
     esignStatus: any;
-    orgDetail?: any;
+    orgName?: string;
+    appName?: string;
     digilockerData?: any;
 };
 
@@ -50,7 +51,8 @@ export const OnboardingWrapper = ({
     handleStepCallBack,
     userData,
     esignStatus,
-    orgDetail,
+    orgName,
+    appName,
     digilockerData
 }: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
@@ -110,9 +112,9 @@ export const OnboardingWrapper = ({
                 case STEP_IDS.AADHAAR_VERIFICATION:
                     return <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case STEP_IDS.AADHAAR_CONSENT:
-                    return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
+                    return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgName={orgName} appName={appName} />;
                 case STEP_IDS.CONFIRM_AADHAAR_NUMBER:
-                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
+                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgName={orgName} appName={appName} />;
                 case STEP_IDS.AADHAAR_NUMBER_OTP_VERIFY:
                     return <AadhaarNumberOtpVerify stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case STEP_IDS.PAN_VERIFICATION:

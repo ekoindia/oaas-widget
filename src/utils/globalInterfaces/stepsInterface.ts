@@ -10,6 +10,7 @@ export type GlobalStepPropsType = {
     primaryColor?: string;
     accentColor?: string;
     esignStatus?: number;
-    orgDetail?: any;
+    orgName?: string;
+    appName?: string;
     digilockerData?: any;
 };

@@ -30,7 +30,8 @@ type OAASPackageProps = {
     primaryColor?: string;
     accentColor?: string;
     esignStatus?: number;
-    orgDetail?: any;
+    appName?: string;
+    orgName?: string;
     digilockerData?: any;
 };
 
@@ -45,11 +46,11 @@ const OnboardingWidget = ({
     handleStepCallBack,
     userData,
     stepsData,
-    // theme,
     primaryColor,
     accentColor,
     esignStatus,
-    orgDetail,
+    appName,
+    orgName,
     digilockerData
 }: OAASPackageProps) => {
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
@@ -143,7 +144,8 @@ const OnboardingWidget = ({
                     handleStepCallBack={handleStepCallBack}
                     userData={userData}
                     esignStatus={esignStatus}
-                    orgDetail={orgDetail}
+                    orgName={orgName}
+                    appName={appName}
                     digilockerData={digilockerData}
                 />
                 {/* <SelectionScreen /> */}
