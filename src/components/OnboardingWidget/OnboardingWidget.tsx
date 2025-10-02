@@ -4,7 +4,7 @@ import { useStore } from '../../store/zustand';
 import { StepDataType } from '../../utils/data/stepsData';
 import Header from '../Common/Header/Header';
 import Headermobile from '../Common/Header/Headermobile';
-import { OnBoradingWrapper } from '../Steps';
+import { OnboardingWrapper } from '../Steps';
 
 const selectOption = [
     {
@@ -28,8 +28,10 @@ type OAASPackageProps = {
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
     primaryColor?: string;
+    accentColor?: string;
     esignStatus?: number;
     orgDetail?: any;
+    digilockerData?: any;
 };
 
 const OnboardingWidget = ({
@@ -45,8 +47,10 @@ const OnboardingWidget = ({
     stepsData,
     // theme,
     primaryColor,
+    accentColor,
     esignStatus,
-    orgDetail
+    orgDetail,
+    digilockerData
 }: OAASPackageProps) => {
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
@@ -57,7 +61,12 @@ const OnboardingWidget = ({
         if (primaryColor) {
             document.documentElement.style.setProperty('--color-primary', primaryColor);
         }
-    }, [primaryColor]);
+
+        // Set Accent Color as css var "color-accent"
+        if (accentColor) {
+            document.documentElement.style.setProperty('--color-accent', accentColor);
+        }
+    }, [primaryColor, accentColor]);
 
     // console.log('[oaas] OnboardingWidget Started', defaultStep, stepsData);
 
@@ -123,7 +132,7 @@ const OnboardingWidget = ({
                         <Headermobile handleSidebarToggle={handleSidebarToggle} />
                     </>
                 )}
-                <OnBoradingWrapper
+                <OnboardingWrapper
                     sideBarToggle={sideBarToggle}
                     setSideBarToggle={setSideBarToggle}
                     handleSubmit={handleSubmit}
@@ -135,6 +144,7 @@ const OnboardingWidget = ({
                     userData={userData}
                     esignStatus={esignStatus}
                     orgDetail={orgDetail}
+                    digilockerData={digilockerData}
                 />
                 {/* <SelectionScreen /> */}
             </div>

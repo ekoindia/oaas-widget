@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { stepsData, StepDataType } from '../utils/data/stepsData';
+import { StepDataType } from '../utils/data/stepsData';
 
 type Zustand = {
     image: any | null;
