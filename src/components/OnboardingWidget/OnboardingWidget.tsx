@@ -126,7 +126,7 @@ const OnboardingWidget = ({
 
     return (
         <>
-            <div className={`${currentStep === 0 ? 'bg-lightdefault' : 'bg-white'} sm:bg-lightdefault w-full min-h-screen`}>
+            <div className="w-full min-h-screen">
                 {isBranding && (
                     <>
                         <Header />
