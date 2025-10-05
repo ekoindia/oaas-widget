@@ -27,7 +27,7 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
     // console.log('[oaas] SelectionScreen started: ', stepData);
 
     return (
-        <div className="flex flex-col max-w-md p-7 mt-10 rounded-lg md:mt-2 bg-white" id={`step_${id}_${name}`}>
+        <div className="flex flex-col max-w-md p-7 rounded-lg mt-7 bg-white" id={`step_${id}_${name}`}>
             <h2 className="mb-5 text-lg font-medium text-lightdefault-900 title-font">{label}</h2>
             {form_data?.roles?.length > 0 &&
                 form_data.roles
