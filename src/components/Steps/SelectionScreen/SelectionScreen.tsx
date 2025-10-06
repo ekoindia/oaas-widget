@@ -52,42 +52,6 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
                             />
                         </label>
                     ))}
-            {/* <div className="flex mb-5">
-                <div className="p-4 mr-5 border-2 rounded-full border-slate-200">
-                    <img src={userMerchant}></img>
-                </div>
-                <div className="flex flex-col justify-center w-full mr-5">
-                    <div>I'm a seller</div>
-                    <div className="text-xs font-light">I serve customers from my shop</div>
-                </div>
-                <div>
-                    <input type="radio" />
-                </div>
-            </div>
-            <div className="flex mb-5">
-                <div className="p-4 mr-5 border-2 rounded-full border-lightdefault-200">
-                    <img src={userDistributor}></img>
-                </div>
-                <div className="flex flex-col justify-center w-full mr-5">
-                    <div>I'm a distributor</div>
-                    <div className="text-xs font-light">I have a network of seller and i want to serve them</div>
-                </div>
-                <div>
-                    <input type="radio" />
-                </div>
-            </div>
-            <div className="flex">
-                <div className="p-4 mr-5 border-2 rounded-full border-slate-200">
-                    <img src={userEnterprise}></img>
-                </div>
-                <div className="flex flex-col justify-center w-full mr-5">
-                    <div>I'm a Enterprise</div>
-                    <div className="text-xs">I want to use API and other solution to make my own service</div>
-                </div>
-                <div>
-                    <input type="radio" />
-                </div>
-            </div> */}
             <ButtonGlobal
                 className="mt-6"
                 onClick={() => {

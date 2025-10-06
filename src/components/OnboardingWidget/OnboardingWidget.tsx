@@ -125,32 +125,29 @@ const OnboardingWidget = ({
     }, [defaultStep]);
 
     return (
-        <>
-            <div className="w-full min-h-screen">
-                {isBranding && (
-                    <>
-                        <Header />
-                        <Headermobile handleSidebarToggle={handleSidebarToggle} />
-                    </>
-                )}
-                <OnboardingWrapper
-                    sideBarToggle={sideBarToggle}
-                    setSideBarToggle={setSideBarToggle}
-                    handleSubmit={handleSubmit}
-                    stepResponse={stepResponse}
-                    shopTypes={[...selectOption, ...shopTypes]}
-                    stateTypes={[...selectOption, ...stateTypes]}
-                    selectedMerchantType={selectedMerchantType}
-                    handleStepCallBack={handleStepCallBack}
-                    userData={userData}
-                    esignStatus={esignStatus}
-                    orgName={orgName}
-                    appName={appName}
-                    digilockerData={digilockerData}
-                />
-                {/* <SelectionScreen /> */}
-            </div>
-        </>
+        <div>
+            {isBranding && (
+                <>
+                    <Header />
+                    <Headermobile handleSidebarToggle={handleSidebarToggle} />
+                </>
+            )}
+            <OnboardingWrapper
+                sideBarToggle={sideBarToggle}
+                setSideBarToggle={setSideBarToggle}
+                handleSubmit={handleSubmit}
+                stepResponse={stepResponse}
+                shopTypes={[...selectOption, ...shopTypes]}
+                stateTypes={[...selectOption, ...stateTypes]}
+                selectedMerchantType={selectedMerchantType}
+                handleStepCallBack={handleStepCallBack}
+                userData={userData}
+                esignStatus={esignStatus}
+                orgName={orgName}
+                appName={appName}
+                digilockerData={digilockerData}
+            />
+        </div>
     );
 };
 
