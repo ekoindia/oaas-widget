@@ -124,31 +124,29 @@ const OnboardingWidget = ({
     }, [defaultStep]);
 
     return (
-        <>
-            <div className={`${currentStep === 0 ? 'bg-lightdefault' : 'bg-white'} sm:bg-lightdefault w-full min-h-screen`}>
-                {isBranding && (
-                    <>
-                        <Header />
-                        <Headermobile handleSidebarToggle={handleSidebarToggle} />
-                    </>
-                )}
-                <OnboardingWrapper
-                    sideBarToggle={sideBarToggle}
-                    setSideBarToggle={setSideBarToggle}
-                    handleSubmit={handleSubmit}
-                    stepResponse={stepResponse}
-                    shopTypes={[...selectOption, ...shopTypes]}
-                    stateTypes={[...selectOption, ...stateTypes]}
-                    selectedMerchantType={selectedMerchantType}
-                    handleStepCallBack={handleStepCallBack}
-                    userData={userData}
-                    esignStatus={esignStatus}
-                    orgDetail={orgDetail}
-                    digilockerData={digilockerData}
-                />
-                {/* <SelectionScreen /> */}
-            </div>
-        </>
+        <div>
+            {isBranding && (
+                <>
+                    <Header />
+                    <Headermobile handleSidebarToggle={handleSidebarToggle} />
+                </>
+            )}
+            <OnboardingWrapper
+                sideBarToggle={sideBarToggle}
+                setSideBarToggle={setSideBarToggle}
+                handleSubmit={handleSubmit}
+                stepResponse={stepResponse}
+                shopTypes={[...selectOption, ...shopTypes]}
+                stateTypes={[...selectOption, ...stateTypes]}
+                selectedMerchantType={selectedMerchantType}
+                handleStepCallBack={handleStepCallBack}
+                userData={userData}
+                esignStatus={esignStatus}
+                orgDetail={orgDetail}
+                digilockerData={digilockerData}
+            />
+            {/* <SelectionScreen /> */}
+        </div>
     );
 };
 
