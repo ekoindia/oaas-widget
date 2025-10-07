@@ -190,16 +190,7 @@ export const OnboardingWrapper = ({
                             <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={steps} userData={userData} />
                             </span>
-                            <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">
-                                {renderStep(currentStep)}
-                                {/* {fetchData === true ? (
-                                    <span className="hidden sm:block">
-                                        <Fetching />
-                                    </span>
-                                ) : (
-                                    ''
-                                )} */}
-                            </div>
+                            <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">{renderStep(currentStep)}</div>
                         </div>
 
                         {finish === true ? (
