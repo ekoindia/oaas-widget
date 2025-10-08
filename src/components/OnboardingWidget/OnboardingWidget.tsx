@@ -75,31 +75,6 @@ const OnboardingWidget = ({
         setSideBarToggle((prev) => !prev);
     };
 
-    type PostMessageType = {
-        type: string;
-        data?: object;
-    };
-
-    // useImperativeHandle(ref, () => ({
-    //     /**
-    //      * receive message from the parent app
-    //      * @param options
-    //      * @param options.type  type/action of message
-    //      * @param options.data  additional data to be passed
-    //      */
-    //     // postMessage: ({ type, data }: PostMessageType) => {
-    //     //     console.log('[oaas] > postMessage: ', type, data);
-    //     //     switch (type) {
-    //     //         case 'esign:ready':
-    //     //             setEsignStatus(1);
-    //     //             break;
-    //     //         case 'esign:failed':
-    //     //             setEsignStatus(2);
-    //     //             break;
-    //     //     }
-    //     // }
-    // }));
-
     let visibleStepData = stepsData;
 
     if (visibleStepData) {
