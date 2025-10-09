@@ -14,6 +14,7 @@ import AdharVerifiction from '../AadharSteps/AdharVerifiction';
 import ConfirmAadhaarNumber from '../AadharSteps/ConfirmAadharNumber';
 import ActivationPlan from '../ActivationPlan/ActivationPlan';
 import SignAgreement from '../Agreement/SignAgreement';
+import { BankAccount } from '../BankAccount';
 import BusinessMerchant from '../Business/BusinessMerchant';
 import { DigilockerRedirection } from '../DigilockerRedirection';
 import LocationCapture from '../Location/LocationCapture';
@@ -127,7 +128,6 @@ export const OnboardingWrapper = ({
                     }
                 case STEP_IDS.SECRET_PIN:
                     return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
-
                 case STEP_IDS.VIDEO_KYC:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case STEP_IDS.SIGN_AGREEMENT:
@@ -144,6 +144,8 @@ export const OnboardingWrapper = ({
                     return (
                         <DigilockerRedirection stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />
                     );
+                case STEP_IDS.ADD_BANK_ACCOUNT:
+                    return <BankAccount stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 default:
                     return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }
