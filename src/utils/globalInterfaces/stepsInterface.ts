@@ -1,3 +1,4 @@
+import { BankListType } from '../../types/bankTypes';
 import { StepDataType } from '../data/stepsData';
 
 export type GlobalStepPropsType = {
@@ -6,6 +7,7 @@ export type GlobalStepPropsType = {
     isDisabledCTA: boolean;
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
+    bankList?: BankListType;
     handleStepCallBack?: any;
     primaryColor?: string;
     accentColor?: string;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../../store/zustand';
+import { BankListType } from '../../../types/bankTypes';
 import { API_STATUS, STEP_IDS } from '../../../utils/constants';
 import { StepDataType } from '../../../utils/data/stepsData';
 import Alert from '../../Common/Alert';
@@ -33,6 +34,7 @@ type HomepageProps = {
     shopTypes: Array<any>;
     selectedMerchantType: string | number;
     stateTypes: Array<any>;
+    bankList: BankListType;
     handleStepCallBack: any;
     userData: any;
     esignStatus: any;
@@ -49,6 +51,7 @@ export const OnboardingWrapper = ({
     shopTypes,
     selectedMerchantType,
     stateTypes,
+    bankList,
     handleStepCallBack,
     userData,
     esignStatus,
@@ -145,7 +148,7 @@ export const OnboardingWrapper = ({
                         <DigilockerRedirection stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />
                     );
                 case STEP_IDS.ADD_BANK_ACCOUNT:
-                    return <BankAccount stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
+                    return <BankAccount stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} bankList={bankList} />;
                 default:
                     return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }
