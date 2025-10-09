@@ -1,73 +1,18 @@
 import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+import { BankDependentParam, BankListElement } from '../../../types/bankTypes';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 import InputGlobal from '../../Common/InputGlobal';
 import Labelglobal from '../../Common/Labelglobal';
 
-// Sample bank data - this would typically come from props or API
-const SAMPLE_BANK_DATA = {
-    bank_code: {
-        list_elements: [
-            {
-                label: 'State Bank of India',
-                value: 'SBIN',
-                dependent_params: [
-                    { name: 'account', length_max: 13, length_min: 11, pattern_error: 'Please enter a valid 11-digit SBI account number' },
-                    { name: 'ifsc_required', value: 0 },
-                    { name: 'bank_id', value: 108 }
-                ]
-            },
-            {
-                label: 'Punjab National Bank',
-                value: 'PUNB',
-                dependent_params: [
-                    { name: 'account', length_max: 16, length_min: 13 },
-                    { name: 'ifsc_required', value: 0 },
-                    { name: 'bank_id', value: 11 }
-                ]
-            },
-            {
-                label: 'Bank of India',
-                value: 'BKID',
-                dependent_params: [
-                    { name: 'account', length_max: 15, length_min: 15 },
-                    { name: 'ifsc_required', value: 1 },
-                    { name: 'bank_id', value: 3 }
-                ]
-            },
-            {
-                label: 'ICICI Bank',
-                value: 'ICIC',
-                dependent_params: [
-                    { name: 'account', length_max: 15, length_min: 12 },
-                    { name: 'ifsc_required', value: 0 },
-                    { name: 'bank_id', value: 7 }
-                ]
-            },
-            {
-                label: 'HDFC Bank',
-                value: 'HDFC',
-                dependent_params: [
-                    { name: 'account', length_max: 16, length_min: 9 },
-                    { name: 'ifsc_required', value: 0 },
-                    { name: 'bank_id', value: 6 }
-                ]
-            }
-        ]
-    }
-};
-
-interface BankAccountProps extends GlobalStepPropsType {
-    bankData?: typeof SAMPLE_BANK_DATA;
-}
-
-const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankData = SAMPLE_BANK_DATA }: BankAccountProps) => {
+const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }: GlobalStepPropsType) => {
+    console.log('[AgeontOnboarding] bankList', bankList);
     console.log('[AgentOnboarding] stepData', stepData);
     const { label, description, primaryCTAText, isSkipable } = stepData;
 
-    const [selectedBank, setSelectedBank] = useState<any>(null);
+    const [selectedBank, setSelectedBank] = useState<BankListElement | null>(null);
     const [isIfscRequired, setIsIfscRequired] = useState(false);
     const [accountValidation, setAccountValidation] = useState({
         min: 6,
@@ -103,22 +48,22 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankData =
         setFieldValue('ifsc', '');
         setFieldValue('branch_address', '');
 
-        const bank = bankData.bank_code.list_elements.find((b) => b.value === bankValue);
+        const bank = bankList?.find((b) => b.value === bankValue);
         setSelectedBank(bank || null);
 
         if (bank) {
             // Set account validation
-            const accountParam = bank.dependent_params.find((p: any) => p.name === 'account');
+            const accountParam = bank.dependent_params.find((p: BankDependentParam) => p.name === 'account');
             if (accountParam) {
                 setAccountValidation({
-                    min: (accountParam as any).length_min || 6,
-                    max: (accountParam as any).length_max || 20,
-                    pattern_error: (accountParam as any).pattern_error || 'Please enter a valid account number'
+                    min: accountParam.length_min || 6,
+                    max: accountParam.length_max || 20,
+                    pattern_error: accountParam.pattern_error || 'Please enter a valid account number'
                 });
             }
 
             // Check IFSC requirement
-            const ifscRequiredParam = bank.dependent_params.find((p: any) => p.name === 'ifsc_required');
+            const ifscRequiredParam = bank.dependent_params.find((p: BankDependentParam) => p.name === 'ifsc_required');
             setIsIfscRequired(ifscRequiredParam?.value === 1);
         } else {
             setIsIfscRequired(false);
@@ -136,12 +81,20 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankData =
             account: values.account
         };
 
-        if (isIfscRequired && values.ifsc) {
+        if (values.ifsc) {
             formData.ifsc = values.ifsc;
         }
 
         if (values.branch_address) {
             formData.branch_address = values.branch_address;
+        }
+
+        // Add bank_id from selected bank's dependent parameters
+        if (selectedBank) {
+            const bankIdParam = selectedBank.dependent_params.find((p: BankDependentParam) => p.name === 'bank_id');
+            if (bankIdParam && bankIdParam.value) {
+                formData.bank_id = bankIdParam.value;
+            }
         }
 
         handleSubmit({
@@ -173,44 +126,47 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankData =
                                         handleChange(e);
                                         handleBankChange(e.target.value, setFieldValue);
                                     }}
-                                    className="px-3 py-2 border-2 w-full rounded bg-white border-default outline-primary mb-2"
+                                    className={`px-3 py-2 border-2 w-full rounded bg-white outline-primary mb-2 ${errors.bank_code && touched.bank_code ? 'border-darkdanger' : 'border-default'}`}
                                 >
                                     <option value="">Select</option>
-                                    {bankData.bank_code.list_elements.map((bank, idx) => (
+                                    {bankList?.map((bank, idx) => (
                                         <option value={bank.value} key={`${idx}_${bank.value}`}>
                                             {bank.label}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.bank_code && touched.bank_code && <div className="text-red-500 text-xs mt-1">* (Required)</div>}
+                                {errors.bank_code && touched.bank_code && <div className="text-darkdanger text-xs mt-1">* (Required)</div>}
                             </div>
 
                             {/* Bank Account Number */}
                             <div>
                                 <Labelglobal className="block text-black text-sm font-bold mb-2">Bank Account Number</Labelglobal>
-                                <InputGlobal name="account" value={values.account} onChange={handleChange} placeholder="" maxLength={accountValidation.max} />
-                                {errors.account && touched.account && <div className="text-red-500 text-xs mt-1">{errors.account}</div>}
+                                <InputGlobal
+                                    name="account"
+                                    value={values.account}
+                                    onChange={handleChange}
+                                    placeholder=""
+                                    maxLength={accountValidation.max}
+                                    className={errors.account && touched.account ? 'border-darkdanger' : ''}
+                                />
+                                {errors.account && touched.account && <div className="text-darkdanger text-xs mt-1">{errors.account}</div>}
                                 {selectedBank && <div className="text-gray-500 text-xs mt-1">{accountValidation.pattern_error}</div>}
                             </div>
 
-                            {/* IFSC Code - conditionally rendered */}
-                            {isIfscRequired && (
+                            {/* IFSC Code - shown when bank is selected, required or optional based on bank config */}
+                            {selectedBank && selectedBank.value && (
                                 <div>
-                                    <Labelglobal className="block text-black text-sm font-bold mb-2">IFSC</Labelglobal>
-                                    <InputGlobal name="ifsc" value={values.ifsc?.toUpperCase() || ''} onChange={handleChange} placeholder="Eg: SBIN0000001" maxLength={11} className="uppercase" />
-                                    {errors.ifsc && touched.ifsc && <div className="text-red-500 text-xs mt-1">{errors.ifsc}</div>}
-                                    <div className="text-blue-600 text-xs mt-1 cursor-pointer hover:underline">Find IFSC</div>
+                                    <Labelglobal className="block text-black text-sm font-bold mb-2">{isIfscRequired ? 'IFSC' : 'IFSC (optional)'}</Labelglobal>
+                                    <InputGlobal
+                                        name="ifsc"
+                                        value={values.ifsc?.toUpperCase() || ''}
+                                        onChange={handleChange}
+                                        placeholder="Eg: SBIN0000001"
+                                        maxLength={11}
+                                        className={`uppercase ${errors.ifsc && touched.ifsc ? 'border-darkdanger' : ''}`}
+                                    />
+                                    {errors.ifsc && touched.ifsc && <div className="text-darkdanger text-xs mt-1">{errors.ifsc}</div>}
                                     <div className="text-gray-500 text-xs mt-1">Bank branch's IFSC code</div>
-                                </div>
-                            )}
-
-                            {/* Branch Address - shows when IFSC is entered */}
-                            {values.ifsc && values.ifsc.length === 11 && (
-                                <div>
-                                    <Labelglobal className="block text-black text-sm font-bold mb-2">Branch Address</Labelglobal>
-                                    <div className="px-3 py-2 border-2 rounded bg-gray-50 border-default text-gray-600 mb-2">
-                                        {values.branch_address || 'Branch address will be populated automatically'}
-                                    </div>
                                 </div>
                             )}
                         </div>
