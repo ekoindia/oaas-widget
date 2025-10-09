@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../index.css';
 import { useStore } from '../../store/zustand';
+import { BankListElement, BankListType } from '../../types/bankTypes';
 import { StepDataType } from '../../utils/data/stepsData';
 import Header from '../Common/Header/Header';
 import Headermobile from '../Common/Header/Headermobile';
@@ -13,6 +14,12 @@ const selectOption = [
     }
 ];
 
+const bankSelectOption: BankListElement = {
+    dependent_params: [],
+    label: '--Select--',
+    value: ''
+};
+
 type OAASPackageProps = {
     defaultStep: string;
     handleSubmit: (data: any) => void;
@@ -23,6 +30,7 @@ type OAASPackageProps = {
     selectedMerchantType?: any;
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
+    bankList?: BankListType;
     handleStepCallBack?: any;
     userData: any;
     stepsData: Array<StepDataType>;
@@ -43,6 +51,7 @@ const OnboardingWidget = ({
     shopTypes = [],
     selectedMerchantType,
     stateTypes = [],
+    bankList = [],
     handleStepCallBack,
     userData,
     stepsData,
@@ -114,6 +123,7 @@ const OnboardingWidget = ({
                 stepResponse={stepResponse}
                 shopTypes={[...selectOption, ...shopTypes]}
                 stateTypes={[...selectOption, ...stateTypes]}
+                bankList={[bankSelectOption, ...bankList]}
                 selectedMerchantType={selectedMerchantType}
                 handleStepCallBack={handleStepCallBack}
                 userData={userData}
