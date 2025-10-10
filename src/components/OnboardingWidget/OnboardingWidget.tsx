@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../index.css';
 import { useStore } from '../../store/zustand';
-import { BankListElement, BankListType } from '../../types/bankTypes';
+import { BankListElement, BankListType } from '../../types';
 import { StepDataType } from '../../utils/data/stepsData';
 import Header from '../Common/Header/Header';
 import Headermobile from '../Common/Header/Headermobile';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../../store/zustand';
-import { BankListType } from '../../../types/bankTypes';
+import { BankListType } from '../../../types';
 import { API_STATUS, STEP_IDS } from '../../../utils/constants';
 import { StepDataType } from '../../../utils/data/stepsData';
 import Alert from '../../Common/Alert';

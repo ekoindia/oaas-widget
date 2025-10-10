@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
-import { BankDependentParam, BankListElement } from '../../../types/bankTypes';
+import { BankDependentParam, BankListElement } from '../../../types';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 import InputGlobal from '../../Common/InputGlobal';
@@ -48,7 +48,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
         setFieldValue('ifsc', '');
         setFieldValue('branch_address', '');
 
-        const bank = bankList?.find((b) => b.value === bankValue);
+        const bank = bankList?.find((b: BankListElement) => b.value === bankValue);
         setSelectedBank(bank || null);
 
         if (bank) {
@@ -129,7 +129,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
                                     className={`px-3 py-2 border-2 w-full rounded bg-white outline-primary mb-2 ${errors.bank_code && touched.bank_code ? 'border-darkdanger' : 'border-default'}`}
                                 >
                                     <option value="">Select</option>
-                                    {bankList?.map((bank, idx) => (
+                                    {bankList?.map((bank: BankListElement, idx: number) => (
                                         <option value={bank.value} key={`${idx}_${bank.value}`}>
                                             {bank.label}
                                         </option>

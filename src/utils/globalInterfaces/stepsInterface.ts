@@ -1,4 +1,4 @@
-import { BankListType } from '../../types/bankTypes';
+import { BankListType } from '../../types';
 import { StepDataType } from '../data/stepsData';
 
 export type GlobalStepPropsType = {
