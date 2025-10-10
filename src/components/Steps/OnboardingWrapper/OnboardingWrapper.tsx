@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../../store/zustand';
+import { BankListType } from '../../../types';
 import { API_STATUS, STEP_IDS } from '../../../utils/constants';
 import { StepDataType } from '../../../utils/data/stepsData';
 import Alert from '../../Common/Alert';
@@ -14,6 +15,7 @@ import AdharVerifiction from '../AadharSteps/AdharVerifiction';
 import ConfirmAadhaarNumber from '../AadharSteps/ConfirmAadharNumber';
 import ActivationPlan from '../ActivationPlan/ActivationPlan';
 import SignAgreement from '../Agreement/SignAgreement';
+import { BankAccount } from '../BankAccount';
 import BusinessMerchant from '../Business/BusinessMerchant';
 import { DigilockerRedirection } from '../DigilockerRedirection';
 import LocationCapture from '../Location/LocationCapture';
@@ -32,10 +34,12 @@ type HomepageProps = {
     shopTypes: Array<any>;
     selectedMerchantType: string | number;
     stateTypes: Array<any>;
+    bankList: BankListType;
     handleStepCallBack: any;
     userData: any;
     esignStatus: any;
-    orgDetail?: any;
+    orgName?: string;
+    appName?: string;
     digilockerData?: any;
 };
 
@@ -47,10 +51,12 @@ export const OnboardingWrapper = ({
     shopTypes,
     selectedMerchantType,
     stateTypes,
+    bankList,
     handleStepCallBack,
     userData,
     esignStatus,
-    orgDetail,
+    orgName,
+    appName,
     digilockerData
 }: HomepageProps) => {
     const { currentStep, panStatus, fetchData, finish, steps, preview, selectedFile, image, cameraType, setCurrentStepInitial, setStepsData } = useStore();
@@ -110,9 +116,9 @@ export const OnboardingWrapper = ({
                 case STEP_IDS.AADHAAR_VERIFICATION:
                     return <AdharVerifiction stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case STEP_IDS.AADHAAR_CONSENT:
-                    return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
+                    return <AadhaarConsent stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgName={orgName} appName={appName} />;
                 case STEP_IDS.CONFIRM_AADHAAR_NUMBER:
-                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgDetail={orgDetail} />;
+                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} orgName={orgName} appName={appName} />;
                 case STEP_IDS.AADHAAR_NUMBER_OTP_VERIFY:
                     return <AadhaarNumberOtpVerify stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
                 case STEP_IDS.PAN_VERIFICATION:
@@ -125,7 +131,6 @@ export const OnboardingWrapper = ({
                     }
                 case STEP_IDS.SECRET_PIN:
                     return <SecretPin stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} />;
-
                 case STEP_IDS.VIDEO_KYC:
                     return <VideoKYC stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
                 case STEP_IDS.SIGN_AGREEMENT:
@@ -142,6 +147,8 @@ export const OnboardingWrapper = ({
                     return (
                         <DigilockerRedirection stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />
                     );
+                case STEP_IDS.ADD_BANK_ACCOUNT:
+                    return <BankAccount stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} bankList={bankList} />;
                 default:
                     return <Welcome stepData={stepData} handleSubmit={handleStepSubmit} isDisabledCTA={isDisable} />;
             }
@@ -188,16 +195,7 @@ export const OnboardingWrapper = ({
                             <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={steps} userData={userData} />
                             </span>
-                            <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">
-                                {renderStep(currentStep)}
-                                {/* {fetchData === true ? (
-                                    <span className="hidden sm:block">
-                                        <Fetching />
-                                    </span>
-                                ) : (
-                                    ''
-                                )} */}
-                            </div>
+                            <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">{renderStep(currentStep)}</div>
                         </div>
 
                         {finish === true ? (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../index.css';
 import { useStore } from '../../store/zustand';
+import { BankListElement, BankListType } from '../../types';
 import { StepDataType } from '../../utils/data/stepsData';
 import Header from '../Common/Header/Header';
 import Headermobile from '../Common/Header/Headermobile';
@@ -13,6 +14,12 @@ const selectOption = [
     }
 ];
 
+const bankSelectOption: BankListElement = {
+    dependent_params: [],
+    label: '--Select--',
+    value: ''
+};
+
 type OAASPackageProps = {
     defaultStep: string;
     handleSubmit: (data: any) => void;
@@ -23,6 +30,7 @@ type OAASPackageProps = {
     selectedMerchantType?: any;
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
+    bankList?: BankListType;
     handleStepCallBack?: any;
     userData: any;
     stepsData: Array<StepDataType>;
@@ -30,7 +38,8 @@ type OAASPackageProps = {
     primaryColor?: string;
     accentColor?: string;
     esignStatus?: number;
-    orgDetail?: any;
+    appName?: string;
+    orgName?: string;
     digilockerData?: any;
 };
 
@@ -42,14 +51,15 @@ const OnboardingWidget = ({
     shopTypes = [],
     selectedMerchantType,
     stateTypes = [],
+    bankList = [],
     handleStepCallBack,
     userData,
     stepsData,
-    // theme,
     primaryColor,
     accentColor,
     esignStatus,
-    orgDetail,
+    appName,
+    orgName,
     digilockerData
 }: OAASPackageProps) => {
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
@@ -73,31 +83,6 @@ const OnboardingWidget = ({
     const handleSidebarToggle = () => {
         setSideBarToggle((prev) => !prev);
     };
-
-    type PostMessageType = {
-        type: string;
-        data?: object;
-    };
-
-    // useImperativeHandle(ref, () => ({
-    //     /**
-    //      * receive message from the parent app
-    //      * @param options
-    //      * @param options.type  type/action of message
-    //      * @param options.data  additional data to be passed
-    //      */
-    //     // postMessage: ({ type, data }: PostMessageType) => {
-    //     //     console.log('[oaas] > postMessage: ', type, data);
-    //     //     switch (type) {
-    //     //         case 'esign:ready':
-    //     //             setEsignStatus(1);
-    //     //             break;
-    //     //         case 'esign:failed':
-    //     //             setEsignStatus(2);
-    //     //             break;
-    //     //     }
-    //     // }
-    // }));
 
     let visibleStepData = stepsData;
 
@@ -138,14 +123,15 @@ const OnboardingWidget = ({
                 stepResponse={stepResponse}
                 shopTypes={[...selectOption, ...shopTypes]}
                 stateTypes={[...selectOption, ...stateTypes]}
+                bankList={[bankSelectOption, ...bankList]}
                 selectedMerchantType={selectedMerchantType}
                 handleStepCallBack={handleStepCallBack}
                 userData={userData}
                 esignStatus={esignStatus}
-                orgDetail={orgDetail}
+                orgName={orgName}
+                appName={appName}
                 digilockerData={digilockerData}
             />
-            {/* <SelectionScreen /> */}
         </div>
     );
 };

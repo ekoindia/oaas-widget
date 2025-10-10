@@ -1,6 +1,7 @@
 export * from './AadharSteps';
 export * from './ActivationPlan';
 export * from './Agreement';
+export * from './BankAccount';
 export * from './Business';
 export * from './KYC';
 export * from './Location';
