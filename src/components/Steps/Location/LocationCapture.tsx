@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
@@ -46,13 +46,7 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
                 <li className="pb-2">You will be re-directed to next step after successful location capture.</li>
             </ul>
             <span className={`flex flex-col items-center sm:block`}>
-                <ButtonGlobal
-                    className="mt-4 w-fit sm:w-fit text-[16px]"
-                    onClick={handleLocation}
-                    // setCapturelocationData={handleLocationCapture}
-                    // getLocation={true}
-                    disabled={isDisabledCTA}
-                >
+                <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" onClick={handleLocation} disabled={isDisabledCTA}>
                     {isDisabledCTA ? 'Loading...' : primaryCTAText}
                 </ButtonGlobal>
 
