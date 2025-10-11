@@ -14,7 +14,6 @@
         "isolatedModules": true,
         "plugins": [{ "name": "typescript-plugin-css-modules" }],
         "types": ["node"],
-        "typeRoots": ["node_modules/@types", "src/types"],
         "declaration": true,
         "sourceMap": true,
         "outDir": "dist/esm",
