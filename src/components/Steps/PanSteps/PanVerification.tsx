@@ -25,9 +25,11 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
         register,
         formState: { errors },
         control,
-        // watch,
+        watch,
         setValue
     } = useForm(/* { mode: 'onChange' } */);
+
+    const selectedShopType = watch('shopType');
 
     // const watchAll = watch();
     // console.log('[PAN Verification] watchAll', watchAll);
@@ -83,7 +85,9 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                         register,
                         control,
                         setValue,
-                        errors
+                        errors,
+                        selectedShopType,
+                        shopTypes
                     }}
                 />
                 <div className="flex flex-col items-center sm:block">
@@ -110,16 +114,26 @@ type FormProps = {
     control: any;
     setValue: Function;
     errors: any;
+    selectedShopType?: string | number;
+    shopTypes?: Array<any>;
 };
 
-const Value = ({ renderer, register, control, setValue, errors }: FormProps) => {
+const Value = ({ renderer, register, control, setValue, errors, selectedShopType, shopTypes = [] }: FormProps) => {
+    // Find the selected shop type's dependent params
+    const selectedShop = shopTypes.find((shop) => shop.value == selectedShopType);
+    const shopNameParam = selectedShop?.dependent_params?.find((param: any) => param.name === 'shop_name');
+    const isShopNameVisible = shopNameParam?.is_visible === 1;
     return (
         <div className="flex flex-col gap-y-2">
             {renderer?.map(({ id, label, required, value, disabled, list_elements, type, placeholder, validation, maxLength, minLength, capitalize }) => {
+                // Hide shop_name field if not visible based on selected shop type
+                if (id === 'shopName' && !isShopNameVisible) {
+                    return null;
+                }
                 switch (type) {
                     case 'TEXT':
                         return (
-                            <div>
+                            <div key={id}>
                                 <Labelglobal htmlFor={id}>{label}</Labelglobal>
                                 <InputGlobal
                                     id={id}
@@ -148,6 +162,7 @@ const Value = ({ renderer, register, control, setValue, errors }: FormProps) => 
                     case 'IMAGE':
                         return (
                             <Controller
+                                key={id}
                                 name={id}
                                 control={control}
                                 render={({ field: { value } }) => {
@@ -165,9 +180,18 @@ const Value = ({ renderer, register, control, setValue, errors }: FormProps) => 
                         );
                     case 'LIST':
                         return (
-                            <div>
+                            <div key={id}>
                                 <Labelglobal htmlFor={id}>{label}</Labelglobal>
-                                <select id={id} name={id} className="px-1 py-[9px] border-2 w-full rounded bg-white border-default outline-primary" {...register(id, { ...validation })}>
+                                <select
+                                    id={id}
+                                    name={id}
+                                    className="px-1 py-[9px] border-2 w-full rounded bg-white border-default outline-primary"
+                                    {...register(id, { ...validation })}
+                                    defaultValue=""
+                                >
+                                    <option value="" disabled>
+                                        Select {label}
+                                    </option>
                                     {list_elements?.length > 0 &&
                                         list_elements.map((shop: any, idx: number) => (
                                             <option value={shop.value} key={`${idx}_${shop.value}`}>
