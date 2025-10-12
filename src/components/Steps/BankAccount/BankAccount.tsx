@@ -13,7 +13,6 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
     const { label, description, primaryCTAText, isSkipable } = stepData;
 
     const [selectedBank, setSelectedBank] = useState<BankListElement | null>(null);
-    const [isIfscRequired, setIsIfscRequired] = useState(false);
     const [accountValidation, setAccountValidation] = useState({
         min: 6,
         max: 20,
@@ -35,11 +34,9 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
             .min(accountValidation.min, `Minimum ${accountValidation.min} digits required`)
             .max(accountValidation.max, `Maximum ${accountValidation.max} digits allowed`)
             .matches(/^(?!0+$)[a-zA-Z0-9]*$/, accountValidation.pattern_error),
-        ifsc: isIfscRequired
-            ? Yup.string()
-                  .required('IFSC code is required')
-                  .matches(/^[a-zA-Z]{4}0[a-zA-Z0-9]{6}$/, 'Invalid IFSC format (e.g., SBIN0000001)')
-            : Yup.string()
+        ifsc: Yup.string()
+            .required('IFSC code is required')
+            .matches(/^[a-zA-Z]{4}0[a-zA-Z0-9]{6}$/, 'Invalid IFSC format (e.g., SBIN0000001)')
     });
 
     const handleBankChange = (bankValue: string, setFieldValue: any) => {
@@ -61,12 +58,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
                     pattern_error: accountParam.pattern_error || 'Please enter a valid account number'
                 });
             }
-
-            // Check IFSC requirement
-            const ifscRequiredParam = bank.dependent_params.find((p: BankDependentParam) => p.name === 'ifsc_required');
-            setIsIfscRequired(ifscRequiredParam?.value === 1);
         } else {
-            setIsIfscRequired(false);
             setAccountValidation({ min: 6, max: 20, pattern_error: 'Please enter a valid account number' });
         }
     };
@@ -153,22 +145,20 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
                                 {selectedBank && <div className="text-gray-500 text-xs mt-1">{accountValidation.pattern_error}</div>}
                             </div>
 
-                            {/* IFSC Code - shown when bank is selected, required or optional based on bank config */}
-                            {selectedBank && selectedBank.value && (
-                                <div>
-                                    <Labelglobal className="block text-black text-sm font-bold mb-2">{isIfscRequired ? 'IFSC' : 'IFSC (optional)'}</Labelglobal>
-                                    <InputGlobal
-                                        name="ifsc"
-                                        value={values.ifsc?.toUpperCase() || ''}
-                                        onChange={handleChange}
-                                        placeholder="Eg: SBIN0000001"
-                                        maxLength={11}
-                                        className={`uppercase ${errors.ifsc && touched.ifsc ? 'border-darkdanger' : ''}`}
-                                    />
-                                    {errors.ifsc && touched.ifsc && <div className="text-darkdanger text-xs mt-1">{errors.ifsc}</div>}
-                                    <div className="text-gray-500 text-xs mt-1">Bank branch's IFSC code</div>
-                                </div>
-                            )}
+                            {/* IFSC Code - always required */}
+                            <div>
+                                <Labelglobal className="block text-black text-sm font-bold mb-2">IFSC</Labelglobal>
+                                <InputGlobal
+                                    name="ifsc"
+                                    value={values.ifsc?.toUpperCase() || ''}
+                                    onChange={handleChange}
+                                    placeholder="Eg: SBIN0000001"
+                                    maxLength={11}
+                                    className={`uppercase ${errors.ifsc && touched.ifsc ? 'border-darkdanger' : ''}`}
+                                />
+                                {errors.ifsc && touched.ifsc && <div className="text-darkdanger text-xs mt-1">{errors.ifsc}</div>}
+                                <div className="text-gray-500 text-xs mt-1">Bank branch's IFSC code</div>
+                            </div>
                         </div>
 
                         <div className="flex flex-col items-center sm:block mt-6">
