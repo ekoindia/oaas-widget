@@ -106,7 +106,7 @@ const OnboardingWidget = ({
             const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
             setCurrentStepInitial(initialStep ? initialStep?.id : 3);
         }
-    }, [defaultStep]);
+    }, [defaultStep, stepsData]);
 
     return (
         <div>
