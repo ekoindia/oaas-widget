@@ -90,6 +90,7 @@ export const OnboardingWrapper = ({
     const handleStepSubmit = (data: any) => {
         if (data.id === STEP_IDS.WELCOME) {
             const nextStepId = findNextVisibleStep(data.id);
+            console.log('[AgentOnboarding] nextStepId', nextStepId);
             if (nextStepId) {
                 setCurrentStepInitial(nextStepId);
             }
@@ -168,6 +169,7 @@ export const OnboardingWrapper = ({
                 if (currentStepData) {
                     if (currentStepData?.id !== STEP_IDS.SELECTION_SCREEN) {
                         const nextStepId = findNextVisibleStep(currentStepData.id);
+                        console.log('[AgentOnboarding] nextStepId', nextStepId);
                         if (nextStepId) {
                             setCurrentStepInitial(nextStepId);
                         }

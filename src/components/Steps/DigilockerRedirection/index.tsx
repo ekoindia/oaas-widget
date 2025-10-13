@@ -46,6 +46,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
     const handleOpenDigilocker = () => {
         if (digilockerData?.link) {
             // Open Digilocker in new tab
+            // TODO: ensure link cannot be opened after single use
             window.open(digilockerData.link, '_blank', 'noopener,noreferrer');
 
             // You might want to add a callback here to track when user returns

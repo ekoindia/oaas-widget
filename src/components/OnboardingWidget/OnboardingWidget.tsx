@@ -63,6 +63,8 @@ const OnboardingWidget = ({
     digilockerData
 }: OAASPackageProps) => {
     const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
+    console.log('[AgentOnboarding] OAAS steps', steps);
+    console.log('[AgentOnboarding] OAAS currentStep', currentStep);
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
     // const [esignStatus, setEsignStatus] = useState<number>(0); // 0: loading, 1: ready, 2: failed
 
@@ -106,7 +108,7 @@ const OnboardingWidget = ({
             const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
             setCurrentStepInitial(initialStep ? initialStep?.id : 3);
         }
-    }, [defaultStep, stepsData]);
+    }, [defaultStep]);
 
     return (
         <div>
