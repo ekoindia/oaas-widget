@@ -62,9 +62,8 @@ const OnboardingWidget = ({
     orgName,
     digilockerData
 }: OAASPackageProps) => {
-    const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
-    console.log('[AgentOnboarding] OAAS steps', steps);
-    console.log('[AgentOnboarding] OAAS currentStep', currentStep);
+    console.log('[AgentOnboarding] OAAS stepsData', stepsData);
+    const { setCurrentStepInitial, setInitialStepsData } = useStore();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
     // const [esignStatus, setEsignStatus] = useState<number>(0); // 0: loading, 1: ready, 2: failed
 
@@ -86,26 +85,13 @@ const OnboardingWidget = ({
         setSideBarToggle((prev) => !prev);
     };
 
-    let visibleStepData = stepsData;
-
-    if (visibleStepData) {
-        if (userData?.userDetails?.user_type === 3) {
-            // For Retailers, Filtering out steps: 9 (Business Details) & 10 (Secret PIN)
-            visibleStepData = visibleStepData?.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
-        } else {
-            // For Distributors
-            visibleStepData = visibleStepData?.filter((step) => step.isVisible);
-        }
-    }
-    // console.log('[oaas] > VISIBLE STEP DATA: ', userData?.userDetails?.user_type, visibleStepData, stepsData);
-
     useEffect(() => {
         setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
     }, [stepsData]);
 
     useEffect(() => {
-        if (visibleStepData) {
-            const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
+        if (stepsData) {
+            const initialStep = stepsData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
             setCurrentStepInitial(initialStep ? initialStep?.id : 3);
         }
     }, [defaultStep]);
