@@ -7,7 +7,7 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, accentColor }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
-    const [roleVal, setRoleVal] = useState<number>(0);
+    const [roleVal, setRoleVal] = useState<number>(-1);
     const handleChange = (e: any) => {
         setRoleVal(parseInt(e.target.value));
     };
@@ -45,19 +45,19 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
                                 id={role.id}
                                 type="radio"
                                 className="w-6 h-6 cursor-pointer accent-primary"
-                                value={role.merchant_type}
+                                value={role.applicant_type}
                                 name="role"
                                 onChange={handleChange}
-                                checked={roleVal === role.merchant_type}
+                                checked={roleVal === role.applicant_type}
                             />
                         </label>
                     ))}
             <ButtonGlobal
                 className="mt-6"
                 onClick={() => {
-                    handleSubmit({ ...stepData, form_data: { merchant_type: roleVal } });
+                    handleSubmit({ ...stepData, form_data: { applicant_type: roleVal } });
                 }}
-                disabled={isDisabledCTA || roleVal <= 0}
+                disabled={isDisabledCTA || roleVal < 0}
             >
                 {isDisabledCTA ? 'Please wait...' : primaryCTAText}
             </ButtonGlobal>
