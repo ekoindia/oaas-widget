@@ -64,8 +64,9 @@ const OnboardingWidget = ({
 }: OAASPackageProps) => {
     console.log('[AgentOnboarding] OAAS stepsData', stepsData);
     const { setCurrentStepInitial, setInitialStepsData } = useStore();
+    const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
+    console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
-    // const [esignStatus, setEsignStatus] = useState<number>(0); // 0: loading, 1: ready, 2: failed
 
     useEffect(() => {
         // Set Primary Color as css var "color-primary"
@@ -79,8 +80,6 @@ const OnboardingWidget = ({
         }
     }, [primaryColor, accentColor]);
 
-    // console.log('[oaas] OnboardingWidget Started', defaultStep, stepsData);
-
     const handleSidebarToggle = () => {
         setSideBarToggle((prev) => !prev);
     };
@@ -91,10 +90,14 @@ const OnboardingWidget = ({
 
     useEffect(() => {
         if (stepsData) {
-            const initialStep = stepsData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
-            setCurrentStepInitial(initialStep ? initialStep?.id : 3);
+            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != 3);
+            console.log('[AgentOnboarding] OnboardingWidget >>>>>  stepsData', stepsData);
+            console.log('[AgentOnboarding] OnboardingWidget >>>>>  initialStep', initialStep);
+            const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
+            setCurrentStepInitial(_initialStepId);
+            setCurrentOnboardingStepId(_initialStepId);
         }
-    }, [defaultStep]);
+    }, [stepsData]);
 
     return (
         <div>
@@ -109,6 +112,7 @@ const OnboardingWidget = ({
                 setSideBarToggle={setSideBarToggle}
                 handleSubmit={handleSubmit}
                 stepResponse={stepResponse}
+                currentOnboardingStepId={currentOnboardingStepId}
                 shopTypes={[...selectOption, ...shopTypes]}
                 stateTypes={[...selectOption, ...stateTypes]}
                 bankList={[bankSelectOption, ...bankList]}
@@ -119,6 +123,7 @@ const OnboardingWidget = ({
                 orgName={orgName}
                 appName={appName}
                 digilockerData={digilockerData}
+                stepsData={stepsData}
             />
         </div>
     );
