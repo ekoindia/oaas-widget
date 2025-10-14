@@ -84,9 +84,9 @@ const OnboardingWidget = ({
         setSideBarToggle((prev) => !prev);
     };
 
-    useEffect(() => {
-        setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
-    }, [stepsData]);
+    // useEffect(() => {
+    //     setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
+    // }, [stepsData]);
 
     useEffect(() => {
         if (stepsData) {
