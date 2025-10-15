@@ -91,8 +91,6 @@ const OnboardingWidget = ({
     useEffect(() => {
         if (stepsData) {
             const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != 3);
-            console.log('[AgentOnboarding] OnboardingWidget >>>>>  stepsData', stepsData);
-            console.log('[AgentOnboarding] OnboardingWidget >>>>>  initialStep', initialStep);
             const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
             setCurrentStepInitial(_initialStepId);
             setCurrentOnboardingStepId(_initialStepId);
