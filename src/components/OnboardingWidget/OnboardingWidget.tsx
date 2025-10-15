@@ -62,9 +62,11 @@ const OnboardingWidget = ({
     orgName,
     digilockerData
 }: OAASPackageProps) => {
-    const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
+    console.log('[AgentOnboarding] OAAS stepsData', stepsData);
+    const { setCurrentStepInitial, setInitialStepsData } = useStore();
+    const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
+    console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
-    // const [esignStatus, setEsignStatus] = useState<number>(0); // 0: loading, 1: ready, 2: failed
 
     useEffect(() => {
         // Set Primary Color as css var "color-primary"
@@ -78,35 +80,22 @@ const OnboardingWidget = ({
         }
     }, [primaryColor, accentColor]);
 
-    // console.log('[oaas] OnboardingWidget Started', defaultStep, stepsData);
-
     const handleSidebarToggle = () => {
         setSideBarToggle((prev) => !prev);
     };
 
-    let visibleStepData = stepsData;
-
-    if (visibleStepData) {
-        if (userData?.userDetails?.user_type === 3) {
-            // For Retailers, Filtering out steps: 9 (Business Details) & 10 (Secret PIN)
-            visibleStepData = visibleStepData?.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
-        } else {
-            // For Distributors
-            visibleStepData = visibleStepData?.filter((step) => step.isVisible);
-        }
-    }
-    // console.log('[oaas] > VISIBLE STEP DATA: ', userData?.userDetails?.user_type, visibleStepData, stepsData);
+    // useEffect(() => {
+    //     setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
+    // }, [stepsData]);
 
     useEffect(() => {
-        setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
+        if (stepsData) {
+            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != 3);
+            const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
+            setCurrentStepInitial(_initialStepId);
+            setCurrentOnboardingStepId(_initialStepId);
+        }
     }, [stepsData]);
-
-    useEffect(() => {
-        if (visibleStepData) {
-            const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
-            setCurrentStepInitial(initialStep ? initialStep?.id : 3);
-        }
-    }, [defaultStep]);
 
     return (
         <div>
@@ -121,6 +110,7 @@ const OnboardingWidget = ({
                 setSideBarToggle={setSideBarToggle}
                 handleSubmit={handleSubmit}
                 stepResponse={stepResponse}
+                currentOnboardingStepId={currentOnboardingStepId}
                 shopTypes={[...selectOption, ...shopTypes]}
                 stateTypes={[...selectOption, ...stateTypes]}
                 bankList={[bankSelectOption, ...bankList]}
@@ -131,6 +121,7 @@ const OnboardingWidget = ({
                 orgName={orgName}
                 appName={appName}
                 digilockerData={digilockerData}
+                stepsData={stepsData}
             />
         </div>
     );
