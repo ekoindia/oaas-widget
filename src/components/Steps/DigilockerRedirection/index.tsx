@@ -105,22 +105,24 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
                     </ol>
                 </div>
 
-                {/* Proceed Button */}
-                <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" onClick={handleProceed} disabled={isDisabledCTA}>
-                    <>
-                        <span>Proceed</span>
-                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                    </>
-                </ButtonGlobal>
-
-                {/* Skip Button (if applicable) */}
-                {isSkipable && (
-                    <ButtonGlobal className="w-full bg-gray-500 hover:bg-gray-600 mt-4" onClick={handleSkip}>
-                        Skip this step
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                    <ButtonGlobal className="w-full sm:w-auto" onClick={handleProceed} disabled={isDisabledCTA}>
+                        <>
+                            <span>Proceed</span>
+                            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </>
                     </ButtonGlobal>
-                )}
+
+                    {/* Skip Button (if applicable) */}
+                    {isSkipable && (
+                        <ButtonGlobal className="w-full sm:w-auto" onClick={handleSkip}>
+                            Skip this step
+                        </ButtonGlobal>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -24,10 +24,9 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appNam
     };
     return (
         <div className="pt-8 sm:p-8 w-full">
-            <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-            <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
-            <div className="relative mt-10"></div>
-            <div className={`flex flex-col items-center sm:block w-full max-w-full md:max-w-[400px]`}>
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
+            <div className="mt-8 max-w-md">
                 <Formik
                     initialValues={formValues}
                     validationSchema={aadhaarConsentSchema}
@@ -39,18 +38,20 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appNam
                 >
                     {({ errors, touched, values, handleChange }) => (
                         <Form>
-                            <Labelglobal className="block mb-2 text-sm font-bold text-black">Name</Labelglobal>
-                            <InputGlobal name="name" className="w-full" value={values.name} onChange={handleChange('name')} id="name" type="text" placeholder="" />
-                            {errors.name && touched.name ? <div className="text-darkdanger text-xs">{errors.name}</div> : null}
-                            <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA}>
-                                {isDisabledCTA ? 'Please wait...' : primaryCTAText}
-                            </ButtonGlobal>
+                            <Labelglobal>Name</Labelglobal>
+                            <InputGlobal name="name" value={values.name} onChange={handleChange('name')} id="name" type="text" placeholder="" />
+                            {errors.name && touched.name ? <div className="text-darkdanger text-xs mt-1">{errors.name}</div> : null}
 
-                            {isSkipable && (
-                                <ButtonGlobal className="mt-6 sm:ml-10" onClick={handleSkip}>
-                                    Skip this step
+                            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                                <ButtonGlobal disabled={isDisabledCTA}>
+                                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                            )}
+                                {isSkipable && (
+                                    <ButtonGlobal onClick={handleSkip}>
+                                        Skip this step
+                                    </ButtonGlobal>
+                                )}
+                            </div>
                         </Form>
                     )}
                 </Formik>

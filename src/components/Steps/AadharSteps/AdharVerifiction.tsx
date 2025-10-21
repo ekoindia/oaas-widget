@@ -86,13 +86,13 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
         setCameraStatus(false);
     };
     return (
-        <div className="w-full pt-8 sm:p-8">
-            <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-            <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
+        <div className="pt-8 sm:p-8 w-full">
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">
                 {description}
                 <span className="text-primary"> .jpg, .png</span>
             </div>
-            <div className="mt-10">
+            <div className="mt-8">
                 {uploadedImage == 0 ? (
                     // <div></div>
                     <div className="sm:flex flex-col text-center lg:flex-row max-[640px]:flex  max-[640px]:items-center ">
@@ -175,23 +175,16 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                     <Browse copyType="Aadhaar copy" />
                 )}
             </div>
-            <span className={`flex flex-col items-center sm:block`}>
-                <ButtonGlobal
-                    className="mt-4 py-2 px-8 w-fit sm:w-fit text-[16px]"
-                    onClick={handleClickAdhar}
-                    // setCapturelocationData={handleLocationCapture}
-                    // getLocation={true}
-                    disabled={isDisabledCTA || frontError || backError}
-                >
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <ButtonGlobal onClick={handleClickAdhar} disabled={isDisabledCTA || frontError || backError}>
                     {isDisabledCTA ? 'Please wait ...' : primaryCTAText}
                 </ButtonGlobal>
-
                 {isSkipable && (
-                    <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
+                    <ButtonGlobal onClick={handleSkip}>
                         Skip this step
                     </ButtonGlobal>
                 )}
-            </span>
+            </div>
             <Modal
                 showModal={showInfoModal}
                 setShowModal={setShowInfoModal}
