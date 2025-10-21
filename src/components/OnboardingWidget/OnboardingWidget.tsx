@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../../index.css';
-import { useStore } from '../../store/zustand';
 import { BankListElement, BankListType } from '../../types';
 import { StepDataType } from '../../utils/data/stepsData';
 import Header from '../Common/Header/Header';
@@ -63,7 +62,6 @@ const OnboardingWidget = ({
     digilockerData
 }: OAASPackageProps) => {
     console.log('[AgentOnboarding] OAAS stepsData', stepsData);
-    const { setCurrentStepInitial, setInitialStepsData } = useStore();
     const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
     console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
@@ -84,15 +82,10 @@ const OnboardingWidget = ({
         setSideBarToggle((prev) => !prev);
     };
 
-    // useEffect(() => {
-    //     setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
-    // }, [stepsData]);
-
     useEffect(() => {
         if (stepsData) {
             const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != 3);
             const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
-            setCurrentStepInitial(_initialStepId);
             setCurrentOnboardingStepId(_initialStepId);
         }
     }, [stepsData]);

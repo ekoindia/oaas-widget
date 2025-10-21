@@ -118,7 +118,7 @@ export const OnboardingWrapper = ({
                     <div className="relative flex flex-col w-full h-full">
                         <div className="sm:flex sm:justify-between">
                             <span className="hidden sm:block md:block lg:block xl:block">
-                                <Sidebar steps={stepsData || []} userData={userData} />
+                                <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} />
                             </span>
                             <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">{renderStep(currentOnboardingStepId ?? 0)}</div>
                         </div>
@@ -129,7 +129,7 @@ export const OnboardingWrapper = ({
             <span className="hidden block">
                 {sideBarToggle ? (
                     <div className="z-20 absolute top-14 top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
-                        <Sidebar steps={stepsData || []} userData={userData} />
+                        <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} />
                         <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
                     </div>
                 ) : (
