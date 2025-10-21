@@ -110,7 +110,7 @@ export const OnboardingWrapper = ({
     };
 
     return (
-        <>
+        <div>
             <div className={`${currentOnboardingStepId === STEP_IDS.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
                 <div className="flex items-center">
                     <div className="relative flex flex-col w-full h-full">
@@ -134,6 +134,6 @@ export const OnboardingWrapper = ({
                     ''
                 )}
             </span>
-        </>
+        </div>
     );
 };
