@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import '../../index.css';
 import { BankListElement, BankListType } from '../../types';
 import { StepDataType } from '../../utils/data/stepsData';
-import Header from '../Common/Header/Header';
-import Headermobile from '../Common/Header/Headermobile';
 import { OnboardingWrapper } from '../Steps';
 
 const selectOption = [
@@ -20,24 +18,24 @@ const bankSelectOption: BankListElement = {
 };
 
 type OAASPackageProps = {
-    handleSubmit: (data: any) => void;
-    developerKey?: string;
-    secretKey?: string;
-    isBranding?: boolean;
-    stepResponse?: any;
+    appName?: string;
+    orgName?: string;
+    primaryColor?: string;
+    accentColor?: string;
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
     bankList?: BankListType;
-    handleStepCallBack?: any;
     userData: any;
+    handleSubmit: (data: any) => void;
+    // developerKey?: string;
+    // secretKey?: string;
+    // isBranding?: boolean;
+    stepResponse?: any;
+    handleStepCallBack?: any;
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
-    primaryColor?: string;
-    accentColor?: string;
-    esignStatus?: number;
-    appName?: string;
-    orgName?: string;
     digilockerData?: any;
+    esignStatus?: number;
 };
 
 const OnboardingWidget = ({
@@ -45,22 +43,21 @@ const OnboardingWidget = ({
     orgName,
     primaryColor,
     accentColor,
-    handleSubmit,
-    isBranding = false,
-    stepResponse,
     shopTypes = [],
     stateTypes = [],
     bankList = [],
-    handleStepCallBack,
     userData,
+    handleSubmit,
+    stepResponse,
+    handleStepCallBack,
     stepsData,
     esignStatus,
     digilockerData
 }: OAASPackageProps) => {
-    console.log('[AgentOnboarding] OAAS stepsData', stepsData);
     const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
-    console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
+    console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
+    console.log('[AgentOnboarding] OAAS stepsData', stepsData);
 
     useEffect(() => {
         // Set Primary Color as css var "color-primary"
@@ -74,10 +71,6 @@ const OnboardingWidget = ({
         }
     }, [primaryColor, accentColor]);
 
-    const handleSidebarToggle = () => {
-        setSideBarToggle((prev) => !prev);
-    };
-
     useEffect(() => {
         if (stepsData) {
             const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != 3);
@@ -87,31 +80,23 @@ const OnboardingWidget = ({
     }, [stepsData]);
 
     return (
-        <div>
-            {isBranding && (
-                <>
-                    <Header />
-                    <Headermobile handleSidebarToggle={handleSidebarToggle} />
-                </>
-            )}
-            <OnboardingWrapper
-                orgName={orgName}
-                appName={appName}
-                shopTypes={[...selectOption, ...shopTypes]}
-                stateTypes={[...selectOption, ...stateTypes]}
-                bankList={[bankSelectOption, ...bankList]}
-                userData={userData}
-                sideBarToggle={sideBarToggle}
-                setSideBarToggle={setSideBarToggle}
-                handleSubmit={handleSubmit}
-                stepResponse={stepResponse}
-                currentOnboardingStepId={currentOnboardingStepId}
-                handleStepCallBack={handleStepCallBack}
-                esignStatus={esignStatus}
-                digilockerData={digilockerData}
-                stepsData={stepsData}
-            />
-        </div>
+        <OnboardingWrapper
+            orgName={orgName}
+            appName={appName}
+            shopTypes={[...selectOption, ...shopTypes]}
+            stateTypes={[...selectOption, ...stateTypes]}
+            bankList={[bankSelectOption, ...bankList]}
+            userData={userData}
+            sideBarToggle={sideBarToggle}
+            setSideBarToggle={setSideBarToggle}
+            handleSubmit={handleSubmit}
+            stepResponse={stepResponse}
+            currentOnboardingStepId={currentOnboardingStepId}
+            handleStepCallBack={handleStepCallBack}
+            esignStatus={esignStatus}
+            digilockerData={digilockerData}
+            stepsData={stepsData}
+        />
     );
 };
 
