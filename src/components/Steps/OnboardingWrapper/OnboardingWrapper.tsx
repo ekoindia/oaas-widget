@@ -30,7 +30,6 @@ type HomepageProps = {
     currentOnboardingStepId: number | undefined;
     stepResponse: any;
     shopTypes: Array<any>;
-    selectedMerchantType: string | number;
     stateTypes: Array<any>;
     bankList: BankListType;
     handleStepCallBack: any;
@@ -48,7 +47,6 @@ export const OnboardingWrapper = ({
     handleSubmit,
     stepResponse,
     shopTypes,
-    selectedMerchantType,
     currentOnboardingStepId,
     stateTypes,
     bankList,

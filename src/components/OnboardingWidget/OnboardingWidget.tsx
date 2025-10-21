@@ -20,13 +20,11 @@ const bankSelectOption: BankListElement = {
 };
 
 type OAASPackageProps = {
-    defaultStep: string;
     handleSubmit: (data: any) => void;
     developerKey?: string;
     secretKey?: string;
     isBranding?: boolean;
     stepResponse?: any;
-    selectedMerchantType?: any;
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
     bankList?: BankListType;
@@ -43,22 +41,20 @@ type OAASPackageProps = {
 };
 
 const OnboardingWidget = ({
-    defaultStep = '12400',
+    appName,
+    orgName,
+    primaryColor,
+    accentColor,
     handleSubmit,
-    isBranding = true,
+    isBranding = false,
     stepResponse,
     shopTypes = [],
-    selectedMerchantType,
     stateTypes = [],
     bankList = [],
     handleStepCallBack,
     userData,
     stepsData,
-    primaryColor,
-    accentColor,
     esignStatus,
-    appName,
-    orgName,
     digilockerData
 }: OAASPackageProps) => {
     console.log('[AgentOnboarding] OAAS stepsData', stepsData);
@@ -99,20 +95,19 @@ const OnboardingWidget = ({
                 </>
             )}
             <OnboardingWrapper
+                orgName={orgName}
+                appName={appName}
+                shopTypes={[...selectOption, ...shopTypes]}
+                stateTypes={[...selectOption, ...stateTypes]}
+                bankList={[bankSelectOption, ...bankList]}
+                userData={userData}
                 sideBarToggle={sideBarToggle}
                 setSideBarToggle={setSideBarToggle}
                 handleSubmit={handleSubmit}
                 stepResponse={stepResponse}
                 currentOnboardingStepId={currentOnboardingStepId}
-                shopTypes={[...selectOption, ...shopTypes]}
-                stateTypes={[...selectOption, ...stateTypes]}
-                bankList={[bankSelectOption, ...bankList]}
-                selectedMerchantType={selectedMerchantType}
                 handleStepCallBack={handleStepCallBack}
-                userData={userData}
                 esignStatus={esignStatus}
-                orgName={orgName}
-                appName={appName}
                 digilockerData={digilockerData}
                 stepsData={stepsData}
             />
