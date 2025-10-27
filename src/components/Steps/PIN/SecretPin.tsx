@@ -28,7 +28,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
     }, []);
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
             <div className="mt-8 max-w-md">
@@ -63,11 +63,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                                 <ButtonGlobal type="submit" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                                {isSkipable && (
-                                    <ButtonGlobal onClick={handleSkip}>
-                                        Skip this step
-                                    </ButtonGlobal>
-                                )}
+                                {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
                             </div>
                         </Form>
                     )}

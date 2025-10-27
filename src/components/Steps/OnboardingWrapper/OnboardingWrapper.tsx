@@ -107,15 +107,15 @@ export const OnboardingWrapper = ({
     };
 
     return (
-        <div>
-            <div className={`${currentOnboardingStepId === STEP_IDS.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
+        <div className="mt-8">
+            <div className={`${currentOnboardingStepId === STEP_IDS.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-8 w-full md:px-24`}>
                 <div className="flex items-center">
                     <div className="relative flex flex-col w-full h-full">
                         <div className="sm:flex sm:justify-between">
                             <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} />
                             </span>
-                            <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">{renderStep(currentOnboardingStepId ?? 0)}</div>
+                            <div className="relative flex w-full pb-10 mb-10 p-8 rounded-2xl sm:ml-8 bg-white">{renderStep(currentOnboardingStepId ?? 0)}</div>
                         </div>
                     </div>
                 </div>

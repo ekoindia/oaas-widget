@@ -51,7 +51,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
         // };
     }, []);
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
             <div className="mt-8 max-w-md">
@@ -105,14 +105,8 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                                <ButtonGlobal disabled={isDisabledCTA}>
-                                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
-                                </ButtonGlobal>
-                                {isSkipable && (
-                                    <ButtonGlobal onClick={handleSkip}>
-                                        Skip this step
-                                    </ButtonGlobal>
-                                )}
+                                <ButtonGlobal disabled={isDisabledCTA}>{isDisabledCTA ? 'Please wait...' : primaryCTAText}</ButtonGlobal>
+                                {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
                             </div>
                         </Form>
                     )}

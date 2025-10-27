@@ -75,7 +75,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
     };
 
     return (
-        <div className="pt-8 sm:p-8 max-w-md">
+        <div>
             <div className="text-[22px] font-[500] sm:font-[400] mb-4">{label || 'Digilocker Redirection'}</div>
 
             <div className="mt-3 mb-6 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">

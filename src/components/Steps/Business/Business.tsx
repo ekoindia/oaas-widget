@@ -41,7 +41,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
     const { label, description, primaryCTAText /*, isSkipable */ } = stepData;
 
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div>
             <Formik
                 initialValues={formValues}
                 validationSchema={SignupSchema}
@@ -185,9 +185,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                            <ButtonGlobal disabled={isDisabledCTA}>
-                                {isDisabledCTA ? 'Loading...' : primaryCTAText}
-                            </ButtonGlobal>
+                            <ButtonGlobal disabled={isDisabledCTA}>{isDisabledCTA ? 'Loading...' : primaryCTAText}</ButtonGlobal>
                         </div>
                     </Form>
                 )}

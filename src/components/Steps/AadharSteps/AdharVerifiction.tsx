@@ -86,7 +86,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
         setCameraStatus(false);
     };
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">
                 {description}
@@ -179,11 +179,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                 <ButtonGlobal onClick={handleClickAdhar} disabled={isDisabledCTA || frontError || backError}>
                     {isDisabledCTA ? 'Please wait ...' : primaryCTAText}
                 </ButtonGlobal>
-                {isSkipable && (
-                    <ButtonGlobal onClick={handleSkip}>
-                        Skip this step
-                    </ButtonGlobal>
-                )}
+                {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
             </div>
             <Modal
                 showModal={showInfoModal}

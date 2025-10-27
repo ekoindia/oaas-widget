@@ -69,7 +69,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
     ];
 
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">
                 {description}
@@ -94,11 +94,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                     <ButtonGlobal disabled={isDisabledCTA} type="submit">
                         {isDisabledCTA ? 'Loading...' : primaryCTAText}
                     </ButtonGlobal>
-                    {isSkipable && (
-                        <ButtonGlobal onClick={handleSkip}>
-                            Skip this step
-                        </ButtonGlobal>
-                    )}
+                    {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
                 </div>
             </form>
         </div>

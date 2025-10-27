@@ -64,7 +64,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
         console.log('Error in GeoLocation=>', error);
     };
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div>
             <Formik
                 initialValues={formValues}
                 validationSchema={SignupSchema}

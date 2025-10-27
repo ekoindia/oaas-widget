@@ -97,7 +97,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
     };
 
     return (
-        <div className="pt-8 sm:p-8 w-full">
+        <div>
             <div className="text-[22px] font-medium sm:font-normal">{label || 'Add Account'}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">
                 {description ||

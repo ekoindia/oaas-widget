@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
-import ButtonGlobal from '../../Common/ButtonGlobal';
 import { useStore } from '../../../store/zustand';
+import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import { Spinner } from '../../Common';
+import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack, esignStatus }: GlobalStepPropsType) => {
     const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
@@ -67,7 +67,7 @@ const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA = false, handleSt
     return (
         <div className="w-full min-h-[80vh] sm:min-h-[85%] flex items-center justify-center bg-white rounded-2xl">
             <div className="items-center text-center text-black">
-                <img src="https://files.eko.co.in/docs/onborading/agreement.png" alt="welcome icon" className="flex items-center text-center h-[180px] mr-auto ml-auto mt-auto mb-6 mb-6" />
+                <img src="https://files.eko.co.in/docs/onborading/agreement.png" alt="welcome icon" className="flex items-center text-center h-[180px] mr-auto ml-auto mt-auto mb-6" />
                 {cardContent}
             </div>
         </div>
