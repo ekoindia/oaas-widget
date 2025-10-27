@@ -38,7 +38,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
     const panVerificationFormMetadata = [
         {
             id: 'panNumber',
-            label: 'PAN Number',
+            label: 'Enter PAN',
             required: true,
             type: 'TEXT',
             // placeholder: 'XXXXXXXXXX',
