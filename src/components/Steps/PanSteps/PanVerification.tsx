@@ -166,7 +166,8 @@ const Value = ({ renderer, register, control, setValue, errors, selectedShopType
                                 control={control}
                                 render={({ field: { value } }) => {
                                     return (
-                                        <div>
+                                        <div key={id}>
+                                            <Labelglobal htmlFor={id}>{label}</Labelglobal>
                                             <CamDropzone file={value} setFile={(file) => setValue(id, file)} />
                                             {errors[id]?.type === 'required' && <p className="text-xs text-darkdanger">Required</p>}
                                         </div>
