@@ -33,7 +33,7 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
                 form_data.roles
                     ?.filter((role: any) => role.isVisible)
                     ?.map((role: any, idx: number) => (
-                        <label className="flex mb-5 cursor-pointer" key={`${idx}_${role.id}`}>
+                        <label className="flex items-center mb-5 cursor-pointer" key={`${idx}_${role.id}`}>
                             <div className="p-4 mr-5 border-2 rounded-full border-slate-200">
                                 <img src={role.id === 1 ? userMerchant : role.id === 2 ? userDistributor : userEnterprise}></img>
                             </div>
