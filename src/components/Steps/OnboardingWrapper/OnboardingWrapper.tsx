@@ -20,7 +20,6 @@ import SecretPin from '../PIN/SecretPin';
 import PanAdharMatch from '../PanSteps/PanAdharMatch';
 import PanVerification from '../PanSteps/PanVerification';
 import PanVerificationDistributor from '../PanSteps/PanVerificationDistributor';
-import SelectionScreen from '../SelectionScreen/SelectionScreen';
 import { Welcome } from '../Welcome';
 
 type HomepageProps = {
@@ -63,8 +62,6 @@ export const OnboardingWrapper = ({
 
         if (stepData) {
             switch (currentStep) {
-                case STEP_IDS.SELECTION_SCREEN:
-                    return <SelectionScreen handleSubmit={handleSubmit} stepData={stepData} />;
                 case STEP_IDS.LOCATION_CAPTURE:
                     return <LocationCapture stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
                 case STEP_IDS.AADHAAR_VERIFICATION:
