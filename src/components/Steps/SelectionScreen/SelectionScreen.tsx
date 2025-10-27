@@ -54,7 +54,7 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
                     ))}
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
                 <ButtonGlobal
-                    className="w-full md:w-[200px] h-[64px]"
+                    className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]"
                     onClick={() => {
                         handleSubmit({ ...stepData, form_data: { applicant_type: roleVal } });
                     }}

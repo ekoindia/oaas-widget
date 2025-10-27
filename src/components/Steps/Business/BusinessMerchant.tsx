@@ -166,7 +166,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                            <ButtonGlobal className="" disabled={isDisabledCTA}>
+                            <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
                             </ButtonGlobal>
                         </div>

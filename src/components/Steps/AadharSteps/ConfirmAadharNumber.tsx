@@ -53,8 +53,14 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                                <ButtonGlobal disabled={isDisabledCTA}>{isDisabledCTA ? 'Please wait...' : primaryCTAText}</ButtonGlobal>
-                                {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
+                                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
+                                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
+                                </ButtonGlobal>
+                                {isSkipable && (
+                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                                        Skip this step
+                                    </ButtonGlobal>
+                                )}
                             </div>
                         </Form>
                     )}

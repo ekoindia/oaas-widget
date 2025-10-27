@@ -47,7 +47,7 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
                 <li>You will be re-directed to next step after successful location capture.</li>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <ButtonGlobal onClick={handleLocation} disabled={isDisabledCTA}>
+                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleLocation} disabled={isDisabledCTA}>
                     {isDisabledCTA ? 'Loading...' : primaryCTAText}
                 </ButtonGlobal>
             </div>

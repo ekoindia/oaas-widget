@@ -60,10 +60,14 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                                <ButtonGlobal type="submit" disabled={isDisabledCTA}>
+                                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" type="submit" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                                {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
+                                {isSkipable && (
+                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                                        Skip this step
+                                    </ButtonGlobal>
+                                )}
                             </div>
                         </Form>
                     )}

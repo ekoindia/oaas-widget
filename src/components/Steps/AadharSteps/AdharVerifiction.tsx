@@ -176,10 +176,14 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                 )}
             </div>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <ButtonGlobal onClick={handleClickAdhar} disabled={isDisabledCTA || frontError || backError}>
+                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleClickAdhar} disabled={isDisabledCTA || frontError || backError}>
                     {isDisabledCTA ? 'Please wait ...' : primaryCTAText}
                 </ButtonGlobal>
-                {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
+                {isSkipable && (
+                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                        Skip this step
+                    </ButtonGlobal>
+                )}
             </div>
             <Modal
                 showModal={showInfoModal}

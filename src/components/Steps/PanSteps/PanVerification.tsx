@@ -91,10 +91,14 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                     }}
                 />
                 <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                    <ButtonGlobal disabled={isDisabledCTA} type="submit">
+                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA} type="submit">
                         {isDisabledCTA ? 'Loading...' : primaryCTAText}
                     </ButtonGlobal>
-                    {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
+                    {isSkipable && (
+                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                            Skip this step
+                        </ButtonGlobal>
+                    )}
                 </div>
             </form>
         </div>

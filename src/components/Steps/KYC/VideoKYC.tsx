@@ -89,10 +89,14 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                     )}
 
                     <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                        <ButtonGlobal onClick={handleOnSubmit} disabled={isDisabledCTA || videoKycError}>
+                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleOnSubmit} disabled={isDisabledCTA || videoKycError}>
                             {isDisabledCTA ? 'Loading...' : primaryCTAText}
                         </ButtonGlobal>
-                        {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
+                        {isSkipable && (
+                            <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                                Skip this step
+                            </ButtonGlobal>
+                        )}
                     </div>
                 </>
             )}

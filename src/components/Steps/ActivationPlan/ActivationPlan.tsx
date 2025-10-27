@@ -19,10 +19,14 @@ const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallB
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <ButtonGlobal onClick={handleActivationPlan} disabled={isDisabledCTA}>
+                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleActivationPlan} disabled={isDisabledCTA}>
                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                 </ButtonGlobal>
-                {isSkipable && <ButtonGlobal onClick={handleSkip}>Skip this step</ButtonGlobal>}
+                {isSkipable && (
+                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                        Skip this step
+                    </ButtonGlobal>
+                )}
             </div>
         </div>
     );
