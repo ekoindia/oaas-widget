@@ -1,10 +1,10 @@
+import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
+import * as Yup from 'yup';
+import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 import InputGlobal from '../../Common/InputGlobal';
 import Labelglobal from '../../Common/Labelglobal';
-import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 
 const SignupSchema = Yup.object().shape({
     name: Yup.string().required('Required').min(3, 'Minimum 3 characters required'),
@@ -64,7 +64,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
         console.log('Error in GeoLocation=>', error);
     };
     return (
-        <>
+        <div>
             <Formik
                 initialValues={formValues}
                 validationSchema={SignupSchema}
@@ -73,30 +73,24 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                 }}
             >
                 {({ errors, touched, values, handleChange }) => (
-                    <Form className="bg-white mt-4 ml-6 w-full mr-2">
-                        <div className="mt-8 text-black text-lg mb-4 font-bold">Enter Your Details</div>
-                        <ButtonGlobal
-                            className="mt-3 mb-4 w-fit sm:w-fit text-[16px]"
-                            onClick={handleLocation}
-                            type="button"
-                            // disabled={}
-                        >
+                    <Form>
+                        <div className="text-[22px] font-medium sm:font-normal mb-4">Enter Your Details</div>
+                        <ButtonGlobal className="w-full sm:w-auto mb-8" onClick={handleLocation} type="button">
                             Location Capture
                         </ButtonGlobal>
-                        <div className="xl:grid xl:grid-cols-2 sm:flex sm:flex-col gap-4 xl:w-full	">
+                        <div className="max-w-4xl grid grid-cols-1 xl:grid-cols-2 gap-5">
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Full Name(as per your panCard)</Labelglobal>
-                                <InputGlobal className="mb-0" name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
-                                {errors.name && touched.name ? <div className="text-red">{errors.name}</div> : null}
+                                <Labelglobal>Full Name (as per your PAN Card)</Labelglobal>
+                                <InputGlobal name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
+                                {errors.name && touched.name ? <div className="text-darkdanger text-xs mt-1">{errors.name}</div> : null}
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Gender</Labelglobal>
+                                <Labelglobal>Gender</Labelglobal>
                                 <select
                                     name="gender"
                                     value={values.gender}
                                     onChange={handleChange('gender')}
-                                    id="cars"
-                                    className="px-0.5 py-[8px] border-2 border-lightdefault-800 w-full rounded-md bg-white border-lightdefault"
+                                    className="px-3 py-2 border-2 w-full rounded bg-white border-default outline-primary mb-2"
                                 >
                                     {genderData.map((gender, idx) => {
                                         return (
@@ -108,13 +102,12 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                 </select>
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Business Type</Labelglobal>
+                                <Labelglobal>Business Type</Labelglobal>
                                 <select
                                     name="businessType"
                                     value={values.businessType}
                                     onChange={handleChange('businessType')}
-                                    id="cars"
-                                    className="px-0.5 py-[8px] border-2 border-lightdefault-800 w-full rounded-md bg-white border-lightdefault"
+                                    className="px-3 py-2 border-2 w-full rounded bg-white border-default outline-primary mb-2"
                                 >
                                     {companyTypeData.map((company, idx) => {
                                         return (
@@ -126,17 +119,17 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                 </select>
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Business Address</Labelglobal>
+                                <Labelglobal>Business Address</Labelglobal>
                                 <InputGlobal name="shop_address_line2" value={values.shop_address_line2} onChange={handleChange('shop_address_line2')} id="username" type="text" placeholder="" />
-                                {errors.shop_address_line2 && touched.shop_address_line2 ? <div className="text-red">{errors.shop_address_line2}</div> : null}
+                                {errors.shop_address_line2 && touched.shop_address_line2 ? <div className="text-darkdanger text-xs mt-1">{errors.shop_address_line2}</div> : null}
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Landmark(optional)</Labelglobal>
+                                <Labelglobal optional>Landmark</Labelglobal>
                                 <InputGlobal name="shop_landmark" value={values.shop_landmark} onChange={handleChange('shop_landmark')} id="username" type="text" placeholder="" />
                             </div>
 
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Pincode</Labelglobal>
+                                <Labelglobal>Pincode</Labelglobal>
                                 <InputGlobal
                                     name="shop_address_pincode"
                                     value={values.shop_address_pincode}
@@ -146,20 +139,20 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                     placeholder=""
                                     maxLength="6"
                                 />
-                                {errors.shop_address_pincode && touched.shop_address_pincode ? <div className="text-red">{errors.shop_address_pincode}</div> : null}
+                                {errors.shop_address_pincode && touched.shop_address_pincode ? <div className="text-darkdanger text-xs mt-1">{errors.shop_address_pincode}</div> : null}
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">City</Labelglobal>
+                                <Labelglobal>City</Labelglobal>
                                 <InputGlobal name="sender_district" value={values.sender_district} onChange={handleChange('sender_district')} id="username" type="text" placeholder="" />
-                                {errors.sender_district && touched.sender_district ? <div className="text-red">{errors.sender_district}</div> : null}
+                                {errors.sender_district && touched.sender_district ? <div className="text-darkdanger text-xs mt-1">{errors.sender_district}</div> : null}
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">State</Labelglobal>
+                                <Labelglobal>State</Labelglobal>
                                 <select
                                     name="sender_state"
                                     value={values.sender_state}
                                     onChange={handleChange('sender_state')}
-                                    className="px-0.5 py-[8px] border-2 border-lightdefault-800 w-full rounded-md bg-white border-lightdefault"
+                                    className="px-3 py-2 border-2 w-full rounded bg-white border-default outline-primary mb-2"
                                 >
                                     {stateTypes.map((state, idx) => {
                                         return (
@@ -170,31 +163,17 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                                     })}
                                 </select>
                             </div>
-                            {/* <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Is your permanent address same as business address</Labelglobal>
-                                <select
-                                    name="addressCheck"
-                                    value={values.addressCheck}
-                                    onChange={handleChange('addressCheck')}
-                                    className="px-0.5 py-2.5 border-2 border-lightdefault-800 w-full rounded-md bg-white border-lightdefault"
-                                >
-                                    {addressCheckData.map((item, idx) => {
-                                        return (
-                                            <option value={item.value} key={`${idx}_${item.value}`}>
-                                                {item.label}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div> */}
                         </div>
-                        <ButtonGlobal className="mt-8" disabled={isDisabledCTA}>
-                            {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
-                        </ButtonGlobal>
+
+                        <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                            <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
+                                {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
+                            </ButtonGlobal>
+                        </div>
                     </Form>
                 )}
             </Formik>
-        </>
+        </div>
     );
 };
 

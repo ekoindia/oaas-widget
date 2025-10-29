@@ -1,23 +1,15 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import CompleteMark from '../../../assets/icons/completemark.svg';
-import { useStore } from '../../../store/zustand';
 import { StepDataType } from '../../../utils/data/stepsData';
 import './Sidebar.css';
 
 type StepperProps = {
     steps: Array<StepDataType>;
     userData: any;
+    currentStepId?: number;
 };
-const Sidebar = ({ steps, userData }: StepperProps) => {
-    const { currentStep, completed, setCurrentStepInput } = useStore();
-    // console.log('currentStep => ', currentStep);
-    // let visibleStepData = steps;
-    // console.log('Jalaj Steps', steps, visibleStepData);
-    // if (userData?.userDetails?.user_type === 3) {
-    //     visibleStepData = visibleStepData?.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
-    // } else {
-    //     visibleStepData = visibleStepData?.filter((step) => step.isVisible);
-    // }
+const Sidebar = ({ steps, userData, currentStepId }: StepperProps) => {
+    const currentStep = currentStepId ?? 0;
 
     const visibleStepData = useMemo(() => {
         if (!steps) return [];

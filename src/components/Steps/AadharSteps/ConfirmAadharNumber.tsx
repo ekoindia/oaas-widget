@@ -21,11 +21,10 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
     };
 
     return (
-        <div className="pt-8 sm:p-8">
-            <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-            <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
-            <div className="relative mt-10"></div>
-            <span className={`flex flex-col items-center sm:block`}>
+        <div>
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
+            <div className="mt-8 max-w-md">
                 <Formik
                     initialValues={formValues}
                     validationSchema={ConfirmAadhaarNumberSchema}
@@ -34,9 +33,9 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
                     }}
                 >
                     {({ errors, touched, values, handleChange }) => (
-                        <Form>
-                            <div className="mb-7 w-[80%] xl:w-[45%]">
-                                <Labelglobal className="block mb-2 text-sm font-bold text-black">Aadhaar Card Number</Labelglobal>
+                        <Form className="space-y-4">
+                            <div>
+                                <Labelglobal>Aadhaar Card Number</Labelglobal>
                                 <InputGlobal
                                     name="aadhaarCardNumber"
                                     value={values.aadhaarCardNumber}
@@ -46,25 +45,27 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
                                     type="number"
                                     placeholder=""
                                 />
-                                {errors.aadhaarCardNumber && touched.aadhaarCardNumber ? <div className="text-darkdanger text-xs">{errors.aadhaarCardNumber}</div> : null}
+                                {errors.aadhaarCardNumber && touched.aadhaarCardNumber ? <div className="text-darkdanger text-xs mt-1">{errors.aadhaarCardNumber}</div> : null}
                             </div>
-                            <div>
+                            <div className="text-sm">
                                 You hereby consent to {orgName || appName || 'us'} as your authorized representative to receive your Aadhaar verification information from UIDAI to validate your
                                 Aadhaar details.
                             </div>
-                            <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
-                                {isDisabledCTA ? 'Please wait...' : primaryCTAText}
-                            </ButtonGlobal>
 
-                            {isSkipable && (
-                                <ButtonGlobal className="mt-6 sm:ml-10" onClick={handleSkip}>
-                                    Skip this step
+                            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
+                                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                            )}
+                                {isSkipable && (
+                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                                        Skip this step
+                                    </ButtonGlobal>
+                                )}
+                            </div>
                         </Form>
                     )}
                 </Formik>
-            </span>
+            </div>
         </div>
     );
 };

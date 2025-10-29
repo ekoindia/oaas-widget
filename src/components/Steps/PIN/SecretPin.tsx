@@ -1,10 +1,10 @@
+import { Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
-import InputGlobal from '../../Common/InputGlobal';
-import ButtonGlobal from '../../Common/ButtonGlobal';
-import Labelglobal from '../../Common/Labelglobal';
-import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
+import ButtonGlobal from '../../Common/ButtonGlobal';
+import InputGlobal from '../../Common/InputGlobal';
+import Labelglobal from '../../Common/Labelglobal';
 
 const secretPinValidationSchema = Yup.object().shape({
     first_okekey: Yup.string().required('Required').min(4, 'Must be exactly 4 digits').max(4, 'Must be exactly 4 digits'),
@@ -28,52 +28,51 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
         // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
     }, []);
     return (
-        <div className="pt-8 sm:p-8">
-            <Formik
-                initialValues={formValues}
-                validationSchema={secretPinValidationSchema}
-                onSubmit={(formData) => {
-                    handleSubmit({ ...stepData, form_data: formData, stepStatus: 3 });
-                }}
-            >
-                {({ errors, touched, values, handleChange }) => (
-                    <Form className="bg-white mt-4 sm:ml-2 xl:ml-6 w-full mr-2">
-                        <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-                        <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
-                        <div className="mt-10 relative"></div>
-                        <span className={`flex flex-col sm:block`}>
+        <div>
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
+            <div className="mt-8 max-w-md">
+                <Formik
+                    initialValues={formValues}
+                    validationSchema={secretPinValidationSchema}
+                    onSubmit={(formData) => {
+                        handleSubmit({ ...stepData, form_data: formData, stepStatus: 3 });
+                    }}
+                >
+                    {({ errors, touched, values, handleChange }) => (
+                        <Form className="space-y-4">
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Secret PIN</Labelglobal>
+                                <Labelglobal>Secret PIN</Labelglobal>
                                 <InputGlobal name="first_okekey" value={values.first_okekey} onChange={handleChange('first_okekey')} id="username" type="number" maxLength="4" placeholder="" />
-                                {errors.first_okekey && touched.first_okekey ? <div className="text-red">{errors.first_okekey}</div> : null}
+                                {errors.first_okekey && touched.first_okekey ? <div className="text-darkdanger text-xs mt-1">{errors.first_okekey}</div> : null}
                             </div>
                             <div>
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">Confirm Secret PIN</Labelglobal>
+                                <Labelglobal>Confirm Secret PIN</Labelglobal>
                                 <InputGlobal name="second_okekey" value={values.second_okekey} onChange={handleChange('second_okekey')} id="username" type="number" maxLength="4" placeholder="" />
-                                {errors.second_okekey && touched.second_okekey ? <div className="text-red">{errors.second_okekey}</div> : null}
+                                {errors.second_okekey && touched.second_okekey ? <div className="text-darkdanger text-xs mt-1">{errors.second_okekey}</div> : null}
                             </div>
-                            Note:
-                            <div className="ml-8">
-                                <li>Please set a strong secret PIN to secure your account</li>
-                                <li>Your 4-digit secret pin will be required in all the transactions</li>
+                            <div className="text-sm">
+                                <div className="font-medium mb-2">Note:</div>
+                                <ul className="list-disc ml-5 space-y-1">
+                                    <li>Please set a strong secret PIN to secure your account</li>
+                                    <li>Your 4-digit secret pin will be required in all the transactions</li>
+                                </ul>
                             </div>
-                            <ButtonGlobal
-                                className="mt-4 w-fit sm:w-fit text-[16px]"
-                                // onClick={handleAadhaarConsentClick}
-                                type="submit"
-                                disabled={isDisabledCTA}
-                            >
-                                {isDisabledCTA ? 'Please wait...' : primaryCTAText}
-                            </ButtonGlobal>
-                            {isSkipable && (
-                                <ButtonGlobal className="sm:ml-10 mt-6" onClick={handleSkip}>
-                                    Skip this step
+
+                            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" type="submit" disabled={isDisabledCTA}>
+                                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                            )}
-                        </span>
-                    </Form>
-                )}
-            </Formik>
+                                {isSkipable && (
+                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                                        Skip this step
+                                    </ButtonGlobal>
+                                )}
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
         </div>
     );
 };

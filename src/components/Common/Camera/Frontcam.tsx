@@ -15,13 +15,13 @@ const Frontcam = ({ handleRetake, imageVal, type }: FrontcamProps) => {
 
     return (
         <>
-            <div className={`w-full bg-curtain rounded-[10px] justify-center flex ${type === 'videoKyc' ? '' : 'h-[190px]'}`}>
-                <img src={imageVal || image} alt="screenshot" className="object-contain rounded-[10px] w-full" id="previewImage" />
+            <div className={`w-full rounded-[10px] p-4 justify-center flex ${type === 'videoKyc' ? '' : 'h-[190px]'}`}>
+                <img src={imageVal || image} alt="screenshot" className="object-contain rounded-[10px] max-w-lg" id="previewImage" />
             </div>
-            <span className="flex flex-col justify-end items-end mt-3 ">
+            <span className="flex flex-col justify-end items-end mt-3">
                 <ButtonGlobal onClick={handleRetake} className="text-[12px] p-1 rounded-[4px] w-[10rem]">
                     <>
-                        <img src={retry} alt="retry_icon" className="w-[16px] h-[16px]  mr-1" /> Re-Capture
+                        <img src={retry} alt="retry_icon" className="w-[16px] h-[16px] mr-1" /> Re-Capture
                     </>
                 </ButtonGlobal>
             </span>

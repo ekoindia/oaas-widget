@@ -10,5 +10,4 @@ export * from './OnboardingWrapper';
 export * from './PanSteps';
 export * from './PIN';
 export * from './SelectionScreen';
-export * from './SupersetComponent';
 export * from './Welcome/Welcome';

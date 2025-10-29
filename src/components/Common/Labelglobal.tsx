@@ -8,7 +8,7 @@ type LabelProps = {
 };
 const Labelglobal = ({ className, htmlFor, optional, children }: LabelProps) => {
     return (
-        <label className={`block text-black text-sm font-bold mb-1 ${className}`} htmlFor={htmlFor}>
+        <label className={`block text-black text-sm font-bold mb-2 ${className}`} htmlFor={htmlFor}>
             {children}
             {optional && <span className="text-xs font-normal ml-1">(Optional)</span>}
         </label>

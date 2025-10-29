@@ -20,7 +20,6 @@ import SecretPin from '../PIN/SecretPin';
 import PanAdharMatch from '../PanSteps/PanAdharMatch';
 import PanVerification from '../PanSteps/PanVerification';
 import PanVerificationDistributor from '../PanSteps/PanVerificationDistributor';
-import SelectionScreen from '../SelectionScreen/SelectionScreen';
 import { Welcome } from '../Welcome';
 
 type HomepageProps = {
@@ -30,7 +29,6 @@ type HomepageProps = {
     currentOnboardingStepId: number | undefined;
     stepResponse: any;
     shopTypes: Array<any>;
-    selectedMerchantType: string | number;
     stateTypes: Array<any>;
     bankList: BankListType;
     handleStepCallBack: any;
@@ -48,7 +46,6 @@ export const OnboardingWrapper = ({
     handleSubmit,
     stepResponse,
     shopTypes,
-    selectedMerchantType,
     currentOnboardingStepId,
     stateTypes,
     bankList,
@@ -65,8 +62,6 @@ export const OnboardingWrapper = ({
 
         if (stepData) {
             switch (currentStep) {
-                case STEP_IDS.SELECTION_SCREEN:
-                    return <SelectionScreen handleSubmit={handleSubmit} stepData={stepData} />;
                 case STEP_IDS.LOCATION_CAPTURE:
                     return <LocationCapture stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
                 case STEP_IDS.AADHAAR_VERIFICATION:
@@ -112,15 +107,15 @@ export const OnboardingWrapper = ({
     };
 
     return (
-        <>
-            <div className={`${currentOnboardingStepId === STEP_IDS.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens sm:pt-7 px-8 w-full md:px-24`}>
+        <div className="mt-8">
+            <div className={`${currentOnboardingStepId === STEP_IDS.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-8 w-full md:px-24`}>
                 <div className="flex items-center">
                     <div className="relative flex flex-col w-full h-full">
                         <div className="sm:flex sm:justify-between">
                             <span className="hidden sm:block md:block lg:block xl:block">
-                                <Sidebar steps={stepsData || []} userData={userData} />
+                                <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} />
                             </span>
-                            <div className="relative flex w-full pb-10 mb-10 rounded-2xl sm:ml-8 sm:bg-white">{renderStep(currentOnboardingStepId ?? 0)}</div>
+                            <div className="relative flex w-full pb-10 mb-10 p-8 rounded-2xl sm:ml-8 bg-white">{renderStep(currentOnboardingStepId ?? 0)}</div>
                         </div>
                     </div>
                 </div>
@@ -129,13 +124,13 @@ export const OnboardingWrapper = ({
             <span className="hidden block">
                 {sideBarToggle ? (
                     <div className="z-20 absolute top-14 top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
-                        <Sidebar steps={stepsData || []} userData={userData} />
+                        <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} />
                         <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
                     </div>
                 ) : (
                     ''
                 )}
             </span>
-        </>
+        </div>
     );
 };

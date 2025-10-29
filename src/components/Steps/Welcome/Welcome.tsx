@@ -1,9 +1,9 @@
 import React from 'react';
 import WelcomeIcon from '../../../assets/icons/welcomeIcon.png';
 import { useStore } from '../../../store/zustand';
-import ButtonGlobal from '../../Common/ButtonGlobal';
 import { StepDataType } from '../../../utils/data/stepsData';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
+import ButtonGlobal from '../../Common/ButtonGlobal';
 
 type WelcomeProps = {
     stepData: StepDataType;
@@ -11,21 +11,15 @@ type WelcomeProps = {
 const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
     const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     return (
-        <div className="w-full min-h-[80vh] min-h-[85%] flex items-center justify-center bg-white rounded-2xl">
-            <div className="items-center text-center text-black">
-                <img src={String(WelcomeIcon)} alt="welcome icon" className="flex items-center text-center h-48 w-48 h-52 w-52 mr-auto ml-auto mt-auto mb-6 mb-6" />
-                <b className="text-[24px]">Welcome!</b>
-                <p className="sm:font-normal text-[18px] pt-2 pl-4 pr-4">
+        <div className="w-full min-h-[80vh] sm:min-h-[85%] flex items-center justify-center bg-white rounded-2xl">
+            <div className="items-center text-center text-black px-4">
+                <img src={String(WelcomeIcon)} alt="welcome icon" className="h-48 w-48 sm:h-52 sm:w-52 mx-auto mb-6" />
+                <h1 className="text-2xl font-semibold">Welcome!</h1>
+                <p className="text-lg font-normal pt-4 px-4 max-w-xl mx-auto">
                     <span className="sm:block">Happy to see you here. Lets start your onboarding journey.</span>
                     <span className="sm:block"> We ensure, you&apos;ll be assisted at every step.</span>
                 </p>
-                <ButtonGlobal
-                    className="mt-6 mt-8"
-                    // onClick={() => {
-                    //     currentStep === steps.length + 1 ? setCompleted(true) : (setCurrentStepPlus(), setStepsStatus([...stepsStatus, { progress: 'In Progress', step: currentStep + 1 }]));
-                    // }}
-                    onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}
-                >
+                <ButtonGlobal className="mt-8" onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}>
                     {currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}
                 </ButtonGlobal>
             </div>

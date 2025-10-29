@@ -38,7 +38,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
     const panVerificationFormMetadata = [
         {
             id: 'panNumber',
-            label: 'PAN Number',
+            label: 'Enter PAN',
             required: true,
             type: 'TEXT',
             // placeholder: 'XXXXXXXXXX',
@@ -69,14 +69,14 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
     ];
 
     return (
-        <div className="pt-8 sm:p-8 xl:w-[55%] lg:w-[70%]">
-            <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-            <div className="mt-3 mb-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
+        <div>
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">
                 {description}
                 <span className="text-primary"> .jpg, .png</span>
             </div>
 
-            <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 3 }))}>
+            <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 3 }))} className="mt-8 max-w-2xl">
                 <Value
                     {...{
                         formHeading: 'PAN Verification',
@@ -90,13 +90,12 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                         shopTypes
                     }}
                 />
-                <div className="flex flex-col items-center sm:block">
-                    <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" disabled={isDisabledCTA} type="submit">
+                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA} type="submit">
                         {isDisabledCTA ? 'Loading...' : primaryCTAText}
                     </ButtonGlobal>
-
                     {isSkipable && (
-                        <ButtonGlobal className="mt-6 sm:ml-10" onClick={handleSkip}>
+                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
                             Skip this step
                         </ButtonGlobal>
                     )}
@@ -167,7 +166,8 @@ const Value = ({ renderer, register, control, setValue, errors, selectedShopType
                                 control={control}
                                 render={({ field: { value } }) => {
                                     return (
-                                        <div>
+                                        <div key={id}>
+                                            <Labelglobal htmlFor={id}>{label}</Labelglobal>
                                             <CamDropzone file={value} setFile={(file) => setValue(id, file)} />
                                             {errors[id]?.type === 'required' && <p className="text-xs text-darkdanger">Required</p>}
                                         </div>
@@ -185,7 +185,7 @@ const Value = ({ renderer, register, control, setValue, errors, selectedShopType
                                 <select
                                     id={id}
                                     name={id}
-                                    className="px-1 py-[9px] border-2 w-full rounded bg-white border-default outline-primary"
+                                    className="px-3 py-2 border-2 w-full rounded bg-white border-default outline-primary mb-2"
                                     {...register(id, { ...validation })}
                                     defaultValue=""
                                 >
