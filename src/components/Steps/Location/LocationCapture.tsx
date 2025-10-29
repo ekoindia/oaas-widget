@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
 
-    React.useEffect(() => {
-        if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'grantPermission' });
-    }, []);
+    const handleLocationCapture = (location: any) => {
+        console.log('[AgentOnboarding] OAAS Captured location:', location);
+        handleSubmit({ ...stepData, form_data: { latlong: `${location?.coordinates?.lat},${location?.coordinates?.lng},${location?.coordinates?.accuracy}` }, stepStatus: 3 });
+    };
 
     const onSuccess = (location: any) => {
         if (!(location && location.coords && location.coords.latitude)) {
@@ -23,39 +24,33 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
             }
         });
     };
+
     const onError = (error: any) => {
         console.log('Error in GeoLocation=>', error);
     };
+
     const handleLocation = () => {
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
-    const handleLocationCapture = (location: any) => {
-        handleSubmit({ ...stepData, form_data: { latlong: `${location?.coordinates?.lat},${location?.coordinates?.lng},${location?.coordinates?.accuracy}` }, stepStatus: 3 });
-    };
 
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
+    useEffect(() => {
+        if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'grantPermission' });
+    }, []);
+
     return (
-        <div className="pt-8 sm:p-8">
-            <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-            <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
-            <ul className="pt-2 pl-5 text-[18px] sm:text-[16px] font-[300]">
-                <li className="pb-2">Please click the button below to allow browser to capture your location.</li>
-                <li className="pb-2">In browser popup, click &quot;Allow&quot; button to enable location capturing.</li>
-                <li className="pb-2">You will be re-directed to next step after successful location capture.</li>
+        <div>
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
+            <ul className="mt-8 space-y-2 list-disc pl-5 text-sm sm:text-base max-w-2xl">
+                <li>Please click the button below to allow browser to capture your location.</li>
+                <li>In browser popup, click &quot;Allow&quot; button to enable location capturing.</li>
+                <li>You will be re-directed to next step after successful location capture.</li>
             </ul>
-            <span className={`flex flex-col items-center sm:block`}>
-                <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" onClick={handleLocation} disabled={isDisabledCTA}>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleLocation} disabled={isDisabledCTA}>
                     {isDisabledCTA ? 'Loading...' : primaryCTAText}
                 </ButtonGlobal>
-
-                {stepData?.isSkipable && (
-                    <ButtonGlobal className="sm:ml-10 mt-6" onClick={handleSkip}>
-                        Skip this step
-                    </ButtonGlobal>
-                )}
-            </span>
+            </div>
         </div>
     );
 };

@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../index.css';
-import { useStore } from '../../store/zustand';
 import { BankListElement, BankListType } from '../../types';
 import { StepDataType } from '../../utils/data/stepsData';
-import Header from '../Common/Header/Header';
-import Headermobile from '../Common/Header/Headermobile';
 import { OnboardingWrapper } from '../Steps';
 
 const selectOption = [
@@ -21,50 +18,46 @@ const bankSelectOption: BankListElement = {
 };
 
 type OAASPackageProps = {
-    defaultStep: string;
-    handleSubmit: (data: any) => void;
-    developerKey?: string;
-    secretKey?: string;
-    isBranding?: boolean;
-    stepResponse?: any;
-    selectedMerchantType?: any;
+    appName?: string;
+    orgName?: string;
+    primaryColor?: string;
+    accentColor?: string;
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
     bankList?: BankListType;
-    handleStepCallBack?: any;
     userData: any;
+    handleSubmit: (data: any) => void;
+    // developerKey?: string;
+    // secretKey?: string;
+    // isBranding?: boolean;
+    stepResponse?: any;
+    handleStepCallBack?: any;
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
-    primaryColor?: string;
-    accentColor?: string;
-    esignStatus?: number;
-    appName?: string;
-    orgName?: string;
     digilockerData?: any;
+    esignStatus?: number;
 };
 
 const OnboardingWidget = ({
-    defaultStep = '12400',
-    handleSubmit,
-    isBranding = true,
-    stepResponse,
-    shopTypes = [],
-    selectedMerchantType,
-    stateTypes = [],
-    bankList = [],
-    handleStepCallBack,
-    userData,
-    stepsData,
-    primaryColor,
-    accentColor,
-    esignStatus,
     appName,
     orgName,
+    primaryColor,
+    accentColor,
+    shopTypes = [],
+    stateTypes = [],
+    bankList = [],
+    userData,
+    handleSubmit,
+    stepResponse,
+    handleStepCallBack,
+    stepsData,
+    esignStatus,
     digilockerData
 }: OAASPackageProps) => {
-    const { steps, currentStep, setCurrentStepInitial, setInitialStepsData } = useStore();
+    const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
-    // const [esignStatus, setEsignStatus] = useState<number>(0); // 0: loading, 1: ready, 2: failed
+    // console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
+    // console.log('[AgentOnboarding] OAAS stepsData', stepsData);
 
     useEffect(() => {
         // Set Primary Color as css var "color-primary"
@@ -78,61 +71,32 @@ const OnboardingWidget = ({
         }
     }, [primaryColor, accentColor]);
 
-    // console.log('[oaas] OnboardingWidget Started', defaultStep, stepsData);
-
-    const handleSidebarToggle = () => {
-        setSideBarToggle((prev) => !prev);
-    };
-
-    let visibleStepData = stepsData;
-
-    if (visibleStepData) {
-        if (userData?.userDetails?.user_type === 3) {
-            // For Retailers, Filtering out steps: 9 (Business Details) & 10 (Secret PIN)
-            visibleStepData = visibleStepData?.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
-        } else {
-            // For Distributors
-            visibleStepData = visibleStepData?.filter((step) => step.isVisible);
-        }
-    }
-    // console.log('[oaas] > VISIBLE STEP DATA: ', userData?.userDetails?.user_type, visibleStepData, stepsData);
-
     useEffect(() => {
-        setInitialStepsData(stepsData?.filter((step: StepDataType) => step.isVisible));
+        if (stepsData) {
+            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != 3);
+            const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
+            setCurrentOnboardingStepId(_initialStepId);
+        }
     }, [stepsData]);
 
-    useEffect(() => {
-        if (visibleStepData) {
-            const initialStep = visibleStepData?.find((step: StepDataType) => step.role && defaultStep?.includes(`${step.role}`));
-            setCurrentStepInitial(initialStep ? initialStep?.id : 3);
-        }
-    }, [defaultStep]);
-
     return (
-        <div>
-            {isBranding && (
-                <>
-                    <Header />
-                    <Headermobile handleSidebarToggle={handleSidebarToggle} />
-                </>
-            )}
-            <OnboardingWrapper
-                sideBarToggle={sideBarToggle}
-                setSideBarToggle={setSideBarToggle}
-                handleSubmit={handleSubmit}
-                stepResponse={stepResponse}
-                shopTypes={[...selectOption, ...shopTypes]}
-                stateTypes={[...selectOption, ...stateTypes]}
-                bankList={[bankSelectOption, ...bankList]}
-                selectedMerchantType={selectedMerchantType}
-                handleStepCallBack={handleStepCallBack}
-                userData={userData}
-                esignStatus={esignStatus}
-                orgName={orgName}
-                appName={appName}
-                digilockerData={digilockerData}
-            />
-        </div>
+        <OnboardingWrapper
+            orgName={orgName}
+            appName={appName}
+            shopTypes={[...selectOption, ...shopTypes]}
+            stateTypes={[...selectOption, ...stateTypes]}
+            bankList={[bankSelectOption, ...bankList]}
+            userData={userData}
+            sideBarToggle={sideBarToggle}
+            setSideBarToggle={setSideBarToggle}
+            handleSubmit={handleSubmit}
+            stepResponse={stepResponse}
+            currentOnboardingStepId={currentOnboardingStepId}
+            handleStepCallBack={handleStepCallBack}
+            esignStatus={esignStatus}
+            digilockerData={digilockerData}
+            stepsData={stepsData}
+        />
     );
 };
 

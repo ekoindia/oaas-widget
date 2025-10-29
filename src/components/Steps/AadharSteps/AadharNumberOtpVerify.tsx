@@ -1,10 +1,10 @@
+import { Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
+import * as Yup from 'yup';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
-import Labelglobal from '../../Common/Labelglobal';
 import InputGlobal from '../../Common/InputGlobal';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
+import Labelglobal from '../../Common/Labelglobal';
 
 const aadhaarNumberVerifySchema = Yup.object().shape({
     otpVal: Yup.string().required('(Required) OTP received on Aadhaar linked mobile number through SMS').min(6, '(Minimum 6 digits required)OTP received on Aadhaar linked mobile number through SMS'),
@@ -51,11 +51,10 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
         // };
     }, []);
     return (
-        <div className="pt-8 sm:p-8">
-            <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-            <div className="mt-3 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">{description}</div>
-            <div className="mt-10 relative"></div>
-            <span className={`flex flex-col items-center sm:block`}>
+        <div>
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
+            <div className="mt-8 max-w-md">
                 <Formik
                     initialValues={formValues}
                     validationSchema={aadhaarNumberVerifySchema}
@@ -64,32 +63,35 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                     }}
                 >
                     {({ errors, touched, values, handleChange }) => (
-                        <Form>
-                            <div className="mb-7 w-[65%]">
-                                <Labelglobal className="block text-black text-sm font-bold mb-2">OTP</Labelglobal>
-                                <InputGlobal className="mb-2" maxLength="6" name="otpVal" value={values.otpVal} onChange={handleChange('otpVal')} id="otp" type="number" placeholder="" />
-                                {errors.otpVal && touched.otpVal ? <div className="text-darkdanger text-xs">{errors.otpVal}</div> : null}
-                                {!isResend ? (
-                                    <small>Resend OTP in {resendTimerCount} sec</small>
-                                ) : (
-                                    <>
-                                        <small>Did not receive yet?</small>
-                                        <p
-                                            style={{ color: 'rgb(31 90 167 / var(--tw-bg-opacity))', cursor: 'pointer' }}
-                                            onClick={() => {
-                                                setResendTimerCount(30);
-                                                setIsResend(false);
-                                                handleResendTimer();
-                                                handleStepCallBack({ type: stepData.id, method: 'resendOtp' });
-                                            }}
-                                        >
-                                            Resend OTP
-                                        </p>
-                                    </>
-                                )}
+                        <Form className="space-y-4">
+                            <div>
+                                <Labelglobal>OTP</Labelglobal>
+                                <InputGlobal maxLength="6" name="otpVal" value={values.otpVal} onChange={handleChange('otpVal')} id="otp" type="number" placeholder="" />
+                                {errors.otpVal && touched.otpVal ? <div className="text-darkdanger text-xs mt-1">{errors.otpVal}</div> : null}
+                                <div className="text-sm mt-2">
+                                    {!isResend ? (
+                                        <span className="text-darkdefault">Resend OTP in {resendTimerCount} sec</span>
+                                    ) : (
+                                        <>
+                                            <span className="text-darkdefault">Did not receive yet? </span>
+                                            <button
+                                                type="button"
+                                                className="text-primary cursor-pointer hover:underline"
+                                                onClick={() => {
+                                                    setResendTimerCount(30);
+                                                    setIsResend(false);
+                                                    handleResendTimer();
+                                                    handleStepCallBack({ type: stepData.id, method: 'resendOtp' });
+                                                }}
+                                            >
+                                                Resend OTP
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                            <div className="mb-7 w-[65%]">
-                                {/* <Labelglobal className="block text-black text-sm font-bold mb-2">Share Code</Labelglobal> */}
+                            <div>
+                                {/* <Labelglobal>Share Code</Labelglobal> */}
                                 <InputGlobal
                                     name="shareCode"
                                     value={values.shareCode}
@@ -99,21 +101,23 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                     type="hidden" // number
                                     placeholder=""
                                 />
-                                {errors.shareCode && touched.shareCode ? <div className="text-darkdanger text-xs">{errors.shareCode}</div> : null}
+                                {errors.shareCode && touched.shareCode ? <div className="text-darkdanger text-xs mt-1">{errors.shareCode}</div> : null}
                             </div>
-                            <ButtonGlobal className="w-fit sm:w-fit text-[16px] mt-10" disabled={isDisabledCTA}>
-                                {isDisabledCTA ? 'Please wait...' : primaryCTAText}
-                            </ButtonGlobal>
 
-                            {isSkipable && (
-                                <ButtonGlobal className="sm:ml-10 mt-6" onClick={handleSkip}>
-                                    Skip this step
+                            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
+                                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                            )}
+                                {isSkipable && (
+                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                                        Skip this step
+                                    </ButtonGlobal>
+                                )}
+                            </div>
                         </Form>
                     )}
                 </Formik>
-            </span>
+            </div>
         </div>
     );
 };

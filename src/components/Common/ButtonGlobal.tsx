@@ -26,9 +26,10 @@ const ButtonGlobal = ({ className, children, onClick, disabled, setCapturelocati
     return (
         <button
             className={twMerge(
-                'bg-primary text-white font-semibold rounded-md cursor-pointer disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center min-h-[45px] px-8 py-2 drop-shadow-md hover:drop-shadow-lg hover:-translate-y-[1px] active:scale-98 active:filter-none transition-all duration-200 ease-in-out',
+                'bg-primary text-white font-semibold cursor-pointer disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center min-h-[45px] px-8 py-2 shadow-[0px_3px_10px_rgba(0,0,0,0.094)] hover:brightness-90 disabled:hover:brightness-100 transition-all duration-200 ease-in-out',
                 className
             )}
+            style={{ borderRadius: '10px' }}
             id={id}
             onClick={onClick}
             disabled={disabled}

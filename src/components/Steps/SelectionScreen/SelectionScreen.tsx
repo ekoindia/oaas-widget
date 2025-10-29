@@ -7,7 +7,7 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, accentColor }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
-    const [roleVal, setRoleVal] = useState<number>(0);
+    const [roleVal, setRoleVal] = useState<number>(-1);
     const handleChange = (e: any) => {
         setRoleVal(parseInt(e.target.value));
     };
@@ -27,13 +27,13 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
     // console.log('[oaas] SelectionScreen started: ', stepData);
 
     return (
-        <div className="flex flex-col max-w-md p-7 rounded-lg m-7 bg-white" id={`step_${id}_${name}`}>
-            <h2 className="mb-5 text-lg font-medium text-lightdefault-900 title-font">{label}</h2>
+        <div id={`step_${id}_${name}`} className="mt-8 p-8 max-w-md bg-white rounded-lg shadow-md h-fit">
+            <h2 className="text-[22px] font-medium sm:font-normal mb-8">{label}</h2>
             {form_data?.roles?.length > 0 &&
                 form_data.roles
                     ?.filter((role: any) => role.isVisible)
                     ?.map((role: any, idx: number) => (
-                        <label className="flex mb-5 cursor-pointer" key={`${idx}_${role.id}`}>
+                        <label className="flex items-center mb-5 cursor-pointer" key={`${idx}_${role.id}`}>
                             <div className="p-4 mr-5 border-2 rounded-full border-slate-200">
                                 <img src={role.id === 1 ? userMerchant : role.id === 2 ? userDistributor : userEnterprise}></img>
                             </div>
@@ -45,22 +45,24 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
                                 id={role.id}
                                 type="radio"
                                 className="w-6 h-6 cursor-pointer accent-primary"
-                                value={role.merchant_type}
+                                value={role.applicant_type}
                                 name="role"
                                 onChange={handleChange}
-                                checked={roleVal === role.merchant_type}
+                                checked={roleVal === role.applicant_type}
                             />
                         </label>
                     ))}
-            <ButtonGlobal
-                className="mt-6"
-                onClick={() => {
-                    handleSubmit({ ...stepData, form_data: { merchant_type: roleVal } });
-                }}
-                disabled={isDisabledCTA || roleVal <= 0}
-            >
-                {isDisabledCTA ? 'Please wait...' : primaryCTAText}
-            </ButtonGlobal>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <ButtonGlobal
+                    className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]"
+                    onClick={() => {
+                        handleSubmit({ ...stepData, form_data: { applicant_type: roleVal } });
+                    }}
+                    disabled={isDisabledCTA || roleVal < 0}
+                >
+                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
+                </ButtonGlobal>
+            </div>
         </div>
     );
 };

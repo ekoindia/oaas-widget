@@ -42,16 +42,16 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
         }
     };
     return (
-        <div className="pt-8 sm:p-8 xl:w-4/5 md:w-full">
-            <div className="text-[22px] font-[500] sm:font-[400]">{label}</div>
-            <div className="sm:font-[400] my-6">{description}</div>
+        <div>
+            <div className="text-[22px] font-medium sm:font-normal">{label}</div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
             {cameraStatus === true ? (
                 <Camera handleImageCapture={handleImageCapture} imagesVal={videoKyc} type="videoRecord" cameraType="front" preferredFacingMode={FACING_MODE_USER} />
             ) : (
                 <>
                     {videoKyc.url !== null || undefined ? (
-                        <div className="flex flex-col w-[100%] max-[640px]:mb-2 md:mb-2 sm:mb-2  mr-3">
-                            <Frontcam type="videoKyc" imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
+                        <div className="flex flex-col justify-self-center max-w-lg">
+                            <Frontcam imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
                         </div>
                     ) : (
                         <div>
@@ -88,23 +88,16 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                         </div>
                     )}
 
-                    <span className={`flex flex-col items-center sm:block mt-8`}>
-                        <ButtonGlobal
-                            className="mt-4 w-fit sm:w-fit text-[16px]"
-                            onClick={handleOnSubmit}
-                            disabled={isDisabledCTA || videoKycError}
-                            // setCapturelocationData={handleLocationCapture}
-                            // getLocation={true}
-                        >
+                    <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleOnSubmit} disabled={isDisabledCTA || videoKycError}>
                             {isDisabledCTA ? 'Loading...' : primaryCTAText}
                         </ButtonGlobal>
-
                         {isSkipable && (
-                            <ButtonGlobal className="mt-6 font-semibold sm:ml-10" onClick={handleSkip}>
+                            <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
                                 Skip this step
                             </ButtonGlobal>
                         )}
-                    </span>
+                    </div>
                 </>
             )}
         </div>

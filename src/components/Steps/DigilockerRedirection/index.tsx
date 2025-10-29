@@ -46,6 +46,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
     const handleOpenDigilocker = () => {
         if (digilockerData?.link) {
             // Open Digilocker in new tab
+            // TODO: ensure link cannot be opened after single use
             window.open(digilockerData.link, '_blank', 'noopener,noreferrer');
 
             // You might want to add a callback here to track when user returns
@@ -74,7 +75,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
     };
 
     return (
-        <div className="pt-8 sm:p-8 max-w-md">
+        <div>
             <div className="text-[22px] font-[500] sm:font-[400] mb-4">{label || 'Digilocker Redirection'}</div>
 
             <div className="mt-3 mb-6 text-[16px] sm:text-[14px] font-[400] sm:font-[300]">
@@ -104,22 +105,24 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
                     </ol>
                 </div>
 
-                {/* Proceed Button */}
-                <ButtonGlobal className="mt-4 w-fit sm:w-fit text-[16px]" onClick={handleProceed} disabled={isDisabledCTA}>
-                    <>
-                        <span>Proceed</span>
-                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                    </>
-                </ButtonGlobal>
-
-                {/* Skip Button (if applicable) */}
-                {isSkipable && (
-                    <ButtonGlobal className="w-full bg-gray-500 hover:bg-gray-600 mt-4" onClick={handleSkip}>
-                        Skip this step
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleProceed} disabled={isDisabledCTA}>
+                        <>
+                            <span>Proceed</span>
+                            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </>
                     </ButtonGlobal>
-                )}
+
+                    {/* Skip Button (if applicable) */}
+                    {isSkipable && (
+                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
+                            Skip this step
+                        </ButtonGlobal>
+                    )}
+                </div>
             </div>
         </div>
     );
