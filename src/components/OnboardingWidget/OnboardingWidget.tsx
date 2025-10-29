@@ -56,8 +56,8 @@ const OnboardingWidget = ({
 }: OAASPackageProps) => {
     const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
-    console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
-    console.log('[AgentOnboarding] OAAS stepsData', stepsData);
+    // console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
+    // console.log('[AgentOnboarding] OAAS stepsData', stepsData);
 
     useEffect(() => {
         // Set Primary Color as css var "color-primary"
