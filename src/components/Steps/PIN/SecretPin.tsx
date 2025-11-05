@@ -24,8 +24,6 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
     };
     useEffect(() => {
         handleStepCallBack({ type: stepData.id, method: 'getBookletNumber' });
-        // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
-        // handleStepCallBack({ type: stepData.id, method: 'getBookletKey' });
     }, []);
     return (
         <div>
