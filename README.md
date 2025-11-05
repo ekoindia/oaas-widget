@@ -43,7 +43,19 @@ const MyApp = () => {
         // ... other steps
     ];
 
-    return <OnboardingWidget defaultStep="2" handleSubmit={handleSubmit} userData={{ userDetails: { user_type: 1 } }} stepsData={stepsData} primaryColor="#007bff" isBranding={true} />;
+    return (
+        <OnboardingWidget
+            appName="My App"
+            orgName="My Organization"
+            userData={{ userDetails: { user_type: 1 } }}
+            stepsData={stepsData}
+            handleSubmit={handleSubmit}
+            primaryColor="#007bff"
+            shopTypes={[]}
+            stateTypes={[]}
+            bankList={[]}
+        />
+    );
 };
 ```
 
@@ -88,6 +100,41 @@ graph TD
 | **Common Components** | `src/components/Common/`                  | Reusable UI components                            |
 | **Zustand Store**     | `src/store/zustand.tsx`                   | Global state management                           |
 
+### Component Logic Flow
+
+#### OnboardingWidget (Main Entry Point)
+
+The `OnboardingWidget` component serves as the main entry point and handles:
+
+1. **Theme Configuration**: Dynamically sets CSS custom properties for `primaryColor` and `accentColor`
+2. **Initial Step Detection**: Automatically finds the first visible step with a role that's not completed (stepStatus !== 3)
+3. **Data Preparation**: Adds default select options to `shopTypes`, `stateTypes`, and `bankList` arrays
+4. **Sidebar State Management**: Manages the sidebar toggle state for mobile/responsive views
+
+**Key Logic:**
+
+```typescript
+// Initial step selection logic (simplified)
+const initialStep = stepsData?.find((step) => step.role && step.isVisible && step.stepStatus !== 3);
+const initialStepId = initialStep?.id ?? stepsData[0]?.id;
+```
+
+#### OnboardingWrapper (Step Orchestrator)
+
+The `OnboardingWrapper` component is responsible for:
+
+1. **Step Rendering**: Uses a centralized `renderStep()` function with a switch-case statement based on `STEP_IDS` constants
+2. **Step Data Lookup**: Finds the current step data from `stepsData` array using `currentOnboardingStepId`
+3. **Conditional Component Rendering**: Renders different business components based on user type (e.g., Distributor vs Merchant)
+4. **Layout Management**: Handles responsive layout with sidebar visibility control
+
+**Key Features:**
+
+-   **Simplified Switch Statement**: Uses `STEP_IDS` constants from `src/utils/constants.ts` for readable step identification
+-   **User Type-Specific Logic**: Conditionally renders different components (e.g., `Business` vs `BusinessMerchant`) based on `userData.userDetails.user_type`
+-   **Error Handling**: Returns a fallback message if step data is not found
+-   **Responsive Design**: Sidebar is hidden on mobile and shown on larger screens
+
 ## 🔄 User Flow
 
 ### Complete Onboarding Flow
@@ -131,28 +178,46 @@ graph LR
 
 ### Core Verification Steps
 
-| Step ID | Component                    | Purpose                   | Required | User Type Dependent    |
-| ------- | ---------------------------- | ------------------------- | -------- | ---------------------- |
-| 2       | `SelectionScreen`            | Role selection            | ✅       | All                    |
-| 3       | `LocationCapture`            | GPS coordinates           | ✅       | All                    |
-| 4-7     | `Aadhaar*`                   | Aadhaar verification flow | ✅       | All                    |
-| 8       | `PanVerification`            | PAN card verification     | ✅       | All                    |
-| 9       | `Business`                   | Business information      | ✅       | Distributors/Merchants |
-| 10      | `SecretPin`                  | Security PIN setup        | ✅       | Distributors/Merchants |
-| 11      | `VideoKYC`                   | Live video verification   | ✅       | All                    |
-| 12      | `SignAgreement`              | Digital signature         | ✅       | All                    |
-| 13      | `ActivationPlan`             | Service plan selection    | ✅       | All                    |
-| 14      | `OnboardingStatus`           | Completion status         | ✅       | All                    |
-| 15      | `PanAdharMatch`              | PAN-Aadhaar linkage       | ✅       | All                    |
-| 16      | `PanVerificationDistributor` | Distributor PAN           | ✅       | Distributors           |
-| 20      | `DigilockerRedirection`      | Digilocker integration    | ⚪       | Optional               |
+| Step ID | Constant Name                  | Component                        | Purpose                  | Required | User Type Dependent    |
+| ------- | ------------------------------ | -------------------------------- | ------------------------ | -------- | ---------------------- |
+| 1       | `WELCOME`                      | `Welcome`                        | Welcome screen           | ⚪       | All                    |
+| 2       | `SELECTION_SCREEN`             | Not rendered in wrapper          | Role selection           | ✅       | All                    |
+| 3       | `LOCATION_CAPTURE`             | `LocationCapture`                | GPS coordinates          | ✅       | All                    |
+| 4       | `AADHAAR_VERIFICATION`         | `AdharVerifiction`               | Aadhaar upload           | ✅       | All                    |
+| 5       | `AADHAAR_CONSENT`              | `AadhaarConsent`                 | Aadhaar consent          | ✅       | All                    |
+| 6       | `CONFIRM_AADHAAR_NUMBER`       | `ConfirmAadhaarNumber`           | Confirm Aadhaar number   | ✅       | All                    |
+| 7       | `AADHAAR_NUMBER_OTP_VERIFY`    | `AadhaarNumberOtpVerify`         | Aadhaar OTP verification | ✅       | All                    |
+| 8       | `PAN_VERIFICATION`             | `PanVerification`                | PAN card verification    | ✅       | All                    |
+| 9       | `BUSINESS`                     | `Business` or `BusinessMerchant` | Business information     | ✅       | Distributors/Merchants |
+| 10      | `SECRET_PIN`                   | `SecretPin`                      | Security PIN setup       | ✅       | Distributors/Merchants |
+| 11      | `VIDEO_KYC`                    | `VideoKYC`                       | Live video verification  | ✅       | All                    |
+| 12      | `SIGN_AGREEMENT`               | `SignAgreement`                  | Digital signature        | ✅       | All                    |
+| 13      | `ACTIVATION_PLAN`              | `ActivationPlan`                 | Service plan selection   | ✅       | All                    |
+| 14      | `ONBOARDING_STATUS`            | `OnboardingStatus`               | Completion status        | ✅       | All                    |
+| 15      | `PAN_AADHAAR_MATCH`            | `PanAdharMatch`                  | PAN-Aadhaar linkage      | ✅       | All                    |
+| 16      | `PAN_VERIFICATION_DISTRIBUTOR` | `PanVerificationDistributor`     | Distributor PAN          | ✅       | Distributors           |
+| 20      | `DIGILOCKER_REDIRECTION`       | `DigilockerRedirection`          | Digilocker integration   | ⚪       | Optional               |
+| 25      | `ADD_BANK_ACCOUNT`             | `BankAccount`                    | Bank account details     | ⚪       | Optional               |
+
+### Step-Specific Logic
+
+#### Business Step (Step 9)
+
+The Business step renders different components based on user type:
+
+-   **Distributor** (`user_type === 1`): Renders `Business` component with detailed business information
+-   **Merchant** (`user_type !== 1`): Renders `BusinessMerchant` component with simplified merchant details
 
 ### Step Status Values
 
--   **0 (Pending)**: Step not yet started
--   **1 (Active)**: Currently active step
--   **2 (Skipped)**: Step was skipped
--   **3 (Completed)**: Step successfully completed
+The widget uses standardized status codes defined in `STEP_STATUS` constants:
+
+-   **0 (NOT_STARTED)**: Step not yet started
+-   **1 (IN_PROGRESS)**: Currently active step
+-   **2 (COMPLETED)**: Step was skipped or bypassed
+-   **3 (FAILED)**: Step successfully completed
+
+**Note:** The initial step is automatically selected as the first visible step with a role that has `stepStatus !== 3` (not completed).
 
 ## 🔧 Integration Guide
 
@@ -160,30 +225,22 @@ graph LR
 
 ```typescript
 interface OnboardingWidgetProps {
-    defaultStep: string; // Starting step ID
-    handleSubmit: (data: any) => void; // Step completion callback
-    userData: {
-        // User information
-        userDetails: {
-            user_type: 1 | 2 | 3; // 1: Distributor, 2: Merchant, 3: Retailer
-            // ... other user details
-        };
-    };
+    // Required props
+    userData: any; // User information including userDetails with user_type
     stepsData: StepDataType[]; // Step configuration array
-    handleStepCallBack?: (params: {
-        // Step-specific callback
-        type: number;
-        method: string;
-        data?: any;
-    }) => void;
-    primaryColor?: string; // Theme color (default: #007bff)
-    isBranding?: boolean; // Show/hide branding
-    shopTypes?: Array<any>; // Available shop types
-    stateTypes?: Array<any>; // Available states
-    stepResponse?: any; // API response data
-    selectedMerchantType?: any; // Merchant type selection
-    esignStatus?: number; // E-signature status
-    orgDetail?: any; // Organization details
+    handleSubmit: (data: any) => void; // Step completion callback
+
+    // Optional props
+    appName?: string; // Application name
+    orgName?: string; // Organization name
+    primaryColor?: string; // Theme primary color (default: #007bff)
+    accentColor?: string; // Theme accent color
+    shopTypes?: Array<any>; // Available shop types for selection
+    stateTypes?: Array<any>; // Available states for location
+    bankList?: BankListType; // Available banks for account verification
+    stepResponse?: any; // API response data for step validation
+    handleStepCallBack?: any; // Step-specific callback handler
+    esignStatus?: number; // E-signature completion status
     digilockerData?: any; // Digilocker integration data
 }
 ```
@@ -192,24 +249,63 @@ interface OnboardingWidgetProps {
 
 ```typescript
 type StepDataType = {
-    id: number; // Unique step identifier
-    name: string; // Step name/slug
-    label: string; // Display title
-    primaryCTAText: string; // Button text
-    description: string; // Step description
-    isSkipable: boolean; // Can be skipped
-    isRequired: boolean; // Required for completion
-    isVisible: boolean; // Should be shown in UI
-    stepStatus: 0 | 1 | 2 | 3; // Step status
-    role?: number; // Associated user role
-    form_data: any; // Step-specific data
-    success_message?: string; // Success message
+    id: number; // Unique step identifier (use STEP_IDS constants)
+    name: string; // Step name/slug (e.g., 'location', 'aadhaar_consent')
+    label: string; // Display title shown in UI
+    primaryCTAText: string; // Button text (e.g., 'Continue', 'Submit')
+    description: string; // Step description/instructions
+    isSkipable: boolean; // Whether the step can be skipped
+    isRequired: boolean; // Whether the step is required for completion
+    isVisible: boolean; // Whether the step should be shown in the flow
+    stepStatus: 0 | 1 | 2 | 3; // 0: Not Started, 1: In Progress, 2: Skipped, 3: Completed
+    role?: number; // Associated user role (1: Distributor, 2: Merchant, 3: Retailer)
+    form_data: any; // Step-specific data and form values
+    success_message?: string; // Message displayed on successful completion
+};
+```
+
+### Step ID Constants
+
+The widget uses centralized constants from `src/utils/constants.ts` for step identification:
+
+```typescript
+export const STEP_IDS = {
+    WELCOME: 1,
+    SELECTION_SCREEN: 2,
+    LOCATION_CAPTURE: 3,
+    AADHAAR_VERIFICATION: 4,
+    AADHAAR_CONSENT: 5,
+    CONFIRM_AADHAAR_NUMBER: 6,
+    AADHAAR_NUMBER_OTP_VERIFY: 7,
+    PAN_VERIFICATION: 8,
+    BUSINESS: 9,
+    SECRET_PIN: 10,
+    VIDEO_KYC: 11,
+    SIGN_AGREEMENT: 12,
+    ACTIVATION_PLAN: 13,
+    ONBOARDING_STATUS: 14,
+    PAN_AADHAAR_MATCH: 15,
+    PAN_VERIFICATION_DISTRIBUTOR: 16,
+    DIGILOCKER_REDIRECTION: 20,
+    ADD_BANK_ACCOUNT: 25
 };
 ```
 
 ## 🔌 API Integration
 
 ### Step Callbacks
+
+The `handleStepCallBack` function is used for steps that require real-time API interactions (e.g., OTP verification, Digilocker URL generation). The widget passes the callback to specific step
+components that need it.
+
+**Steps that use handleStepCallBack:**
+
+-   Location Capture (Step 3)
+-   Aadhaar OTP Verification (Step 7)
+-   Secret PIN (Step 10)
+-   Sign Agreement/E-sign (Step 12)
+-   Activation Plan (Step 13)
+-   Digilocker Redirection (Step 20)
 
 ```typescript
 const handleStepCallBack = ({ type, method, data }) => {
@@ -295,14 +391,20 @@ REACT_APP_ESIGN_PROVIDER_URL=https://esign-provider.com
 
 ### Theming
 
+The widget supports custom theming through CSS custom properties that are set dynamically:
+
 ```typescript
 // Custom theme configuration
 <OnboardingWidget
-    primaryColor="#ff6b35" // Primary color
-    isBranding={false} // Hide header/branding
-    // CSS custom property --color-primary will be set
+    primaryColor="#ff6b35" // Sets CSS variable --color-primary
+    accentColor="#00a8cc" // Sets CSS variable --color-accent
+    appName="MyApp"
+    orgName="MyOrg"
+    // ... other props
 />
 ```
+
+The widget automatically sets these CSS custom properties on the document root, which are used throughout the Tailwind configuration.
 
 ### Step Visibility Control
 
@@ -433,9 +535,10 @@ The project uses **Rollup** for efficient bundling with the following features:
 
 -   **Tree Shaking**: Removes unused code for smaller bundle sizes
 -   **ES Module Support**: Native ES module compatibility
--   **Multiple Output Formats**: UMD and ESM builds
+-   **Multiple Output Formats**: CommonJS (CJS) and ES Module (ESM) builds
 -   **TypeScript Support**: Full TypeScript compilation and declaration generation
--   **CSS Processing**: PostCSS and Tailwind CSS integration
+-   **CSS Processing**: PostCSS and Tailwind CSS integration with inline injection
+-   **Image Processing**: Optimized asset bundling
 
 ### Build Scripts
 
@@ -445,20 +548,26 @@ npm run build
 
 # Generates:
 # ├── dist/
-# │   ├── index.js          # UMD bundle
+# │   ├── index.js          # CommonJS bundle
 # │   ├── index.esm.js      # ES module bundle
 # │   ├── index.d.ts        # TypeScript declarations
-# │   └── styles/           # Processed CSS
+# │   └── (CSS inlined in JS bundles)
+
+# Check for outdated dependencies
+npm run check-updates
 ```
 
 ### Publishing to NPM
 
-1. Increment the package version in `package.json` file.
+1. Increment the package version in `package.json` file (currently at v4.3.0)
 2. Build the package: `npm run build`
-3. Add your npm credentials using `npm adduser` (app.admin account).
-    1. Enter username, email and password.
-    1. Enter OTP sent to app.admin's email.
+3. Add your npm credentials using `npm adduser` (app.admin account)
+    - Enter username, email and password
+    - Enter OTP sent to app.admin's email
 4. Publish the package: `npm run publish-try`
+    - This command uses `|| true` to prevent CI/CD failures if publish fails
+
+**Note**: The package is published under the `@ekoindia` scope with public access.
 
 ### Configuration Files
 
@@ -488,8 +597,12 @@ npm run build
 #### Rollup Configuration
 
 -   **Input**: `src/index.ts`
--   **Output**: Multiple formats (UMD, ESM)
--   **Plugins**: TypeScript, PostCSS, Terser
+-   **Output**: Multiple formats (CommonJS, ESM)
+-   **Plugins**:
+    -   TypeScript with declaration generation
+    -   PostCSS with Tailwind CSS (inline injection)
+    -   Image optimization
+    -   Peer dependencies externalization
 -   **External**: React, React-DOM (peer dependencies)
 
 #### Tailwind CSS Configuration
@@ -526,19 +639,18 @@ module.exports = {
 
 ### Testing Framework
 
--   **Jest**: Unit and integration testing
--   **React Testing Library**: Component testing
--   **TypeScript**: Static type checking
+The project includes testing infrastructure with:
+
+-   **Jest**: Unit and integration testing framework
+-   **React Testing Library**: Component testing utilities
+-   **TypeScript**: Static type checking for compile-time safety
 
 ```bash
 # Run tests
 npm test
 
-# Run tests with coverage
+# Run tests with coverage report
 npm run test-coverage
-
-# Watch mode
-npm test -- --watch
 ```
 
 ### Storybook Integration
@@ -546,16 +658,23 @@ npm test -- --watch
 Interactive component development and documentation:
 
 ```bash
-# Start Storybook development server
+# Start Storybook development server (port 6006)
 npm run storybook
 
 # Build Storybook static site
 npm run build-storybook
+
+# Run Chromatic visual regression testing
+npm run chromatic
 ```
+
+**Note**: The project uses Storybook v6.5.15 with Webpack 4 builder for component development and testing.
 
 ## 🔧 Advanced Features
 
 ### State Management with Zustand
+
+The widget uses Zustand (v4.3.6) for lightweight, performant state management:
 
 ```typescript
 // Global state structure
@@ -580,17 +699,30 @@ interface OnboardingState {
     // Actions
     setCurrentStep: (step: number) => void;
     setStepsData: (data: StepDataType) => void;
+    setSideBarToggle: (toggle: boolean) => void;
+    setImage: (image: any) => void;
     // ... other actions
 }
 ```
+
+State is managed centrally in `src/store/zustand.tsx` and can be accessed from any component using the Zustand hooks.
 
 ### Custom Hooks
 
 #### useGeoLocation
 
+Located in `src/components/CustomHooks/UseGeoLocation.tsx`, this hook provides geolocation functionality:
+
 ```typescript
 const { location, error, loading } = useGeoLocation();
+
+// Returns:
+// - location: { latitude: number, longitude: number } | null
+// - error: string | null
+// - loading: boolean
 ```
+
+This hook is used by the Location step component to capture user coordinates.
 
 ### Error Handling
 
@@ -678,21 +810,62 @@ rm -rf dist
 npm run build
 ```
 
-## 📞 Support
+## � Dependencies
 
--   **Documentation**: [README.md](./README.md)
+### Core Dependencies
+
+-   **React 18.2+**: UI framework (peer dependency)
+-   **Zustand 4.3.6**: State management
+-   **Formik 2.2.9**: Form handling
+-   **React Hook Form 7.45.4**: Alternative form library
+-   **Yup 1.1.1**: Schema validation
+-   **React Webcam 7.0.1**: Camera integration
+-   **Tailwind CSS 3.2.7**: Utility-first CSS framework
+-   **Tailwind Merge 1.14.0**: Tailwind class merging utility
+
+### Development Dependencies
+
+-   **TypeScript 4.9.4**: Type safety
+-   **Rollup 3.14.0**: Module bundler
+-   **PostCSS 8.4.25**: CSS processing
+-   **Jest 29.4.1**: Testing framework
+-   **Storybook 6.5.15**: Component development
+
+## 📞 Support & Resources
+
+-   **Repository**: [github.com/ekoindia/oaas-widget](https://github.com/ekoindia/oaas-widget)
 -   **NPM Package**: [@ekoindia/oaas-widget](https://www.npmjs.com/package/@ekoindia/oaas-widget)
--   **Issues**: [GitHub Issues](https://github.com/ekoindia/oaas-widget/issues)
+-   **Current Version**: 4.3.0
 -   **License**: MIT
+-   **Author**: jalaj goyal
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new features
-5. Run the test suite
-6. Submit a pull request
+We welcome contributions to improve the OaaS Widget! Here's how you can contribute:
+
+1. **Fork the repository** from [github.com/ekoindia/oaas-widget](https://github.com/ekoindia/oaas-widget)
+2. **Create a feature branch**: `git checkout -b feat/my-new-feature`
+3. **Make your changes** with clear, descriptive commits
+4. **Add tests** for new features or bug fixes
+5. **Run the test suite**: `npm test`
+6. **Build the package**: `npm run build`
+7. **Submit a pull request** with a clear description of changes
+
+### Coding Standards
+
+-   Follow TypeScript best practices
+-   Use functional components with hooks
+-   Maintain consistent code formatting
+-   Add JSDoc comments for complex functions
+-   Keep components small and focused
+
+### Branch Naming Convention
+
+-   `feat/`: New features
+-   `fix/`: Bug fixes
+-   `docs/`: Documentation updates
+-   `refactor/`: Code refactoring
+-   `test/`: Test additions or updates
 
 ---
 
