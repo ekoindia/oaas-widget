@@ -36,6 +36,38 @@ type OAASPackageProps = {
     // theme?: Record<string, string>;
     digilockerData?: any;
     esignStatus?: number;
+    constants: {
+        apiStatus: {
+            SUCCESS: number;
+            ONBOARDING_REDIRECTION_ERROR: number;
+        };
+        stepIds: {
+            WELCOME: number;
+            SELECTION_SCREEN: number;
+            LOCATION_CAPTURE: number;
+            AADHAAR_VERIFICATION: number;
+            AADHAAR_CONSENT: number;
+            CONFIRM_AADHAAR_NUMBER: number;
+            AADHAAR_NUMBER_OTP_VERIFY: number;
+            PAN_VERIFICATION: number;
+            BUSINESS: number;
+            SECRET_PIN: number;
+            VIDEO_KYC: number;
+            SIGN_AGREEMENT: number;
+            ACTIVATION_PLAN: number;
+            ONBOARDING_STATUS: number;
+            PAN_AADHAAR_MATCH: number;
+            PAN_VERIFICATION_DISTRIBUTOR: number;
+            DIGILOCKER_REDIRECTION: number;
+            ADD_BANK_ACCOUNT: number;
+        };
+        stepStatus: {
+            NOT_STARTED: number;
+            IN_PROGRESS: number;
+            COMPLETED: number;
+            FAILED: number;
+        };
+    };
 };
 
 const OnboardingWidget = ({
@@ -52,10 +84,15 @@ const OnboardingWidget = ({
     handleStepCallBack,
     stepsData,
     esignStatus,
-    digilockerData
+    digilockerData,
+    constants
 }: OAASPackageProps) => {
     const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
+
+    // Extract constants from props
+    const { apiStatus, stepIds, stepStatus } = constants;
+
     // console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
     // console.log('[AgentOnboarding] OAAS stepsData', stepsData);
 
@@ -73,11 +110,11 @@ const OnboardingWidget = ({
 
     useEffect(() => {
         if (stepsData) {
-            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.isVisible && step.stepStatus != 3);
+            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.isVisible && step.stepStatus != stepStatus.FAILED);
             const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
             setCurrentOnboardingStepId(_initialStepId);
         }
-    }, [stepsData]);
+    }, [stepsData, stepStatus]);
 
     return (
         <OnboardingWrapper
@@ -96,6 +133,7 @@ const OnboardingWidget = ({
             esignStatus={esignStatus}
             digilockerData={digilockerData}
             stepsData={stepsData}
+            constants={{ apiStatus, stepIds, stepStatus }}
         />
     );
 };
