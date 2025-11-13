@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
+const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, skipButtonComponent }: GlobalStepPropsType) => {
     const [consentData, setConsentData] = useState('');
     const { label, description, primaryCTAText } = stepData;
     const handleActivationPlan = () => {
@@ -19,6 +19,7 @@ const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallB
                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleActivationPlan} disabled={isDisabledCTA}>
                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                 </ButtonGlobal>
+                {skipButtonComponent}
             </div>
         </div>
     );

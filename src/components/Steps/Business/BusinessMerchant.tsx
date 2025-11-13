@@ -30,7 +30,8 @@ const addressCheckData = [
     { label: 'No', value: 'no' }
 ];
 
-const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [] }: GlobalStepPropsType) => {
+const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [], skipButtonComponent }: GlobalStepPropsType) => {
+    const { primaryCTAText } = stepData;
     const [formValues, setFormValues] = useState({
         name: '',
         gender: 49,
@@ -167,8 +168,9 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
 
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
-                                {isDisabledCTA ? 'Loading...' : stepData?.primaryCTAText}
+                                {isDisabledCTA ? 'Loading...' : primaryCTAText}
                             </ButtonGlobal>
+                            {skipButtonComponent}
                         </div>
                     </Form>
                 )}

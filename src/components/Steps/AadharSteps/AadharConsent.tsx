@@ -10,7 +10,7 @@ const aadhaarConsentSchema = Yup.object().shape({
     name: Yup.string().required('Required').min(3, 'Minimum 3 characters required')
 });
 
-const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName }: GlobalStepPropsType) => {
+const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName, skipButtonComponent }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
     const consentText = `You hereby consent to ${
         orgName || appName || 'us'
@@ -43,6 +43,7 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appNam
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
+                                {skipButtonComponent}
                             </div>
                         </Form>
                     )}

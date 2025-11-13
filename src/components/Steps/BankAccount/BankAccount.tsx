@@ -7,7 +7,7 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 import InputGlobal from '../../Common/InputGlobal';
 import Labelglobal from '../../Common/Labelglobal';
 
-const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }: GlobalStepPropsType) => {
+const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, skipButtonComponent }: GlobalStepPropsType) => {
     console.log('[AgeontOnboarding] bankList', bankList);
     console.log('[AgentOnboarding] stepData', stepData);
     const { label, description, primaryCTAText } = stepData;
@@ -158,6 +158,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
                             <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" type="submit" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Loading...' : primaryCTAText || 'Proceed'}
                             </ButtonGlobal>
+                            {skipButtonComponent}
                         </div>
                     </Form>
                 )}

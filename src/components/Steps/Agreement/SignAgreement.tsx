@@ -4,7 +4,7 @@ import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterf
 import { Spinner } from '../../Common';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack, esignStatus }: GlobalStepPropsType) => {
+const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, esignStatus, skipButtonComponent }: GlobalStepPropsType) => {
     const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     const [leegalityLoaded, setLeegalityLoaded] = useState<boolean>(false);
 

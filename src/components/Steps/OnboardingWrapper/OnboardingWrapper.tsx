@@ -98,61 +98,72 @@ export const OnboardingWrapper = ({
     console.log('[Onboarding] stepIds', stepIds);
     console.log('[Onboarding]. stepsData', stepsData);
 
-    const renderStep = (currentStep: number): any => {
-        const stepData: StepDataType | undefined = stepsData?.find((step: StepDataType) => step.id === currentOnboardingStepId);
-
-        if (stepData) {
-            switch (currentStep) {
-                case stepIds.LOCATION_CAPTURE:
-                    return <LocationCapture stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case stepIds.AADHAAR_VERIFICATION:
-                    return <AdharVerifiction stepData={stepData} handleSubmit={handleSubmit} />;
-                case stepIds.AADHAAR_CONSENT:
-                    return <AadhaarConsent stepData={stepData} handleSubmit={handleSubmit} orgName={orgName} appName={appName} />;
-                case stepIds.CONFIRM_AADHAAR_NUMBER:
-                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleSubmit} orgName={orgName} appName={appName} />;
-                case stepIds.AADHAAR_NUMBER_OTP_VERIFY:
-                    return <AadhaarNumberOtpVerify stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case stepIds.PAN_VERIFICATION:
-                    return <PanVerification stepData={stepData} handleSubmit={handleSubmit} shopTypes={shopTypes} />;
-                case stepIds.BUSINESS:
-                    if (userData?.userDetails?.user_type === 1) {
-                        return <Business stepData={stepData} handleSubmit={handleSubmit} shopTypes={shopTypes} stateTypes={stateTypes} />;
-                    } else {
-                        return <BusinessMerchant stepData={stepData} handleSubmit={handleSubmit} shopTypes={shopTypes} stateTypes={stateTypes} />;
-                    }
-                case stepIds.SECRET_PIN:
-                    return <SecretPin stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case stepIds.VIDEO_KYC:
-                    return <VideoKYC stepData={stepData} handleSubmit={handleSubmit} />;
-                case stepIds.SIGN_AGREEMENT:
-                    return <SignAgreement stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} esignStatus={esignStatus} />;
-                case stepIds.ACTIVATION_PLAN:
-                    return <ActivationPlan stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case stepIds.ONBOARDING_STATUS:
-                    return <OnboardingStatus stepData={stepData} handleSubmit={handleSubmit} />;
-                case stepIds.PAN_AADHAAR_MATCH:
-                    return <PanAdharMatch />;
-                case stepIds.PAN_VERIFICATION_DISTRIBUTOR:
-                    return <PanVerificationDistributor stepData={stepData} handleSubmit={handleSubmit} /* shopTypes={shopTypes}*/ />;
-                case stepIds.DIGILOCKER_REDIRECTION:
-                    return <DigilockerRedirection stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />;
-                case stepIds.ADD_BANK_ACCOUNT:
-                    return <BankAccount stepData={stepData} handleSubmit={handleSubmit} bankList={bankList} />;
-                default:
-                    return <Welcome stepData={stepData} handleSubmit={handleSubmit} />;
-            }
-        } else {
-            return <div>No step data found for step {currentOnboardingStepId}</div>;
-        }
-    };
-
     const currentStepData = stepsData?.find((step: StepDataType) => step.id === currentOnboardingStepId);
     const showSkipButton = currentStepData && !currentStepData.isRequired && typeof handleOnboardingSkip === 'function';
 
     const handleSkipClick = () => {
         if (currentStepData && handleOnboardingSkip) {
             handleOnboardingSkip(currentStepData.id);
+        }
+    };
+
+    const skipButtonComponent = showSkipButton ? (
+        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px] bg-white text-primary" onClick={handleSkipClick}>
+            Skip this step
+        </ButtonGlobal>
+    ) : null;
+
+    const renderStep = (currentStep: number): any => {
+        const stepData: StepDataType | undefined = stepsData?.find((step: StepDataType) => step.id === currentOnboardingStepId);
+
+        if (stepData) {
+            const props = {
+                stepData,
+                handleSubmit,
+                skipButtonComponent
+            };
+            switch (currentStep) {
+                case stepIds.LOCATION_CAPTURE:
+                    return <LocationCapture {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.AADHAAR_VERIFICATION:
+                    return <AdharVerifiction {...props} />;
+                case stepIds.AADHAAR_CONSENT:
+                    return <AadhaarConsent {...props} orgName={orgName} appName={appName} />;
+                case stepIds.CONFIRM_AADHAAR_NUMBER:
+                    return <ConfirmAadhaarNumber {...props} orgName={orgName} appName={appName} />;
+                case stepIds.AADHAAR_NUMBER_OTP_VERIFY:
+                    return <AadhaarNumberOtpVerify {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.PAN_VERIFICATION:
+                    return <PanVerification {...props} shopTypes={shopTypes} />;
+                case stepIds.BUSINESS:
+                    if (userData?.userDetails?.user_type === 1) {
+                        return <Business {...props} shopTypes={shopTypes} stateTypes={stateTypes} />;
+                    } else {
+                        return <BusinessMerchant {...props} shopTypes={shopTypes} stateTypes={stateTypes} />;
+                    }
+                case stepIds.SECRET_PIN:
+                    return <SecretPin {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.VIDEO_KYC:
+                    return <VideoKYC {...props} />;
+                case stepIds.SIGN_AGREEMENT:
+                    return <SignAgreement {...props} handleStepCallBack={handleStepCallBack} esignStatus={esignStatus} />;
+                case stepIds.ACTIVATION_PLAN:
+                    return <ActivationPlan {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.ONBOARDING_STATUS:
+                    return <OnboardingStatus {...props} />;
+                case stepIds.PAN_AADHAAR_MATCH:
+                    return <PanAdharMatch />;
+                case stepIds.PAN_VERIFICATION_DISTRIBUTOR:
+                    return <PanVerificationDistributor {...props} />;
+                case stepIds.DIGILOCKER_REDIRECTION:
+                    return <DigilockerRedirection {...props} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />;
+                case stepIds.ADD_BANK_ACCOUNT:
+                    return <BankAccount {...props} bankList={bankList} />;
+                default:
+                    return <Welcome {...props} />;
+            }
+        } else {
+            return <div>No step data found for step {currentOnboardingStepId}</div>;
         }
     };
 
@@ -165,24 +176,15 @@ export const OnboardingWrapper = ({
                             <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
                             </span>
-                            <div className="relative flex flex-col w-full pb-10 mb-10 p-4 sm:p-8 rounded-2xl bg-white min-w-0">
-                                {renderStep(currentOnboardingStepId ?? 0)}
-                                {showSkipButton && (
-                                    <div className="mt-6 flex justify-start">
-                                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px] bg-gray-200 text-gray-700 hover:bg-gray-300" onClick={handleSkipClick}>
-                                            Skip this step
-                                        </ButtonGlobal>
-                                    </div>
-                                )}
-                            </div>
+                            <div className="relative flex flex-col w-full pb-10 mb-10 p-4 sm:p-8 rounded-2xl bg-white min-w-0">{renderStep(currentOnboardingStepId ?? 0)}</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <span className="hidden block">
+            <span className="hidden">
                 {sideBarToggle ? (
-                    <div className="z-20 absolute top-14 top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
+                    <div className="z-20 absolute top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
                         <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
                         <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
                     </div>

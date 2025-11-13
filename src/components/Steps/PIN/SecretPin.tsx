@@ -13,7 +13,7 @@ const secretPinValidationSchema = Yup.object().shape({
         .required('Required')
 });
 
-const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
+const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, skipButtonComponent }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
     const [formValues, setFormValues] = useState({
         first_okekey: '',
@@ -58,6 +58,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" type="submit" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
+                                {skipButtonComponent}
                             </div>
                         </Form>
                     )}

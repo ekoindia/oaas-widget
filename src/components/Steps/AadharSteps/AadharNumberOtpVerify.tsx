@@ -11,7 +11,7 @@ const aadhaarNumberVerifySchema = Yup.object().shape({
     shareCode: Yup.string().required('(Required) Please set up your 4-digit share code').min(4, '(Minimum 4 digits required) Please set up your 4-digit share code')
 });
 
-const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
+const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, skipButtonComponent }: GlobalStepPropsType) => {
     // const [otpVal, setOtpVal] = useState('');
     // const [shareCode, setShareCode] = useState('0000');
     const [isResend, setIsResend] = useState(false);
@@ -105,6 +105,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
+                                {skipButtonComponent}
                             </div>
                         </Form>
                     )}

@@ -8,7 +8,7 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 type WelcomeProps = {
     stepData: StepDataType;
 };
-const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
+const Welcome = ({ stepData, handleSubmit, skipButtonComponent }: GlobalStepPropsType) => {
     const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     return (
         <div className="min-h-[60vh] flex items-center justify-center">
@@ -19,9 +19,10 @@ const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                     <span className="sm:block">Happy to see you here. Lets start your onboarding journey.</span>
                     <span className="sm:block"> We ensure, you&apos;ll be assisted at every step.</span>
                 </p>
-                <ButtonGlobal className="mt-8" onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}>
-                    {currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}
-                </ButtonGlobal>
+                <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
+                    <ButtonGlobal onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}>{currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}</ButtonGlobal>
+                    {skipButtonComponent}
+                </div>
             </div>
         </div>
     );

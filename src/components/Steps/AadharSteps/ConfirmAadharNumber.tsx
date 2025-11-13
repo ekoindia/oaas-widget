@@ -10,7 +10,7 @@ const ConfirmAadhaarNumberSchema = Yup.object().shape({
     aadhaarCardNumber: Yup.string().required('Required').min(12, 'Minimum 12 characters required')
 });
 
-const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName }: GlobalStepPropsType) => {
+const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName, skipButtonComponent }: GlobalStepPropsType) => {
     const formValues = { aadhaarCardNumber: '' };
     const { label, description, primaryCTAText } = stepData;
     // const handleConfirmAadhaarClick = () => {
@@ -53,6 +53,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
+                                {skipButtonComponent}
                             </div>
                         </Form>
                     )}

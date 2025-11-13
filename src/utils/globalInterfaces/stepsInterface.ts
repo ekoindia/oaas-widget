@@ -8,6 +8,7 @@ export type GlobalStepPropsType = {
     shopTypes?: Array<any>;
     stateTypes?: Array<any>;
     bankList?: BankListType;
+    skipButtonComponent?: React.ReactNode;
     handleStepCallBack?: any;
     handleOnboardingSkip?: (_stepId: number) => void;
     primaryColor?: string;

@@ -24,7 +24,7 @@ const companyTypeData = [
     { label: 'Sole Proprietorship', value: 4 }
 ];
 
-const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [] }: GlobalStepPropsType) => {
+const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [], skipButtonComponent }: GlobalStepPropsType) => {
     const [formValues, setFormValues] = useState({
         name: '',
         alternate_mobile: '',
@@ -188,6 +188,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Loading...' : primaryCTAText}
                             </ButtonGlobal>
+                            {skipButtonComponent}
                         </div>
                     </Form>
                 )}

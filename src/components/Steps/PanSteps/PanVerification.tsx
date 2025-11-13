@@ -6,7 +6,7 @@ import { ButtonGlobal, CamDropzone, InputGlobal, Labelglobal } from '../../Commo
 
 const PANREGEX = /^([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
 
-const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [] }: GlobalStepPropsType) => {
+const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], skipButtonComponent }: GlobalStepPropsType) => {
     // console.log('[PanVerification] handleSubmit', handleSubmit);
     const { label, description, primaryCTAText } = stepData;
 
@@ -90,6 +90,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                     <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA} type="submit">
                         {isDisabledCTA ? 'Loading...' : primaryCTAText}
                     </ButtonGlobal>
+                    {skipButtonComponent}
                 </div>
             </form>
         </div>

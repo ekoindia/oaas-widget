@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack }: GlobalStepPropsType) => {
+const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack, skipButtonComponent }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
 
     const handleLocationCapture = (location: any) => {
@@ -48,8 +48,9 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
             </ul>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleLocation} disabled={isDisabledCTA}>
-                    {isDisabledCTA ? 'Loading...' : primaryCTAText}
+                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                 </ButtonGlobal>
+                {skipButtonComponent}
             </div>
         </div>
     );
