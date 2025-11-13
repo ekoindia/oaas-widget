@@ -109,7 +109,7 @@ export const OnboardingWrapper = ({
 
     const skipButtonComponent = showSkipButton ? (
         <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px] bg-white text-primary" onClick={handleSkipClick}>
-            Skip this step
+            Skip
         </ButtonGlobal>
     ) : null;
 
