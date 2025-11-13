@@ -48,7 +48,7 @@ const Sidebar = ({ steps, userData, currentStepId, constants }: StepperProps) =>
     }, [currentStepIndex, visibleStepData]);
 
     return (
-        <div className="w-[75%] sm:w-full sm:rounded-2xl bg-white">
+        <div className="w-[75%] sm:w-[280px] sm:rounded-2xl bg-white">
             <div className="px-5 pt-5 p-5 bg-primary rounded-t-2xl">
                 <div className="flex-col">
                     <div className="mb-2 text-base text-white">ONBOARDING PROGRESS</div>

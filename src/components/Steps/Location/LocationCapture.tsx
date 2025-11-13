@@ -41,7 +41,7 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
         <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
-            <ul className="mt-8 space-y-2 list-disc pl-5 text-sm sm:text-base max-w-2xl">
+            <ul className="mt-8 space-y-2 list-disc pl-5 text-sm sm:text-base">
                 <li>Please click the button below to allow browser to capture your location.</li>
                 <li>In browser popup, click &quot;Allow&quot; button to enable location capturing.</li>
                 <li>You will be re-directed to next step after successful location capture.</li>

@@ -78,7 +78,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                         <ButtonGlobal className="w-full sm:w-auto mb-8" onClick={handleLocation} type="button">
                             Location Capture
                         </ButtonGlobal>
-                        <div className="max-w-4xl grid grid-cols-1 xl:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
                             <div>
                                 <Labelglobal>Full Name (as per your PAN Card)</Labelglobal>
                                 <InputGlobal name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />

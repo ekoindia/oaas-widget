@@ -93,17 +93,14 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
     };
 
     return (
-        <div>
+        <div className="min-w-0">
             <div className="text-[22px] font-medium sm:font-normal">{label || 'Add Account'}</div>
-            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">
-                {description ||
-                    'This is the account from which you would want to do a transfer of funds in order to get E-value instantly. To get instant E-value kindly deposit funds from your added bank account only. Fund deposited from other bank account (which has not been added here) will not be considered for E-value clearance.'}
-            </div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light break-words">{description}</div>
 
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} enableReinitialize>
                 {({ errors, touched, values, handleChange, setFieldValue }) => (
-                    <Form className="mt-8 max-w-md">
-                        <div className="space-y-4">
+                    <Form className="mt-8 min-w-0">
+                        <div className="flex flex-col gap-y-4 min-w-0">
                             {/* Bank Selection */}
                             <div>
                                 <Labelglobal>Select Your Bank</Labelglobal>

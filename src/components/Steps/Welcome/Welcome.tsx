@@ -11,7 +11,7 @@ type WelcomeProps = {
 const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
     const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     return (
-        <div className="w-full min-h-[80vh] sm:min-h-[85%] flex items-center justify-center bg-white rounded-2xl">
+        <div className="min-h-[60vh] flex items-center justify-center">
             <div className="items-center text-center text-black px-4">
                 <img src={String(WelcomeIcon)} alt="welcome icon" className="h-48 w-48 sm:h-52 sm:w-52 mx-auto mb-6" />
                 <h1 className="text-2xl font-semibold">Welcome!</h1>

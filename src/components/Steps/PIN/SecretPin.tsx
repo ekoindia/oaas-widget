@@ -26,7 +26,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }
         <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
-            <div className="mt-8 max-w-md">
+            <div className="mt-8">
                 <Formik
                     initialValues={formValues}
                     validationSchema={secretPinValidationSchema}

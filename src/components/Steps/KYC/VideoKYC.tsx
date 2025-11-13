@@ -47,7 +47,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
             ) : (
                 <>
                     {videoKyc.url !== null || undefined ? (
-                        <div className="flex flex-col justify-self-center max-w-lg">
+                        <div className="flex flex-col justify-self-center">
                             <Frontcam imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
                         </div>
                     ) : (

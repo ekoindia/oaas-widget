@@ -54,7 +54,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                         <div className="text-[22px] font-medium sm:font-normal">{label}</div>
                         <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
 
-                        <div className="mt-8 max-w-4xl grid grid-cols-1 xl:grid-cols-2 gap-5">
+                        <div className="mt-8 grid grid-cols-1 xl:grid-cols-2 gap-5">
                             <div>
                                 <Labelglobal>Company/Firm's Name</Labelglobal>
                                 <InputGlobal name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
