@@ -110,7 +110,7 @@ const OnboardingWidget = ({
 
     useEffect(() => {
         if (stepsData) {
-            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.isVisible && step.stepStatus != stepStatus.FAILED);
+            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != stepStatus.FAILED);
             const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
             setCurrentOnboardingStepId(_initialStepId);
         }
