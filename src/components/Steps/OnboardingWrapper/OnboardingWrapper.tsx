@@ -1,6 +1,7 @@
 import React from 'react';
 import { BankListType } from '../../../types';
 import { StepDataType } from '../../../utils/data/stepsData';
+import ButtonGlobal from '../../Common/ButtonGlobal';
 import Sidebar from '../../Common/Sidebar/Sidebar';
 import Business from '../../Steps/Business/Business';
 import VideoKYC from '../../Steps/KYC/VideoKYC';
@@ -31,6 +32,7 @@ type HomepageProps = {
     stateTypes: Array<any>;
     bankList: BankListType;
     handleStepCallBack: any;
+    handleOnboardingSkip?: (_stepId: number) => void;
     userData: any;
     esignStatus: any;
     orgName?: string;
@@ -81,6 +83,7 @@ export const OnboardingWrapper = ({
     stateTypes,
     bankList,
     handleStepCallBack,
+    handleOnboardingSkip,
     userData,
     esignStatus,
     orgName,
@@ -91,7 +94,8 @@ export const OnboardingWrapper = ({
 }: HomepageProps) => {
     // Extract constants from props
     const { stepIds, stepStatus } = constants;
-    console.log('[OAAS] stepIds', stepIds);
+    console.log('[Onboarding] stepIds', stepIds);
+    console.log('[Onboarding]. stepsData', stepsData);
 
     const renderStep = (currentStep: number): any => {
         const stepData: StepDataType | undefined = stepsData?.find((step: StepDataType) => step.id === currentOnboardingStepId);
@@ -142,6 +146,15 @@ export const OnboardingWrapper = ({
         }
     };
 
+    const currentStepData = stepsData?.find((step: StepDataType) => step.id === currentOnboardingStepId);
+    const showSkipButton = currentStepData && !currentStepData.isRequired && typeof handleOnboardingSkip === 'function';
+
+    const handleSkipClick = () => {
+        if (currentStepData && handleOnboardingSkip) {
+            handleOnboardingSkip(currentStepData.id);
+        }
+    };
+
     return (
         <div className="mt-8">
             <div className={`${currentOnboardingStepId === stepIds.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-8 w-full md:px-24`}>
@@ -151,7 +164,16 @@ export const OnboardingWrapper = ({
                             <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
                             </span>
-                            <div className="relative flex w-full pb-10 mb-10 p-8 rounded-2xl sm:ml-8 bg-white">{renderStep(currentOnboardingStepId ?? 0)}</div>
+                            <div className="relative flex flex-col w-full pb-10 mb-10 p-8 rounded-2xl sm:ml-8 bg-white">
+                                {renderStep(currentOnboardingStepId ?? 0)}
+                                {showSkipButton && (
+                                    <div className="mt-6 flex justify-start">
+                                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px] bg-gray-200 text-gray-700 hover:bg-gray-300" onClick={handleSkipClick}>
+                                            Skip this step
+                                        </ButtonGlobal>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

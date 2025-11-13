@@ -32,6 +32,7 @@ type OAASPackageProps = {
     // isBranding?: boolean;
     stepResponse?: any;
     handleStepCallBack?: any;
+    handleOnboardingSkip?: (_stepId: number) => void;
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
     digilockerData?: any;
@@ -82,6 +83,7 @@ const OnboardingWidget = ({
     handleSubmit,
     stepResponse,
     handleStepCallBack,
+    handleOnboardingSkip,
     stepsData,
     esignStatus,
     digilockerData,
@@ -130,6 +132,7 @@ const OnboardingWidget = ({
             stepResponse={stepResponse}
             currentOnboardingStepId={currentOnboardingStepId}
             handleStepCallBack={handleStepCallBack}
+            handleOnboardingSkip={handleOnboardingSkip}
             esignStatus={esignStatus}
             digilockerData={digilockerData}
             stepsData={stepsData}
