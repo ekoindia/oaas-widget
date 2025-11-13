@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-import { useStore } from '../../../store/zustand';
+import React, { useEffect } from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import { Spinner } from '../../Common';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, esignStatus, skipButtonComponent }: GlobalStepPropsType) => {
-    const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
-    const [leegalityLoaded, setLeegalityLoaded] = useState<boolean>(false);
-
-    React.useEffect(() => {
+    useEffect(() => {
         if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'getSignUrl' });
     }, []);
 
