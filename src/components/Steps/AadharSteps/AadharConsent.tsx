@@ -11,7 +11,7 @@ const aadhaarConsentSchema = Yup.object().shape({
 });
 
 const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName }: GlobalStepPropsType) => {
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     const consentText = `You hereby consent to ${
         orgName || appName || 'us'
     } as your authorized representative to receive your personal and credit information from UIDAI, CIBIL and other government and private agencies for the purpose of providing you credit in the form of loans or line of credit through our lending partners (&quot;End Use Purpose&quot;).`;
@@ -19,9 +19,6 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appNam
     //     handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
     // };
     const formValues = { name: '' };
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
     return (
         <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
@@ -46,11 +43,6 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appNam
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                                {isSkipable && (
-                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                                        Skip this step
-                                    </ButtonGlobal>
-                                )}
                             </div>
                         </Form>
                     )}

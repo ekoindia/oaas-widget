@@ -38,7 +38,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
         current_address_state: ''
     });
 
-    const { label, description, primaryCTAText /*, isSkipable */ } = stepData;
+    const { label, description, primaryCTAText } = stepData;
 
     return (
         <div>

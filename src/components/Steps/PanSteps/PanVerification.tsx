@@ -8,17 +8,13 @@ const PANREGEX = /^([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
 
 const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [] }: GlobalStepPropsType) => {
     // console.log('[PanVerification] handleSubmit', handleSubmit);
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
 
     const { cameraStatus, uploadedImage, setCameraStatus, selectedFile, preview } = useStore();
 
     useEffect(() => {
         setCameraStatus(false);
     }, []);
-
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
 
     const {
         handleSubmit: handleSubmitRhf,
@@ -94,11 +90,6 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                     <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA} type="submit">
                         {isDisabledCTA ? 'Loading...' : primaryCTAText}
                     </ButtonGlobal>
-                    {isSkipable && (
-                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                            Skip this step
-                        </ButtonGlobal>
-                    )}
                 </div>
             </form>
         </div>

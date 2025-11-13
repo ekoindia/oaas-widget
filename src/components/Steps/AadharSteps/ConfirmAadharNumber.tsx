@@ -12,13 +12,10 @@ const ConfirmAadhaarNumberSchema = Yup.object().shape({
 
 const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName }: GlobalStepPropsType) => {
     const formValues = { aadhaarCardNumber: '' };
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     // const handleConfirmAadhaarClick = () => {
     //     handleSubmit({ ...stepData, form_data: { aadhaar: aadhaarCardNumber, is_consent: 'Y' }, stepStatus: 3 });
     // };
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
 
     return (
         <div>
@@ -56,11 +53,6 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                                {isSkipable && (
-                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                                        Skip this step
-                                    </ButtonGlobal>
-                                )}
                             </div>
                         </Form>
                     )}

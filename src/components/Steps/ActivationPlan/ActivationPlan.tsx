@@ -4,12 +4,9 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
     const [consentData, setConsentData] = useState('');
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     const handleActivationPlan = () => {
         // handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
-    };
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
     };
     useEffect(() => {
         if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'getInitialActivationPlan' });
@@ -22,11 +19,6 @@ const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallB
                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleActivationPlan} disabled={isDisabledCTA}>
                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                 </ButtonGlobal>
-                {isSkipable && (
-                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                        Skip this step
-                    </ButtonGlobal>
-                )}
             </div>
         </div>
     );

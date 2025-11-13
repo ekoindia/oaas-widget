@@ -10,7 +10,7 @@ import Labelglobal from '../../Common/Labelglobal';
 const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }: GlobalStepPropsType) => {
     console.log('[AgeontOnboarding] bankList', bankList);
     console.log('[AgentOnboarding] stepData', stepData);
-    const { label, description, primaryCTAText, isSkipable } = stepData;
+    const { label, description, primaryCTAText } = stepData;
 
     const [selectedBank, setSelectedBank] = useState<BankListElement | null>(null);
     const [accountValidation, setAccountValidation] = useState({
@@ -61,10 +61,6 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
         } else {
             setAccountValidation({ min: 6, max: 20, pattern_error: 'Please enter a valid account number' });
         }
-    };
-
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
     };
 
     const onSubmit = (values: any) => {
@@ -165,11 +161,6 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
                             <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" type="submit" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Loading...' : primaryCTAText || 'Proceed'}
                             </ButtonGlobal>
-                            {isSkipable && (
-                                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip} type="button">
-                                    Skip this step
-                                </ButtonGlobal>
-                            )}
                         </div>
                     </Form>
                 )}

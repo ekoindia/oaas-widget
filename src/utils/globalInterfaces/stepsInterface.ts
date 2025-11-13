@@ -9,6 +9,7 @@ export type GlobalStepPropsType = {
     stateTypes?: Array<any>;
     bankList?: BankListType;
     handleStepCallBack?: any;
+    handleOnboardingSkip?: (_stepId: number) => void;
     primaryColor?: string;
     accentColor?: string;
     esignStatus?: number;

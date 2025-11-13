@@ -12,15 +12,12 @@ import Frontcam from '../../Common/Camera/Frontcam';
 const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepPropsType) => {
     const { cameraStatus, setCameraStatus } = useStore();
     const [videoKycError, setVideoKycError] = useState(true);
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     const [videoKyc, setVideoKyc] = useState({ url: null, fileData: null });
 
     useEffect(() => {
         setCameraStatus(false);
     }, []);
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
     const handleImageCapture = (image: any, fileData: any) => {
         setVideoKyc({
             url: image,
@@ -92,11 +89,6 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
                         <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleOnSubmit} disabled={isDisabledCTA || videoKycError}>
                             {isDisabledCTA ? 'Loading...' : primaryCTAText}
                         </ButtonGlobal>
-                        {isSkipable && (
-                            <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                                Skip this step
-                            </ButtonGlobal>
-                        )}
                     </div>
                 </>
             )}

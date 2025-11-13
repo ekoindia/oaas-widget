@@ -17,7 +17,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
     const [isResend, setIsResend] = useState(false);
     const [resendTimerCount, setResendTimerCount] = useState(30);
     const formValues = { otpVal: '', shareCode: '0000' };
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     let timerOut: any = null;
     const handleResendTimer = () => {
         let timer = 30;
@@ -36,9 +36,6 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
         // if (timerOut !== null) {
         //     timerOut;
         // }
-    };
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
     };
     useEffect(() => {
         if (resendTimerCount === 30) {
@@ -108,11 +105,6 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                                {isSkipable && (
-                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                                        Skip this step
-                                    </ButtonGlobal>
-                                )}
                             </div>
                         </Form>
                     )}
