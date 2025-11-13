@@ -46,6 +46,7 @@ export type GlobalStepPropsType = {
             IN_PROGRESS: number;
             COMPLETED: number;
             FAILED: number;
+            SKIPPED: number;
         };
     };
 };

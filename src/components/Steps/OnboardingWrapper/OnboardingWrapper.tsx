@@ -69,6 +69,7 @@ type HomepageProps = {
             IN_PROGRESS: number;
             COMPLETED: number;
             FAILED: number;
+            SKIPPED: number;
         };
     };
 };

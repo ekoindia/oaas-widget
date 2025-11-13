@@ -15,6 +15,7 @@ type StepperProps = {
         };
         stepStatus: {
             COMPLETED: number;
+            SKIPPED: number;
             [key: string]: number;
         };
     };
@@ -68,6 +69,7 @@ const Sidebar = ({ steps, userData, currentStepId, constants }: StepperProps) =>
                     const isDone = i < currentStepIndex;
                     const isCurrent = currentStep === step.id;
                     const isFuture = i > currentStepIndex;
+                    const isSkipped = step.stepStatus === stepStatus.SKIPPED;
 
                     // console.log('>>>>>>>> Sidebar Step:: ', isDone ? '↙️' : isFuture ? '↗️' : '—', i, currentStepIndex, step, currentStep);
 
@@ -79,23 +81,28 @@ const Sidebar = ({ steps, userData, currentStepId, constants }: StepperProps) =>
                             // }}
                             >
                                 <span className="flex pb-5 items-center">
-                                    <span className={`step relative before:bg-lightdefault ${isFuture ? 'disabled' : ''}`}>
+                                    <span className={`step relative before:bg-lightdefault ${isFuture ? 'disabled' : ''} ${isSkipped ? 'border-orange-400 bg-orange-50' : ''}`}>
                                         {/* {step.stepStatus !== 3 ? i + 1 : <img src={CompleteMark} alt="complete mark" className="w-[15px] h-[11px]" />} */}
-                                        {isDone ? <img src={CompleteMark} alt="complete mark" className="w-[14px] h-[14px]" /> : i + 1}
+                                        {isSkipped ? (
+                                            <span className="text-[10px] font-bold text-orange-500">—</span>
+                                        ) : isDone ? (
+                                            <img src={CompleteMark} alt="complete mark" className="w-[14px] h-[14px]" />
+                                        ) : (
+                                            i + 1
+                                        )}
                                     </span>
                                     <div className="min-h-[40px] flex flex-col justify-center">
-                                        <div className={`ml-3 pr-2 text-[13px] font-medium ${isCurrent ? 'text-primary' : isFuture ? 'disabled' : 'text-black'}`}>{step.label}</div>
-                                        {
-                                            /* step.stepStatus >= 1 && step.stepStatus <= 3 */ isCurrent && (
-                                                <div
-                                                    className={`w-[70px] rounded-full h-[16px] ml-3 mt-[4px] text-[10px] flex justify-center items-center ${
-                                                        step.stepStatus === stepStatus.COMPLETED ? 'text-darkdanger bg-white border-darkdanger border-2' : 'text-white bg-warning'
-                                                    }`}
-                                                >
-                                                    {/* step.stepStatus === 1 */ isCurrent ? 'In Progress' : step.stepStatus === stepStatus.COMPLETED ? 'Skipped' : ''}
-                                                </div>
-                                            )
-                                        }
+                                        <div className={`ml-3 pr-2 text-[13px] font-medium ${isCurrent ? 'text-primary' : isFuture ? 'disabled' : isSkipped ? 'text-orange-500' : 'text-black'}`}>
+                                            {step.label}
+                                        </div>
+                                        {isCurrent && (
+                                            <div className="w-[70px] rounded-full h-[16px] ml-3 mt-[4px] text-[10px] flex justify-center items-center text-white bg-warning">In Progress</div>
+                                        )}
+                                        {isSkipped && !isCurrent && (
+                                            <div className="w-[70px] rounded-full h-[16px] ml-3 mt-[4px] text-[10px] flex justify-center items-center text-orange-600 bg-orange-100 border border-orange-400">
+                                                Skipped
+                                            </div>
+                                        )}
                                     </div>
                                 </span>
                             </div>
