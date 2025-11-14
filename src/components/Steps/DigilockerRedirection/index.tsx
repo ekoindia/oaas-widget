@@ -32,9 +32,9 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
  *
  * The API should return a response with a redirectUrl field that contains the Digilocker URL.
  */
-export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, digilockerData }: GlobalStepPropsType) => {
+export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, digilockerData, skipButtonComponent }: GlobalStepPropsType) => {
     // console.log('[DigilockerRedirection] digilockerData', digilockerData);
-    const { label, description, primaryCTAText, isSkipable } = stepData;
+    const { label, description, primaryCTAText } = stepData;
 
     useEffect(() => {
         // Call API to get Digilocker redirection URL
@@ -68,10 +68,6 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
             },
             stepStatus: 3
         });
-    };
-
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
     };
 
     return (
@@ -115,13 +111,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
                             </svg>
                         </>
                     </ButtonGlobal>
-
-                    {/* Skip Button (if applicable) */}
-                    {isSkipable && (
-                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                            Skip this step
-                        </ButtonGlobal>
-                    )}
+                    {skipButtonComponent}
                 </div>
             </div>
         </div>

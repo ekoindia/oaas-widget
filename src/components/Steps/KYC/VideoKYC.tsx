@@ -9,18 +9,15 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 import Camera from '../../Common/Camera/Camera';
 import Frontcam from '../../Common/Camera/Frontcam';
 
-const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepPropsType) => {
+const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false, skipButtonComponent }: GlobalStepPropsType) => {
     const { cameraStatus, setCameraStatus } = useStore();
     const [videoKycError, setVideoKycError] = useState(true);
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     const [videoKyc, setVideoKyc] = useState({ url: null, fileData: null });
 
     useEffect(() => {
         setCameraStatus(false);
     }, []);
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
     const handleImageCapture = (image: any, fileData: any) => {
         setVideoKyc({
             url: image,
@@ -50,7 +47,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
             ) : (
                 <>
                     {videoKyc.url !== null || undefined ? (
-                        <div className="flex flex-col justify-self-center max-w-lg">
+                        <div className="flex flex-col justify-self-center">
                             <Frontcam imageVal={videoKyc.url} handleRetake={() => handleRetake()} />
                         </div>
                     ) : (
@@ -90,13 +87,9 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false }: GlobalStepP
 
                     <div className="flex flex-col sm:flex-row gap-4 mt-8">
                         <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleOnSubmit} disabled={isDisabledCTA || videoKycError}>
-                            {isDisabledCTA ? 'Loading...' : primaryCTAText}
+                            {isDisabledCTA ? 'Please wait ...' : primaryCTAText}
                         </ButtonGlobal>
-                        {isSkipable && (
-                            <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                                Skip this step
-                            </ButtonGlobal>
-                        )}
+                        {skipButtonComponent}
                     </div>
                 </>
             )}

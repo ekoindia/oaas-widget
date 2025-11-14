@@ -6,18 +6,14 @@ import { ButtonGlobal, CamDropzone, InputGlobal, Labelglobal } from '../../Commo
 
 const PANREGEX = /^([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
 
-const PanVerificationDistributor = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [] }: GlobalStepPropsType) => {
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+const PanVerificationDistributor = ({ stepData, handleSubmit, isDisabledCTA = false, skipButtonComponent }: GlobalStepPropsType) => {
+    const { label, description, primaryCTAText } = stepData;
 
     const { cameraStatus, uploadedImage, setCameraStatus, selectedFile, preview } = useStore();
 
     useEffect(() => {
         setCameraStatus(false);
     }, []);
-
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
 
     const {
         handleSubmit: handleSubmitRhf,
@@ -69,7 +65,7 @@ const PanVerificationDistributor = ({ stepData, handleSubmit, isDisabledCTA = fa
                 <span className="text-primary"> .jpg, .png</span>
             </div>
 
-            <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 3 }))} className="mt-8 max-w-md">
+            <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 3 }))} className="mt-8">
                 <Value
                     {...{
                         formHeading: 'PAN Verification',
@@ -85,11 +81,7 @@ const PanVerificationDistributor = ({ stepData, handleSubmit, isDisabledCTA = fa
                     <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA} type="submit">
                         {isDisabledCTA ? 'Loading...' : primaryCTAText}
                     </ButtonGlobal>
-                    {isSkipable && (
-                        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                            Skip this step
-                        </ButtonGlobal>
-                    )}
+                    {skipButtonComponent}
                 </div>
             </form>
         </div>

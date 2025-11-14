@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Browse, ButtonGlobal, Camera, Frontcam, Uploadfile } from '..';
 import camera from '../../../assets/icons/camera.svg';
 import filledcamera from '../../../assets/icons/filledcamera.svg';
 import { useStore } from '../../../store/zustand';
+import Browse from '../Browse';
+import ButtonGlobal from '../ButtonGlobal';
+import { Camera, Frontcam } from '../Camera';
+import Uploadfile from '../Uploadfile';
 
 type CamDropzoneProps = {
     file: any;

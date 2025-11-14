@@ -24,7 +24,7 @@ const companyTypeData = [
     { label: 'Sole Proprietorship', value: 4 }
 ];
 
-const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [] }: GlobalStepPropsType) => {
+const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [], stateTypes = [], skipButtonComponent }: GlobalStepPropsType) => {
     const [formValues, setFormValues] = useState({
         name: '',
         alternate_mobile: '',
@@ -38,7 +38,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
         current_address_state: ''
     });
 
-    const { label, description, primaryCTAText /*, isSkipable */ } = stepData;
+    const { label, description, primaryCTAText } = stepData;
 
     return (
         <div>
@@ -54,7 +54,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                         <div className="text-[22px] font-medium sm:font-normal">{label}</div>
                         <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
 
-                        <div className="mt-8 max-w-4xl grid grid-cols-1 xl:grid-cols-2 gap-5">
+                        <div className="mt-8 grid grid-cols-1 xl:grid-cols-2 gap-5">
                             <div>
                                 <Labelglobal>Company/Firm's Name</Labelglobal>
                                 <InputGlobal name="name" value={values.name} onChange={handleChange('name')} id="username" type="text" placeholder="" />
@@ -188,6 +188,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                             <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Loading...' : primaryCTAText}
                             </ButtonGlobal>
+                            {skipButtonComponent}
                         </div>
                     </Form>
                 )}

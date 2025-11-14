@@ -10,21 +10,18 @@ const ConfirmAadhaarNumberSchema = Yup.object().shape({
     aadhaarCardNumber: Yup.string().required('Required').min(12, 'Minimum 12 characters required')
 });
 
-const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName }: GlobalStepPropsType) => {
+const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, appName, skipButtonComponent }: GlobalStepPropsType) => {
     const formValues = { aadhaarCardNumber: '' };
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     // const handleConfirmAadhaarClick = () => {
     //     handleSubmit({ ...stepData, form_data: { aadhaar: aadhaarCardNumber, is_consent: 'Y' }, stepStatus: 3 });
     // };
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
 
     return (
         <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
-            <div className="mt-8 max-w-md">
+            <div className="mt-8">
                 <Formik
                     initialValues={formValues}
                     validationSchema={ConfirmAadhaarNumberSchema}
@@ -56,11 +53,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                                {isSkipable && (
-                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                                        Skip this step
-                                    </ButtonGlobal>
-                                )}
+                                {skipButtonComponent}
                             </div>
                         </Form>
                     )}

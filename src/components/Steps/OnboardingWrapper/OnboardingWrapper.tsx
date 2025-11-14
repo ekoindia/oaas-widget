@@ -1,7 +1,7 @@
 import React from 'react';
 import { BankListType } from '../../../types';
-import { STEP_IDS } from '../../../utils/constants';
 import { StepDataType } from '../../../utils/data/stepsData';
+import ButtonGlobal from '../../Common/ButtonGlobal';
 import Sidebar from '../../Common/Sidebar/Sidebar';
 import Business from '../../Steps/Business/Business';
 import VideoKYC from '../../Steps/KYC/VideoKYC';
@@ -32,12 +32,46 @@ type HomepageProps = {
     stateTypes: Array<any>;
     bankList: BankListType;
     handleStepCallBack: any;
+    handleOnboardingSkip?: (_stepId: number) => void;
     userData: any;
     esignStatus: any;
     orgName?: string;
     appName?: string;
     digilockerData?: any;
     stepsData?: Array<StepDataType> | undefined;
+    constants: {
+        apiStatus: {
+            SUCCESS: number;
+            ONBOARDING_REDIRECTION_ERROR: number;
+        };
+        stepIds: {
+            WELCOME: number;
+            SELECTION_SCREEN: number;
+            LOCATION_CAPTURE: number;
+            AADHAAR_VERIFICATION: number;
+            AADHAAR_CONSENT: number;
+            CONFIRM_AADHAAR_NUMBER: number;
+            AADHAAR_NUMBER_OTP_VERIFY: number;
+            PAN_VERIFICATION: number;
+            BUSINESS: number;
+            SECRET_PIN: number;
+            VIDEO_KYC: number;
+            SIGN_AGREEMENT: number;
+            ACTIVATION_PLAN: number;
+            ONBOARDING_STATUS: number;
+            PAN_AADHAAR_MATCH: number;
+            PAN_VERIFICATION_DISTRIBUTOR: number;
+            DIGILOCKER_REDIRECTION: number;
+            ADD_BANK_ACCOUNT: number;
+        };
+        stepStatus: {
+            NOT_STARTED: number;
+            IN_PROGRESS: number;
+            COMPLETED: number;
+            FAILED: number;
+            SKIPPED: number;
+        };
+    };
 };
 
 export const OnboardingWrapper = ({
@@ -50,56 +84,83 @@ export const OnboardingWrapper = ({
     stateTypes,
     bankList,
     handleStepCallBack,
+    handleOnboardingSkip,
     userData,
     esignStatus,
     orgName,
     appName,
     digilockerData,
-    stepsData
+    stepsData,
+    constants
 }: HomepageProps) => {
+    // Extract constants from props
+    const { stepIds, stepStatus } = constants;
+    console.log('[Onboarding] stepIds', stepIds);
+    console.log('[Onboarding]. stepsData', stepsData);
+
+    const currentStepData = stepsData?.find((step: StepDataType) => step.id === currentOnboardingStepId);
+    const showSkipButton = currentStepData && !currentStepData.isRequired && typeof handleOnboardingSkip === 'function';
+
+    const handleSkipClick = () => {
+        if (currentStepData && handleOnboardingSkip) {
+            handleOnboardingSkip(currentStepData.id);
+        }
+    };
+
+    const skipButtonComponent = showSkipButton ? (
+        <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px] bg-white text-primary" onClick={handleSkipClick}>
+            Skip
+        </ButtonGlobal>
+    ) : null;
+
     const renderStep = (currentStep: number): any => {
         const stepData: StepDataType | undefined = stepsData?.find((step: StepDataType) => step.id === currentOnboardingStepId);
 
         if (stepData) {
+            const props = {
+                stepData,
+                handleSubmit,
+                skipButtonComponent
+            };
             switch (currentStep) {
-                case STEP_IDS.LOCATION_CAPTURE:
-                    return <LocationCapture stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case STEP_IDS.AADHAAR_VERIFICATION:
-                    return <AdharVerifiction stepData={stepData} handleSubmit={handleSubmit} />;
-                case STEP_IDS.AADHAAR_CONSENT:
-                    return <AadhaarConsent stepData={stepData} handleSubmit={handleSubmit} orgName={orgName} appName={appName} />;
-                case STEP_IDS.CONFIRM_AADHAAR_NUMBER:
-                    return <ConfirmAadhaarNumber stepData={stepData} handleSubmit={handleSubmit} orgName={orgName} appName={appName} />;
-                case STEP_IDS.AADHAAR_NUMBER_OTP_VERIFY:
-                    return <AadhaarNumberOtpVerify stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case STEP_IDS.PAN_VERIFICATION:
-                    return <PanVerification stepData={stepData} handleSubmit={handleSubmit} shopTypes={shopTypes} />;
-                case STEP_IDS.BUSINESS:
+                case stepIds.LOCATION_CAPTURE:
+                    return <LocationCapture {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.AADHAAR_VERIFICATION:
+                    return <AdharVerifiction {...props} />;
+                case stepIds.AADHAAR_CONSENT:
+                    return <AadhaarConsent {...props} orgName={orgName} appName={appName} />;
+                case stepIds.CONFIRM_AADHAAR_NUMBER:
+                    return <ConfirmAadhaarNumber {...props} orgName={orgName} appName={appName} />;
+                case stepIds.AADHAAR_NUMBER_OTP_VERIFY:
+                    return <AadhaarNumberOtpVerify {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.PAN_VERIFICATION:
+                    return <PanVerification {...props} shopTypes={shopTypes} />;
+                case stepIds.BUSINESS:
                     if (userData?.userDetails?.user_type === 1) {
-                        return <Business stepData={stepData} handleSubmit={handleSubmit} shopTypes={shopTypes} stateTypes={stateTypes} />;
+                        return <Business {...props} shopTypes={shopTypes} stateTypes={stateTypes} />;
                     } else {
-                        return <BusinessMerchant stepData={stepData} handleSubmit={handleSubmit} shopTypes={shopTypes} stateTypes={stateTypes} />;
+                        return <BusinessMerchant {...props} shopTypes={shopTypes} stateTypes={stateTypes} />;
                     }
-                case STEP_IDS.SECRET_PIN:
-                    return <SecretPin stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case STEP_IDS.VIDEO_KYC:
-                    return <VideoKYC stepData={stepData} handleSubmit={handleSubmit} />;
-                case STEP_IDS.SIGN_AGREEMENT:
-                    return <SignAgreement stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} esignStatus={esignStatus} />;
-                case STEP_IDS.ACTIVATION_PLAN:
-                    return <ActivationPlan stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} />;
-                case STEP_IDS.ONBOARDING_STATUS:
-                    return <OnboardingStatus stepData={stepData} handleSubmit={handleSubmit} />;
-                case STEP_IDS.PAN_AADHAAR_MATCH:
+                case stepIds.SECRET_PIN:
+                    return <SecretPin {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.VIDEO_KYC:
+                    return <VideoKYC {...props} />;
+                case stepIds.SIGN_AGREEMENT:
+                    return <SignAgreement {...props} handleStepCallBack={handleStepCallBack} esignStatus={esignStatus} />;
+                case stepIds.ACTIVATION_PLAN:
+                    return <ActivationPlan {...props} handleStepCallBack={handleStepCallBack} />;
+                case stepIds.ONBOARDING_STATUS:
+                    return <OnboardingStatus {...props} />;
+                case stepIds.PAN_AADHAAR_MATCH:
                     return <PanAdharMatch />;
-                case STEP_IDS.PAN_VERIFICATION_DISTRIBUTOR:
-                    return <PanVerificationDistributor stepData={stepData} handleSubmit={handleSubmit} /* shopTypes={shopTypes}*/ />;
-                case STEP_IDS.DIGILOCKER_REDIRECTION:
-                    return <DigilockerRedirection stepData={stepData} handleSubmit={handleSubmit} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />;
-                case STEP_IDS.ADD_BANK_ACCOUNT:
-                    return <BankAccount stepData={stepData} handleSubmit={handleSubmit} bankList={bankList} />;
+                case stepIds.PAN_VERIFICATION_DISTRIBUTOR:
+                    return <PanVerificationDistributor {...props} />;
+                case stepIds.DIGILOCKER_REDIRECTION:
+                    return <DigilockerRedirection {...props} handleStepCallBack={handleStepCallBack} digilockerData={digilockerData} />;
+                case stepIds.ADD_BANK_ACCOUNT:
+                    return <BankAccount {...props} bankList={bankList} />;
                 default:
-                    return <Welcome stepData={stepData} handleSubmit={handleSubmit} />;
+                    return <Welcome {...props} />;
             }
         } else {
             return <div>No step data found for step {currentOnboardingStepId}</div>;
@@ -108,23 +169,23 @@ export const OnboardingWrapper = ({
 
     return (
         <div className="mt-8">
-            <div className={`${currentOnboardingStepId === STEP_IDS.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-8 w-full md:px-24`}>
-                <div className="flex items-center">
-                    <div className="relative flex flex-col w-full h-full">
-                        <div className="sm:flex sm:justify-between">
+            <div className={`${currentOnboardingStepId === stepIds.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-4 sm:px-8 w-full md:px-24`}>
+                <div className="w-full">
+                    <div className="relative w-full">
+                        <div className="sm:grid sm:grid-cols-[280px_minmax(0,768px)] sm:gap-6">
                             <span className="hidden sm:block md:block lg:block xl:block">
-                                <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} />
+                                <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
                             </span>
-                            <div className="relative flex w-full pb-10 mb-10 p-8 rounded-2xl sm:ml-8 bg-white">{renderStep(currentOnboardingStepId ?? 0)}</div>
+                            <div className="relative flex flex-col w-full pb-10 mb-10 p-4 sm:p-8 rounded-2xl bg-white min-w-0">{renderStep(currentOnboardingStepId ?? 0)}</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <span className="hidden block">
+            <span className="hidden">
                 {sideBarToggle ? (
-                    <div className="z-20 absolute top-14 top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
-                        <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} />
+                    <div className="z-20 absolute top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
+                        <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
                         <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
                     </div>
                 ) : (

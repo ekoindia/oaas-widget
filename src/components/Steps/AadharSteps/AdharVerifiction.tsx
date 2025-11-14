@@ -9,10 +9,10 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 import Modal from '../../Common/Modal';
 import Uploadfile from '../../Common/Uploadfile';
 
-const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepPropsType) => {
+const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA, skipButtonComponent }: GlobalStepPropsType) => {
     const { cameraStatus, uploadedImage, setCameraStatus, image, selectedFile, setImage, preview } = useStore();
     const [cameraType, setCameraType] = useState('');
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
     const [frontError, setFrontError] = useState(true);
     const [backError, setBackError] = useState(true);
@@ -52,9 +52,6 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
         }
     };
 
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
     const handleOnclick = () => {
         if (frontError === false && backError === false) {
             handleSubmit({ ...stepData, form_data: { aadhaarImages }, stepStatus: 3 });
@@ -179,11 +176,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA }: GlobalStepP
                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleClickAdhar} disabled={isDisabledCTA || frontError || backError}>
                     {isDisabledCTA ? 'Please wait ...' : primaryCTAText}
                 </ButtonGlobal>
-                {isSkipable && (
-                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                        Skip this step
-                    </ButtonGlobal>
-                )}
+                {skipButtonComponent}
             </div>
             <Modal
                 showModal={showInfoModal}
