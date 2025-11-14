@@ -1,16 +1,20 @@
 import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+import camera from '../../../assets/icons/camera.svg';
+import filledcamera from '../../../assets/icons/filledcamera.svg';
 import { BankDependentParam, BankListElement } from '../../../types';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
+import { Camera } from '../../Common/Camera';
 import InputGlobal from '../../Common/InputGlobal';
 import Labelglobal from '../../Common/Labelglobal';
+import Uploadfile from '../../Common/Uploadfile';
 
-const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }: GlobalStepPropsType) => {
+const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, skipButtonComponent }: GlobalStepPropsType) => {
     console.log('[AgeontOnboarding] bankList', bankList);
     console.log('[AgentOnboarding] stepData', stepData);
-    const { label, description, primaryCTAText, isSkipable } = stepData;
+    const { label, description, primaryCTAText } = stepData;
 
     const [selectedBank, setSelectedBank] = useState<BankListElement | null>(null);
     const [accountValidation, setAccountValidation] = useState({
@@ -18,12 +22,15 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
         max: 20,
         pattern_error: 'Please enter a valid account number'
     });
+    const [passbookImage, setPassbookImage] = useState<{ url: any; fileData: any } | null>(null);
+    const [cameraStatus, setCameraStatus] = useState(false);
 
     const initialValues = {
         bank_code: '',
         account: '',
         ifsc: '',
-        branch_address: ''
+        branch_address: '',
+        passbook_image: null as File | null
     };
 
     // Create dynamic validation schema
@@ -36,7 +43,8 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
             .matches(/^(?!0+$)[a-zA-Z0-9]*$/, accountValidation.pattern_error),
         ifsc: Yup.string()
             .required('IFSC code is required')
-            .matches(/^[a-zA-Z]{4}0[a-zA-Z0-9]{6}$/, 'Invalid IFSC format (e.g., SBIN0000001)')
+            .matches(/^[a-zA-Z]{4}0[a-zA-Z0-9]{6}$/, 'Invalid IFSC format (e.g., SBIN0000001)'),
+        passbook_image: Yup.mixed().required('Passbook image is required')
     });
 
     const handleBankChange = (bankValue: string, setFieldValue: any) => {
@@ -63,8 +71,20 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
         }
     };
 
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
+    const handlePassbookUpload = (url: string, type: string, fileData: File, setFieldValue: any) => {
+        setPassbookImage({ url, fileData });
+        setFieldValue('passbook_image', fileData);
+    };
+
+    const handlePassbookRetake = (setFieldValue: any) => {
+        setPassbookImage({ url: null, fileData: null });
+        setFieldValue('passbook_image', null);
+    };
+
+    const handleImageCapture = (imageData: any, setFieldValue: any) => {
+        setCameraStatus(false);
+        setPassbookImage({ url: imageData.url, fileData: imageData.file });
+        setFieldValue('passbook_image', imageData.file);
     };
 
     const onSubmit = (values: any) => {
@@ -79,6 +99,11 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
 
         if (values.branch_address) {
             formData.branch_address = values.branch_address;
+        }
+
+        // Add passbook image if uploaded (similar to aadhaarImages structure)
+        if (passbookImage) {
+            formData.passbookImage = passbookImage;
         }
 
         // Add bank_id from selected bank's dependent parameters
@@ -97,17 +122,14 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
     };
 
     return (
-        <div>
+        <div className="min-w-0">
             <div className="text-[22px] font-medium sm:font-normal">{label || 'Add Account'}</div>
-            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">
-                {description ||
-                    'This is the account from which you would want to do a transfer of funds in order to get E-value instantly. To get instant E-value kindly deposit funds from your added bank account only. Fund deposited from other bank account (which has not been added here) will not be considered for E-value clearance.'}
-            </div>
+            <div className="mt-3 text-base sm:text-sm font-normal sm:font-light break-words">{description}</div>
 
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} enableReinitialize>
                 {({ errors, touched, values, handleChange, setFieldValue }) => (
-                    <Form className="mt-8 max-w-md">
-                        <div className="space-y-4">
+                    <Form className="mt-8 min-w-0">
+                        <div className="flex flex-col gap-y-4 min-w-0">
                             {/* Bank Selection */}
                             <div>
                                 <Labelglobal>Select Your Bank</Labelglobal>
@@ -159,17 +181,51 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList }
                                 {errors.ifsc && touched.ifsc && <div className="text-darkdanger text-xs mt-1">{errors.ifsc}</div>}
                                 <div className="text-darkdefault text-xs mt-1">Bank branch's IFSC code</div>
                             </div>
+
+                            {/* Passbook Upload */}
+                            <div>
+                                <Labelglobal>Bank Passbook Image</Labelglobal>
+                                {cameraStatus ? (
+                                    <Camera type="Passbook" cameraType="passbook" handleImageCapture={(imageData: any) => handleImageCapture(imageData, setFieldValue)} imagesVal={passbookImage} />
+                                ) : passbookImage?.url ? (
+                                    <div className="flex flex-col w-full">
+                                        <div className="relative w-full h-[190px] border border-default rounded-md overflow-hidden">
+                                            <img src={passbookImage.url} alt="Bank Passbook" className="w-full h-full object-cover" />
+                                        </div>
+                                        <ButtonGlobal className="text-xs font-medium rounded-md px-4 py-2 w-max mt-2" onClick={() => handlePassbookRetake(setFieldValue)} type="button">
+                                            Retake
+                                        </ButtonGlobal>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col w-full">
+                                        <div className="p-8 text-sm text-darkdefault border border-default rounded-md bg-lightdefault border-dashed flex flex-col justify-center items-center h-[190px]">
+                                            <img src={camera} className="w-[2rem] h-[2rem] flex-col mb-4" alt="Camera" />
+                                            <div className="text-sm text-center">Upload or click bank passbook image</div>
+                                            <div className="flex mt-4">
+                                                <Uploadfile
+                                                    type="passbook"
+                                                    handleUpload={(url: string, type: string, fileData: File) => {
+                                                        handlePassbookUpload(url, type, fileData, setFieldValue);
+                                                    }}
+                                                />
+                                                <ButtonGlobal className="text-xs bottom-1.5 font-medium rounded-md pl-2 pr-2 py-[6px] w-max mr-2" onClick={() => setCameraStatus(true)} type="button">
+                                                    <>
+                                                        <img src={filledcamera} className="h-[15px] mr-2" alt="Camera" /> Open Camera
+                                                    </>
+                                                </ButtonGlobal>
+                                            </div>
+                                        </div>
+                                        {errors.passbook_image && touched.passbook_image && <div className="text-darkdanger text-xs mt-1">* Required</div>}
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" type="submit" disabled={isDisabledCTA}>
                                 {isDisabledCTA ? 'Loading...' : primaryCTAText || 'Proceed'}
                             </ButtonGlobal>
-                            {isSkipable && (
-                                <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip} type="button">
-                                    Skip this step
-                                </ButtonGlobal>
-                            )}
+                            {skipButtonComponent}
                         </div>
                     </Form>
                 )}

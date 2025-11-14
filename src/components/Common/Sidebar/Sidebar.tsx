@@ -7,19 +7,32 @@ type StepperProps = {
     steps: Array<StepDataType>;
     userData: any;
     currentStepId?: number;
+    constants: {
+        stepIds: {
+            BUSINESS: number;
+            SECRET_PIN: number;
+            [key: string]: number;
+        };
+        stepStatus: {
+            COMPLETED: number;
+            SKIPPED: number;
+            [key: string]: number;
+        };
+    };
 };
-const Sidebar = ({ steps, userData, currentStepId }: StepperProps) => {
+const Sidebar = ({ steps, userData, currentStepId, constants }: StepperProps) => {
     const currentStep = currentStepId ?? 0;
+    const { stepIds, stepStatus } = constants;
 
     const visibleStepData = useMemo(() => {
         if (!steps) return [];
         if (userData?.userDetails?.user_type === 3) {
-            // For Retailers, Filtering out steps: 9 (Business Details) & 10 (Secret PIN)
-            return steps?.filter((step) => step.isVisible && step.id !== 10 && step.id !== 9);
+            // For Retailers, Filtering out steps: Business Details & Secret PIN
+            return steps?.filter((step) => step.isVisible && step.id !== stepIds.SECRET_PIN && step.id !== stepIds.BUSINESS);
         } else {
             return steps?.filter((step) => step.isVisible);
         }
-    }, [steps]);
+    }, [steps, stepIds]);
 
     const progressRef = useRef<any>(null);
     const currentStepIndex = visibleStepData?.map((step) => step.id)?.indexOf(currentStep);
@@ -35,7 +48,7 @@ const Sidebar = ({ steps, userData, currentStepId }: StepperProps) => {
     }, [currentStepIndex, visibleStepData]);
 
     return (
-        <div className="w-[75%] sm:w-full sm:rounded-2xl bg-white">
+        <div className="w-[75%] sm:w-[280px] sm:rounded-2xl bg-white">
             <div className="px-5 pt-5 p-5 bg-primary rounded-t-2xl">
                 <div className="flex-col">
                     <div className="mb-2 text-base text-white">ONBOARDING PROGRESS</div>
@@ -56,6 +69,7 @@ const Sidebar = ({ steps, userData, currentStepId }: StepperProps) => {
                     const isDone = i < currentStepIndex;
                     const isCurrent = currentStep === step.id;
                     const isFuture = i > currentStepIndex;
+                    const isSkipped = step.stepStatus === stepStatus.SKIPPED;
 
                     // console.log('>>>>>>>> Sidebar Step:: ', isDone ? '↙️' : isFuture ? '↗️' : '—', i, currentStepIndex, step, currentStep);
 
@@ -67,23 +81,28 @@ const Sidebar = ({ steps, userData, currentStepId }: StepperProps) => {
                             // }}
                             >
                                 <span className="flex pb-5 items-center">
-                                    <span className={`step relative before:bg-lightdefault ${isFuture ? 'disabled' : ''}`}>
+                                    <span className={`step relative before:bg-lightdefault ${isFuture ? 'disabled' : ''} ${isSkipped ? 'border-orange-400 bg-orange-50' : ''}`}>
                                         {/* {step.stepStatus !== 3 ? i + 1 : <img src={CompleteMark} alt="complete mark" className="w-[15px] h-[11px]" />} */}
-                                        {isDone ? <img src={CompleteMark} alt="complete mark" className="w-[14px] h-[14px]" /> : i + 1}
+                                        {isSkipped ? (
+                                            <span className="text-[10px] font-bold text-orange-500">—</span>
+                                        ) : isDone ? (
+                                            <img src={CompleteMark} alt="complete mark" className="w-[14px] h-[14px]" />
+                                        ) : (
+                                            i + 1
+                                        )}
                                     </span>
                                     <div className="min-h-[40px] flex flex-col justify-center">
-                                        <div className={`ml-3 pr-2 text-[13px] font-medium ${isCurrent ? 'text-primary' : isFuture ? 'disabled' : 'text-black'}`}>{step.label}</div>
-                                        {
-                                            /* step.stepStatus >= 1 && step.stepStatus <= 3 */ isCurrent && (
-                                                <div
-                                                    className={`w-[70px] rounded-full h-[16px] ml-3 mt-[4px] text-[10px] flex justify-center items-center ${
-                                                        step.stepStatus === 2 ? 'text-darkdanger bg-white border-darkdanger border-2' : 'text-white bg-warning'
-                                                    }`}
-                                                >
-                                                    {/* step.stepStatus === 1 */ isCurrent ? 'In Progress' : step.stepStatus === 2 ? 'Skipped' : ''}
-                                                </div>
-                                            )
-                                        }
+                                        <div className={`ml-3 pr-2 text-[13px] font-medium ${isCurrent ? 'text-primary' : isFuture ? 'disabled' : isSkipped ? 'text-orange-500' : 'text-black'}`}>
+                                            {step.label}
+                                        </div>
+                                        {isCurrent && (
+                                            <div className="w-[70px] rounded-full h-[16px] ml-3 mt-[4px] text-[10px] flex justify-center items-center text-white bg-warning">In Progress</div>
+                                        )}
+                                        {isSkipped && !isCurrent && (
+                                            <div className="w-[70px] rounded-full h-[16px] ml-3 mt-[4px] text-[10px] flex justify-center items-center text-orange-600 bg-orange-100 border border-orange-400">
+                                                Skipped
+                                            </div>
+                                        )}
                                     </div>
                                 </span>
                             </div>

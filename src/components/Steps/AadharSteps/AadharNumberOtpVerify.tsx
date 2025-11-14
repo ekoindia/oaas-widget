@@ -11,13 +11,13 @@ const aadhaarNumberVerifySchema = Yup.object().shape({
     shareCode: Yup.string().required('(Required) Please set up your 4-digit share code').min(4, '(Minimum 4 digits required) Please set up your 4-digit share code')
 });
 
-const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack }: GlobalStepPropsType) => {
+const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, skipButtonComponent }: GlobalStepPropsType) => {
     // const [otpVal, setOtpVal] = useState('');
     // const [shareCode, setShareCode] = useState('0000');
     const [isResend, setIsResend] = useState(false);
     const [resendTimerCount, setResendTimerCount] = useState(30);
     const formValues = { otpVal: '', shareCode: '0000' };
-    const { label, description, isSkipable, primaryCTAText } = stepData;
+    const { label, description, primaryCTAText } = stepData;
     let timerOut: any = null;
     const handleResendTimer = () => {
         let timer = 30;
@@ -37,9 +37,6 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
         //     timerOut;
         // }
     };
-    const handleSkip = () => {
-        handleSubmit({ ...stepData, stepStatus: 2 });
-    };
     useEffect(() => {
         if (resendTimerCount === 30) {
             console.log('Inside detectTimer', resendTimerCount);
@@ -54,7 +51,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
         <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
-            <div className="mt-8 max-w-md">
+            <div className="mt-8">
                 <Formik
                     initialValues={formValues}
                     validationSchema={aadhaarNumberVerifySchema}
@@ -108,11 +105,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" disabled={isDisabledCTA}>
                                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                                 </ButtonGlobal>
-                                {isSkipable && (
-                                    <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleSkip}>
-                                        Skip this step
-                                    </ButtonGlobal>
-                                )}
+                                {skipButtonComponent}
                             </div>
                         </Form>
                     )}

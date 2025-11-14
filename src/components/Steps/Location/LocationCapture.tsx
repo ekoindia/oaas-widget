@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack }: GlobalStepPropsType) => {
+const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handleStepCallBack, skipButtonComponent }: GlobalStepPropsType) => {
     const { label, description, primaryCTAText } = stepData;
 
     const handleLocationCapture = (location: any) => {
@@ -41,15 +41,16 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
         <div>
             <div className="text-[22px] font-medium sm:font-normal">{label}</div>
             <div className="mt-3 text-base sm:text-sm font-normal sm:font-light">{description}</div>
-            <ul className="mt-8 space-y-2 list-disc pl-5 text-sm sm:text-base max-w-2xl">
+            <ul className="mt-8 space-y-2 list-disc pl-5 text-sm sm:text-base">
                 <li>Please click the button below to allow browser to capture your location.</li>
                 <li>In browser popup, click &quot;Allow&quot; button to enable location capturing.</li>
                 <li>You will be re-directed to next step after successful location capture.</li>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
                 <ButtonGlobal className="w-full h-[48px] sm:max-w-[200px] sm:h-[64px]" onClick={handleLocation} disabled={isDisabledCTA}>
-                    {isDisabledCTA ? 'Loading...' : primaryCTAText}
+                    {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                 </ButtonGlobal>
+                {skipButtonComponent}
             </div>
         </div>
     );

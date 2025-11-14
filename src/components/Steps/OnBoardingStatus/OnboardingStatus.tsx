@@ -1,10 +1,10 @@
 import React from 'react';
-import thumb from '../../../assets/icons/thumb.svg';
 import retry from '../../../assets/icons/retry.png';
-import ButtonGlobal from '../../Common/ButtonGlobal';
+import thumb from '../../../assets/icons/thumb.svg';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
+import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const OnboardingStatus = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
+const OnboardingStatus = ({ stepData, handleSubmit, skipButtonComponent }: GlobalStepPropsType) => {
     return (
         <>
             <div className="flex mt-8">

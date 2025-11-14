@@ -8,10 +8,10 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 type WelcomeProps = {
     stepData: StepDataType;
 };
-const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
+const Welcome = ({ stepData, handleSubmit, skipButtonComponent }: GlobalStepPropsType) => {
     const { steps, currentStep, setCompleted, setCurrentStepPlus } = useStore();
     return (
-        <div className="w-full min-h-[80vh] sm:min-h-[85%] flex items-center justify-center bg-white rounded-2xl">
+        <div className="min-h-[60vh] flex items-center justify-center">
             <div className="items-center text-center text-black px-4">
                 <img src={String(WelcomeIcon)} alt="welcome icon" className="h-48 w-48 sm:h-52 sm:w-52 mx-auto mb-6" />
                 <h1 className="text-2xl font-semibold">Welcome!</h1>
@@ -19,9 +19,10 @@ const Welcome = ({ stepData, handleSubmit }: GlobalStepPropsType) => {
                     <span className="sm:block">Happy to see you here. Lets start your onboarding journey.</span>
                     <span className="sm:block"> We ensure, you&apos;ll be assisted at every step.</span>
                 </p>
-                <ButtonGlobal className="mt-8" onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}>
-                    {currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}
-                </ButtonGlobal>
+                <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
+                    <ButtonGlobal onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}>{currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}</ButtonGlobal>
+                    {skipButtonComponent}
+                </div>
             </div>
         </div>
     );

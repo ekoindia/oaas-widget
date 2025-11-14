@@ -5,7 +5,7 @@ import userMerchant from '../../../assets/icons/user_merchant.png';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
-const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, accentColor }: GlobalStepPropsType) => {
+const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, accentColor, skipButtonComponent }: GlobalStepPropsType) => {
     const { id, name, label, primaryCTAText, form_data } = stepData;
     const [roleVal, setRoleVal] = useState<number>(-1);
     const handleChange = (e: any) => {
@@ -62,6 +62,7 @@ const SelectionScreen = ({ stepData, handleSubmit, isDisabledCTA, primaryColor, 
                 >
                     {isDisabledCTA ? 'Please wait...' : primaryCTAText}
                 </ButtonGlobal>
+                {skipButtonComponent}
             </div>
         </div>
     );
