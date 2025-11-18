@@ -111,9 +111,13 @@ const OnboardingWidget = ({
         }
     }, [primaryColor, accentColor]);
 
+    /**
+     * Set Initial Onboarding Step ID based on stepStatus
+     * If any step with role exists and is not COMPLETED or SKIPPED, set it as initial step
+     */
     useEffect(() => {
         if (stepsData) {
-            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != stepStatus.FAILED && step.stepStatus != stepStatus.SKIPPED);
+            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != stepStatus.COMPLETED && step.stepStatus != stepStatus.SKIPPED);
             const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
             setCurrentOnboardingStepId(_initialStepId);
         }
