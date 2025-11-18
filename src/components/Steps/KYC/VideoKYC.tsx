@@ -35,7 +35,7 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false, skipButtonCom
     };
     const handleOnSubmit = () => {
         if (!videoKycError) {
-            handleSubmit({ ...stepData, form_data: { videoKyc }, stepStatus: 3 });
+            handleSubmit({ ...stepData, form_data: { videoKyc }, stepStatus: 2 });
         }
     };
     return (

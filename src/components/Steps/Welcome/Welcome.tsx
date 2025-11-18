@@ -20,7 +20,7 @@ const Welcome = ({ stepData, handleSubmit, skipButtonComponent }: GlobalStepProp
                     <span className="sm:block"> We ensure, you&apos;ll be assisted at every step.</span>
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
-                    <ButtonGlobal onClick={() => handleSubmit({ ...stepData, stepStatus: 3 })}>{currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}</ButtonGlobal>
+                    <ButtonGlobal onClick={() => handleSubmit({ ...stepData, stepStatus: 2 })}>{currentStep === steps.length + 1 ? 'Done' : stepData?.primaryCTAText}</ButtonGlobal>
                     {skipButtonComponent}
                 </div>
             </div>

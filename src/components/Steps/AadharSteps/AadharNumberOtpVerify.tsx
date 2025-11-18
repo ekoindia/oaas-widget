@@ -56,7 +56,7 @@ const AadhaarNumberOtpVerify = ({ stepData, handleSubmit, isDisabledCTA, handleS
                     initialValues={formValues}
                     validationSchema={aadhaarNumberVerifySchema}
                     onSubmit={(formData) => {
-                        handleSubmit({ ...stepData, form_data: { otp: formData.otpVal, is_consent: 'Y', share_code: formData.shareCode }, stepStatus: 3 });
+                        handleSubmit({ ...stepData, form_data: { otp: formData.otpVal, is_consent: 'Y', share_code: formData.shareCode }, stepStatus: 2 });
                     }}
                 >
                     {({ errors, touched, values, handleChange }) => (
