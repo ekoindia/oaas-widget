@@ -70,7 +70,7 @@ const BusinessMerchant = ({ stepData, handleSubmit, isDisabledCTA = false, shopT
                 initialValues={formValues}
                 validationSchema={SignupSchema}
                 onSubmit={(formData) => {
-                    handleSubmit({ ...stepData, form_data: { ...formData, latlong: locationVal }, stepStatus: 3 });
+                    handleSubmit({ ...stepData, form_data: { ...formData, latlong: locationVal }, stepStatus: 2 });
                 }}
             >
                 {({ errors, touched, values, handleChange }) => (

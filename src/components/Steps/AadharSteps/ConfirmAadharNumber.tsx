@@ -14,7 +14,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
     const formValues = { aadhaarCardNumber: '' };
     const { label, description, primaryCTAText } = stepData;
     // const handleConfirmAadhaarClick = () => {
-    //     handleSubmit({ ...stepData, form_data: { aadhaar: aadhaarCardNumber, is_consent: 'Y' }, stepStatus: 3 });
+    //     handleSubmit({ ...stepData, form_data: { aadhaar: aadhaarCardNumber, is_consent: 'Y' }, stepStatus: 2 });
     // };
 
     return (
@@ -26,7 +26,7 @@ const ConfirmAadhaarNumber = ({ stepData, handleSubmit, isDisabledCTA, orgName, 
                     initialValues={formValues}
                     validationSchema={ConfirmAadhaarNumberSchema}
                     onSubmit={(formData) => {
-                        handleSubmit({ ...stepData, form_data: { aadhar: formData.aadhaarCardNumber, is_consent: 'Y' }, stepStatus: 3 });
+                        handleSubmit({ ...stepData, form_data: { aadhar: formData.aadhaarCardNumber, is_consent: 'Y' }, stepStatus: 2 });
                     }}
                 >
                     {({ errors, touched, values, handleChange }) => (

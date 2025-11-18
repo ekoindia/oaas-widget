@@ -31,7 +31,7 @@ const SecretPin = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, 
                     initialValues={formValues}
                     validationSchema={secretPinValidationSchema}
                     onSubmit={(formData) => {
-                        handleSubmit({ ...stepData, form_data: formData, stepStatus: 3 });
+                        handleSubmit({ ...stepData, form_data: formData, stepStatus: 2 });
                     }}
                 >
                     {({ errors, touched, values, handleChange }) => (
