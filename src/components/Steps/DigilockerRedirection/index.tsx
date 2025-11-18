@@ -66,7 +66,7 @@ export const DigilockerRedirection = ({ stepData, handleSubmit, isDisabledCTA, h
                 digilocker_completed: true,
                 completion_timestamp: new Date().toISOString()
             },
-            stepStatus: 3
+            stepStatus: 2
         });
     };
 

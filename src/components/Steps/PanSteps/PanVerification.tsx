@@ -72,7 +72,7 @@ const PanVerification = ({ stepData, handleSubmit, isDisabledCTA = false, shopTy
                 <span className="text-primary"> .jpg, .png</span>
             </div>
 
-            <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 3 }))} className="mt-8">
+            <form onSubmit={handleSubmitRhf((_data) => handleSubmit({ ...stepData, form_data: _data, stepStatus: 2 }))} className="mt-8">
                 <Value
                     {...{
                         formHeading: 'PAN Verification',

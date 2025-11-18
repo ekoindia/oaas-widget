@@ -117,7 +117,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
         handleSubmit({
             ...stepData,
             form_data: formData,
-            stepStatus: 3
+            stepStatus: 2
         });
     };
 

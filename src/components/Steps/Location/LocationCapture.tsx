@@ -7,7 +7,7 @@ const LocationCapture = ({ stepData, handleSubmit, isDisabledCTA = false, handle
 
     const handleLocationCapture = (location: any) => {
         console.log('[AgentOnboarding] OAAS Captured location:', location);
-        handleSubmit({ ...stepData, form_data: { latlong: `${location?.coordinates?.lat},${location?.coordinates?.lng},${location?.coordinates?.accuracy}` }, stepStatus: 3 });
+        handleSubmit({ ...stepData, form_data: { latlong: `${location?.coordinates?.lat},${location?.coordinates?.lng},${location?.coordinates?.accuracy}` }, stepStatus: 2 });
     };
 
     const onSuccess = (location: any) => {

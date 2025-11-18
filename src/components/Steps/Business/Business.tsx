@@ -46,7 +46,7 @@ const Business = ({ stepData, handleSubmit, isDisabledCTA = false, shopTypes = [
                 initialValues={formValues}
                 validationSchema={SignupSchema}
                 onSubmit={(formData) => {
-                    handleSubmit({ ...stepData, form_data: formData, stepStatus: 3 });
+                    handleSubmit({ ...stepData, form_data: formData, stepStatus: 2 });
                 }}
             >
                 {({ errors, touched, values, handleChange }) => (
