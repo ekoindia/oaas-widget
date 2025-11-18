@@ -6,7 +6,7 @@ const ActivationPlan = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallB
     const [consentData, setConsentData] = useState('');
     const { label, description, primaryCTAText } = stepData;
     const handleActivationPlan = () => {
-        // handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
+        // handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 2 });
     };
     useEffect(() => {
         if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'getInitialActivationPlan' });

@@ -16,7 +16,7 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appNam
         orgName || appName || 'us'
     } as your authorized representative to receive your personal and credit information from UIDAI, CIBIL and other government and private agencies for the purpose of providing you credit in the form of loans or line of credit through our lending partners (&quot;End Use Purpose&quot;).`;
     // const handleAadhaarConsentClick = () => {
-    //     handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 3 });
+    //     handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: consentData }, stepStatus: 2 });
     // };
     const formValues = { name: '' };
     return (
@@ -28,9 +28,9 @@ const AadhaarConsent = ({ stepData, handleSubmit, isDisabledCTA, orgName, appNam
                     initialValues={formValues}
                     validationSchema={aadhaarConsentSchema}
                     onSubmit={(formData) => {
-                        // handleSubmit({ ...stepData, form_data: formData, stepStatus: 3 });
+                        // handleSubmit({ ...stepData, form_data: formData, stepStatus: 2 });
                         // console.log('this is form data', formData);
-                        handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: formData.name }, stepStatus: 3 });
+                        handleSubmit({ ...stepData, form_data: { is_consent: 'Y', consent_text: consentText, name: formData.name }, stepStatus: 2 });
                     }}
                 >
                     {({ errors, touched, values, handleChange }) => (

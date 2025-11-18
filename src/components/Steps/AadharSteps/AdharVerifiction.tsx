@@ -54,7 +54,7 @@ const AdharVerifiction = ({ stepData, handleSubmit, isDisabledCTA, skipButtonCom
 
     const handleOnclick = () => {
         if (frontError === false && backError === false) {
-            handleSubmit({ ...stepData, form_data: { aadhaarImages }, stepStatus: 3 });
+            handleSubmit({ ...stepData, form_data: { aadhaarImages }, stepStatus: 2 });
         }
     };
 

@@ -96,6 +96,7 @@ const OnboardingWidget = ({
     // Extract constants from props
     const { apiStatus, stepIds, stepStatus } = constants;
 
+    console.log('[Onboarding] stepStatus', stepStatus);
     // console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
     // console.log('[AgentOnboarding] OAAS stepsData', stepsData);
 
