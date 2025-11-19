@@ -1,15 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GlobalStepPropsType } from '../../../utils/globalInterfaces/stepsInterface';
 import { Spinner } from '../../Common';
 import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, esignStatus, skipButtonComponent }: GlobalStepPropsType) => {
+    const [popupOpened, setPopupOpened] = useState(false); // Track if popup has been opened by the user
+
     useEffect(() => {
         if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'getSignUrl' });
     }, []);
 
     const openPopupTab = () => {
         handleStepCallBack({ type: stepData.id, method: 'legalityOpen' });
+        setPopupOpened(true);
+    };
+
+    const checkStatusAfterPopupOpened = () => {
+        handleStepCallBack({ type: stepData.id, method: 'checkEsignStatus' });
     };
 
     const onReload = () => {
@@ -30,6 +37,16 @@ const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBa
             <ButtonGlobal className="mt-6 mt-8" disabled={isLoading} onClick={openPopupTab}>
                 {isLoading ? 'Loading...' : stepData?.primaryCTAText}
             </ButtonGlobal>
+            {popupOpened ? (
+                <p className="sm:font-normal text-[16px] pt-4 pl-4 pr-4 text-center">
+                    <span className="sm:block">After completing the e-sign process in the opened tab,</span>
+                    <span className="sm:block">please click here to confirm status and proceed:</span>
+                    <br />
+                    <ButtonGlobal className="mt-6 mt-8" disabled={isLoading} onClick={checkStatusAfterPopupOpened}>
+                        Continue
+                    </ButtonGlobal>
+                </p>
+            ) : null}
         </>
     );
 

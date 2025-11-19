@@ -1,6 +1,6 @@
 {
     "name": "@ekoindia/oaas-widget",
-    "version": "4.3.4",
+    "version": "4.3.5",
     "description": "Web widget for onboarding-as-a-service",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
