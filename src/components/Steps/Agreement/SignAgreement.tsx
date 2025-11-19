@@ -38,11 +38,11 @@ const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBa
                 {isLoading ? 'Loading...' : stepData?.primaryCTAText}
             </ButtonGlobal>
             {popupOpened ? (
-                <p className="sm:font-normal text-[16px] pt-4 pl-4 pr-4 text-center">
-                    <span className="sm:block">After completing the e-sign process in the opened tab,</span>
-                    <span className="sm:block">please click here to confirm status and proceed:</span>
+                <p className="sm:font-normal text-[16px] pt-8 pl-4 pr-4 text-center">
+                    <span className="sm:block">After completing the e-sign process,</span>
+                    <span className="sm:block">please click the following button to confirm status and proceed:</span>
                     <br />
-                    <ButtonGlobal className="mt-6 mt-8" disabled={isLoading} onClick={checkStatusAfterPopupOpened}>
+                    <ButtonGlobal className="mt-4" disabled={isLoading} onClick={checkStatusAfterPopupOpened}>
                         Continue
                     </ButtonGlobal>
                 </p>
