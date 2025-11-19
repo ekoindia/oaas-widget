@@ -7,7 +7,7 @@ node_modules
 dist
 *.bundle.js
 *.bundle.js.map
-types
+/types
 
 # Storybook build output
 storybook-static
