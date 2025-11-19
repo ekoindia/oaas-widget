@@ -81,10 +81,17 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
         setFieldValue('passbook_image', null);
     };
 
-    const handleImageCapture = (imageData: any, setFieldValue: any) => {
+    // const handleImageCapture = (imageData: any, setFieldValue: any) => {
+    //     setCameraStatus(false);
+    //     setPassbookImage({ url: imageData.url, fileData: imageData.file });
+    //     setFieldValue('passbook_image', imageData.file);
+    // };
+
+    // TODO: Quick fix for camera issue - to be refactored later (19 Nov 2025)
+    const handleImageCapture = (image: any, fileData: any, setFieldValue: any) => {
         setCameraStatus(false);
-        setPassbookImage({ url: imageData.url, fileData: imageData.file });
-        setFieldValue('passbook_image', imageData.file);
+        setPassbookImage({ url: image, fileData });
+        setFieldValue('passbook_image', fileData);
     };
 
     const onSubmit = (values: any) => {
@@ -186,7 +193,12 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
                             <div>
                                 <Labelglobal>Bank Passbook Image</Labelglobal>
                                 {cameraStatus ? (
-                                    <Camera type="Passbook" cameraType="passbook" handleImageCapture={(imageData: any) => handleImageCapture(imageData, setFieldValue)} imagesVal={passbookImage} />
+                                    <Camera
+                                        type="Passbook"
+                                        cameraType="passbook"
+                                        handleImageCapture={(image: any, fileData: any) => handleImageCapture(image, fileData, setFieldValue)}
+                                        imagesVal={passbookImage}
+                                    />
                                 ) : passbookImage?.url ? (
                                     <div className="flex flex-col w-full">
                                         <div className="relative w-full h-[190px] border border-default rounded-md overflow-hidden">
