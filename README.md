@@ -565,13 +565,16 @@ npm run check-updates
 
 ### Publishing to NPM
 
-1. Increment the package version in `package.json` file (currently at v4.3.0)
-2. Build the package: `npm run build`
-3. Add your npm credentials using `npm adduser` (app.admin account)
-    - Enter username, email and password
-    - Enter OTP sent to app.admin's email
+1. One-time setup:
+    - Ensure you have an npm account with access to the `@ekoindia` scope
+    - Configure 2FA (Two-Factor Authentication) for your npm account
+    - Add your npm credentials using `npm adduser` (app.admin account)
+        - Enter username, email and password
+        - Enter OTP sent to app.admin's email
+2. Increment the package version in `package.json` file (line #3)
+3. Build the package: `npm run build`
 4. Publish the package: `npm run publish-try`
-    - This command uses `|| true` to prevent CI/CD failures if publish fails
+    - Note: this command uses `|| true` to prevent CI/CD failures if publish fails
 
 **Note**: The package is published under the `@ekoindia` scope with public access.
 
