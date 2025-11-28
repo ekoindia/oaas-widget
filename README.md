@@ -440,6 +440,12 @@ it as a local dependency.
 3. Run the `npm link @ekoindia/oaas-widget` command in your target project's root directory to link this package.
     1. A folder called `@ekoindia` will be created in your target project's node_modules directory with a symlink to this package. You may delete that folder to remove the symlink.
 4. Import the package in your project and use it as a local dependency.
+5. Make changes in this package and rebuild using `npm run build` to see the changes reflected in your target project.
+6. When done testing,
+    - Run `npm unlink @ekoindia/oaas-widget` in your target project to remove the symlink
+    - Run `npm unlink` in this package to remove the global link
+    - Also, delete the `@ekoindia` folder from your target project's node_modules directory if it still exists
+    - Then, reinstall the package from npm if needed: `npm install @ekoindia/oaas-widget`.
 
 ## 📁 Project Structure
 
