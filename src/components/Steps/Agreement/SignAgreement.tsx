@@ -31,7 +31,7 @@ const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBa
     let cardContent = (
         <>
             <p className="sm:font-normal text-[18px] pt-2 pl-4 pr-4">
-                <span className="sm:block">Only one more to go!</span>
+                <span className="sm:block">Only one more to go!&nbsp;</span>
                 <span className="sm:block">Sign the agreement using your Aadhaar number to continue.</span>
             </p>
             <ButtonGlobal className="mt-6 mt-8" disabled={isLoading} onClick={openPopupTab}>
@@ -39,7 +39,7 @@ const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBa
             </ButtonGlobal>
             {popupOpened ? (
                 <p className="sm:font-normal text-[16px] pt-8 pl-4 pr-4 text-center">
-                    <span className="sm:block">After completing the e-sign process,</span>
+                    <span className="sm:block">After completing the e-sign process,&nbsp;</span>
                     <span className="sm:block">please click the following button to confirm status and proceed:</span>
                     <br />
                     <ButtonGlobal className="mt-4" disabled={isLoading} onClick={checkStatusAfterPopupOpened}>
