@@ -61,7 +61,8 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false, skipButtonCom
                                         onClick={() => setCameraStatus(true)}
                                     >
                                         <>
-                                            <img src={filledcamera} className="h-[15px] mr-2" /> Open Camera
+                                            <img src={filledcamera} className="h-[15px] mr-2" />
+                                            &nbsp;Open Camera
                                         </>
                                     </ButtonGlobal>
                                 </div>
@@ -76,7 +77,8 @@ const VideoKYC = ({ stepData, handleSubmit, isDisabledCTA = false, skipButtonCom
                                         onClick={() => setCameraStatus(true)}
                                     >
                                         <>
-                                            <img src={filledcamera} className="h-[15px] mr-2" /> Open Camera
+                                            <img src={filledcamera} className="h-[15px] mr-2" />
+                                            &nbsp;Open Camera
                                         </>
                                     </ButtonGlobal>
                                 </div>

@@ -33,6 +33,7 @@ type OAASPackageProps = {
     stepResponse?: any;
     handleStepCallBack?: any;
     handleOnboardingSkip?: (_stepId: number) => void;
+    apiInProgress?: boolean;
     stepsData: Array<StepDataType>;
     // theme?: Record<string, string>;
     digilockerData?: any;
@@ -85,6 +86,7 @@ const OnboardingWidget = ({
     stepResponse,
     handleStepCallBack,
     handleOnboardingSkip,
+    apiInProgress = false,
     stepsData,
     esignStatus,
     digilockerData,
@@ -139,6 +141,7 @@ const OnboardingWidget = ({
             currentOnboardingStepId={currentOnboardingStepId}
             handleStepCallBack={handleStepCallBack}
             handleOnboardingSkip={handleOnboardingSkip}
+            apiInProgress={apiInProgress}
             esignStatus={esignStatus}
             digilockerData={digilockerData}
             stepsData={stepsData}

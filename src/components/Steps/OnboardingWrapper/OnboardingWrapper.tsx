@@ -33,6 +33,7 @@ type HomepageProps = {
     bankList: BankListType;
     handleStepCallBack: any;
     handleOnboardingSkip?: (_stepId: number) => void;
+    apiInProgress?: boolean;
     userData: any;
     esignStatus: any;
     orgName?: string;
@@ -85,6 +86,7 @@ export const OnboardingWrapper = ({
     bankList,
     handleStepCallBack,
     handleOnboardingSkip,
+    apiInProgress,
     userData,
     esignStatus,
     orgName,
@@ -120,7 +122,8 @@ export const OnboardingWrapper = ({
             const props = {
                 stepData,
                 handleSubmit,
-                skipButtonComponent
+                skipButtonComponent,
+                isDisabledCTA: apiInProgress
             };
             switch (currentStep) {
                 case stepIds.LOCATION_CAPTURE:
