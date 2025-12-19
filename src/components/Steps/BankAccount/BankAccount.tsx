@@ -73,6 +73,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
 
     const handlePassbookUpload = (url: string, type: string, fileData: File, setFieldValue: any) => {
         setPassbookImage({ url, fileData });
+        console.log('[BankAccount] handlePassbookUpload fileData:', fileData);
         setFieldValue('passbook_image', fileData);
     };
 
