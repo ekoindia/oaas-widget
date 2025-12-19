@@ -91,6 +91,8 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
     const handleImageCapture = (image: any, fileData: any, setFieldValue: any) => {
         setCameraStatus(false);
         setPassbookImage({ url: image, fileData });
+        console.log('[BankAccount] handleImageCapture image:', image);
+        console.log('[BankAccount] handleImageCapture fileData:', fileData);
         setFieldValue('passbook_image', fileData);
     };
 
