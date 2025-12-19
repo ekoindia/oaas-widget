@@ -61,15 +61,94 @@ const MyApp = () => {
 
 ## 📋 Table of Contents
 
-1. [Architecture Overview](#-architecture-overview)
-2. [User Flow](#-user-flow)
-3. [Available Steps](#-available-steps)
-4. [Integration Guide](#-integration-guide)
-5. [API Integration](#-api-integration)
-6. [Configuration](#-configuration)
-7. [Development Setup](#-development-setup)
-8. [Project Structure](#-project-structure)
-9. [Build & Deployment](#-build--deployment)
+1. [Development Setup](#-development-setup)
+2. [Build & Deployment](#-build--deployment)
+3. [Architecture Overview](#-architecture-overview)
+4. [User Flow](#-user-flow)
+5. [Available Steps](#-available-steps)
+6. [Integration Guide](#-integration-guide)
+7. [API Integration](#-api-integration)
+8. [Configuration](#-configuration)
+9. [Project Structure](#-project-structure)
+10. [Testing & Quality](#-testing--quality)
+11. [Advanced Features](#-advanced-features)
+12. [Browser Support](#-browser-support)
+13. [Mobile Support](#-mobile-support)
+14. [Troubleshooting](#-troubleshooting)
+15. [Contributing](#-contributing)
+16. [Adding a New Step](#-adding-a-new-step)
+
+## 🛠️ Development Setup
+
+### Prerequisites
+
+-   Node.js (v16+)
+-   React (v18+)
+-   TypeScript (v4.9+)
+
+### Local Development
+
+To include the package in your local project for testing, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import
+it as a local dependency.
+
+#### To test the package locally:
+
+1. Create build using `npm run build` to create dist folder which will serve target projects.
+2. Run the `npm link` command in this project's root directory to create a symlink.
+3. Run the `npm link @ekoindia/oaas-widget` command in your target project's root directory to link this package.
+    1. A folder called `@ekoindia` will be created in your target project's node_modules directory with a symlink to this package. You may delete that folder to remove the symlink.
+4. Import the package in your project and use it as a local dependency.
+5. Make changes in this package and rebuild using `npm run build` to see the changes reflected in your target project.
+6. When done testing,
+    - Run `npm unlink @ekoindia/oaas-widget` in your target project to remove the symlink
+    - Run `npm unlink` in this package to remove the global link
+    - Also, delete the `@ekoindia` folder from your target project's node_modules directory if it still exists
+    - Then, reinstall the package from npm if needed: `npm install @ekoindia/oaas-widget`.
+
+## 🚀 Build & Deployment
+
+### Build Configuration
+
+The project uses **Rollup** for efficient bundling with the following features:
+
+-   **Tree Shaking**: Removes unused code for smaller bundle sizes
+-   **ES Module Support**: Native ES module compatibility
+-   **Multiple Output Formats**: CommonJS (CJS) and ES Module (ESM) builds
+-   **TypeScript Support**: Full TypeScript compilation and declaration generation
+-   **CSS Processing**: PostCSS and Tailwind CSS integration with inline injection
+-   **Image Processing**: Optimized asset bundling
+
+### Build Scripts
+
+```bash
+# Production build
+npm run build
+
+# Generates:
+# ├── dist/
+# │   ├── index.js          # CommonJS bundle
+# │   ├── index.esm.js      # ES module bundle
+# │   ├── index.d.ts        # TypeScript declarations
+# │   └── (CSS inlined in JS bundles)
+
+# Check for outdated dependencies
+npm run check-updates
+```
+
+### Publishing to NPM
+
+1. One-time setup:
+    - Ensure you have an npm account with access to the `@ekoindia` scope
+    - Configure 2FA (Two-Factor Authentication) for your npm account
+    - Add your npm credentials using `npm adduser` (app.admin account)
+        - Enter username, email and password
+        - Enter OTP sent to app.admin's email
+2. Increment the package version in `package.json` file (line #3)
+3. Build the package: `npm run build`
+4. Publish the package: `npm run publish-try`
+    - Note: this command uses `|| true` to prevent CI/CD failures if publish fails
+
+**Note**: The package is published under the `@ekoindia` scope with public access.
 
 ## 🏗️ Architecture Overview
 
@@ -389,6 +468,72 @@ REACT_APP_ENABLE_VIDEO_KYC=true
 REACT_APP_ESIGN_PROVIDER_URL=https://esign-provider.com
 ```
 
+### Configuration Files
+
+#### TypeScript Configuration (`tsconfig.json`)
+
+```json
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "lib": ["ES2018", "DOM"],
+        "jsx": "react",
+        "module": "ESNext",
+        "declaration": true,
+        "declarationDir": "types",
+        "outDir": "dist/esm",
+        "strict": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
+```
+
+#### Rollup Configuration
+
+-   **Input**: `src/index.ts`
+-   **Output**: Multiple formats (CommonJS, ESM)
+-   **Plugins**:
+    -   TypeScript with declaration generation
+    -   PostCSS with Tailwind CSS (inline injection)
+    -   Image optimization
+    -   Peer dependencies externalization
+-   **External**: React, React-DOM (peer dependencies)
+
+#### Tailwind CSS Configuration
+
+```javascript
+module.exports = {
+    content: ['src/**/*.{ts,tsx}'],
+    theme: {
+        extend: {
+            colors: {
+                primary: 'var(--color-primary, #007bff)'
+                // ... custom color palette
+            },
+            boxShadow: {
+                xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
+                // ... custom shadows
+            }
+        },
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: '1rem',
+                sm: '2rem',
+                lg: '4rem',
+                xl: '5rem',
+                '2xl': '6rem'
+            }
+        }
+    }
+};
+```
+
 ### Theming
 
 The widget supports custom theming through CSS custom properties that are set dynamically:
@@ -419,33 +564,6 @@ const stepsData = [
     }
 ];
 ```
-
-## 🛠️ Development Setup
-
-### Prerequisites
-
--   Node.js (v16+)
--   React (v18+)
--   TypeScript (v4.9+)
-
-### Local Development
-
-To include the package in your local project for testing, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import
-it as a local dependency.
-
-#### To test the package locally:
-
-1. Create build using `npm run build` to create dist folder which will serve target projects.
-2. Run the `npm link` command in this project's root directory to create a symlink.
-3. Run the `npm link @ekoindia/oaas-widget` command in your target project's root directory to link this package.
-    1. A folder called `@ekoindia` will be created in your target project's node_modules directory with a symlink to this package. You may delete that folder to remove the symlink.
-4. Import the package in your project and use it as a local dependency.
-5. Make changes in this package and rebuild using `npm run build` to see the changes reflected in your target project.
-6. When done testing,
-    - Run `npm unlink @ekoindia/oaas-widget` in your target project to remove the symlink
-    - Run `npm unlink` in this package to remove the global link
-    - Also, delete the `@ekoindia` folder from your target project's node_modules directory if it still exists
-    - Then, reinstall the package from npm if needed: `npm install @ekoindia/oaas-widget`.
 
 ## 📁 Project Structure
 
@@ -532,117 +650,6 @@ oaas-widget/
 | `src/utils/`             | Utility functions, data configurations, and interface definitions |
 | `src/assets/`            | Static assets including icons and images                          |
 | `types/`                 | Generated TypeScript declaration files for the built package      |
-
-## 🚀 Build & Deployment
-
-### Build Configuration
-
-The project uses **Rollup** for efficient bundling with the following features:
-
--   **Tree Shaking**: Removes unused code for smaller bundle sizes
--   **ES Module Support**: Native ES module compatibility
--   **Multiple Output Formats**: CommonJS (CJS) and ES Module (ESM) builds
--   **TypeScript Support**: Full TypeScript compilation and declaration generation
--   **CSS Processing**: PostCSS and Tailwind CSS integration with inline injection
--   **Image Processing**: Optimized asset bundling
-
-### Build Scripts
-
-```bash
-# Production build
-npm run build
-
-# Generates:
-# ├── dist/
-# │   ├── index.js          # CommonJS bundle
-# │   ├── index.esm.js      # ES module bundle
-# │   ├── index.d.ts        # TypeScript declarations
-# │   └── (CSS inlined in JS bundles)
-
-# Check for outdated dependencies
-npm run check-updates
-```
-
-### Publishing to NPM
-
-1. One-time setup:
-    - Ensure you have an npm account with access to the `@ekoindia` scope
-    - Configure 2FA (Two-Factor Authentication) for your npm account
-    - Add your npm credentials using `npm adduser` (app.admin account)
-        - Enter username, email and password
-        - Enter OTP sent to app.admin's email
-2. Increment the package version in `package.json` file (line #3)
-3. Build the package: `npm run build`
-4. Publish the package: `npm run publish-try`
-    - Note: this command uses `|| true` to prevent CI/CD failures if publish fails
-
-**Note**: The package is published under the `@ekoindia` scope with public access.
-
-### Configuration Files
-
-#### TypeScript Configuration (`tsconfig.json`)
-
-```json
-{
-    "compilerOptions": {
-        "target": "ES6",
-        "lib": ["ES2018", "DOM"],
-        "jsx": "react",
-        "module": "ESNext",
-        "declaration": true,
-        "declarationDir": "types",
-        "outDir": "dist/esm",
-        "strict": true,
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true
-    },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist"]
-}
-```
-
-#### Rollup Configuration
-
--   **Input**: `src/index.ts`
--   **Output**: Multiple formats (CommonJS, ESM)
--   **Plugins**:
-    -   TypeScript with declaration generation
-    -   PostCSS with Tailwind CSS (inline injection)
-    -   Image optimization
-    -   Peer dependencies externalization
--   **External**: React, React-DOM (peer dependencies)
-
-#### Tailwind CSS Configuration
-
-```javascript
-module.exports = {
-    content: ['src/**/*.{ts,tsx}'],
-    theme: {
-        extend: {
-            colors: {
-                primary: 'var(--color-primary, #007bff)'
-                // ... custom color palette
-            },
-            boxShadow: {
-                xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
-                // ... custom shadows
-            }
-        },
-        container: {
-            center: true,
-            padding: {
-                DEFAULT: '1rem',
-                sm: '2rem',
-                lg: '4rem',
-                xl: '5rem',
-                '2xl': '6rem'
-            }
-        }
-    }
-};
-```
 
 ## 🧪 Testing & Quality
 
@@ -781,72 +788,24 @@ const handleSubmit = async (stepData) => {
 
 ## 🚨 Troubleshooting
 
-### Common Issues
+-   Camera Not Working
+    1. Check browser permissions
+    2. Ensure HTTPS is enabled
+    3. Verify camera access in browser settings
+-   Location Not Captured
+    1. Check geolocation permissions
+    2. Ensure HTTPS is enabled
+    3. Verify location services are enabled
+-   Step Not Progressing
+    1. Check stepResponse prop format
+    2. Verify API response structure
+    3. Check browser console for errors
+-   Build Errors
+    1. Clear node_modules and reinstall: `rm -rf node_modules package-lock.json && npm install`
+    2. Clear build cache: `rm -rf dist`
+    3. Rebuild the project: `npm run build`
 
-#### Camera Not Working
-
-```bash
-# Check browser permissions
-# Ensure HTTPS is enabled
-# Verify camera access in browser settings
-```
-
-#### Location Not Captured
-
-```bash
-# Check geolocation permissions
-# Ensure HTTPS is enabled
-# Verify location services are enabled
-```
-
-#### Step Not Progressing
-
-```bash
-# Check stepResponse prop format
-# Verify API response structure
-# Check browser console for errors
-```
-
-#### Build Errors
-
-```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-
-# Clear build cache
-rm -rf dist
-npm run build
-```
-
-## � Dependencies
-
-### Core Dependencies
-
--   **React 18.2+**: UI framework (peer dependency)
--   **Zustand 4.3.6**: State management
--   **Formik 2.2.9**: Form handling
--   **React Hook Form 7.45.4**: Alternative form library
--   **Yup 1.1.1**: Schema validation
--   **React Webcam 7.0.1**: Camera integration
--   **Tailwind CSS 3.2.7**: Utility-first CSS framework
--   **Tailwind Merge 1.14.0**: Tailwind class merging utility
-
-### Development Dependencies
-
--   **TypeScript 4.9.4**: Type safety
--   **Rollup 3.14.0**: Module bundler
--   **PostCSS 8.4.25**: CSS processing
--   **Jest 29.4.1**: Testing framework
--   **Storybook 6.5.15**: Component development
-
-## 📞 Support & Resources
-
--   **Repository**: [github.com/ekoindia/oaas-widget](https://github.com/ekoindia/oaas-widget)
--   **NPM Package**: [@ekoindia/oaas-widget](https://www.npmjs.com/package/@ekoindia/oaas-widget)
--   **Current Version**: 4.3.0
--   **License**: MIT
--   **Author**: jalaj goyal
+---
 
 ## 🤝 Contributing
 
