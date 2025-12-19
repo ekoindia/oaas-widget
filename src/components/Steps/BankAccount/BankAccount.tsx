@@ -98,6 +98,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
     };
 
     const onSubmit = (values: any) => {
+        console.log('[BankAccount] onSubmit values:', values);
         const formData: any = {
             bank_code: values.bank_code,
             account: values.account
@@ -123,6 +124,8 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
                 formData.bank_id = bankIdParam.value;
             }
         }
+
+        console.log('[BankAccount] onSubmit formData:', formData);
 
         handleSubmit({
             ...stepData,
