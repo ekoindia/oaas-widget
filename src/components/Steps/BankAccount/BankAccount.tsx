@@ -73,6 +73,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
 
     const handlePassbookUpload = (url: string, type: string, fileData: File, setFieldValue: any) => {
         setPassbookImage({ url, fileData });
+        console.log('[BankAccount] handlePassbookUpload fileData:', fileData);
         setFieldValue('passbook_image', fileData);
     };
 
@@ -97,6 +98,7 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
     };
 
     const onSubmit = (values: any) => {
+        console.log('[BankAccount] onSubmit values:', values);
         const formData: any = {
             bank_code: values.bank_code,
             account: values.account
@@ -122,6 +124,8 @@ const BankAccount = ({ stepData, handleSubmit, isDisabledCTA = false, bankList, 
                 formData.bank_id = bankIdParam.value;
             }
         }
+
+        console.log('[BankAccount] onSubmit formData:', formData);
 
         handleSubmit({
             ...stepData,

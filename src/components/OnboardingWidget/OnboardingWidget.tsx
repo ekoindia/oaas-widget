@@ -120,8 +120,10 @@ const OnboardingWidget = ({
      */
     useEffect(() => {
         if (stepsData) {
+            console.log('[OnboardingWidget] stepsData', stepsData);
             const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != stepStatus.COMPLETED && step.stepStatus != stepStatus.SKIPPED);
             const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
+            console.log('[OnboardingWidget] initialStep', { initialStep, _initialStepId });
             setCurrentOnboardingStepId(_initialStepId);
         }
     }, [stepsData, stepStatus]);
