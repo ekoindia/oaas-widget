@@ -88,10 +88,40 @@ const MyApp = () => {
 
 ### Local Development
 
+#### Option 1: Test Page (Quick & Easy)
+
+The easiest way to test the widget during development:
+
+```bash
+# Start development server with auto-rebuild
+npm run dev:full
+```
+
+This starts a local test page at `http://localhost:8080/example/` with:
+
+-   ✅ Auto-reload on file changes
+-   ✅ Live console output
+-   ✅ Multiple test configurations
+-   ✅ Theme switcher
+
+See [example/README.md](example/README.md) for more details.
+
+**Alternative commands:**
+
+```bash
+# Just build in watch mode
+npm run dev
+
+# Just serve the test page
+npm run serve
+```
+
+#### Option 2: NPM Link (For Integration Testing)
+
 To include the package in your local project for testing, you can use the npm link command. This will create a symlink to the package in your project's node_modules directory, allowing you to import
 it as a local dependency.
 
-#### To test the package locally:
+##### To test the package locally:
 
 1. Create build using `npm run build` to create dist folder which will serve target projects.
 2. Run the `npm link` command in this project's root directory to create a symlink.
@@ -107,27 +137,23 @@ it as a local dependency.
 
 ## 🚀 Build & Deployment
 
-### Build Configuration
-
-The project uses **Rollup** for efficient bundling with the following features:
-
--   **Tree Shaking**: Removes unused code for smaller bundle sizes
--   **ES Module Support**: Native ES module compatibility
--   **Multiple Output Formats**: CommonJS (CJS) and ES Module (ESM) builds
--   **TypeScript Support**: Full TypeScript compilation and declaration generation
--   **CSS Processing**: PostCSS and Tailwind CSS integration with inline injection
--   **Image Processing**: Optimized asset bundling
-
 ### Build Scripts
 
 ```bash
 # Production build
 npm run build
 
+# Development build with watch mode
+npm run dev
+
+# Development server with auto-reload
+npm run dev:full
+
 # Generates:
 # ├── dist/
 # │   ├── index.js          # CommonJS bundle
 # │   ├── index.esm.js      # ES module bundle
+# │   ├── index.umd.js      # UMD bundle (for browsers)
 # │   ├── index.d.ts        # TypeScript declarations
 # │   └── (CSS inlined in JS bundles)
 
@@ -149,6 +175,17 @@ npm run check-updates
     - Note: this command uses `|| true` to prevent CI/CD failures if publish fails
 
 **Note**: The package is published under the `@ekoindia` scope with public access.
+
+### Build Configuration
+
+The project uses **Rollup** for efficient bundling with the following features:
+
+-   **Tree Shaking**: Removes unused code for smaller bundle sizes
+-   **ES Module Support**: Native ES module compatibility
+-   **Multiple Output Formats**: CommonJS (CJS) and ES Module (ESM) builds
+-   **TypeScript Support**: Full TypeScript compilation and declaration generation
+-   **CSS Processing**: PostCSS and Tailwind CSS integration with inline injection
+-   **Image Processing**: Optimized asset bundling
 
 ## 🏗️ Architecture Overview
 
