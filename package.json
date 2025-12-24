@@ -1,6 +1,6 @@
 {
     "name": "@ekoindia/oaas-widget",
-    "version": "4.4.0",
+    "version": "4.5.0",
     "description": "Web widget for onboarding-as-a-service",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -10,6 +10,9 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "rollup -c --bundleConfigAsCjs",
+        "dev": "rollup -c --bundleConfigAsCjs -w",
+        "serve": "http-server . -p 8080 -o /example/index.html",
+        "dev:full": "npm-run-all --parallel dev serve",
         "publish-try": "npm publish --access=public || true",
         "check-updates": "npm outdated --depth=0",
         "storybook": "start-storybook -p 6006",
@@ -22,11 +25,16 @@
         "name": "jalaj goyal"
     },
     "license": "MIT",
+    "peerDependencies": {
+        "react": ">=18.0.0",
+        "react-dom": ">=18.0.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.20.12",
         "@babel/preset-react": "^7.18.6",
         "@rollup/plugin-commonjs": "^24.0.1",
         "@rollup/plugin-node-resolve": "^15.0.1",
+        "@rollup/plugin-replace": "^6.0.3",
         "@storybook/addon-actions": "^6.5.15",
         "@storybook/addon-essentials": "^6.5.15",
         "@storybook/addon-interactions": "^6.5.15",
@@ -49,13 +57,15 @@
         "chromatic": "^6.17.2",
         "css-loader": "^6.7.3",
         "html-webpack-plugin": "^5.5.0",
+        "http-server": "^14.1.1",
         "jest": "^29.4.1",
         "jest-environment-jsdom": "^29.4.1",
+        "npm-run-all": "^4.1.5",
         "postcss": "^8.4.25",
         "postcss-cli": "^10.1.0",
         "postcss-import-url": "^7.2.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
         "rollup": "^3.14.0",
         "rollup-plugin-dts": "^5.1.1",
         "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -63,10 +73,6 @@
         "style-loader": "^3.3.1",
         "tailwindcss": "^3.2.7",
         "typescript": "^4.9.4"
-    },
-    "peerDependencies": {
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
     },
     "dependencies": {
         "@rollup/plugin-image": "^3.0.2",

@@ -5,10 +5,22 @@ import ButtonGlobal from '../../Common/ButtonGlobal';
 
 const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBack, esignStatus, skipButtonComponent }: GlobalStepPropsType) => {
     const [popupOpened, setPopupOpened] = useState(false); // Track if popup has been opened by the user
+    const [popupOpenedDelayed, setPopupOpenedDelayed] = useState(false); // True 3s after popupOpened
 
     useEffect(() => {
         if (typeof handleStepCallBack === 'function') handleStepCallBack({ type: stepData.id, method: 'getSignUrl' });
     }, []);
+
+    // Set popupOpenedDelayed to true 3s after popupOpened is set to true
+    useEffect(() => {
+        if (popupOpened) {
+            const timer = setTimeout(() => setPopupOpenedDelayed(true), 3000);
+            return () => clearTimeout(timer);
+        }
+
+        setPopupOpenedDelayed(false);
+        return undefined;
+    }, [popupOpened]);
 
     const openPopupTab = () => {
         handleStepCallBack({ type: stepData.id, method: 'legalityOpen' });
@@ -34,19 +46,27 @@ const SignAgreement = ({ stepData, handleSubmit, isDisabledCTA, handleStepCallBa
                 <span className="sm:block">Only one more to go!&nbsp;</span>
                 <span className="sm:block">Sign the agreement using your Aadhaar number to continue.</span>
             </p>
-            <ButtonGlobal className="mt-6 mt-8" disabled={isLoading} onClick={openPopupTab}>
-                {isLoading ? 'Loading...' : stepData?.primaryCTAText}
-            </ButtonGlobal>
-            {popupOpened ? (
-                <p className="sm:font-normal text-[16px] pt-8 pl-4 pr-4 text-center">
-                    <span className="sm:block">After completing the e-sign process,&nbsp;</span>
-                    <span className="sm:block">please click the following button to confirm status and proceed:</span>
-                    <br />
-                    <ButtonGlobal className="mt-4" disabled={isLoading} onClick={checkStatusAfterPopupOpened}>
-                        Continue
+            <div className="flex flex-row justify-center w-full">
+                {popupOpenedDelayed ? (
+                    <div className="flex flex-col items-center w-full sm:font-normal text-[16px] pt-8 pl-4 pr-4 text-center">
+                        <div className="sm:block">After completing the e-sign process:</div>
+                        <ButtonGlobal className="mt-4" disabled={isLoading} onClick={checkStatusAfterPopupOpened}>
+                            Continue
+                        </ButtonGlobal>
+
+                        <div className="mt-10 text-sm text-gray-500">
+                            Didn&apos;t complete the e-sign process?&nbsp;
+                            <span className="text-primary underline cursor-pointer" onClick={openPopupTab}>
+                                Retry
+                            </span>
+                        </div>
+                    </div>
+                ) : (
+                    <ButtonGlobal className="mt-6 mt-8" disabled={isLoading || popupOpened} onClick={openPopupTab}>
+                        {isLoading ? 'Loading...' : popupOpened ? 'Starting Agreement Sign...' : stepData?.primaryCTAText}
                     </ButtonGlobal>
-                </p>
-            ) : null}
+                )}
+            </div>
         </>
     );
 

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>OaaS Widget Test Page</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+				'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+				sans-serif;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			background: #f5f5f5;
+			padding: 20px;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			background: white;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			overflow: hidden;
+		}
+
+		.header {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			padding: 30px;
+			text-align: center;
+		}
+
+		.header h1 {
+			margin-bottom: 10px;
+			font-size: 28px;
+		}
+
+		.header p {
+			opacity: 0.9;
+			font-size: 14px;
+		}
+
+		.controls {
+			padding: 20px;
+			background: #f9fafb;
+			border-bottom: 1px solid #e5e7eb;
+		}
+
+		.controls h3 {
+			margin-bottom: 15px;
+			color: #374151;
+			font-size: 16px;
+		}
+
+		.control-group {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+			margin-bottom: 15px;
+		}
+
+		.control-group button {
+			padding: 8px 16px;
+			background: #667eea;
+			color: white;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 14px;
+			transition: background 0.2s;
+		}
+
+		.control-group button:hover {
+			background: #5568d3;
+		}
+
+		.control-group button.secondary {
+			background: #6b7280;
+		}
+
+		.control-group button.secondary:hover {
+			background: #4b5563;
+		}
+
+		.widget-wrapper {
+			padding: 20px;
+			min-height: 500px;
+		}
+
+		#root {
+			width: 100%;
+		}
+
+		.info-panel {
+			padding: 20px;
+			background: #fffbeb;
+			border-top: 1px solid #fbbf24;
+		}
+
+		.info-panel h4 {
+			color: #92400e;
+			margin-bottom: 10px;
+		}
+
+		.info-panel pre {
+			background: white;
+			padding: 15px;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-size: 12px;
+			border: 1px solid #fcd34d;
+		}
+
+		.console-log {
+			padding: 20px;
+			background: #1f2937;
+			color: #e5e7eb;
+		}
+
+		.console-log h4 {
+			color: #9ca3af;
+			margin-bottom: 10px;
+			font-size: 14px;
+		}
+
+		.console-log pre {
+			max-height: 200px;
+			overflow-y: auto;
+			font-size: 12px;
+			line-height: 1.5;
+		}
+
+		.log-entry {
+			padding: 5px 0;
+			border-bottom: 1px solid #374151;
+		}
+
+		.log-entry:last-child {
+			border-bottom: none;
+		}
+
+		.log-time {
+			color: #6b7280;
+			font-size: 11px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>🚀 OaaS Widget Test Page</h1>
+			<p>Development environment for testing the Onboarding-as-a-Service Widget</p>
+		</div>
+
+		<div class="controls">
+			<h3>Quick Actions</h3>
+			<div class="control-group">
+				<button onclick="reloadWidget()">🔄 Reload Widget</button>
+				<button onclick="clearConsole()" class="secondary">🗑️ Clear Console</button>
+				<button onclick="changeTheme()" class="secondary">🎨 Change Theme</button>
+			</div>
+		</div>
+
+		<div class="widget-wrapper">
+			<div id="root"></div>
+		</div>
+
+		<div class="info-panel">
+			<h4>ℹ️ Current Configuration</h4>
+			<pre id="config-display"></pre>
+		</div>
+
+		<div class="console-log">
+			<h4>📋 Console Output</h4>
+			<pre id="console-output"></pre>
+		</div>
+	</div>
+
+	<!-- Polyfill for Node.js globals needed by some dependencies -->
+	<script>
+		if (typeof window !== 'undefined') {
+			if (typeof process === 'undefined') {
+				window.process = {
+					env: {
+						NODE_ENV: 'production'
+					}
+				};
+			}
+		}
+	</script>
+
+	<!-- React and ReactDOM from CDN -->
+	<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+	<!-- Load the widget (path is relative to the example directory) -->
+	<script src="../dist/index.umd.js"
+		onerror="console.error('Failed to load widget UMD bundle from ../dist/index.umd.js')"></script>
+
+	<!-- Demo configuration -->
+	<script src="./demo-config.js" onerror="console.error('Failed to load demo-config.js')"></script>
+
+	<!-- Test page logic -->
+	<script>
+		let consoleHistory = [];
+		let currentThemeIndex = 0;
+		const themes = ['#11299E', '#75140c', '#015a8c', '#821f50', '#354d5b'];
+		const themesAccent = ['#FE9F00', '#4c526f', '#ed7802', '#4c526f', '#bf4a79'];
+
+		// Capture console logs
+		const originalLog = console.log;
+		console.log = function (...args) {
+			originalLog.apply(console, args);
+			const timestamp = new Date().toLocaleTimeString();
+			consoleHistory.push({ time: timestamp, message: args.join(' ') });
+			updateConsoleDisplay();
+		};
+
+		function updateConsoleDisplay() {
+			const output = document.getElementById('console-output');
+			output.innerHTML = consoleHistory
+				.slice(-20)
+				.map(entry => `<div class="log-entry"><span class="log-time">[${entry.time}]</span> ${entry.message}</div>`)
+				.join('');
+			output.scrollTop = output.scrollHeight;
+		}
+
+		function clearConsole() {
+			consoleHistory = [];
+			updateConsoleDisplay();
+		}
+
+		function changeTheme() {
+			currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+			renderWidget();
+		}
+
+		function reloadWidget() {
+			console.log('Reloading widget...');
+			renderWidget();
+		}
+
+		function renderWidget() {
+			const root = document.getElementById('root');
+
+			// Clear existing content
+			root.innerHTML = '';
+
+			// Create widget configuration
+			const config = {
+				...window.DEMO_CONFIG,
+				primaryColor: themes[currentThemeIndex],
+				accentColor: themesAccent[currentThemeIndex]
+			};
+
+			// Display current config
+			document.getElementById('config-display').textContent = JSON.stringify({
+				appName: config.appName,
+				orgName: config.orgName,
+				primaryColor: config.primaryColor,
+				totalSteps: config.stepsData.length
+			}, null, 2);
+
+			try {
+				// Render the widget using the UMD global
+				if (window.OaaSWidget && window.OaaSWidget.OnboardingWidget) {
+					const element = React.createElement(
+						window.OaaSWidget.OnboardingWidget,
+						config
+					);
+
+					const rootContainer = ReactDOM.createRoot(root);
+					rootContainer.render(element);
+
+					console.log('✅ Widget rendered successfully');
+				} else {
+					console.error('❌ Widget not found. Make sure dist/index.umd.js is built.');
+					root.innerHTML = '<div style="padding: 20px; color: red;">Error: Widget not loaded. Run <code>npm run build</code> first.</div>';
+				}
+			} catch (error) {
+				console.error('❌ Error rendering widget:', error);
+				root.innerHTML = `<div style="padding: 20px; color: red;">Error: ${error.message}</div>`;
+			}
+		}
+
+		// Initialize on page load
+		window.addEventListener('DOMContentLoaded', () => {
+			console.log('🎯 Test page initialized');
+			console.log('📦 React available:', typeof React !== 'undefined', React ? React.version : 'N/A');
+			console.log('📦 ReactDOM available:', typeof ReactDOM !== 'undefined');
+			console.log('📦 OaaSWidget available:', typeof window.OaaSWidget !== 'undefined');
+
+			if (typeof window.OaaSWidget !== 'undefined') {
+				console.log('📦 OaaSWidget exports:', Object.keys(window.OaaSWidget));
+			}
+
+			if (window.DEMO_CONFIG) {
+				console.log('✅ Demo configuration loaded');
+				renderWidget();
+			} else {
+				console.error('❌ Demo configuration not found');
+				document.getElementById('root').innerHTML =
+					'<div style="padding: 20px; color: red;">Error: demo-config.js not loaded</div>';
+			}
+		});
+	</script>
+</body>
+
+</html>
