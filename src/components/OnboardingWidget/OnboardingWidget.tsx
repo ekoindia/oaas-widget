@@ -20,6 +20,7 @@ const bankSelectOption: BankListElement = {
 type OAASPackageProps = {
     appName?: string;
     orgName?: string;
+    initialStepId?: number;
     primaryColor?: string;
     accentColor?: string;
     shopTypes?: Array<any>;
@@ -90,14 +91,15 @@ const OnboardingWidget = ({
     stepsData,
     esignStatus,
     digilockerData,
-    constants
+    constants,
+    initialStepId
 }: OAASPackageProps) => {
-    const [currentOnboardingStepId, setCurrentOnboardingStepId] = useState<number | undefined>();
     const [sideBarToggle, setSideBarToggle] = useState<boolean>(false);
 
     // Extract constants from props
     const { apiStatus, stepIds, stepStatus } = constants;
 
+    console.log('[OnboardingWidget] initialStepId', initialStepId);
     console.log('[Onboarding] stepStatus', stepStatus);
     // console.log('[AgentOnboarding] OAAS currentOnboardingStepId', currentOnboardingStepId);
     // console.log('[AgentOnboarding] OAAS stepsData', stepsData);
@@ -114,20 +116,6 @@ const OnboardingWidget = ({
         }
     }, [primaryColor, accentColor]);
 
-    /**
-     * Set Initial Onboarding Step ID based on stepStatus
-     * If any step with role exists and is not COMPLETED or SKIPPED, set it as initial step
-     */
-    useEffect(() => {
-        if (stepsData) {
-            console.log('[OnboardingWidget] stepsData', stepsData);
-            const initialStep = stepsData?.find((step: StepDataType) => step.role && step.stepStatus != stepStatus.COMPLETED && step.stepStatus != stepStatus.SKIPPED);
-            const _initialStepId = initialStep?.id ?? stepsData[0]?.id;
-            console.log('[OnboardingWidget] initialStep', { initialStep, _initialStepId });
-            setCurrentOnboardingStepId(_initialStepId);
-        }
-    }, [stepsData, stepStatus]);
-
     return (
         <OnboardingWrapper
             orgName={orgName}
@@ -140,7 +128,7 @@ const OnboardingWidget = ({
             setSideBarToggle={setSideBarToggle}
             handleSubmit={handleSubmit}
             stepResponse={stepResponse}
-            currentOnboardingStepId={currentOnboardingStepId}
+            currentOnboardingStepId={initialStepId}
             handleStepCallBack={handleStepCallBack}
             handleOnboardingSkip={handleOnboardingSkip}
             apiInProgress={apiInProgress}
