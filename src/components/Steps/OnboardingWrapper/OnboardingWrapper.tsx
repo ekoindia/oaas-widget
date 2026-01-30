@@ -175,12 +175,12 @@ export const OnboardingWrapper = ({
             <div className={`${currentOnboardingStepId === stepIds.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-4 sm:px-8 w-full md:px-24`}>
                 <div className="w-full">
                     <div className="relative w-full">
-                        <div className="sm:grid sm:grid-cols-[280px_minmax(0,768px)] sm:gap-6">
-                            <span className="hidden sm:block md:block lg:block xl:block">
+                        {/* <div className="sm:grid sm:grid-cols-[280px_minmax(0,768px)] sm:gap-6"> */}
+                        {/* <span className="hidden sm:block md:block lg:block xl:block">
                                 <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
-                            </span>
-                            <div className="relative flex flex-col w-full pb-10 mb-10 p-4 sm:p-8 rounded-2xl bg-white min-w-0">{renderStep(currentOnboardingStepId ?? 0)}</div>
-                        </div>
+                            </span> */}
+                        <div className="relative flex flex-col w-full pb-10 mb-10 p-4 sm:p-8 rounded-2xl bg-white min-w-0">{renderStep(currentOnboardingStepId ?? 0)}</div>
+                        {/* </div> */}
                     </div>
                 </div>
             </div>
