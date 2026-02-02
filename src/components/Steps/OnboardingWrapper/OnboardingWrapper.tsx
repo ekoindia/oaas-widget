@@ -2,7 +2,6 @@ import React from 'react';
 import { BankListType } from '../../../types';
 import { StepDataType } from '../../../utils/data/stepsData';
 import ButtonGlobal from '../../Common/ButtonGlobal';
-import Sidebar from '../../Common/Sidebar/Sidebar';
 import Business from '../../Steps/Business/Business';
 import VideoKYC from '../../Steps/KYC/VideoKYC';
 import OnboardingStatus from '../../Steps/OnBoardingStatus/OnboardingStatus';
@@ -171,30 +170,31 @@ export const OnboardingWrapper = ({
     };
 
     return (
-        <div className="mt-8">
-            <div className={`${currentOnboardingStepId === stepIds.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-4 sm:px-8 w-full md:px-24`}>
-                <div className="w-full">
-                    <div className="relative w-full">
-                        {/* <div className="sm:grid sm:grid-cols-[280px_minmax(0,768px)] sm:gap-6"> */}
-                        {/* <span className="hidden sm:block md:block lg:block xl:block">
-                                <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
-                            </span> */}
-                        <div className="relative flex flex-col w-full pb-10 mb-10 p-4 sm:p-8 rounded-2xl bg-white min-w-0">{renderStep(currentOnboardingStepId ?? 0)}</div>
-                        {/* </div> */}
-                    </div>
-                </div>
-            </div>
+        <div>{renderStep(currentOnboardingStepId ?? 0)}</div>
+        // <div className="mt-8">
+        //     <div className={`${currentOnboardingStepId === stepIds.WELCOME && 'pt-0'} ${currentOnboardingStepId === 0 && 'pt-7'} h-screens px-4 sm:px-8 w-full md:px-24`}>
+        //         <div className="w-full">
+        //             <div className="relative w-full">
+        //                 {/* <div className="sm:grid sm:grid-cols-[280px_minmax(0,768px)] sm:gap-6"> */}
+        //                 {/* <span className="hidden sm:block md:block lg:block xl:block">
+        //                         <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
+        //                     </span> */}
+        //                 <div className="relative flex flex-col w-full pb-10 mb-10 p-4 sm:p-8 rounded-2xl bg-white min-w-0">{renderStep(currentOnboardingStepId ?? 0)}</div>
+        //                 {/* </div> */}
+        //             </div>
+        //         </div>
+        //     </div>
 
-            <span className="hidden">
-                {sideBarToggle ? (
-                    <div className="z-20 absolute top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
-                        <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
-                        <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
-                    </div>
-                ) : (
-                    ''
-                )}
-            </span>
-        </div>
+        //     <span className="hidden">
+        //         {sideBarToggle ? (
+        //             <div className="z-20 absolute top-0 backdrop-blur-[1px] left-0 bottom-0 right-0 rounded-2xl flex justify-center">
+        //                 <Sidebar steps={stepsData || []} userData={userData} currentStepId={currentOnboardingStepId} constants={{ stepIds, stepStatus }} />
+        //                 <div className="w-[25%]" onClick={() => setSideBarToggle((prev) => !prev)}></div>
+        //             </div>
+        //         ) : (
+        //             ''
+        //         )}
+        //     </span>
+        // </div>
     );
 };
